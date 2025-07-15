@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
-
-import '../../../ui/text_styles.dart';
+import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class MediumButton extends StatelessWidget {
   final String title;
-  final Function(void)? onClick;
+  final VoidCallback? onClick;
 
   const MediumButton({
     super.key,
@@ -15,17 +14,17 @@ class MediumButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 243.0,
-      height: 54.0,
-      decoration: BoxDecoration(
-        color: AppColors.primary100,
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: GestureDetector(
-        onTap: () {
-          onClick;
-        },
+    return GestureDetector(
+      onTap: () {
+        onClick?.call();
+      },
+      child: Container(
+        width: 243.0,
+        height: 54.0,
+        decoration: BoxDecoration(
+          color: AppColors.primary100,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
         child: Center(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,

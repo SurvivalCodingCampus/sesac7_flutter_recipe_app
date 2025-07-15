@@ -4,7 +4,7 @@ import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class SmallButton extends StatelessWidget {
   final String title;
-  final Function(void)? onClick;
+  final VoidCallback? onClick;
 
   const SmallButton({
     super.key,
@@ -14,17 +14,17 @@ class SmallButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 174.0,
-      height: 37.0,
-      decoration: BoxDecoration(
-        color: AppColors.primary100,
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: GestureDetector(
-        onTap: () {
-          onClick;
-        },
+    return GestureDetector(
+      onTap: () {
+        onClick?.call();
+      },
+      child: Container(
+        width: 174.0,
+        height: 37.0,
+        decoration: BoxDecoration(
+          color: AppColors.primary100,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
         child: Center(
           child: Text(
             title,
