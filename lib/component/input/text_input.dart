@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/ui/app_color.dart';
 
-class Label extends StatelessWidget {
-  const Label({super.key});
+class TextInput extends StatelessWidget {
+  final String labelText;
+
+  const TextInput({super.key, required this.labelText});
 
   @override
   Widget build(BuildContext context) {

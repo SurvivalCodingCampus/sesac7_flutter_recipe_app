@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/ui/app_color.dart';
 
 class BigButton extends StatelessWidget {
-  const BigButton({super.key});
+  final String buttonText;
+  final void Function() onTap;
+
+  const BigButton({super.key,required this.buttonText ,required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: (){
-        print('112312');
-      },
-      borderRadius: BorderRadius.circular(10),
+    return GestureDetector(
+      onTap: onTap,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 85, vertical: 18),
         decoration: BoxDecoration(
@@ -24,7 +24,7 @@ class BigButton extends StatelessWidget {
               constraints: BoxConstraints(minWidth: 114, minHeight: 24),
               child: Center(
                 child: Text(
-                  'Button',
+                  '$buttonText',
                   style: TextStyle(
                     color: AppColor.White,
                     fontSize: 16,
