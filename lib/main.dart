@@ -3,7 +3,8 @@ import 'package:flutter_recipe_app/presentation/component/button/big_button.dart
 import 'package:flutter_recipe_app/presentation/component/button/medium_button.dart';
 import 'package:flutter_recipe_app/presentation/component/button/small_button.dart';
 import 'package:flutter_recipe_app/presentation/component/input/input_field.dart';
-import 'package:flutter_recipe_app/presentation/component/other/tabs.dart';
+import 'package:flutter_recipe_app/presentation/component/tab/three_tabs.dart';
+import 'package:flutter_recipe_app/presentation/component/tab/two_tabs.dart';
 
 void main() {
   runApp(const MyApp());
@@ -24,7 +25,18 @@ class MyApp extends StatelessWidget {
           spacing: 20,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Tabs(
+            ThreeTabs(
+              labels: [
+                'Tab 1',
+                'Tab 2',
+                'Tab 3',
+              ],
+              selectedIndex: 0,
+              onValueChange: (index) {
+                print('Selected tab index: $index');
+              },
+            ),
+            TwoTabs(
               labels: [
                 'Tab 1',
                 'Tab 2',
