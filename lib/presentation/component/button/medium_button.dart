@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
-class BigButton extends StatelessWidget {
+class MediumButton extends StatelessWidget {
   final String text;
   final VoidCallback onClick;
 
-  const BigButton({
+  const MediumButton({
     super.key,
     required this.text,
     required this.onClick,
@@ -17,14 +17,14 @@ class BigButton extends StatelessWidget {
     return GestureDetector(
       onTap: onClick,
       child: Container(
-        width: 315,
-        height: 60,
+        width: 243,
+        height: 54,
         decoration: BoxDecoration(
           color: AppColors.primary100,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
-          spacing: 11,
+          spacing: 9,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
