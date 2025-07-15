@@ -27,7 +27,6 @@ abstract class TextStyles {
     fontWeight: FontWeight.w600,
     overflow: TextOverflow.ellipsis,
   );
-
   /* Button Component END */
 
   /* InputField START */
@@ -46,4 +45,23 @@ abstract class TextStyles {
     fontWeight: FontWeight.w400,
     overflow: TextOverflow.ellipsis,
   );
+  /* InputField END */
+
+  /* Tabs Label START */
+  static final TextStyle tabsSelectedLabelTitle = TextStyle(
+    color: AppColors.white,
+    fontSize: 11,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis
+  );
+
+  static final TextStyle tabsUnSelectedLabelTitle = TextStyle(
+      color: AppColors.primary80,
+      fontSize: 11,
+      fontFamily: FontFamilyType.poppins.fontFamilyName,
+      fontWeight: FontWeight.w600,
+      overflow: TextOverflow.ellipsis
+  );
+  /* Label END */
 }
