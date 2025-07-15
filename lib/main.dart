@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/button/big_button.dart';
 import 'package:flutter_recipe_app/presentation/component/button/medium_button.dart';
 import 'package:flutter_recipe_app/presentation/component/button/small_button.dart';
+import 'package:flutter_recipe_app/presentation/component/input/input_field.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,6 +23,13 @@ class MyApp extends StatelessWidget {
           spacing: 20,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            InputField(
+              label: 'Label',
+              placeholder: 'placeholder',
+              onValueChange: (value) {
+                print(value);
+              },
+            ),
             BigButton(
               text: 'Button',
               onClick: () {
