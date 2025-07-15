@@ -5,12 +5,14 @@ import 'package:flutter_recipe_app/ui/text_styles.dart';
 class InputField extends StatelessWidget {
   final String label;
   final String placeholder;
+  final String? value;
   final void Function(String) onValueChange;
 
   const InputField({
     super.key,
     required this.label,
     required this.placeholder,
+    this.value,
     required this.onValueChange,
   });
 
@@ -32,7 +34,8 @@ class InputField extends StatelessWidget {
           ),
           SizedBox(
             height: 55,
-            child: TextField(
+            child: TextFormField(
+              initialValue: value,
               cursorHeight: 17,
               cursorColor: AppColors.black,
               cursorWidth: 1,
