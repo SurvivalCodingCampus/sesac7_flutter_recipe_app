@@ -34,6 +34,8 @@ class MediumButton extends StatelessWidget {
               child: Text(
                 text,
                 style: TextStyles.normalTextBold,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
               ),
             ),
             const SizedBox(width: 11),

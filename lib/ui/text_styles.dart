@@ -51,7 +51,7 @@ abstract class TextStyles {
     color: Colors.white,
   );
 
-  static final TextStyle tittleTextRegular = TextStyle(
+  static final TextStyle titleTextRegular = TextStyle(
     fontSize: 50,
     fontWeight: FontWeight.normal, // Regular는 FontWeight.normal에 해당합니다.
     fontFamily: 'Poppins',

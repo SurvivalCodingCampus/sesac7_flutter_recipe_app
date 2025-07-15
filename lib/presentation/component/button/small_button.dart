@@ -26,11 +26,14 @@ class SmallButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         child: Container(
+          margin: EdgeInsets.only(left: 20, right: 20),
           alignment: Alignment.center,
           width: 114,
           child: Text(
             text,
             style: TextStyles.smallerTextBold,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ),

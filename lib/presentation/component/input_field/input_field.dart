@@ -45,7 +45,7 @@ class InputField extends StatelessWidget {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10), // 모서리 둥글게
                   borderSide: const BorderSide(
-                    color: Colors.grey, // 테두리 색상에 맞게 조절
+                    color: AppColors.gray4, // 테두리 색상에 맞게 조절
                     width: 1.0,
                   ),
                 ),

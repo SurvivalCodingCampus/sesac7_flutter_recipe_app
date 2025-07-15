@@ -9,7 +9,11 @@ class Tabs extends StatelessWidget {
     required this.labels,
     required this.selectedIndex,
     required this.onValueChanged,
-  });
+  }) : assert(labels.length == 2, 'Labels must contain exactly 2 items'),
+       assert(
+         selectedIndex >= 0 && selectedIndex <= 1,
+         'selectedIndex must be 0 or 1',
+       );
 
   final List<String> labels;
   final int selectedIndex;
@@ -34,14 +38,20 @@ class Tabs extends StatelessWidget {
               child: Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: selectedIndex == 0 ? AppColors.primary100 : AppColors.white,
+                  color: selectedIndex == 0
+                      ? AppColors.primary100
+                      : AppColors.white,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 //width: 150,
                 height: 33,
                 child: Text(
                   labels[0],
-                  style: selectedIndex == 0 ? TextStyles.smallerTextBold : TextStyles.smallerTextBold.copyWith(color: AppColors.primary80),
+                  style: selectedIndex == 0
+                      ? TextStyles.smallerTextBold
+                      : TextStyles.smallerTextBold.copyWith(
+                          color: AppColors.primary80,
+                        ),
                 ),
               ),
             ),
@@ -55,18 +65,24 @@ class Tabs extends StatelessWidget {
               child: Container(
                 alignment: Alignment.center,
                 decoration: BoxDecoration(
-                  color: selectedIndex == 0 ? AppColors.white : AppColors.primary100,
+                  color: selectedIndex == 0
+                      ? AppColors.white
+                      : AppColors.primary100,
                   borderRadius: BorderRadius.circular(10),
                 ),
                 //width: 150,
                 height: 33,
                 child: Text(
                   labels[1],
-                  style: selectedIndex == 0 ? TextStyles.smallerTextBold.copyWith(color: AppColors.primary80) : TextStyles.smallerTextBold,
+                  style: selectedIndex == 0
+                      ? TextStyles.smallerTextBold.copyWith(
+                          color: AppColors.primary80,
+                        )
+                      : TextStyles.smallerTextBold,
                 ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );
