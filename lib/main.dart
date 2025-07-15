@@ -30,6 +30,7 @@ class MyApp extends StatelessWidget {
               SizedBox(height: 10),
               SmallButton(),
               SizedBox(height: 10),
+              Label()
             ],
           ),
         ),
