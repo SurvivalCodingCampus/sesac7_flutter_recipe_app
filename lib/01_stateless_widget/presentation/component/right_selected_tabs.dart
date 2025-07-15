@@ -32,7 +32,7 @@ class RightSelectedTabs extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                onValueChange(listOfLables.indexOf(listOfLables[0]));
+                onValueChange(0);
               },
               child: Container(
                 width: 150,
@@ -58,7 +58,7 @@ class RightSelectedTabs extends StatelessWidget {
             SizedBox(width: 15),
             GestureDetector(
               onTap: () {
-                onValueChange(listOfLables.indexOf(listOfLables[1]));
+                onValueChange(1);
               },
               child: Container(
                 width: 150,
