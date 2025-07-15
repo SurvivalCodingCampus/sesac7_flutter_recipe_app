@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/button/big_button.dart';
 import 'package:flutter_recipe_app/presentation/component/button/medium_button.dart';
+import 'package:flutter_recipe_app/presentation/component/button/small_button.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,6 +32,13 @@ class MyApp extends StatelessWidget {
               text: 'Button',
               onClick: () {
                 print('medium button');
+              },
+            ),
+
+            SmallButton(
+              text: 'Button',
+              onClick: () {
+                print('small button');
               },
             ),
           ],
