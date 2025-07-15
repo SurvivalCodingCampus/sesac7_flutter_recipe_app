@@ -32,4 +32,7 @@ abstract class AppColors {
 
   // Green
   static const Color success = Color(0xFF31B057);
+
+  // InputField
+  static const Color labelColor = Color(0xFF121212);
 }
