@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/presentation/component/button/medium_button.dart';
 
 import '../component/button/small_button.dart';
 
@@ -14,6 +15,13 @@ class MainScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SmallButton(
+              text: 'Button',
+              onClick: (String text) {
+                print(text);
+              },
+            ),
+            SizedBox(height: 16),
+            MediumButton(
               text: 'Button',
               onClick: (String text) {
                 print(text);
