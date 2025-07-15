@@ -13,12 +13,13 @@ class InputFiled extends StatelessWidget {
     required this.label,
     required this.placeHolder,
     required this.value,
-    required this.onValueChange
+    required this.onValueChange,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
+      width: 315.0,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -33,7 +34,7 @@ class InputFiled extends StatelessWidget {
           ),
           SizedBox(height: 5.0),
           SizedBox(
-            width: 315.0,
+            width: double.infinity,
             height: 55.0,
             child: TextField(
               onChanged: (value) {
