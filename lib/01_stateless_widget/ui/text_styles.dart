@@ -41,9 +41,7 @@ abstract class TextStyles {
   );
 
   static const TextStyle smallerTextBold = TextStyle(
-    color: AppColors.white,
     fontSize: 11,
-    //
     fontWeight: FontWeight.bold,
     fontFamily: 'Poppins',
   );
