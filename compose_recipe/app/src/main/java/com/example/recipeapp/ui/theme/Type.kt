@@ -64,7 +64,8 @@ val ButtonTitleTypography = Typography(
         fontFamily = poppins,
         fontWeight = FontWeight.SemiBold,
         fontSize = 16.sp,
-        fontStyle = FontStyle.Normal
+        fontStyle = FontStyle.Normal,
+        color = White
     )
 )
 /* Button Component END */
