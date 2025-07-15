@@ -32,6 +32,7 @@ class BigButton extends StatelessWidget {
                 child: Text(
                   title,
                   style: TextStyles.bigButtonTitle,
+                  maxLines: 1,
                 ),
               ),
             ),

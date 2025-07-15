@@ -26,7 +26,11 @@ class SmallButton extends StatelessWidget {
           onClick;
         },
         child: Center(
-          child: Text(title, style: TextStyles.smallButtonTitle),
+          child: Text(
+            title,
+            style: TextStyles.smallButtonTitle,
+            maxLines: 1,
+          ),
         ),
       ),
     );

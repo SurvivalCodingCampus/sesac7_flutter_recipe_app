@@ -34,7 +34,11 @@ class MediumButton extends StatelessWidget {
                 width: 114.0,
                 height: 24.0,
                 child: Center(
-                  child: Text(title, style: TextStyles.mediumButtonTitle),
+                  child: Text(
+                    title,
+                    style: TextStyles.mediumButtonTitle,
+                    maxLines: 1,
+                  ),
                 ),
               ),
               SizedBox(
