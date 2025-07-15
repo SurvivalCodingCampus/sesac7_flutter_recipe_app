@@ -29,7 +29,7 @@ class ThreeTabs extends StatelessWidget {
         child: Row(
           spacing: 7,
           children: [
-            for (int i = 0; i < labels.length; i++)
+            for (int i = 0; i < 3; i++)
               SizedBox(
                 width: 107,
                 height: 33,
