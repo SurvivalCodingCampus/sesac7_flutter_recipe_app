@@ -87,5 +87,24 @@ void main() {
       // then
       expect(newValue, expectedValue);
     });
+
+    testWidgets('should handle empty input correctly', (tester) async {
+      String? capturedValue;
+
+      await tester.pumpWidget(
+        MaterialApp(
+          home: Scaffold(
+            body: InputField(
+              label: 'Test',
+              placeholder: 'Test',
+              onValueChange: (value) => capturedValue = value,
+            ),
+          ),
+        ),
+      );
+
+      await tester.enterText(find.byType(TextFormField), '');
+      expect(capturedValue, null);
+    });
   });
 }
