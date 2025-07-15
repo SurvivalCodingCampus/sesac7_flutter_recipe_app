@@ -14,26 +14,28 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BigButton(text: 'Button', onClick: () { print('큰 버튼 클릭되었어요'); }),
-            SizedBox(height: 20),
-            MediumButton(text: 'Button', onClick: () { print('중간 버튼 클릭되었어요'); }),
-            SizedBox(height: 20),
-            SmallButton(text: 'Button', onClick: () { print('작은 버튼 클릭되었어요'); },),
-            SizedBox(height: 20),
-            DefaultInputField(label: 'Label', placeHolder: 'PlaceHolder', value: 'PlaceHolder', onValueChange: (String value) { print(value); }),
-            SizedBox(height: 20),
-            FocusedInputField(label: 'Label', placeHolder: 'PlaceHolder', value: 'PlaceHolder', onValueChange: (String value) { print(value); }),
-            SizedBox(height: 20),
-            FilledInputField(label: 'Label', placeHolder: 'PlaceHolder', value: 'PlaceHolder', onValueChange: (String value) { print(value); }),
-            SizedBox(height: 20),
-            LeftSelectedTabs(listOfLables: ['label1', 'label2'], selectedIndex: 0, onValueChange: (int value) { print('selected: $value'); },),
-            SizedBox(height: 20),
-            RightSelectedTabs(listOfLables: ['label1', 'label2'], selectedIndex: 0, onValueChange: (int value) { print('selected: $value'); },),
-          ],
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              BigButton(text: 'Button', onClick: () { print('큰 버튼 클릭되었어요'); }),
+              SizedBox(height: 20),
+              MediumButton(text: 'Button', onClick: () { print('중간 버튼 클릭되었어요'); }),
+              SizedBox(height: 20),
+              SmallButton(text: 'Button', onClick: () { print('작은 버튼 클릭되었어요'); },),
+              SizedBox(height: 20),
+              DefaultInputField(label: 'Label', placeHolder: 'PlaceHolder', value: 'PlaceHolder', onValueChange: (String value) { print(value); }),
+              SizedBox(height: 20),
+              FocusedInputField(label: 'Label', placeHolder: 'PlaceHolder', value: 'PlaceHolder', onValueChange: (String value) { print(value); }),
+              SizedBox(height: 20),
+              FilledInputField(label: 'Label', placeHolder: 'PlaceHolder', value: 'PlaceHolder', onValueChange: (String value) { print(value); }),
+              SizedBox(height: 20),
+              LeftSelectedTabs(listOfLables: ['label1', 'label2'], selectedIndex: 0, onValueChange: (int value) { print('selected: $value'); },),
+              SizedBox(height: 20),
+              RightSelectedTabs(listOfLables: ['label1', 'label2'], selectedIndex: 0, onValueChange: (int value) { print('selected: $value'); },),
+            ],
+          ),
         ),
       ),
     );
