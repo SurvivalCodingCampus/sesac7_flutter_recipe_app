@@ -15,7 +15,7 @@ class BigButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 315.0,
+      width: double.infinity,
       height: 60.0,
       decoration: BoxDecoration(
         color: AppColors.primary100,
