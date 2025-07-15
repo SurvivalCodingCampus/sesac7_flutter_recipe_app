@@ -29,7 +29,7 @@ class TwoTabs extends StatelessWidget {
         child: Row(
           spacing: 15,
           children: [
-            for (int i = 0; i < labels.length; i++)
+            for (int i = 0; i < 2; i++)
               SizedBox(
                 width: 150,
                 height: 33,
