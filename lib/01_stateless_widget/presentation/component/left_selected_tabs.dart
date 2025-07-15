@@ -48,7 +48,9 @@ class LeftSelectedTabs extends StatelessWidget {
                   child: Text(
                     listOfLables[0],
                     textAlign: TextAlign.center,
-                    style: TextStyles.smallerTextBold,
+                    style: TextStyles.smallerTextBold.copyWith(
+                      color: AppColors.white
+                    ),
                   ),
                 ),
               ),

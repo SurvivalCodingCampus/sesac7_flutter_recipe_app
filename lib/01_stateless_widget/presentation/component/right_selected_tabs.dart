@@ -74,7 +74,9 @@ class RightSelectedTabs extends StatelessWidget {
                   child: Text(
                     listOfLables[1],
                     textAlign: TextAlign.center,
-                    style: TextStyles.smallerTextBold,
+                    style: TextStyles.smallerTextBold.copyWith(
+                      color: AppColors.white
+                    ),
                   ),
                 ),
               ),
