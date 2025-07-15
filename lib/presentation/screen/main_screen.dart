@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
 
-class MainScreen extends StatefulWidget {
+import '../component/button/small_button.dart';
+
+class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
-  @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SmallButton(
+              text: 'Button',
+              onClick: (String text) {
+                print(text);
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
