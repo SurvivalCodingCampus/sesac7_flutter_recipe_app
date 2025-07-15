@@ -18,64 +18,69 @@ class RightSelectedTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 375,
+      // width: 375,
       height: 58,
       padding: EdgeInsets.fromLTRB(30, 12, 30, 13),
+      margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
       decoration: BoxDecoration(
         color: AppColors.white,
       ),
       child: SizedBox(
-        width: 315,
+        // width: 315,
         height: 33,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            GestureDetector(
-              onTap: () {
-                onValueChange(0);
-              },
-              child: Container(
-                width: 150,
-                height: 33,
-                decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  onValueChange(0);
+                },
                 child: Container(
-                  width: 150,
-                  height: 17,
-                  padding: EdgeInsets.fromLTRB(9, 8, 9, 8),
-                  child: Text(
-                    listOfLables[0],
-                    textAlign: TextAlign.center,
-                    style: TextStyles.smallerTextBold.copyWith(
-                      color: AppColors.primary80,
+                  // width: 120,
+                  height: 33,
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Container(
+                    // width: 120,
+                    height: 17,
+                    padding: EdgeInsets.fromLTRB(9, 8, 9, 8),
+                    child: Text(
+                      listOfLables[0],
+                      textAlign: TextAlign.center,
+                      style: TextStyles.smallerTextBold.copyWith(
+                        color: AppColors.primary80,
+                      ),
                     ),
                   ),
                 ),
               ),
             ),
             SizedBox(width: 15),
-            GestureDetector(
-              onTap: () {
-                onValueChange(1);
-              },
-              child: Container(
-                width: 150,
-                height: 33,
-                decoration: BoxDecoration(
-                  color: AppColors.primary100,
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  onValueChange(1);
+                },
                 child: Container(
-                  width: 150,
-                  height: 17,
-                  padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
-                  child: Text(
-                    listOfLables[1],
-                    textAlign: TextAlign.center,
-                    style: TextStyles.smallerTextBold.copyWith(
-                      color: AppColors.white
+                  // width: 120,
+                  height: 33,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary100,
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Container(
+                    // width: 120,
+                    height: 17,
+                    padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                    child: Text(
+                      listOfLables[1],
+                      textAlign: TextAlign.center,
+                      style: TextStyles.smallerTextBold.copyWith(
+                        color: AppColors.white,
+                      ),
                     ),
                   ),
                 ),
