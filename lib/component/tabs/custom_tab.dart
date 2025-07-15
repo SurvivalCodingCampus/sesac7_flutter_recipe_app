@@ -20,13 +20,13 @@ class CustomTab extends StatelessWidget {
       decoration: BoxDecoration(color: AppColor.White),
       child: Row(
         children: tabData.map((data) {
-          int tabId = data['id'] as int;
-          bool isSelected = data['id'] == selectedTabId;
-          String labelText = data['name'] as String;
-          Color selectedTextColor = isSelected
+          final int tabId = data['id'] as int;
+          final bool isSelected = data['id'] == selectedTabId;
+          final String labelText = data['name'] as String;
+          final Color selectedTextColor = isSelected
               ? AppColor.White
               : AppColor.Primary100;
-          Color selectedTabColor = isSelected
+          final Color selectedTabColor = isSelected
               ? AppColor.Primary100
               : AppColor.White;
 
