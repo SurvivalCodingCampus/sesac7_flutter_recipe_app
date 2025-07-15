@@ -35,6 +35,8 @@ class MediumButton extends StatelessWidget {
                   style: TextStyles.normalTextBold.copyWith(
                     color: AppColors.white,
                   ),
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
             ),

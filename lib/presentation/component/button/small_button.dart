@@ -29,6 +29,8 @@ class SmallButton extends StatelessWidget {
             style: TextStyles.smallerTextBold.copyWith(
               color: AppColors.white,
             ),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ),

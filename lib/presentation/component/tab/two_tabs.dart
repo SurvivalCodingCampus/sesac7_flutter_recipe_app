@@ -54,6 +54,8 @@ class TwoTabs extends StatelessWidget {
                             ? AppColors.white
                             : AppColors.primary80,
                       ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ),

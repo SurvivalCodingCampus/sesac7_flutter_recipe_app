@@ -49,13 +49,13 @@ class MyApp extends StatelessWidget {
             InputField(
               label: 'Label',
               placeholder: 'placeholder',
-              value: 'Initial Value',
+              // value: 'Initial Value',
               onValueChange: (value) {
                 print(value);
               },
             ),
             BigButton(
-              text: 'Button',
+              text: 'ButtonButtonButtonButtonButtonButtonButton',
               onClick: () {
                 print('big button');
               },
