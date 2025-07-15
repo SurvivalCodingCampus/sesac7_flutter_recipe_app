@@ -79,19 +79,39 @@ class MyApp extends StatelessWidget {
                   padding: EdgeInsets.symmetric(vertical: 10),
                   child: Column(
                     children: [
-                      CustomTab(tabData: tab1, selectedTabId: 1),
+                      CustomTab(
+                        tabData: tab1,
+                        selectedTabId: 1,
+                        onTap: (id) => print('tab id : $id'),
+                      ),
                       // 선택이 됐다고 가정한 탭 id
                       SizedBox(height: 10),
-                      CustomTab(tabData: tab1, selectedTabId: 2),
+                      CustomTab(
+                        tabData: tab1,
+                        selectedTabId: 2,
+                        onTap: (id) => print('tab id : $id'),
+                      ),
                       // 선택이 됐다고 가정한 탭 id
                       SizedBox(height: 10),
-                      CustomTab(tabData: tab2, selectedTabId: 1),
+                      CustomTab(
+                        tabData: tab2,
+                        selectedTabId: 1,
+                        onTap: (id) => print('tab id : $id'),
+                      ),
                       // 선택이 됐다고 가정한 탭 id
                       SizedBox(height: 10),
-                      CustomTab(tabData: tab2, selectedTabId: 2),
+                      CustomTab(
+                        tabData: tab2,
+                        selectedTabId: 2,
+                        onTap: (id) => print('tab id : $id'),
+                      ),
                       // 선택이 됐다고 가정한 탭 id
                       SizedBox(height: 10),
-                      CustomTab(tabData: tab2, selectedTabId: 3),
+                      CustomTab(
+                        tabData: tab2,
+                        selectedTabId: 3,
+                        onTap: (id) => print('tab id : $id'),
+                      ),
                       // 선택이 됐다고 가정한 탭 id
                     ],
                   ),

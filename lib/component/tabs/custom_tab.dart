@@ -3,9 +3,15 @@ import 'package:flutter_recipe_app/ui/app_color.dart';
 
 class CustomTab extends StatelessWidget {
   final List<Map<String, Object>> tabData;
+  final void Function(int id) onTap;
   final selectedTabId; // 선택이 됐다고 가정한 탭 id
 
-  const CustomTab({super.key, required this.tabData, this.selectedTabId = 1});
+  const CustomTab({
+    super.key,
+    required this.tabData,
+    this.selectedTabId = 1,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -14,28 +20,36 @@ class CustomTab extends StatelessWidget {
       decoration: BoxDecoration(color: AppColor.White),
       child: Row(
         children: tabData.map((data) {
+          int tabId = data['id'] as int;
           bool isSelected = data['id'] == selectedTabId;
           String labelText = data['name'] as String;
-          Color selectedTextColor = isSelected ? AppColor.White : AppColor.Primary100;
-          Color selectedTabColor = isSelected ? AppColor.Primary100 : AppColor.White;
+          Color selectedTextColor = isSelected
+              ? AppColor.White
+              : AppColor.Primary100;
+          Color selectedTabColor = isSelected
+              ? AppColor.Primary100
+              : AppColor.White;
 
           return Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 4.0),
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                decoration: BoxDecoration(
-                  color: selectedTabColor,
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                ),
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(minWidth: 83, minHeight: 17),
-                  child: Center(
-                    child: Text(
-                      labelText,
-                      style: TextStyle(
-                        color: selectedTextColor,
-                        fontWeight: FontWeight.w600,
+            child: GestureDetector(
+              onTap: () => onTap(tabId),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: selectedTabColor,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                  ),
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(minWidth: 83, minHeight: 17),
+                    child: Center(
+                      child: Text(
+                        labelText,
+                        style: TextStyle(
+                          color: selectedTextColor,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
