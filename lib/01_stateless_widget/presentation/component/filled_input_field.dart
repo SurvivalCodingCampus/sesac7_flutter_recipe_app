@@ -21,9 +21,10 @@ class FilledInputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 315,
+    return Container(
+      // width: 315,
       height: 81,
+      margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
