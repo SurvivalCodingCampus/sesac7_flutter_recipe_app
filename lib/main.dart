@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
               },
             ),
             BigButton(
-              text: 'ButtonButtonButtonButtonButtonButtonButton',
+              text: 'Button',
               onClick: () {
                 print('big button');
               },

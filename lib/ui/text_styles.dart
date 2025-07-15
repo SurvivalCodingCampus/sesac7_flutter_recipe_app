@@ -6,103 +6,100 @@ abstract class TextStyles {
   static const FontWeight bold = FontWeight.bold;
   static const FontWeight normal = FontWeight.normal;
 
-  static final poppins = GoogleFonts.poppins();
-
-  static final TextStyle titleTextBold = poppins.copyWith(
+  static final TextStyle titleTextBold = _poppinsTextStyle(
     fontSize: 50,
-    height: 75 / 50,
+    lineHeight: 75,
     fontWeight: bold,
-    fontFamily: family,
   );
 
-  static final TextStyle headerTextBold = poppins.copyWith(
+  static final TextStyle headerTextBold = _poppinsTextStyle(
     fontSize: 30,
-    height: 45 / 30,
+    lineHeight: 45,
     fontWeight: bold,
-    fontFamily: family,
   );
 
-  static final TextStyle largeTextBold = poppins.copyWith(
+  static final TextStyle largeTextBold = _poppinsTextStyle(
     fontSize: 20,
-    height: 30 / 20,
+    lineHeight: 30,
     fontWeight: bold,
-    fontFamily: family,
   );
 
-  static final TextStyle mediumTextBold = poppins.copyWith(
+  static final TextStyle mediumTextBold = _poppinsTextStyle(
     fontSize: 18,
-    height: 27 / 18,
+    lineHeight: 27,
     fontWeight: bold,
-    fontFamily: family,
   );
 
-  static final TextStyle normalTextBold = poppins.copyWith(
+  static final TextStyle normalTextBold = _poppinsTextStyle(
     fontSize: 16,
-    height: 24 / 16,
+    lineHeight: 24,
     fontWeight: bold,
-    fontFamily: family,
   );
 
-  static final TextStyle smallTextBold = poppins.copyWith(
+  static final TextStyle smallTextBold = _poppinsTextStyle(
     fontSize: 14,
-    height: 21 / 14,
+    lineHeight: 21,
     fontWeight: bold,
-    fontFamily: family,
   );
 
-  static final TextStyle smallerTextBold = poppins.copyWith(
+  static final TextStyle smallerTextBold = _poppinsTextStyle(
     fontSize: 11,
-    height: 17 / 11,
+    lineHeight: 17,
     fontWeight: bold,
-    fontFamily: family,
   );
 
-  static final TextStyle titleTextRegular = poppins.copyWith(
+  static final TextStyle titleTextRegular = _poppinsTextStyle(
     fontSize: 50,
-    height: 75 / 50,
+    lineHeight: 75,
     fontWeight: normal,
-    fontFamily: family,
   );
 
-  static final TextStyle headerTextRegular = poppins.copyWith(
+  static final TextStyle headerTextRegular = _poppinsTextStyle(
     fontSize: 30,
-    height: 45 / 30,
+    lineHeight: 45,
     fontWeight: normal,
-    fontFamily: family,
   );
 
-  static final TextStyle largeTextRegular = poppins.copyWith(
+  static final TextStyle largeTextRegular = _poppinsTextStyle(
     fontSize: 20,
-    height: 30 / 20,
+    lineHeight: 30,
     fontWeight: normal,
-    fontFamily: family,
   );
 
-  static final TextStyle mediumTextRegular = poppins.copyWith(
+  static final TextStyle mediumTextRegular = _poppinsTextStyle(
     fontSize: 18,
-    height: 27 / 18,
+    lineHeight: 27,
     fontWeight: normal,
-    fontFamily: family,
   );
 
-  static final TextStyle normalTextRegular = poppins.copyWith(
+  static final TextStyle normalTextRegular = _poppinsTextStyle(
     fontSize: 16,
-    height: 24 / 16,
+    lineHeight: 24,
     fontWeight: normal,
-    fontFamily: family,
   );
 
-  static final TextStyle smallTextRegular = poppins.copyWith(
+  static final TextStyle smallTextRegular = _poppinsTextStyle(
     fontSize: 14,
-    height: 21 / 14,
+    lineHeight: 21,
     fontWeight: normal,
-    fontFamily: family,
   );
 
-  static final TextStyle smallerTextRegular = poppins.copyWith(
+  static final TextStyle smallerTextRegular = _poppinsTextStyle(
     fontSize: 11,
-    height: 27 / 11,
+    lineHeight: 17,
     fontWeight: normal,
-    fontFamily: family,
   );
+
+  static TextStyle _poppinsTextStyle({
+    required double fontSize,
+    required double lineHeight,
+    required FontWeight fontWeight,
+  }) {
+    return GoogleFonts.poppins().copyWith(
+      fontSize: fontSize,
+      height: lineHeight / fontSize,
+      fontWeight: fontWeight,
+      fontFamily: family,
+    );
+  }
 }
