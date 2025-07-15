@@ -60,9 +60,18 @@ class MyApp extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 10),
-                TextInput(labelText: 'label'),
+                TextInput(
+                  labelText: 'label',
+                  placeholderText: 'placeholder',
+                  onChanged: (value) => print(value),
+                ),
                 SizedBox(height: 5),
-                TextInput(labelText: 'label'),
+                TextInput(
+                  labelText: 'label',
+                  placeholderText: 'placeholder',
+                  isDisabled: true,
+                  onChanged: (value) => print(value),
+                ),
 
                 SizedBox(height: 20),
                 Container(
