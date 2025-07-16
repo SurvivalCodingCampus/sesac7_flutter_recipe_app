@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/presentation/component/button/big_button.dart';
-import 'package:flutter_recipe_app/presentation/component/button/medium_button.dart';
-import 'package:flutter_recipe_app/presentation/component/button/small_button.dart';
-import 'package:flutter_recipe_app/presentation/component/input/input_field.dart';
-import 'package:flutter_recipe_app/presentation/component/tab/three_tabs.dart';
-import 'package:flutter_recipe_app/presentation/component/tab/two_tabs.dart';
+import 'package:flutter_recipe_app/data/model/ingredient.dart';
+import 'package:flutter_recipe_app/presentation/component/list_item/ingredient_item.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,53 +21,13 @@ class MyApp extends StatelessWidget {
           spacing: 20,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ThreeTabs(
-              labels: [
-                'Tab 1',
-                'Tab 2',
-                'Tab 3',
-              ],
-              selectedIndex: 0,
-              onValueChange: (index) {
-                print('Selected tab index: $index');
-              },
-            ),
-            TwoTabs(
-              labels: [
-                'Tab 1',
-                'Tab 2',
-              ],
-              selectedIndex: 0,
-              onValueChange: (index) {
-                print('Selected tab index: $index');
-              },
-            ),
-            InputField(
-              label: 'Label',
-              placeholder: 'placeholder',
-              // value: 'Initial Value',
-              onValueChange: (value) {
-                print(value);
-              },
-            ),
-            BigButton(
-              text: 'Button',
-              onClick: () {
-                print('big button');
-              },
-            ),
-            MediumButton(
-              text: 'Button',
-              onClick: () {
-                print('medium button');
-              },
-            ),
-
-            SmallButton(
-              text: 'Button',
-              onClick: () {
-                print('small button');
-              },
+            IngredientItem(
+              ingredient: Ingredient(
+                name: 'Tomatos',
+                imageUrl:
+                    'https://cdn.pixabay.com/photo/2017/10/06/17/17/tomato-2823826_1280.jpg',
+                weight: 500,
+              ),
             ),
           ],
         ),
