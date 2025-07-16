@@ -18,7 +18,7 @@ class RatingDialogButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        onTap;
+        onTap.call();
       },
       child: Container(
         decoration: BoxDecoration(
