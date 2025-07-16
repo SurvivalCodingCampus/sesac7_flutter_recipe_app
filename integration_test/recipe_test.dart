@@ -45,7 +45,7 @@ void main() {
           home: Scaffold(
             body: Center(
               child: RecipeCard(
-                recipe: dummyRecipe, saveRecipeCallback: (int recipeId) {},),
+                recipe: dummyRecipe, saveRecipeCallback: (String recipeId) {},),
             ),
           ),
         ),
@@ -144,7 +144,7 @@ void main() {
           home: Scaffold(
             body: Center(
               child: RecipeCard(recipe: longTitleRecipe,
-                saveRecipeCallback: (int recipeId) {},),
+                saveRecipeCallback: (String recipeId) {},),
             ),
           ),
         ),
