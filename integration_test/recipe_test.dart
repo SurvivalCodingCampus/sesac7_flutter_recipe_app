@@ -10,7 +10,7 @@ import 'package:integration_test/integration_test.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  group('Recipe Card Widget Integration Tests', () {
+  group('레시피 카드 위젯 테스트', () {
     // 테스트에 사용할 더미 레시피 데이터
     final dummyRecipe = RecipeModel(
       category: 'Indian',
@@ -37,7 +37,7 @@ void main() {
       isSavedByUser: false,
     );
 
-    testWidgets('Card widget renders correctly with all elements', (
+    testWidgets('Card 위젯 렌더링 테스트', (
         WidgetTester tester) async {
       // 위젯을 렌더링합니다.
       await tester.pumpWidget(
@@ -113,7 +113,7 @@ void main() {
     });
 
     testWidgets(
-        'Long title is truncated with ellipsis', (WidgetTester tester) async {
+        '타이틀 길어질 경우 말줄임표 기능 테스트', (WidgetTester tester) async {
       final longTitleRecipe = RecipeModel(
         category: 'Indian',
         id: '1',
