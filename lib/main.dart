@@ -5,6 +5,7 @@ import 'package:flutter_recipe_app/data/model/recipe.dart';
 import 'package:flutter_recipe_app/presentation/component/button/big_button.dart';
 import 'package:flutter_recipe_app/presentation/component/button/filter_button.dart';
 import 'package:flutter_recipe_app/presentation/component/button/rating_button.dart';
+import 'package:flutter_recipe_app/presentation/component/dialog/rating_dialog.dart';
 import 'package:flutter_recipe_app/presentation/component/list_item/ingredient_item.dart';
 import 'package:flutter_recipe_app/presentation/component/list_item/recipe_card.dart';
 
@@ -70,6 +71,11 @@ class MyApp extends StatelessWidget {
               ],
             ),
             BigButton(text: 'text', onClick: () {}),
+            RatingDialog(
+              title: 'Rate recipe',
+              actionName: 'Send',
+              onChange: (rating) {},
+            ),
           ],
         ),
       ),
