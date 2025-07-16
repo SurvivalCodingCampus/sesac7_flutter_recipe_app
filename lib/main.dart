@@ -5,6 +5,7 @@ import 'package:flutter_recipe_app/component/button/small_button.dart';
 import 'package:flutter_recipe_app/component/input/text_input.dart';
 import 'package:flutter_recipe_app/component/tabs/custom_tab.dart';
 import 'package:flutter_recipe_app/component/widget/ingredient_item.dart';
+import 'package:flutter_recipe_app/component/widget/recipe_thumbnail.dart';
 import 'package:flutter_recipe_app/ui/app_color.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
       home: Scaffold(
         body: Center(
           child: SingleChildScrollView(
+            padding: EdgeInsets.symmetric(horizontal: 30),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -46,6 +48,8 @@ class MyApp extends StatelessWidget {
                     print('Big Button');
                   },
                 ),
+                SizedBox(height: 10),
+                RecipeThumbnail(),
                 SizedBox(height: 5),
                 IngredientItem()
               ],
