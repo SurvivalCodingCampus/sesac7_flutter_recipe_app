@@ -21,8 +21,8 @@ abstract class AppColor {
   static const Color Secondary100 = Color(0xFFFF9C00);
   static const Color Secondary80 = Color(0xFFFFA81A);
   static const Color Secondary60 = Color(0xFFFFBA4D);
-  static const Color Secondary40 = Color(0xFFFCE80);
-  static const Color Secondary20 = Color(0xFFFE1B3);
+  static const Color Secondary40 = Color(0xFFFFC881);
+  static const Color Secondary20 = Color(0xFFFFE4B5);
 
   // Rating
   static const Color Rating = Color(0xFFFFAD30);
