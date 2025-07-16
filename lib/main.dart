@@ -50,9 +50,12 @@ class MyApp extends StatelessWidget {
                 SizedBox(height: 10),
                 Row(
                   children: [
-                    RatingButton(),
+                    RatingButton(
+                      rating: 5,
+                      onTap: () => print('Rating Button'),
+                    ),
                     SizedBox(width: 5),
-                    FilterButton(onTap: () => print('Filter Button'),),
+                    FilterButton(onTap: () => print('Filter Button')),
                   ],
                 ),
               ],
