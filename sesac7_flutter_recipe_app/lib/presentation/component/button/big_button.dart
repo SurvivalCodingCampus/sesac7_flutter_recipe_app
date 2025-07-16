@@ -17,50 +17,47 @@ class BigButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AbsorbPointer(
-      absorbing: isTapDown,
-      child: GestureDetector(
-        onTapDown: (_) {
-          onTapStateChange(TapStateType.onTapDown);
-        },
-        onTapUp: (_) {
-          onTapStateChange(TapStateType.onTapUp);
-        },
-        onTapCancel: () {
-          onTapStateChange(TapStateType.onTapCancel);
-        },
-        child: Container(
-          width: double.infinity,
-          height: 60.0,
-          decoration: BoxDecoration(
-            color: isTapDown ? AppColors.gray4 : AppColors.primary100,
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 114.0,
-                  height: 24.0,
-                  child: Center(
-                    child: Text(
-                      title,
-                      style: TextStyles.bigButtonTitle,
-                      maxLines: 1,
-                    ),
+    return GestureDetector(
+      onTapDown: (_) {
+        onTapStateChange(TapStateType.onTapDown);
+      },
+      onTapUp: (_) {
+        onTapStateChange(TapStateType.onTapUp);
+      },
+      onTapCancel: () {
+        onTapStateChange(TapStateType.onTapCancel);
+      },
+      child: Container(
+        width: double.infinity,
+        height: 60.0,
+        decoration: BoxDecoration(
+          color: isTapDown ? AppColors.gray4 : AppColors.primary100,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                width: 114.0,
+                height: 24.0,
+                child: Center(
+                  child: Text(
+                    title,
+                    style: TextStyles.bigButtonTitle,
+                    maxLines: 1,
                   ),
                 ),
-                SizedBox(
-                  width: 11.0,
-                ),
-                SizedBox(
-                  width: 20.0,
-                  height: 20.0,
-                  child: Icon(Icons.arrow_forward),
-                ),
-              ],
-            ),
+              ),
+              SizedBox(
+                width: 11.0,
+              ),
+              SizedBox(
+                width: 20.0,
+                height: 20.0,
+                child: Icon(Icons.arrow_forward),
+              ),
+            ],
           ),
         ),
       ),
