@@ -5,6 +5,13 @@ import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class IngredientItem extends StatelessWidget {
+  static const double imageSpacing = 16;
+  static const double imageSize = 52;
+  static const EdgeInsets padding = EdgeInsets.symmetric(
+    horizontal: 15,
+    vertical: 12,
+  );
+
   final Ingredient ingredient;
 
   const IngredientItem({
@@ -15,10 +22,7 @@ class IngredientItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(
-        horizontal: 15,
-        vertical: 12,
-      ),
+      padding: padding,
       decoration: BoxDecoration(
         color: AppColors.gray4,
         borderRadius: BorderRadius.circular(ComponentConstant.borderRadius),
@@ -27,12 +31,12 @@ class IngredientItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
-            spacing: 16,
+            spacing: imageSpacing,
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                width: 52,
-                height: 52,
+                width: imageSize,
+                height: imageSize,
                 decoration: BoxDecoration(
                   color: AppColors.white,
                   borderRadius: BorderRadius.circular(
