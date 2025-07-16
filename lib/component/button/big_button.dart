@@ -1,20 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/ui/app_color.dart';
 
-class BigButton extends StatelessWidget {
+class BigButton extends StatefulWidget {
   final String buttonText;
-  final void Function() onTap;
+  final VoidCallback onTap;
 
-  const BigButton({super.key,required this.buttonText ,required this.onTap});
+  const BigButton({super.key, required this.buttonText, required this.onTap});
+
+  @override
+  State<BigButton> createState() => _BigButtonState();
+}
+
+class _BigButtonState extends State<BigButton> {
+  String _stateButtonText = '';
+  bool _isPressed = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _stateButtonText = widget.buttonText;
+  }
 
   @override
   Widget build(BuildContext context) {
+    Color buttonColor = _isPressed ? AppColor.Gray4 : AppColor.Primary100;
     return GestureDetector(
-      onTap: onTap,
+      onTapDown: (_) {
+        setState(() {
+          _isPressed = true;
+
+        });
+      },
+      onTapUp: (_) {
+        setState(() {
+          _isPressed = false;
+        });
+      },
+      onTapCancel: () {
+        setState(() {
+          _isPressed = false;
+        });
+      },
+      onTap: () => widget.onTap(),
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 85, vertical: 18),
         decoration: BoxDecoration(
-          color: AppColor.Primary100,
+          color: buttonColor,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
@@ -24,7 +55,7 @@ class BigButton extends StatelessWidget {
               constraints: BoxConstraints(minWidth: 114, minHeight: 24),
               child: Center(
                 child: Text(
-                  '$buttonText',
+                  '${_stateButtonText}',
                   style: TextStyle(
                     color: AppColor.White,
                     fontSize: 16,
