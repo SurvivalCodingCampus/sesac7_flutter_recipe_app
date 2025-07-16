@@ -48,7 +48,7 @@ class _SmallButtonState extends State<SmallButton> {
         width: SmallButton.width,
         height: SmallButton.height,
         decoration: BoxDecoration(
-          color: AppColors.primary100,
+          color: isEnabled ? AppColors.primary100 : AppColors.gray4,
           borderRadius: BorderRadius.circular(ComponentConstant.borderRadius),
         ),
         child: SizedBox(
