@@ -3,6 +3,20 @@ import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class InputField extends StatelessWidget {
+  static const double width = 315;
+  static const double height = 81;
+  static const double spacing = 5;
+  static const double labelHeight = 21;
+  static const double inputHeight = 55;
+  static const double cursorHeight = 17;
+  static const double cursorWidth = 1;
+  static const double borderWidth = 1.5;
+  static const EdgeInsetsGeometry inputPadding = EdgeInsets.only(
+    left: 20,
+    top: 19,
+    bottom: 19,
+  );
+
   final String label;
   final String placeholder;
   final String? value;
@@ -19,44 +33,40 @@ class InputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 315,
-      height: 81,
+      width: width,
+      height: height,
       child: Column(
-        spacing: 5,
+        spacing: spacing,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            height: 21,
+            height: labelHeight,
             child: Text(
               label,
               style: TextStyles.smallerTextRegular,
             ),
           ),
           SizedBox(
-            height: 55,
+            height: inputHeight,
             child: TextFormField(
               initialValue: value,
-              cursorHeight: 17,
+              cursorHeight: cursorHeight,
               cursorColor: AppColors.black,
-              cursorWidth: 1,
+              cursorWidth: cursorWidth,
               onChanged: onValueChange,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(
-                  left: 20,
-                  top: 19,
-                  bottom: 19,
-                ),
+                contentPadding: inputPadding,
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: AppColors.gray4,
-                    width: 1.5,
+                    width: borderWidth,
                   ),
                   borderRadius: BorderRadius.circular(10),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: AppColors.primary80,
-                    width: 1.5,
+                    width: borderWidth,
                   ),
                   borderRadius: BorderRadius.circular(10),
                 ),

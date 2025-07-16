@@ -3,6 +3,12 @@ import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class MediumButton extends StatelessWidget {
+  static const double width = 243;
+  static const double height = 54;
+  static const double spacing = 9;
+  static const double textWidth = 114;
+  static const int textMaxLines = 1;
+
   final String text;
   final VoidCallback onClick;
 
@@ -17,25 +23,25 @@ class MediumButton extends StatelessWidget {
     return GestureDetector(
       onTap: onClick,
       child: Container(
-        width: 243,
-        height: 54,
+        width: width,
+        height: height,
         decoration: BoxDecoration(
           color: AppColors.primary100,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(
-          spacing: 9,
+          spacing: spacing,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              width: 114,
+              width: textWidth,
               child: Center(
                 child: Text(
                   text,
                   style: TextStyles.normalTextBold.copyWith(
                     color: AppColors.white,
                   ),
-                  maxLines: 1,
+                  maxLines: textMaxLines,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
