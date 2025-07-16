@@ -1,16 +1,7 @@
-# flutter_recipe_app
+# recipe_app
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Directory 구조
+- compose_recipe
+    - Flutter 수업과제로 진행하는 Flutter RecipeApp을 Android Compose로 적용해보는 Android Project Directory
+- sesac7_flutter_recipe_app
+    - Fluttre 수업과제로 진행하는 Flutter RecipeApp 제작 Flutter Project Directory
