@@ -1,102 +1,33 @@
-
 import 'package:flutter/material.dart';
 
 abstract class TextStyles {
-  static final TextStyle titleTextBold = TextStyle(
-    fontSize: 50,
-    fontWeight: FontWeight.bold,
-    fontFamily: 'Poppins',
-    color: Colors.white,
-  );
+  static const String _fontFamily = 'Poppins';
+  static const Color _defaultColor = Colors.white;
 
-  static final TextStyle headerTextBold = TextStyle(
-    fontSize: 30,
-    fontWeight: FontWeight.bold,
-    fontFamily: 'Poppins',
-    color: Colors.white,
-  );
+  static TextStyle _baseStyle(double fontSize, FontWeight fontWeight) {
+    return TextStyle(
+      fontSize: fontSize,
+      fontWeight: fontWeight,
+      fontFamily: _fontFamily,
+      color: _defaultColor,
+    );
+  }
 
-  static final TextStyle largeTextBold = TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.bold,
-    fontFamily: 'Poppins',
-    color: Colors.white,
-  );
+  // Bold styles
+  static final TextStyle titleTextBold = _baseStyle(50, FontWeight.bold);
+  static final TextStyle headerTextBold = _baseStyle(30, FontWeight.bold);
+  static final TextStyle largeTextBold = _baseStyle(20, FontWeight.bold);
+  static final TextStyle mediumTextBold = _baseStyle(18, FontWeight.bold);
+  static final TextStyle normalTextBold = _baseStyle(16, FontWeight.bold);
+  static final TextStyle smallTextBold = _baseStyle(14, FontWeight.bold);
+  static final TextStyle smallerTextBold = _baseStyle(11, FontWeight.bold);
 
-  static final TextStyle mediumTextBold = TextStyle(
-    fontSize: 18,
-    fontWeight: FontWeight.bold,
-    fontFamily: 'Poppins',
-    color: Colors.white,
-  );
-
-  static final TextStyle normalTextBold = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.bold,
-    fontFamily: 'Poppins',
-    color: Colors.white,
-  );
-
-  static final TextStyle smallTextBold = TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.bold,
-    fontFamily: 'Poppins',
-    color: Colors.white,
-  );
-
-  static final TextStyle smallerTextBold = TextStyle(
-    fontSize: 11,
-    fontWeight: FontWeight.bold,
-    fontFamily: 'Poppins',
-    color: Colors.white,
-  );
-
-  static final TextStyle titleTextRegular = TextStyle(
-    fontSize: 50,
-    fontWeight: FontWeight.normal, // Regular는 FontWeight.normal에 해당합니다.
-    fontFamily: 'Poppins',
-    color: Colors.white,
-  );
-
-  static final TextStyle headerTextRegular = TextStyle(
-    fontSize: 30,
-    fontWeight: FontWeight.normal,
-    fontFamily: 'Poppins',
-    color: Colors.white,
-  );
-
-  static final TextStyle largeTextRegular = TextStyle(
-    fontSize: 20,
-    fontWeight: FontWeight.normal,
-    fontFamily: 'Poppins',
-    color: Colors.white,
-  );
-
-  static final TextStyle mediumTextRegular = TextStyle(
-    fontSize: 18,
-    fontWeight: FontWeight.normal,
-    fontFamily: 'Poppins',
-    color: Colors.white,
-  );
-
-  static final TextStyle normalTextRegular = TextStyle(
-    fontSize: 16,
-    fontWeight: FontWeight.normal,
-    fontFamily: 'Poppins',
-    color: Colors.white,
-  );
-
-  static final TextStyle smallTextRegular = TextStyle(
-    fontSize: 14,
-    fontWeight: FontWeight.normal, // Regular는 FontWeight.normal에 해당합니다.
-    fontFamily: 'Poppins',
-    color: Colors.white,
-  );
-
-  static final TextStyle smallerTextRegular = TextStyle(
-    fontSize: 11,
-    fontWeight: FontWeight.normal,
-    fontFamily: 'Poppins',
-    color: Colors.white,
-  );
+  // Regular styles
+  static final TextStyle titleTextRegular = _baseStyle(50, FontWeight.normal);
+  static final TextStyle headerTextRegular = _baseStyle(30, FontWeight.normal);
+  static final TextStyle largeTextRegular = _baseStyle(20, FontWeight.normal);
+  static final TextStyle mediumTextRegular = _baseStyle(18, FontWeight.normal);
+  static final TextStyle normalTextRegular = _baseStyle(16, FontWeight.normal);
+  static final TextStyle smallTextRegular = _baseStyle(14, FontWeight.normal);
+  static final TextStyle smallerTextRegular = _baseStyle(11, FontWeight.normal);
 }
