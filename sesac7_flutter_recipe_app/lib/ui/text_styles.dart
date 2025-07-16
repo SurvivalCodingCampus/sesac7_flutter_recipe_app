@@ -107,5 +107,25 @@ abstract class TextStyles {
     overflow: TextOverflow.ellipsis,
     height: 17 / 11,
   );
+
   /* RatingButton End */
+
+  /* RatingDialog Start */
+  static final TextStyle ratingDialogTitle = TextStyle(
+    color: AppColors.labelColor,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle ratingDialogButtonTitle = TextStyle(
+    color: AppColors.white,
+    fontSize: 8.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 12 / 8,
+  );
 }
