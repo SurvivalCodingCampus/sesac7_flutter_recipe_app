@@ -19,7 +19,7 @@ class MediumButton extends StatefulWidget {
 }
 
 class _MediumButtonState extends State<MediumButton> {
-  bool isPressed = true;
+  bool isPressed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,24 +27,24 @@ class _MediumButtonState extends State<MediumButton> {
       onTap: widget.onClick,
       onTapDown: (details){
         setState(() {
-          isPressed = false;
+          isPressed = true;
         });
       },
       onTapUp: (details){
         setState(() {
-          isPressed = true;
+          isPressed = false;
         });
       },
       onTapCancel: (){
         setState(() {
-          isPressed = true;
+          isPressed = false;
         });
       },
       child: Container(
         width: 243,
         height: 54,
         decoration: BoxDecoration(
-          color: isPressed ? AppColors.primary100 : AppColors.gray4,
+          color: isPressed ? AppColors.gray4 : AppColors.primary100,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Row(

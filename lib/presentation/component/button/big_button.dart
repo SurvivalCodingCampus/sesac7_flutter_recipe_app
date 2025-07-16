@@ -19,7 +19,7 @@ class BigButton extends StatefulWidget {
 }
 
 class _BigButtonState extends State<BigButton> {
-  bool isPressed = true;
+  bool isPressed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,24 +29,24 @@ class _BigButtonState extends State<BigButton> {
         onTap: widget.onClick,
         onTapDown: (details){
           setState(() {
-            isPressed = false;
+            isPressed = true;
           });
         },
         onTapUp: (details){
           setState(() {
-            isPressed = true;
+            isPressed = false;
           });
         },
         onTapCancel: (){
           setState(() {
-            isPressed = true;
+            isPressed = false;
           });
         },
         child: Container(
           width: double.infinity,
           height: 60,
           decoration: BoxDecoration(
-            color: isPressed ? AppColors.primary100 : AppColors.gray4,
+            color: isPressed ? AppColors.gray4 : AppColors.primary100,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Row(
