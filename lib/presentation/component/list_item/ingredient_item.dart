@@ -45,6 +45,15 @@ class IngredientItem extends StatelessWidget {
                 ),
                 child: Image.network(
                   ingredient.imageUrl,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) =>
+                      const Icon(Icons.image_not_supported),
+                  loadingBuilder: (context, child, loadingProgress) =>
+                      loadingProgress == null
+                      ? child
+                      : const Center(
+                          child: CircularProgressIndicator(),
+                        ),
                 ),
               ),
               Text(

@@ -35,10 +35,12 @@ class RecipeCard extends StatelessWidget {
         image: DecorationImage(
           image: Image.network(recipe.imageUrl).image,
           fit: BoxFit.cover,
+          onError: (exception, stackTrace) =>
+              const Icon(Icons.image_not_supported),
         ),
         borderRadius: BorderRadius.circular(ComponentConstant.borderRadius),
       ),
-      // clipBehavior: Clip.hardEdge,
+
       child: Stack(
         children: [
           Container(
