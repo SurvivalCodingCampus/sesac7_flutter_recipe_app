@@ -3,7 +3,7 @@ import 'package:flutter_recipe_app/presentation/component/constants/component_co
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
-class SmallButton extends StatelessWidget {
+class SmallButton extends StatefulWidget {
   static const double width = 174;
   static const double height = 37;
   static const double textWidth = 114;
@@ -19,25 +19,47 @@ class SmallButton extends StatelessWidget {
   });
 
   @override
+  State<SmallButton> createState() => _SmallButtonState();
+}
+
+class _SmallButtonState extends State<SmallButton> {
+  bool isEnabled = true;
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onClick,
+      onTap: widget.onClick,
+      onTapDown: (details) {
+        setState(() {
+          isEnabled = false;
+        });
+      },
+      onTapUp: (details) {
+        setState(() {
+          isEnabled = true;
+        });
+      },
+      onTapCancel: () {
+        setState(() {
+          isEnabled = true;
+        });
+      },
       child: Container(
-        width: width,
-        height: height,
+        width: SmallButton.width,
+        height: SmallButton.height,
         decoration: BoxDecoration(
           color: AppColors.primary100,
           borderRadius: BorderRadius.circular(ComponentConstant.borderRadius),
         ),
         child: SizedBox(
-          width: textWidth,
+          width: SmallButton.textWidth,
           child: Center(
             child: Text(
-              text,
+              widget.text,
               style: TextStyles.smallerTextBold.copyWith(
                 color: AppColors.white,
               ),
-              maxLines: textMaxLines,
+              maxLines: SmallButton.textMaxLines,
               overflow: TextOverflow.ellipsis,
             ),
           ),

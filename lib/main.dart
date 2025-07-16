@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/data/model/category.dart';
 import 'package:flutter_recipe_app/data/model/ingredient.dart';
 import 'package:flutter_recipe_app/data/model/recipe.dart';
+import 'package:flutter_recipe_app/presentation/component/button/big_button.dart';
 import 'package:flutter_recipe_app/presentation/component/button/filter_button.dart';
 import 'package:flutter_recipe_app/presentation/component/button/rating_button.dart';
 import 'package:flutter_recipe_app/presentation/component/list_item/ingredient_item.dart';
@@ -68,6 +69,7 @@ class MyApp extends StatelessWidget {
                 FilterButton(text: 'Text', isSelected: true, onTap: (value) {}),
               ],
             ),
+            BigButton(text: 'text', onClick: () {}),
           ],
         ),
       ),
