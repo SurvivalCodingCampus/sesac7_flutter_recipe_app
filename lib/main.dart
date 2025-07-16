@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/component/button/big_button.dart';
+import 'package:flutter_recipe_app/component/button/rating_button.dart';
 import 'package:flutter_recipe_app/component/widget/ingredient_item.dart';
 import 'package:flutter_recipe_app/component/widget/recipe_thumbnail.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'component/button/filter_button.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,17 +13,6 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  static const tab1 = [
-    {'id': 1, 'name': 'Label'},
-    {'id': 2, 'name': 'Label'},
-  ];
-
-  static const tab2 = [
-    {'id': 1, 'name': 'Label'},
-    {'id': 2, 'name': 'Label'},
-    {'id': 3, 'name': 'Label'},
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +44,14 @@ class MyApp extends StatelessWidget {
                   secondLine: 'baked',
                   rating: 4.0,
                   minutes: 20,
+                ),
+                SizedBox(height: 10),
+                Row(
+                  children: [
+                    RatingButton(),
+                    SizedBox(width: 5),
+                    FilterButton(),
+                  ],
                 ),
               ],
             ),
