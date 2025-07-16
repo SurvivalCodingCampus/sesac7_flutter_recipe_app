@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/button/big_button.dart';
+import 'package:flutter_recipe_app/presentation/component/constants/component_constant.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -12,7 +13,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: BigButton(text: 'Test', onClick: () {}),
+          body: BigButton(text: expectedText, onClick: () {}),
         ),
       ),
     );
@@ -20,8 +21,8 @@ void main() {
     final Size buttonSize = tester.getSize(buttonFinder);
 
     // then
-    expect(buttonSize.width, 315);
-    expect(buttonSize.height, 60);
+    expect(buttonSize.width, BigButton.width);
+    expect(buttonSize.height, BigButton.height);
   });
 
   testWidgets('should have correct colors', (tester) async {
@@ -39,7 +40,10 @@ void main() {
 
     // then
     expect(decoration.color, AppColors.primary100);
-    expect(decoration.borderRadius, BorderRadius.circular(10));
+    expect(
+      decoration.borderRadius,
+      BorderRadius.circular(ComponentConstant.borderRadius),
+    );
   });
 
   testWidgets('should display arrow forward icon', (tester) async {
