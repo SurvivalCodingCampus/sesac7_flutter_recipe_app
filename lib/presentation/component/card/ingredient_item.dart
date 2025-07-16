@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 
@@ -16,6 +16,7 @@ class IngredientItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         color: AppColors.gray4,
         borderRadius: BorderRadius.circular(12)),
@@ -27,7 +28,9 @@ class IngredientItem extends StatelessWidget {
           Container(
             width: 52,
             height: 52,
-            color: AppColors.white,
+            decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(12)),
             child: Image.network(
               ingredient.imageUrl,
             ),
