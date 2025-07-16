@@ -45,7 +45,7 @@ class Recipe with _$Recipe {
     required this.cookingTime,
     required this.creator,
     required this.createdAt,
-    required this.videoUrl,
+    this.videoUrl,
     required this.ingredients,
     required this.category,
     required this.tags,
