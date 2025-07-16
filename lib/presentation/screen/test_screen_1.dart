@@ -109,14 +109,14 @@ class TestScreen1 extends StatelessWidget {
                 MediumButton(
                   text: 'Button',
                   onClick: () {
-                    print('Big Button Clicked!');
+                    print('Medium Button Clicked!');
                   },
                 ),
                 SizedBox(height: 10),
                 SmallButton(
                   text: 'Button',
                   onClick: () {
-                    print('Big Button Clicked!');
+                    print('Small Button Clicked!');
                   },
                 ),
               ],
