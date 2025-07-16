@@ -3,12 +3,12 @@ import 'package:flutter_recipe_app/presentation/component/constants/component_co
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
-class FilterButton extends StatelessWidget {
+class RatingButton extends StatelessWidget {
   final String text;
   final bool isSelected;
   final void Function(bool oldValue) onTap;
 
-  const FilterButton({
+  const RatingButton({
     super.key,
     required this.text,
     required this.isSelected,
@@ -20,7 +20,8 @@ class FilterButton extends StatelessWidget {
     return GestureDetector(
       onTap: () => onTap(isSelected),
       child: Container(
-        height: 27,
+        width: 50,
+        height: 28,
         padding: const EdgeInsets.symmetric(
           horizontal: 10,
           vertical: 5,
@@ -33,11 +34,21 @@ class FilterButton extends StatelessWidget {
           ),
           borderRadius: BorderRadius.circular(ComponentConstant.borderRadius),
         ),
-        child: Text(
-          text,
-          style: TextStyles.smallerTextRegular.copyWith(
-            color: isSelected ? AppColors.white : AppColors.primary80,
-          ),
+        child: Row(
+          spacing: 5,
+          children: [
+            Text(
+              text,
+              style: TextStyles.smallerTextRegular.copyWith(
+                color: isSelected ? AppColors.white : AppColors.primary80,
+              ),
+            ),
+            Icon(
+              Icons.star,
+              size: 15,
+              color: isSelected ? AppColors.white : AppColors.primary80,
+            ),
+          ],
         ),
       ),
     );

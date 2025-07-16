@@ -3,6 +3,7 @@ import 'package:flutter_recipe_app/data/model/category.dart';
 import 'package:flutter_recipe_app/data/model/ingredient.dart';
 import 'package:flutter_recipe_app/data/model/recipe.dart';
 import 'package:flutter_recipe_app/presentation/component/button/filter_button.dart';
+import 'package:flutter_recipe_app/presentation/component/button/rating_button.dart';
 import 'package:flutter_recipe_app/presentation/component/list_item/ingredient_item.dart';
 import 'package:flutter_recipe_app/presentation/component/list_item/recipe_card.dart';
 
@@ -57,8 +58,14 @@ class MyApp extends StatelessWidget {
             Row(
               spacing: 10,
               children: [
-                FilterButton(text: '5', isSelected: false, onTap: (value) {}),
-                FilterButton(text: '5', isSelected: true, onTap: (value) {}),
+                RatingButton(text: '5', isSelected: false, onTap: (value) {}),
+                RatingButton(text: '5', isSelected: true, onTap: (value) {}),
+                FilterButton(
+                  text: 'Text',
+                  isSelected: false,
+                  onTap: (value) {},
+                ),
+                FilterButton(text: 'Text', isSelected: true, onTap: (value) {}),
               ],
             ),
           ],
