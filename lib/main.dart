@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 10),
-                IngredientItem(),
+                IngredientItem(onTap: () => print('ingredient Item')),
                 SizedBox(height: 10),
                 RecipeThumbnail(
                   userName: 'Chef John',
@@ -44,6 +44,8 @@ class MyApp extends StatelessWidget {
                   secondLine: 'baked',
                   rating: 4.0,
                   minutes: 20,
+                  onTapList: () => print('Recipe Thumbnail'),
+                  onTapBookmark: () => print('Bookmark'),
                 ),
                 SizedBox(height: 10),
                 Row(
