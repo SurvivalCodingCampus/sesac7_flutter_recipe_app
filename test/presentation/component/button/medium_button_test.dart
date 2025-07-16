@@ -6,6 +6,24 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   final expectedText = 'Button';
 
+  testWidgets('should have correct fixed dimensions', (tester) async {
+    // given
+    // when
+    await tester.pumpWidget(
+      MaterialApp(
+        home: Scaffold(
+          body: MediumButton(text: 'Test', onClick: () {}),
+        ),
+      ),
+    );
+    final buttonFinder = find.byType(MediumButton);
+    final Size buttonSize = tester.getSize(buttonFinder);
+
+    // then
+    expect(buttonSize.width, 243);
+    expect(buttonSize.height, 54);
+  });
+
   testWidgets('should have correct colors', (tester) async {
     // given
     await tester.pumpWidget(
