@@ -40,7 +40,6 @@ class RecipeCard extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(ComponentConstant.borderRadius),
       ),
-
       child: Stack(
         children: [
           Container(
@@ -94,6 +93,7 @@ class RecipeCard extends StatelessWidget {
             right: positionedPadding,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisSize: MainAxisSize.min,
               children: [
                 Flexible(
@@ -138,19 +138,20 @@ class RecipeCard extends StatelessWidget {
                         ),
                       ],
                     ),
-                    GestureDetector(
-                      onTap: onBookmarkTap,
-                      child: Container(
-                        width: bookmarkButtonSize,
-                        height: bookmarkButtonSize,
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.bookmark_outline,
-                          size: bookmarkIconSize,
-                          color: AppColors.primary80,
+                    Material(
+                      color: AppColors.white,
+                      shape: const CircleBorder(),
+                      child: InkWell(
+                        onTap: onBookmarkTap,
+                        customBorder: const CircleBorder(),
+                        child: SizedBox(
+                          width: bookmarkButtonSize,
+                          height: bookmarkButtonSize,
+                          child: Icon(
+                            Icons.bookmark_outline,
+                            size: bookmarkIconSize,
+                            color: AppColors.primary80,
+                          ),
                         ),
                       ),
                     ),
