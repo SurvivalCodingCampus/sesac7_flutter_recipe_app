@@ -92,25 +92,30 @@ class RecipeCard extends StatelessWidget {
             right: positionedPadding,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      recipe.name,
-                      style: TextStyles.smallTextBold.copyWith(
-                        color: AppColors.white,
+                Flexible(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        recipe.name,
+                        style: TextStyles.smallTextBold.copyWith(
+                          color: AppColors.white,
+                        ),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                    Text(
-                      'By ${recipe.creator}',
-                      style: TextStyles.smallerTextRegular.copyWith(
-                        fontSize: smallerTextSize,
-                        color: AppColors.gray4,
+                      Text(
+                        'By ${recipe.creator}',
+                        style: TextStyles.smallerTextRegular.copyWith(
+                          fontSize: smallerTextSize,
+                          color: AppColors.gray4,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 Row(
                   spacing: 10,
