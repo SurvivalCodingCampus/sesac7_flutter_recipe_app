@@ -5,6 +5,18 @@ import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class RecipeCard extends StatelessWidget {
+  static const double width = 315;
+  static const double height = 150;
+  static const double positionedPadding = 10;
+  static const double ratingBoxWidth = 37;
+  static const double ratingBoxHeight = 16;
+  static const double ratingBoxBorderRadius = 20;
+  static const double ratingIconSize = 7;
+  static const double smallerTextSize = 8;
+  static const double timerIconSize = 17;
+  static const double bookmarkButtonSize = 24;
+  static const double bookmarkIconSize = 13;
+
   final Recipe recipe;
   final VoidCallback onBookmarkTap;
 
@@ -17,8 +29,8 @@ class RecipeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 315,
-      height: 150,
+      width: width,
+      height: height,
       decoration: BoxDecoration(
         image: DecorationImage(
           image: Image.network(recipe.imageUrl).image,
@@ -45,15 +57,15 @@ class RecipeCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 10,
-            right: 10,
+            top: positionedPadding,
+            right: positionedPadding,
             child: Container(
-              width: 37,
-              height: 16,
+              width: ratingBoxWidth,
+              height: ratingBoxHeight,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: AppColors.secondary20,
-                borderRadius: BorderRadius.circular(20),
+                borderRadius: BorderRadius.circular(ratingBoxBorderRadius),
               ),
               child: Row(
                 spacing: 3.25,
@@ -62,20 +74,22 @@ class RecipeCard extends StatelessWidget {
                   Icon(
                     Icons.star,
                     color: AppColors.rating,
-                    size: 7,
+                    size: ratingIconSize,
                   ),
                   Text(
                     recipe.rating.toStringAsFixed(1),
-                    style: TextStyles.smallerTextRegular.copyWith(fontSize: 8),
+                    style: TextStyles.smallerTextRegular.copyWith(
+                      fontSize: smallerTextSize,
+                    ),
                   ),
                 ],
               ),
             ),
           ),
           Positioned(
-            bottom: 10,
-            left: 10,
-            right: 10,
+            bottom: positionedPadding,
+            left: positionedPadding,
+            right: positionedPadding,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -92,7 +106,7 @@ class RecipeCard extends StatelessWidget {
                     Text(
                       'By ${recipe.creator}',
                       style: TextStyles.smallerTextRegular.copyWith(
-                        fontSize: 8,
+                        fontSize: smallerTextSize,
                         color: AppColors.gray4,
                       ),
                     ),
@@ -106,7 +120,7 @@ class RecipeCard extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.timer_outlined,
-                          size: 17,
+                          size: timerIconSize,
                           color: AppColors.gray4,
                         ),
                         Text(
@@ -120,15 +134,15 @@ class RecipeCard extends StatelessWidget {
                     GestureDetector(
                       onTap: onBookmarkTap,
                       child: Container(
-                        width: 24,
-                        height: 24,
+                        width: bookmarkButtonSize,
+                        height: bookmarkButtonSize,
                         decoration: BoxDecoration(
                           color: AppColors.white,
                           shape: BoxShape.circle,
                         ),
                         child: Icon(
                           Icons.bookmark_outline,
-                          size: 13,
+                          size: bookmarkIconSize,
                           color: AppColors.primary80,
                         ),
                       ),
