@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/data/model/category.dart';
 import 'package:flutter_recipe_app/data/model/ingredient.dart';
+import 'package:flutter_recipe_app/data/model/recipe.dart';
 import 'package:flutter_recipe_app/presentation/component/list_item/ingredient_item.dart';
+import 'package:flutter_recipe_app/presentation/component/list_item/recipe_card.dart';
 
 void main() {
   runApp(const MyApp());
@@ -28,6 +31,27 @@ class MyApp extends StatelessWidget {
                     'https://cdn.pixabay.com/photo/2017/10/06/17/17/tomato-2823826_1280.jpg',
                 weight: 500,
               ),
+            ),
+            RecipeCard(
+              recipe: Recipe(
+                id: '1',
+                name: 'Traditional spare ribs baked',
+                imageUrl:
+                    'https://cdn.pixabay.com/photo/2017/11/10/15/04/steak-2936531_1280.jpg',
+                imageWithBackgroundUrl: 'https://example.com/spaghetti_bg.jpg',
+                rating: 4.0,
+                cookingTime: Duration(minutes: 20),
+                creator: 'Chef John',
+                createdAt: DateTime.now(),
+                videoUrl: 'https://example.com/spaghetti_video.mp4',
+                ingredients: [],
+                category: Category.breakFast,
+                tags: ['Italian', 'Dinner'],
+                reviews: [],
+                servings: 2,
+                steps: [],
+              ),
+              onBookmarkTap: () {},
             ),
           ],
         ),
