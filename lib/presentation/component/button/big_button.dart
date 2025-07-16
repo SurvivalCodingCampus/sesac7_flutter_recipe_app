@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/presentation/component/constants/component_constant.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
@@ -27,7 +28,7 @@ class BigButton extends StatelessWidget {
         height: height,
         decoration: BoxDecoration(
           color: AppColors.primary100,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(ComponentConstant.borderRadius),
         ),
         child: Row(
           spacing: spacing,
@@ -49,7 +50,7 @@ class BigButton extends StatelessWidget {
             Icon(
               Icons.arrow_forward,
               color: AppColors.white,
-              size: 20,
+              size: ComponentConstant.iconSize,
             ),
           ],
         ),

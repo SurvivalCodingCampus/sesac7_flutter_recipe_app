@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/presentation/component/constants/component_constant.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
@@ -22,11 +23,11 @@ class SmallButton extends StatelessWidget {
     return GestureDetector(
       onTap: onClick,
       child: Container(
-        width: 174,
-        height: 37,
+        width: width,
+        height: height,
         decoration: BoxDecoration(
           color: AppColors.primary100,
-          borderRadius: BorderRadius.circular(10),
+          borderRadius: BorderRadius.circular(ComponentConstant.borderRadius),
         ),
         child: SizedBox(
           width: textWidth,

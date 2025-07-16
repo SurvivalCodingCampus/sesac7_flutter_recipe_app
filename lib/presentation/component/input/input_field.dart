@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/presentation/component/constants/component_constant.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
@@ -61,14 +62,18 @@ class InputField extends StatelessWidget {
                     color: AppColors.gray4,
                     width: borderWidth,
                   ),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(
+                    ComponentConstant.borderRadius,
+                  ),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: AppColors.primary80,
                     width: borderWidth,
                   ),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(
+                    ComponentConstant.borderRadius,
+                  ),
                 ),
                 hintText: placeholder,
                 hintStyle: TextStyles.smallerTextRegular.copyWith(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/presentation/component/constants/component_constant.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
@@ -55,7 +56,9 @@ class TwoTabs extends StatelessWidget {
                       color: selectedIndex == i
                           ? AppColors.primary100
                           : Colors.transparent,
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(
+                        ComponentConstant.borderRadius,
+                      ),
                     ),
                     child: SizedBox(
                       width: textWidth,
