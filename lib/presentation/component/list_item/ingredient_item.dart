@@ -54,7 +54,7 @@ class IngredientItem extends StatelessWidget {
             ],
           ),
           Text(
-            '${ingredient.weight}g',
+            '${ingredient.weight.toInt()}g',
             style: TextStyles.smallTextRegular.copyWith(
               color: AppColors.gray3,
             ),
