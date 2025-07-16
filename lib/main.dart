@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
                 createdAt: DateTime.now(),
                 videoUrl: 'https://example.com/spaghetti_video.mp4',
                 ingredients: [],
-                category: Category.breakFast,
+                category: Category.dinner,
                 tags: ['Italian', 'Dinner'],
                 reviews: [],
                 servings: 2,

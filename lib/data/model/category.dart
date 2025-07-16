@@ -5,7 +5,7 @@ enum Category {
   chinese,
   localDish,
   fruit,
-  breakFast,
+  breakfast,
   spanish,
   lunch,
 }
