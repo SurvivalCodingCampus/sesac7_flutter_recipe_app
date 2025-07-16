@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/data/model/category.dart';
 import 'package:flutter_recipe_app/data/model/ingredient.dart';
 import 'package:flutter_recipe_app/data/model/recipe.dart';
+import 'package:flutter_recipe_app/presentation/component/button/filter_button.dart';
 import 'package:flutter_recipe_app/presentation/component/list_item/ingredient_item.dart';
 import 'package:flutter_recipe_app/presentation/component/list_item/recipe_card.dart';
 
@@ -52,6 +53,13 @@ class MyApp extends StatelessWidget {
                 steps: [],
               ),
               onBookmarkTap: () {},
+            ),
+            Row(
+              spacing: 10,
+              children: [
+                FilterButton(text: '5', isSelected: false, onTap: (value) {}),
+                FilterButton(text: '5', isSelected: true, onTap: (value) {}),
+              ],
             ),
           ],
         ),
