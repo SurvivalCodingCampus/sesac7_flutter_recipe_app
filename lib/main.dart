@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
                   children: [
                     RatingButton(),
                     SizedBox(width: 5),
-                    FilterButton(),
+                    FilterButton(onTap: () => print('Filter Button'),),
                   ],
                 ),
               ],
