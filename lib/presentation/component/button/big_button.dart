@@ -4,7 +4,6 @@ import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class BigButton extends StatelessWidget {
-  static const double width = 315;
   static const double height = 60;
   static const double spacing = 11;
   static const double textWidth = 114;
@@ -24,7 +23,6 @@ class BigButton extends StatelessWidget {
     return GestureDetector(
       onTap: onClick,
       child: Container(
-        width: width,
         height: height,
         decoration: BoxDecoration(
           color: AppColors.primary100,

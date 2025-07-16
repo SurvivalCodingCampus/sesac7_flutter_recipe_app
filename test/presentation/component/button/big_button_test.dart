@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   final expectedText = 'Button';
 
-  testWidgets('should have correct fixed dimensions', (tester) async {
+  testWidgets('should have correct dimensions', (tester) async {
     // given
     // when
     await tester.pumpWidget(
@@ -21,7 +21,6 @@ void main() {
     final Size buttonSize = tester.getSize(buttonFinder);
 
     // then
-    expect(buttonSize.width, BigButton.width);
     expect(buttonSize.height, BigButton.height);
   });
 

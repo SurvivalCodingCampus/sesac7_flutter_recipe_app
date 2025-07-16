@@ -4,7 +4,6 @@ import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class InputField extends StatelessWidget {
-  static const double width = 315;
   static const double height = 81;
   static const double spacing = 5;
   static const double labelHeight = 21;
@@ -34,7 +33,6 @@ class InputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: width,
       height: height,
       child: Column(
         spacing: spacing,
