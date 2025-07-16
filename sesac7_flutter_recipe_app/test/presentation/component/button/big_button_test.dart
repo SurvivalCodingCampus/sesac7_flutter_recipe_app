@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/core/enum/tap_state_type.dart';
 import 'package:flutter_recipe_app/presentation/component/button/big_button.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -8,7 +9,11 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: BigButton(title: bigBtnTitle),
+          body: BigButton(
+            title: bigBtnTitle,
+            isTapDown: false,
+            onTapStateChange: (tapState) {},
+          ),
         ),
       ),
     );
@@ -19,7 +24,7 @@ void main() {
   });
 
   testWidgets('BigButton onClick Test', (tester) async {
-    bool isClicked = false;
+    TapStateType? tapStateType;
     final String bigBtnTitle = '빅버튼';
     final String bigBtnKey = 'BigBtnKey';
     await tester.pumpWidget(
@@ -28,8 +33,9 @@ void main() {
           body: BigButton(
             key: Key(bigBtnKey),
             title: bigBtnTitle,
-            onClick: () {
-              isClicked = true;
+            isTapDown: false,
+            onTapStateChange: (tapState) {
+              tapStateType = tapState;
             },
           ),
         ),
@@ -38,6 +44,6 @@ void main() {
     await tester.tap(find.byKey(Key(bigBtnKey)));
     await tester.pump();
 
-    expect(isClicked, isTrue);
+    expect(tapStateType, equals(TapStateType.onTapUp));
   });
 }

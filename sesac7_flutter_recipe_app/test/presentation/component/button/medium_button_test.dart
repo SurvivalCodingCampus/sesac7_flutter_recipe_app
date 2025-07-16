@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/core/enum/tap_state_type.dart';
 import 'package:flutter_recipe_app/presentation/component/button/medium_button.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -9,7 +10,11 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: MediumButton(title: mediumBtnTitle),
+          body: MediumButton(
+            title: mediumBtnTitle,
+            isTapDown: false,
+            onTapStateChange: (tapState) {},
+          ),
         ),
       ),
     );
@@ -20,7 +25,7 @@ void main() {
   });
 
   testWidgets('MediumButton onClick Test', (tester) async {
-    bool isClicked = false;
+    TapStateType? tapStateType;
     final String mediumBtnKey = 'MediumBtnKey';
     await tester.pumpWidget(
       MaterialApp(
@@ -28,8 +33,9 @@ void main() {
           body: MediumButton(
             key: Key(mediumBtnKey),
             title: mediumBtnKey,
-            onClick: () {
-              isClicked = true;
+            isTapDown: false,
+            onTapStateChange: (tapState) {
+              tapStateType = tapState;
             },
           ),
         ),
@@ -38,6 +44,6 @@ void main() {
     await tester.tap(find.byKey(Key(mediumBtnKey)));
     await tester.pump();
 
-    expect(isClicked, isTrue);
+    expect(tapStateType, equals(TapStateType.onTapUp));
   });
 }
