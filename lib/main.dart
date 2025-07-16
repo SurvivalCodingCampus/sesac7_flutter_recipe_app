@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/screen/ingredient_screen.dart';
+import 'package:flutter_recipe_app/presentation/screen/recipe_card_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme(),
       ),
 
-      home: const IngredientScreen(),
+      home: const RecipeCardScreen(),
     );
   }
 }

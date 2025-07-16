@@ -46,3 +46,6 @@ app.*.map.json
 
 *.g.dart
 *.freezed.dart
+
+ios/Pods/
+ios/Flutter/Generated.xcconfig
