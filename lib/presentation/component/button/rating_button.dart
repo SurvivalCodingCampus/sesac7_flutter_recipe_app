@@ -53,7 +53,7 @@ class RatingButton extends StatelessWidget {
 // RatingButton을 호출하는 부모 위젯 (StatefulWidget)
 // ===========================================================================
 class RatingButtonScreen extends StatefulWidget {
-  const RatingButtonScreen({Key? key}) : super(key: key);
+  const RatingButtonScreen({super.key});
 
   @override
   State<RatingButtonScreen> createState() => _RatingButtonScreenState();

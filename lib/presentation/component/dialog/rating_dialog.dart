@@ -90,9 +90,7 @@ class _RatingDialogState extends State<RatingDialog> {
         //Icons.star_rounded, // 둥근 별 아이콘
         starRating <= _selectedRating ? Icons.star_rounded : Icons.star_border_rounded, // 선택된 별은 빨간색, 선택되지 않은 별은 회색
         size: 20,
-        color: starRating <= _selectedRating
-            ? AppColors.rating // 선택된 별은 주황색
-            : AppColors.rating, // 선택되지 않은 별은 회색 투명
+        color: AppColors.rating
       ),
     );
   }
