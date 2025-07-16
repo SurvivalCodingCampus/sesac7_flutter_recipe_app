@@ -63,7 +63,7 @@ class IngredientItem extends StatelessWidget {
             ],
           ),
           Text(
-            '${ingredient.weight.toInt()}g',
+            '${ingredient.weight.toStringAsFixed(ingredient.weight == ingredient.weight.roundToDouble() ? 0 : 1)}g',
             style: TextStyles.smallTextRegular.copyWith(
               color: AppColors.gray3,
             ),
