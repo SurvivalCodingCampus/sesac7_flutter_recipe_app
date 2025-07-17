@@ -22,13 +22,13 @@ class SavedRecipesViewModel with ChangeNotifier {
     switch (result) {
       case Success<List<Recipe>, NetworkError>():
         _savedRecipes = result.data;
-        notifyListeners();
-        return;
+        _errorMessage = null;
+        break;
       case Error<List<Recipe>, NetworkError>():
         _errorMessage =
             'Failed to fetch saved recipes with error: ${result.error}';
-        notifyListeners();
-        return;
+        break;
     }
+    notifyListeners();
   }
 }
