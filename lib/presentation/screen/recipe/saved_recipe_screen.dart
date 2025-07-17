@@ -46,30 +46,27 @@ class SavedRecipeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Column(
-          children: [
-            const SizedBox(height: 10),
-            ...viewModel.recipes.map((recipe) {
-              int minutes = 0;
-              try {
-                minutes = int.parse(recipe.time.split(' ')[0]);
-              } catch (e) {
-                minutes = 0;
-              }
+          children: viewModel.recipes.map((recipe) {
+            int minutes = 0;
+            try {
+              minutes = int.parse(recipe.time.split(' ')[0]);
+            } catch (e) {
+              minutes = 0;
+            }
 
-              return Padding(
-                padding: const EdgeInsets.only(bottom: 15.0),
-                child: RecipeThumbnail(
-                  userName: recipe.chef,
-                  firstLine: recipe.name,
-                  rating: recipe.rating,
-                  minutes: minutes,
-                  imageUrl: recipe.image,
-                  onTapList: () => print('레시피 ${recipe.name} 클릭'),
-                  onTapBookmark: () => print('북마크 ${recipe.name}'),
-                ),
-              );
-            }).toList(),
-          ],
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 15.0),
+              child: RecipeThumbnail(
+                userName: recipe.chef,
+                firstLine: recipe.name,
+                rating: recipe.rating,
+                minutes: minutes,
+                imageUrl: recipe.image,
+                onTapList: () => print('레시피 ${recipe.name} 클릭'),
+                onTapBookmark: () => print('북마크 ${recipe.name}'),
+              ),
+            );
+          }).toList(),
         ),
       ),
     );
