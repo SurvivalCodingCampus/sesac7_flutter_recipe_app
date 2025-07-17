@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/component/small_button.dart';
-
-import '../../../data/model/person.dart';
-import '../../component/greeting.dart';
+import 'package:flutter_recipe_app/01_stateless/data/model/recipe.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/component/recipe_card.dart';
+import '../../../data/model/ingredient.dart';
+import '../../component/ingredient_item.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -12,23 +12,24 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SmallButton(
-              text: 'button',
-              onClick: () {},
+            IngredientItem(
+              ingredient: Ingredient(
+                name: 'Tomatos',
+                image:
+                    'https://cdn.pixabay.com/photo/2017/10/06/17/17/tomato-2823826_1280.jpg',
+              ),
+              amount: '500g',
             ),
-            ElevatedButton(
-              onPressed: () {},
-              child: Text('button'),
-            ),
-            Greeting(
-              name: '홍길동의 화면',
-              person: const Person(name: '홍길동', age: 20),
-              onTap: (Person person) {
-                print(person);
-              },
+            RecipeCard(
+              recipe: Recipe(
+                name: 'galbijjim',
+                author: 'sumin',
+                image: 'https://placehold.co/600x400.jpg',
+                duration: 60,
+                rating: 5.0,
+              ),
+              onTap: () => print("hello")
             ),
           ],
         ),
