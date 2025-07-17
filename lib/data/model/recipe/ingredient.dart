@@ -4,6 +4,8 @@ part "ingredient.freezed.dart";
 
 @freezed
 class Ingredient with _$Ingredient {
+  static const String invalidId = 'invalid_id';
+
   @override
   final String id;
   @override
