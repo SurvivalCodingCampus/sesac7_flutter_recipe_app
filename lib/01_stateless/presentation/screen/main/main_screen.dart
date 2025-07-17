@@ -57,15 +57,18 @@ class MainScreen extends StatelessWidget {
                 showDialog(
                   context: context,
                   builder: (_) {
-                    return RatingDialog(
-                      score: viewModel.score,
-                      title: '제목',
-                      actionName: '별점',
-                      onChange: (int rating) {
-                        print(rating);
-                        viewModel.setScore(rating);
-                        Navigator.pop(context);
-                      },
+                    return Dialog(
+                      insetPadding: EdgeInsets.zero,
+                      child: RatingDialog(
+                        score: viewModel.score,
+                        title: '제목',
+                        actionName: '별점',
+                        onChange: (int rating) {
+                          print(rating);
+                          viewModel.setScore(rating);
+                          Navigator.pop(context);
+                        },
+                      ),
                     );
                   },
                 );
