@@ -18,8 +18,9 @@ class BigButton extends StatefulWidget {
 }
 
 class _BigButtonState extends State<BigButton> {
-
-  bool isDisabled = false;
+  // 이미 _으로 프라이빗하게 되어있어서 외부에서 접근은 불가
+  // 필드에 프라이빗한 필드를 사용해서 의도와 가독성을 높임
+  bool isPressed = false;
 
   @override
   Widget build(BuildContext context) {
@@ -27,23 +28,28 @@ class _BigButtonState extends State<BigButton> {
       child: GestureDetector(
         onTapDown: (_) {
           setState(() {
-            isDisabled = true;
+            isPressed = true;
           });
         },
         onTapUp: (_) {
           setState(() {
-            isDisabled = false;
+            isPressed = false;
           });
         },
         onTap: () {
-          if (!isDisabled) {
-            widget.onTap();
+          if (!isPressed) {
+            isPressed = false;
           }
+        },
+        onTapCancel: (){
+          setState(() {
+            isPressed = false;
+          });
         },
         child: Container(
           height: 60,
           decoration: BoxDecoration(
-            color: isDisabled ? AppColors.gray4 : AppColors.primary100,
+            color: isPressed ? AppColors.gray4 : AppColors.primary100,
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Row(

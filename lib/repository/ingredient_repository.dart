@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 class IngredientRepository {
   Future<List<Ingredient>> fetchIngredients() async {
     final response = await http.get(
-        Uri.parse('https://raw.githubusercontent.com/junsuk5/mock_json/refs/heads/main/recipe/ingredients.json')
+        Uri.parse('https://raw.githubusercontent.com/junsuk5/mock_json/refs/heads/main/saved_recipes/ingredients.json')
     );
 
     if (response.statusCode == 200) {

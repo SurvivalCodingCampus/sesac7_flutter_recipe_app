@@ -38,6 +38,7 @@ dependencies:
   json_annotation: ^4.9.0
   google_fonts: ^6.2.1
   http: ^1.4.0
+  shimmer: ^3.0.0
 
 dev_dependencies:
   integration_test:

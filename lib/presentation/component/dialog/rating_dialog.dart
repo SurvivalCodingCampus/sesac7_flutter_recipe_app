@@ -60,9 +60,13 @@ class _RatingDialogState extends State<RatingDialog> {
           ),
           const SizedBox(height: 5),
           TextButton(
-            onPressed: selectedRating == 0 ? null : () {
+            onPressed: () {
+              if(selectedRating == 0 ) {
+                return;
+              }
               widget.onChange(selectedRating);
-              Navigator.pop(context);
+              // Navigator.pop(context);
+              // 컴포넌트가 스스로 뭔가 하려고 하는것은 하면 안됌!
             },
             style: TextButton.styleFrom(
               foregroundColor: AppColors.white,

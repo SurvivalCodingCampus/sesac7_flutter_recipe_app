@@ -15,15 +15,16 @@ class RatingDialogScreen extends StatelessWidget {
               context: context,
               builder: (context) {
                 return RatingDialog(
-                  title: 'Rate recipe',
+                  title: 'Rate saved_recipes',
                   actionName: 'Send',
                   onChange: (int rating) {
                     print('Rating: $rating');
+                    Navigator.pop(context); // 여기서 처리해야함
                   });
               },
             );
-          },
-          child: const Text('Show Rating Dialog : '),
+          }, // 화면에 점수 보여주려면?
+          child: const Text('Show Rating Dialog'),
         ),
       ),
     );
