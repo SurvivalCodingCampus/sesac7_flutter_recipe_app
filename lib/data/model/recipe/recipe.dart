@@ -1,3 +1,4 @@
+import 'package:flutter_recipe_app/data/model/recipe/ingredient.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part "recipe.freezed.dart";
@@ -19,7 +20,7 @@ class Recipe with _$Recipe {
   @override
   final double rating;
   @override
-  final List<String> ingredients;
+  final List<Ingredient> ingredients;
 
   const Recipe({
     required this.id,
