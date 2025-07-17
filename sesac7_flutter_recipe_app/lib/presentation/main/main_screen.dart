@@ -41,9 +41,9 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   bool _ratingSelected = false;
   bool _filterSelected = false;
-  bool _isBigButtonTabDown = false;
-  bool _isMediumButtonTabDown = false;
-  bool _isSmallButtonTabDown = false;
+  bool _isBigButtonTapDown = false;
+  bool _isMediumButtonTapDown = false;
+  bool _isSmallButtonTapDown = false;
   int _ratingDialogRating = 0;
 
   void _onTabChange(int selectedIndex) {
@@ -98,51 +98,48 @@ class _MainScreenState extends State<MainScreen> {
             ),
             SmallButton(
               title: 'Button',
-              isTapDown: _isSmallButtonTabDown,
+              isTapDown: _isSmallButtonTapDown,
               onTapStateChange: (tapState) {
                 setState(() {
                   switch (tapState) {
                     case TapStateType.onTapDown:
-                      _isSmallButtonTabDown = true;
+                      _isSmallButtonTapDown = true;
                       break;
                     case TapStateType.onTapUp:
-                      _isSmallButtonTabDown = false;
                     case TapStateType.onTapCancel:
-                      _isSmallButtonTabDown = false;
+                      _isSmallButtonTapDown = false;
                   }
                 });
               },
             ),
             MediumButton(
               title: 'Button',
-              isTapDown: _isMediumButtonTabDown,
+              isTapDown: _isMediumButtonTapDown,
               onTapStateChange: (tapState) {
                 setState(() {
                   switch (tapState) {
                     case TapStateType.onTapDown:
-                      _isMediumButtonTabDown = true;
+                      _isMediumButtonTapDown = true;
                       break;
                     case TapStateType.onTapUp:
-                      _isMediumButtonTabDown = false;
                     case TapStateType.onTapCancel:
-                      _isMediumButtonTabDown = false;
+                      _isMediumButtonTapDown = false;
                   }
                 });
               },
             ),
             BigButton(
               title: 'Button',
-              isTapDown: _isBigButtonTabDown,
+              isTapDown: _isBigButtonTapDown,
               onTapStateChange: (tapState) {
                 setState(() {
                   switch (tapState) {
                     case TapStateType.onTapDown:
-                      _isBigButtonTabDown = true;
+                      _isBigButtonTapDown = true;
                       break;
                     case TapStateType.onTapUp:
-                      _isBigButtonTabDown = false;
                     case TapStateType.onTapCancel:
-                      _isBigButtonTabDown = false;
+                      _isBigButtonTapDown = false;
                   }
                 });
               },
@@ -151,9 +148,7 @@ class _MainScreenState extends State<MainScreen> {
               label: 'Label',
               placeHolder: 'PlaceHolder',
               value: 'value',
-              onValueChange: (value) {
-                print(value);
-              },
+              onValueChange: (value) {},
             ),
             Tabs(
               labels: labels,
