@@ -1,4 +1,4 @@
-import 'ingredient_dto.dart';
+import 'ingredients_dto.dart';
 
 class RecipeDto {
   RecipeDto({
@@ -23,7 +23,7 @@ class RecipeDto {
     if (json['ingredients'] != null) {
       ingredients = [];
       json['ingredients'].forEach((v) {
-        ingredients?.add(IngredientDto.fromJson(v));
+        ingredients?.add(IngredientsDto.fromJson(v));
       });
     }
   }
@@ -35,7 +35,7 @@ class RecipeDto {
   String? chef;
   String? time;
   num? rating;
-  List<IngredientDto>? ingredients;
+  List<IngredientsDto>? ingredients;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
