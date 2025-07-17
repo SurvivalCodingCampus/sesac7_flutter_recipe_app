@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/data/model/recipe_model.dart';
 
-import '../../../data/model/ingredient_model.dart';
 import '../../../data/model/recipe.dart';
-import '../../../data/model/step_model.dart';
 import '../../../ui/app_colors.dart';
 import '../../../ui/text_styles.dart';
 

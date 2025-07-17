@@ -4,7 +4,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'ingredient_model.dart';
 
 part 'recipe_model.freezed.dart';
-
 part 'recipe_model.g.dart';
 
 @freezed

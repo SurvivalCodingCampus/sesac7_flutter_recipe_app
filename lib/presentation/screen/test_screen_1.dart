@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/button/filter_button.dart';
 
-import '../../data/model/ingredient.dart';
 import '../../data/model/ingredient_model.dart';
 import '../../data/model/recipe.dart';
-import '../../data/model/recipe_ingredient.dart';
-import '../../data/model/recipe_model.dart';
-import '../../data/model/step_model.dart';
 import '../component/button/big_button.dart';
 import '../component/button/medium_button.dart';
 import '../component/button/rating_button.dart';
