@@ -5,8 +5,8 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('FilterButton Test', () {
     final String filterTitle = 'filter';
-    bool selectedState = false;
     testWidgets('FilterButton Finder Test', (tester) async {
+      bool selectedState = false;
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -23,6 +23,7 @@ void main() {
     });
 
     testWidgets('FilterButton onValueChange Test', (tester) async {
+      bool selectedState = false;
       final Key filterButtonKey = Key('FilterButtonKey');
       await tester.pumpWidget(
         MaterialApp(
