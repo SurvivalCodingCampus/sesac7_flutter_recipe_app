@@ -128,4 +128,43 @@ abstract class TextStyles {
     overflow: TextOverflow.ellipsis,
     height: 12 / 8,
   );
+
+  /* RatingDialog End */
+
+  /* RecipeCard Start */
+  static final TextStyle recipeCardRatingValue = TextStyle(
+    color: AppColors.black,
+    fontSize: 8.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 12 / 8,
+  );
+
+  static final TextStyle recipeCardTitle = TextStyle(
+    color: AppColors.white,
+    fontSize: 14.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 21 / 14
+  );
+
+  static final TextStyle recipeCardChef = TextStyle(
+    color: AppColors.gray4,
+    fontSize: 8.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 12 / 8
+  );
+
+  static final TextStyle recipeCardTime = TextStyle(
+    color: AppColors.gray4,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11
+  );
 }
