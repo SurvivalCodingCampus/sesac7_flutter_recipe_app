@@ -133,6 +133,8 @@ class RecipeCard extends StatelessWidget {
                   GestureDetector(
                     onTap: onFavoritePressed,
                     child: Container(
+                      width: 24.0,
+                      height: 24.0,
                       decoration: ShapeDecoration(
                         shape: CircleBorder(),
                         color: AppColors.white,
