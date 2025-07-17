@@ -6,7 +6,7 @@ abstract class TextStyles {
   /* Button Component START */
   static final TextStyle smallButtonTitle = TextStyle(
     color: AppColors.white,
-    fontSize: 11,
+    fontSize: 11.0,
     fontFamily: FontFamilyType.poppins.fontFamilyName,
     fontWeight: FontWeight.w600,
     overflow: TextOverflow.ellipsis,
@@ -14,7 +14,7 @@ abstract class TextStyles {
 
   static final TextStyle mediumButtonTitle = TextStyle(
     color: AppColors.white,
-    fontSize: 16,
+    fontSize: 16.0,
     fontFamily: FontFamilyType.poppins.fontFamilyName,
     fontWeight: FontWeight.w600,
     overflow: TextOverflow.ellipsis,
@@ -22,17 +22,18 @@ abstract class TextStyles {
 
   static final TextStyle bigButtonTitle = TextStyle(
     color: AppColors.white,
-    fontSize: 16,
+    fontSize: 16.0,
     fontFamily: FontFamilyType.poppins.fontFamilyName,
     fontWeight: FontWeight.w600,
     overflow: TextOverflow.ellipsis,
   );
+
   /* Button Component END */
 
   /* InputField START */
   static final TextStyle inputFiledLabel = TextStyle(
     color: AppColors.labelColor,
-    fontSize: 14,
+    fontSize: 14.0,
     fontFamily: FontFamilyType.poppins.fontFamilyName,
     fontWeight: FontWeight.w400,
     overflow: TextOverflow.ellipsis,
@@ -40,28 +41,91 @@ abstract class TextStyles {
 
   static final TextStyle inputFiledHint = TextStyle(
     color: AppColors.gray4,
-    fontSize: 11,
+    fontSize: 11.0,
     fontFamily: FontFamilyType.poppins.fontFamilyName,
     fontWeight: FontWeight.w400,
     overflow: TextOverflow.ellipsis,
   );
+
   /* InputField END */
 
   /* Tabs Label START */
   static final TextStyle tabsSelectedLabelTitle = TextStyle(
     color: AppColors.white,
-    fontSize: 11,
+    fontSize: 11.0,
     fontFamily: FontFamilyType.poppins.fontFamilyName,
     fontWeight: FontWeight.w600,
-    overflow: TextOverflow.ellipsis
+    overflow: TextOverflow.ellipsis,
   );
 
   static final TextStyle tabsUnSelectedLabelTitle = TextStyle(
-      color: AppColors.primary80,
-      fontSize: 11,
-      fontFamily: FontFamilyType.poppins.fontFamilyName,
-      fontWeight: FontWeight.w600,
-      overflow: TextOverflow.ellipsis
+    color: AppColors.primary80,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
   );
+
   /* Label END */
+
+  /* FilterButton Start */
+  static final TextStyle selectedFilterTitle = TextStyle(
+    color: AppColors.white,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle unSelectedFilterTitle = TextStyle(
+    color: AppColors.primary80,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  /* FilterButton Start */
+
+  /* RatingButton Start */
+  static final TextStyle selectedRatingTitle = TextStyle(
+    color: AppColors.white,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle unSelectedRatingTitle = TextStyle(
+    color: AppColors.primary80,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  /* RatingButton End */
+
+  /* RatingDialog Start */
+  static final TextStyle ratingDialogTitle = TextStyle(
+    color: AppColors.labelColor,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle ratingDialogButtonTitle = TextStyle(
+    color: AppColors.white,
+    fontSize: 8.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 12 / 8,
+  );
 }

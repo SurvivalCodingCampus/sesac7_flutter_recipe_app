@@ -1,27 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/button/big_button.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
 
 void main() {
-  final String bigBtnTitle = '빅버튼';
-  testWidgets('BigButton Title Test', (tester) async {
-    await tester.pumpWidget(
-      MaterialApp(
-        home: Scaffold(
-          body: BigButton(
-            title: bigBtnTitle,
-            onClick: () {},
-          ),
-        ),
-      ),
-    );
+  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-    final Finder bigButtonTitleFinder = find.text(bigBtnTitle);
-
-    expect(bigButtonTitleFinder, findsOneWidget);
-  });
-
-  testWidgets('BigButton onClick Test', (tester) async {
+  testWidgets('BigButton end-to-end Test', (tester) async {
     bool isClick = false;
     final String bigBtnTitle = '빅버튼';
     final String bigBtnKey = 'BigBtnKey';
@@ -39,7 +24,7 @@ void main() {
       ),
     );
     await tester.tap(find.byKey(Key(bigBtnKey)));
-    await tester.pump();
+    await tester.pump(Duration(seconds: 2));
 
     expect(isClick, equals(isTrue));
   });

@@ -9,7 +9,10 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: SmallButton(title: smallBtnTitle),
+          body: SmallButton(
+            title: smallBtnTitle,
+            onClick: () {},
+          ),
         ),
       ),
     );
@@ -20,7 +23,7 @@ void main() {
   });
 
   testWidgets('SmallButton onClick Test', (tester) async {
-    bool isClicked = false;
+    bool isClick = false;
     final String smallBtnKey = 'SmallBtnKey';
     await tester.pumpWidget(
       MaterialApp(
@@ -29,7 +32,7 @@ void main() {
             key: Key(smallBtnKey),
             title: smallBtnKey,
             onClick: () {
-              isClicked = true;
+              isClick = true;
             },
           ),
         ),
@@ -38,6 +41,6 @@ void main() {
     await tester.tap(find.byKey(Key(smallBtnKey)));
     await tester.pump();
 
-    expect(isClicked, isTrue);
+    expect(isClick, equals(isTrue));
   });
 }
