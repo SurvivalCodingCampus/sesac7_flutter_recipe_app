@@ -6,7 +6,6 @@ import 'package:flutter_recipe_app/ui/text_styles.dart';
 class SmallButton extends StatefulWidget {
   static const double width = 174;
   static const double height = 37;
-  static const double textWidth = 114;
   static const int textMaxLines = 1;
 
   final String text;
@@ -47,22 +46,18 @@ class _SmallButtonState extends State<SmallButton> {
       child: Container(
         width: SmallButton.width,
         height: SmallButton.height,
+        padding: const EdgeInsets.symmetric(horizontal: 10),
         decoration: BoxDecoration(
           color: isEnabled ? AppColors.primary100 : AppColors.gray4,
           borderRadius: BorderRadius.circular(ComponentConstant.borderRadius),
         ),
-        child: SizedBox(
-          width: SmallButton.textWidth,
-          child: Center(
-            child: Text(
-              widget.text,
-              style: TextStyles.smallerTextBold.copyWith(
-                color: AppColors.white,
-              ),
-              maxLines: SmallButton.textMaxLines,
-              overflow: TextOverflow.ellipsis,
-            ),
+        child: Text(
+          widget.text,
+          style: TextStyles.smallerTextBold.copyWith(
+            color: AppColors.white,
           ),
+          maxLines: SmallButton.textMaxLines,
+          overflow: TextOverflow.ellipsis,
         ),
       ),
     );

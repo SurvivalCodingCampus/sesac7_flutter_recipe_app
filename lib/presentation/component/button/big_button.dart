@@ -6,7 +6,6 @@ import 'package:flutter_recipe_app/ui/text_styles.dart';
 class BigButton extends StatefulWidget {
   static const double height = 60;
   static const double spacing = 11;
-  static const double textWidth = 114;
   static const int textMaxLines = 1;
   static const Key gestureKey = Key('big button gesture');
 
@@ -48,6 +47,7 @@ class _BigButtonState extends State<BigButton> {
       },
       child: Container(
         height: BigButton.height,
+        padding: const EdgeInsets.symmetric(vertical: 18),
         decoration: BoxDecoration(
           color: isEnabled ? AppColors.primary100 : AppColors.gray4,
           borderRadius: BorderRadius.circular(ComponentConstant.borderRadius),
@@ -56,18 +56,13 @@ class _BigButtonState extends State<BigButton> {
           spacing: BigButton.spacing,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: BigButton.textWidth,
-              child: Center(
-                child: Text(
-                  widget.text,
-                  style: TextStyles.normalTextBold.copyWith(
-                    color: AppColors.white,
-                  ),
-                  maxLines: BigButton.textMaxLines,
-                  overflow: TextOverflow.ellipsis,
-                ),
+            Text(
+              widget.text,
+              style: TextStyles.normalTextBold.copyWith(
+                color: AppColors.white,
               ),
+              maxLines: BigButton.textMaxLines,
+              overflow: TextOverflow.ellipsis,
             ),
             Icon(
               Icons.arrow_forward,
