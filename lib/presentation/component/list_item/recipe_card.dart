@@ -131,7 +131,7 @@ class RecipeCard extends StatelessWidget {
                           color: AppColors.gray4,
                         ),
                         Text(
-                          '${recipe.cookingTime.inMinutes} min',
+                          recipe.cookingTime,
                           style: TextStyles.smallerTextRegular.copyWith(
                             color: AppColors.gray4,
                           ),

@@ -4,6 +4,7 @@ part "ingredient.freezed.dart";
 
 @freezed
 class Ingredient with _$Ingredient {
+  final String id;
   @override
   final String name;
   @override
@@ -12,6 +13,7 @@ class Ingredient with _$Ingredient {
   final double weight;
 
   const Ingredient({
+    required this.id,
     required this.name,
     required this.imageUrl,
     required this.weight,
