@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/core/enum/tap_state_type.dart';
 import 'package:flutter_recipe_app/presentation/component/button/small_button.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -12,8 +11,7 @@ void main() {
         home: Scaffold(
           body: SmallButton(
             title: smallBtnTitle,
-            isTapDown: false,
-            onTapStateChange: (tapState) {},
+            onClick: () {},
           ),
         ),
       ),
@@ -25,7 +23,7 @@ void main() {
   });
 
   testWidgets('SmallButton onClick Test', (tester) async {
-    TapStateType? tapStateType;
+    bool isClick = false;
     final String smallBtnKey = 'SmallBtnKey';
     await tester.pumpWidget(
       MaterialApp(
@@ -33,9 +31,8 @@ void main() {
           body: SmallButton(
             key: Key(smallBtnKey),
             title: smallBtnKey,
-            isTapDown: false,
-            onTapStateChange: (tapState) {
-              tapStateType = tapState;
+            onClick: () {
+              isClick = true;
             },
           ),
         ),
@@ -44,6 +41,6 @@ void main() {
     await tester.tap(find.byKey(Key(smallBtnKey)));
     await tester.pump();
 
-    expect(tapStateType, equals(TapStateType.onTapUp));
+    expect(isClick, equals(isTrue));
   });
 }
