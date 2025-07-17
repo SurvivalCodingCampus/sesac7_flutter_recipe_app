@@ -3,12 +3,12 @@ import 'package:flutter_recipe_app/presentation/component/constants/component_co
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
-class BigButton extends StatelessWidget {
-  static const double width = 315;
+class BigButton extends StatefulWidget {
   static const double height = 60;
   static const double spacing = 11;
   static const double textWidth = 114;
   static const int textMaxLines = 1;
+  static const Key gestureKey = Key('big button gesture');
 
   final String text;
   final VoidCallback onClick;
@@ -20,29 +20,51 @@ class BigButton extends StatelessWidget {
   });
 
   @override
+  State<BigButton> createState() => _BigButtonState();
+}
+
+class _BigButtonState extends State<BigButton> {
+  bool isEnabled = true;
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onClick,
+      key: BigButton.gestureKey,
+      onTap: widget.onClick,
+      onTapDown: (details) {
+        setState(() {
+          isEnabled = false;
+        });
+      },
+      onTapUp: (details) {
+        setState(() {
+          isEnabled = true;
+        });
+      },
+      onTapCancel: () {
+        setState(() {
+          isEnabled = true;
+        });
+      },
       child: Container(
-        width: width,
-        height: height,
+        height: BigButton.height,
         decoration: BoxDecoration(
-          color: AppColors.primary100,
+          color: isEnabled ? AppColors.primary100 : AppColors.gray4,
           borderRadius: BorderRadius.circular(ComponentConstant.borderRadius),
         ),
         child: Row(
-          spacing: spacing,
+          spacing: BigButton.spacing,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              width: textWidth,
+              width: BigButton.textWidth,
               child: Center(
                 child: Text(
-                  text,
+                  widget.text,
                   style: TextStyles.normalTextBold.copyWith(
                     color: AppColors.white,
                   ),
-                  maxLines: textMaxLines,
+                  maxLines: BigButton.textMaxLines,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
