@@ -7,9 +7,9 @@ import 'package:flutter_recipe_app/data/dto/recipe/recipe_list_dto.dart';
 import 'package:http/http.dart' as http;
 
 class RecipeDataSourceImpl implements RecipeDataSource {
-  static const String _baseUrl =
+  static const String baseUrl =
       'https://raw.githubusercontent.com/junsuk5/mock_json/refs/heads/main/recipe/recipes.json';
-  static const Map<String, String> _headers = {
+  static const Map<String, String> headers = {
     'Content-Type': 'application/json; charset=UTF-8',
   };
 
@@ -20,7 +20,7 @@ class RecipeDataSourceImpl implements RecipeDataSource {
 
   @override
   Future<Response<List<RecipeDto>>> fetchAllRecipes() async {
-    final response = await _client.get(Uri.parse(_baseUrl), headers: _headers);
+    final response = await _client.get(Uri.parse(baseUrl), headers: headers);
 
     return Response<List<RecipeDto>>(
       statusCode: response.statusCode,
