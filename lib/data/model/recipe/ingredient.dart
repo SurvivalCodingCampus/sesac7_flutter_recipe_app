@@ -4,6 +4,7 @@ part "ingredient.freezed.dart";
 
 @freezed
 class Ingredient with _$Ingredient {
+  @override
   final String id;
   @override
   final String name;
