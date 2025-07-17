@@ -24,53 +24,51 @@ class _BigButtonState extends State<BigButton> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: GestureDetector(
-        onTapDown: (_) {
-          setState(() {
-            isPressed = true;
-          });
-        },
-        onTapUp: (_) {
-          setState(() {
-            isPressed = false;
-          });
-        },
-        onTap: () {
-          if (!isPressed) {
-            isPressed = false;
-          }
-        },
-        onTapCancel: (){
-          setState(() {
-            isPressed = false;
-          });
-        },
-        child: Container(
-          height: 60,
-          decoration: BoxDecoration(
-            color: isPressed ? AppColors.gray4 : AppColors.primary100,
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Text(
-                widget.text,
-                style: const TextStyle(
-                  color: AppColors.white,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(width: 11),
-              Icon(
-                Icons.arrow_forward,
+    return GestureDetector(
+      onTapDown: (_) {
+        setState(() {
+          isPressed = true;
+        });
+      },
+      onTapUp: (_) {
+        setState(() {
+          isPressed = false;
+        });
+      },
+      onTapCancel: (){
+        setState(() {
+          isPressed = false;
+        });
+      },
+      onTap: () {
+        if (!isPressed) {
+          isPressed = false;
+        } widget.onTap();
+      },
+      child: Container(
+        height: 60,
+        decoration: BoxDecoration(
+          color: isPressed ? AppColors.gray4 : AppColors.primary100,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Text(
+              widget.text,
+              style: const TextStyle(
                 color: AppColors.white,
-                size: 16
-              ),// Text(text),
-            ],
-          ),
+                fontSize: 16,
+              ),
+            ),
+            const SizedBox(width: 11),
+            Icon(
+              Icons.arrow_forward,
+              color: AppColors.white,
+              size: 16
+            ),// Text(text),
+          ],
         ),
       ),
     );

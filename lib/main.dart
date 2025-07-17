@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/common/shimmer_list.dart';
 import 'package:flutter_recipe_app/presentation/screen/saved_recipes/recipe_card_screen.dart';
 import 'package:flutter_recipe_app/presentation/screen/saved_recipes/recipe_view_model.dart';
+import 'package:flutter_recipe_app/presentation/screen/splash_screen/splash_screen.dart';
 import 'package:flutter_recipe_app/repository/recipes_repository_impl.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -38,9 +39,10 @@ class MyApp extends StatelessWidget {
           if (viewModel.isLoading) {
             return ShimmerList();
           }
-          return RecipeCardScreen(
-            viewModel: viewModel,
-          );
+          // return RecipeCardScreen(
+          //   viewModel: viewModel,
+          // );
+          return SplashScreen();
         },
       ),
     );

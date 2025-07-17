@@ -66,6 +66,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - lib/asset/splash_bg.png
+    - lib/asset/ic_hat.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:
