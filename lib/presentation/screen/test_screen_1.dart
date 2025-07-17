@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/button/filter_button.dart';
 
+import '../../data/model/ingredient.dart';
 import '../../data/model/ingredient_model.dart';
+import '../../data/model/recipe.dart';
+import '../../data/model/recipe_ingredient.dart';
 import '../../data/model/recipe_model.dart';
 import '../../data/model/step_model.dart';
 import '../component/button/big_button.dart';
@@ -33,29 +36,17 @@ class TestScreen1 extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 RecipeCard(
-                  recipe: RecipeModel(
-                    category: 'Indian',
-                    id: '1',
-                    title:
-                        'Traditional spare ribs baked Traditional spare ribs baked Traditional spare ribs baked',
-                    imageUrl:
-                        'https://cdn.pixabay.com/photo/2017/11/10/15/04/steak-2936531_1280.jpg',
-                    description: 'This is a description of the recipe.',
+                  recipe: Recipe(
+                    id: 8,
+                    category: "Japanese",
+                    name: "Sushi Platter",
+                    image: "https://cdn.pixabay.com/photo/2017/10/15/11/41/sushi-2853382_1280.jpg",
+                    chef: "Jiro Ono",
+                    time: "60 min",
+                    rating: 4.8,
                     ingredients: [
-                      IngredientModel(
-                        name: 'ingredient1',
-                        quantity: '100g',
-                        imageUrl:
-                            'https://cdn.pixabay.com/photo/2017/11/10/15/04/steak-2936531_1280.jpg',
-                      ),
-                    ],
-                    steps: [StepModel(description: 'step1', stepNumber: 1)],
-                    cookTimeMinutes: 30,
-                    servings: 4,
-                    authorName: 'sehwan',
-                    averageRating: 4.5,
-                    reviewCount: 100,
-                    isSavedByUser: false,
+
+                    ]
                   ),
                   saveRecipeCallback: (String recipeId) {
                     print('recipe ID : $recipeId');

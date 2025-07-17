@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/data/model/recipe_model.dart';
 
 import '../../../data/model/ingredient_model.dart';
+import '../../../data/model/recipe.dart';
 import '../../../data/model/step_model.dart';
 import '../../../ui/app_colors.dart';
 import '../../../ui/text_styles.dart';
@@ -13,7 +14,7 @@ class RecipeCard extends StatelessWidget {
     required this.saveRecipeCallback,
   });
 
-  final RecipeModel recipe;
+  final Recipe recipe;
   final void Function(String recipeId) saveRecipeCallback;
 
   @override
@@ -27,10 +28,26 @@ class RecipeCard extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(16), // Card와 동일한 라운드 값
             child: Image.network(
-              recipe.imageUrl,
+              recipe.image,
               height: 150,
               width: double.infinity,
               fit: BoxFit.cover,
+            ),
+          ),
+          Positioned.fill(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter, // 그라데이션 시작점: 컨테이너의 하단 중앙
+                  end: Alignment.bottomCenter, // 그라데이션 끝점: 컨테이너의 상단 중앙
+                  colors: const [
+                    // 그라데이션 색상 리스트
+                    Colors.transparent, // 상단 끝 지점의 색상 (완전 투명)
+                    Colors.black, // 하단 시작 지점의 색상 (완전 불투명 검정)
+                  ],
+                  // 여기서는 기본값 (0.0과 1.0)을 사용하여 부드럽게 전환
+                ),
+              ),
             ),
           ),
 
@@ -51,7 +68,7 @@ class RecipeCard extends StatelessWidget {
                       children: [
                         // 타이틀
                         Text(
-                          recipe.title,
+                          recipe.name,
                           style: TextStyles.smallTextBold.copyWith(
                             color: AppColors.white,
                             fontSize: 14,
@@ -61,7 +78,7 @@ class RecipeCard extends StatelessWidget {
                         ),
                         // 세프 이름
                         Text(
-                          'By Chef ${recipe.authorName}',
+                          'By Chef ${recipe.chef}',
                           style: TextStyles.smallerTextRegular.copyWith(
                             color: AppColors.white,
                             fontSize: 8,
@@ -93,7 +110,7 @@ class RecipeCard extends StatelessWidget {
                               Icon(Icons.star, color: Colors.orange, size: 16),
                               SizedBox(width: 4),
                               Text(
-                                '${recipe.averageRating}',
+                                '${recipe.rating}',
                                 style: TextStyle(fontWeight: FontWeight.bold),
                               ),
                             ],
@@ -115,7 +132,7 @@ class RecipeCard extends StatelessWidget {
                             ),
                             SizedBox(width: 5),
                             Text(
-                              '${recipe.cookTimeMinutes} min',
+                              recipe.time,
                               style: TextStyles.smallerTextRegular.copyWith(
                                 color: AppColors.gray4,
                                 fontSize: 11,
@@ -126,7 +143,7 @@ class RecipeCard extends StatelessWidget {
                         SizedBox(width: 10),
                         GestureDetector(
                           onTap: () {
-                            saveRecipeCallback(recipe.id);
+                            saveRecipeCallback(recipe.id.toString());
                           },
                           child: Icon(
                             Icons.bookmark_border,
@@ -146,7 +163,7 @@ class RecipeCard extends StatelessWidget {
   }
 }
 
-void main() {
+/*void main() {
   runApp(
     MaterialApp(
       title: 'Flutter Demo',
@@ -188,4 +205,4 @@ void main() {
       ),
     ),
   );
-}
+}*/

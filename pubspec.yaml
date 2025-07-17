@@ -36,6 +36,9 @@ dependencies:
   cupertino_icons: ^1.0.8
   freezed_annotation: ^3.1.0
   json_annotation: ^4.9.0
+  collection: ^1.19.1
+  http: ^1.4.0
+  intl: ^0.20.2
 
 dev_dependencies:
   integration_test:
@@ -54,6 +57,7 @@ dev_dependencies:
   freezed: ^3.1.0
   build_runner: ^2.5.4
   json_serializable: ^6.9.5
+  mockito: ^5.4.6
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -65,6 +69,9 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - assets/images/background_cooking.jpg
+    - assets/icons/chef_hat.png # 요리사 모자 아이콘 경로 추가
 
   fonts:
     - family: Poppins
