@@ -6,8 +6,8 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('RatingDialogButtonTest', () {
     final String ratingDialogButtonTitle = 'Send';
-    bool buttonActiveState = false;
     testWidgets('RatingDialogButton Finder Test', (tester) async {
+      bool buttonActiveState = false;
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -25,6 +25,7 @@ void main() {
       expect(ratingDialogButtonFinder, findsOneWidget);
     });
     testWidgets('RatingDialogButton onTap Test', (tester) async {
+      bool buttonActiveState = false;
       final Key ratingDialogButtonKey = Key('RatingDialogButtonKey');
       await tester.pumpWidget(
         MaterialApp(
