@@ -21,6 +21,7 @@ class _SmallButtonState extends State<SmallButton> {
 
   @override
   Widget build(BuildContext context) {
+    Colors.red;
     return GestureDetector(
       onTap: () {
         widget.onClick();

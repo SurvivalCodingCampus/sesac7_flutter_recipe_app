@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/component/button/big_button.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/component/dialog/rating_dialog.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/component/small_button.dart';
 
 import '../../../data/model/person.dart';
@@ -13,6 +15,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   int count = 0;
+  int score = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +48,41 @@ class _MainScreenState extends State<MainScreen> {
               onTap: (Person person) {
                 print(person);
               },
+            ),
+            RatingDialog(
+              title: 'title',
+              actionName: 'actionName',
+              onChange: (rating) {
+                print(rating);
+              },
+            ),
+            Text('별점 : $score'),
+            ElevatedButton(
+              key: Key('dialog_button'),
+              onPressed: () {
+                showDialog(
+                  context: context,
+                  builder: (_) {
+                    return RatingDialog(
+                      score: score,
+                      title: '제목',
+                      actionName: '별점',
+                      onChange: (int rating) {
+                        print(rating);
+                        setState(() {
+                          score = rating;
+                        });
+                        Navigator.pop(context);
+                      },
+                    );
+                  },
+                );
+              },
+              child: Text('dialog'),
+            ),
+            BigButton(
+              buttonText: 'buttonText',
+              onTap: () {},
             ),
           ],
         ),
