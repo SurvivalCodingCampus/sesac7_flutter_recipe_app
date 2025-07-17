@@ -4,9 +4,9 @@ import 'package:flutter_recipe_app/presentation/ui/app_color.dart';
 class RecipeThumbnail extends StatelessWidget {
   final String userName;
   final String firstLine;
-  final String? secondLine;
   final double rating;
   final int minutes;
+  final String imageUrl;
   final VoidCallback? onTapList;
   final VoidCallback? onTapBookmark;
 
@@ -14,9 +14,9 @@ class RecipeThumbnail extends StatelessWidget {
     super.key,
     required this.userName,
     required this.firstLine,
-    this.secondLine = '',
     this.rating = 0.0,
     this.minutes = 0,
+    required this.imageUrl,
     this.onTapList,
     this.onTapBookmark,
   });
@@ -35,8 +35,16 @@ class RecipeThumbnail extends StatelessWidget {
           children: [
             Positioned.fill(
               child: Image.network(
-                'https://cdn.pixabay.com/photo/2017/11/10/15/04/steak-2936531_1280.jpg',
+                imageUrl,
                 fit: BoxFit.cover,
+                errorBuilder: (context, error, stackTrace) {
+                  return Container(
+                    color: Colors.grey[300],
+                    child: Center(
+                      child: Icon(Icons.broken_image, color: Colors.grey[600]),
+                    ),
+                  );
+                },
               ),
             ),
             Align(
@@ -89,23 +97,17 @@ class RecipeThumbnail extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            firstLine,
-                            style: TextStyle(
-                              color: AppColor.White,
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          if (secondLine != null && secondLine!.isNotEmpty)
-                            Text(
-                              secondLine!,
+                          Container(
+                            width: 180,
+                            child: Text(
+                              firstLine,
                               style: TextStyle(
                                 color: AppColor.White,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
                               ),
                             ),
+                          ),
                           Text(
                             'By $userName',
                             style: TextStyle(color: AppColor.White, fontSize: 8),

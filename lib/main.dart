@@ -1,14 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/presentation/component/widget/recipe_thumbnail.dart';
+import 'package:flutter_recipe_app/data/mocks/data_source/mock_recipe_data_sourece_impl.dart';
+import 'package:flutter_recipe_app/presentation/screen/recipe/recipe_view_model.dart';
+import 'package:flutter_recipe_app/presentation/screen/recipe/saved_recipe_screen.dart';
 import 'package:flutter_recipe_app/presentation/ui/app_color.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_recipe_app/data/repository/recipe/recipe_repository_impl.dart';
+
 
 void main() {
-  runApp(const MyApp());
+  final recipeDataSource = MockRecipeDataSourceImpl();
+  final recipeRepository = RecipeRepositoryImpl(recipeDataSource);
+  final recipeViewModel = RecipeViewModel(recipeRepository);
+
+  recipeViewModel.fetchRecipes();
+
+  runApp(
+    MyApp(viewModel: recipeViewModel),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final RecipeViewModel viewModel;
+
+  const MyApp({
+    super.key,
+    required this.viewModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -17,42 +34,17 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
         scaffoldBackgroundColor: Colors.white,
-      ),
-      home: const MyHomePage(),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: AppColor.White,
-        title: const Text(
-          'Saved recipes',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+        appBarTheme: AppBarTheme(
+          backgroundColor: AppColor.White,
+          elevation: 0,
         ),
-        centerTitle: true,
+        useMaterial3: true,
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
-          children: [
-            const SizedBox(height: 10),
-            RecipeThumbnail(
-              userName: 'Chef John',
-              firstLine: 'Traditional spare ribs',
-              secondLine: 'baked',
-              rating: 4.0,
-              minutes: 20,
-              onTapList: () => print('Recipe Thumbnail'),
-              onTapBookmark: () => print('Bookmark'),
-            ),
-          ],
-        ),
+      home: ListenableBuilder(
+        listenable: viewModel,
+        builder: (context, child) {
+          return SavedRecipeScreen(viewModel: viewModel);
+        },
       ),
     );
   }
