@@ -5,6 +5,8 @@ part "recipe.freezed.dart";
 
 @freezed
 class Recipe with _$Recipe {
+  static const String invalidId = 'invalid_id';
+
   @override
   final String id;
   @override
