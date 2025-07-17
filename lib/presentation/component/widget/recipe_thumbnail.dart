@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/ui/app_color.dart';
+import 'package:flutter_recipe_app/presentation/ui/app_color.dart';
 
 class RecipeThumbnail extends StatelessWidget {
   final String userName;
@@ -53,7 +53,7 @@ class RecipeThumbnail extends StatelessWidget {
                       Colors.black54,
                       Colors.black87,
                     ],
-                    stops: [0.0, 0.5, 1.0],
+                    stops: [0.0, 0.4, 1.0],
                   ),
                 ),
               ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/presentation/component/button/medium_button.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_recipe_app/component/button/medium_button.dart';
 
 void main() {
   group('MediumButton 위젯 테스트', () {

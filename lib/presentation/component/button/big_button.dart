@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/ui/app_color.dart';
+import 'package:flutter_recipe_app/presentation/ui/app_color.dart';
 
 class BigButton extends StatefulWidget {
   final String buttonText;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/component/input/text_input.dart';
+import 'package:flutter_recipe_app/presentation/component/input/text_input.dart';
+import 'package:flutter_recipe_app/presentation/ui/app_color.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_recipe_app/ui/app_color.dart';
 
 void main() {
   group('TextInput 위젯 테스트', () {

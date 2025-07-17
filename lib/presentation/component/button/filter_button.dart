@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/ui/app_color.dart';
+import 'package:flutter_recipe_app/presentation/ui/app_color.dart';
 
-class RatingButton extends StatefulWidget {
-  final int? rating;
+class FilterButton extends StatefulWidget {
+  final String? text;
   final bool initialIsSelected;
   final VoidCallback? onTap;
 
-  const RatingButton({
+  const FilterButton({
     super.key,
-    this.rating = 0,
+    this.text = 'Text',
     this.initialIsSelected = false,
     this.onTap,
   });
 
   @override
-  State<RatingButton> createState() => _RatingButtonState();
+  State<FilterButton> createState() => _FilterButtonState();
 }
 
-class _RatingButtonState extends State<RatingButton> {
+class _FilterButtonState extends State<FilterButton> {
   late bool _isSelected;
 
   @override
@@ -47,24 +47,13 @@ class _RatingButtonState extends State<RatingButton> {
           border: Border.all(color: AppColor.Primary100, width: 1),
           borderRadius: BorderRadius.circular(10),
         ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              '${widget.rating}',
-              style: TextStyle(
-                color: _isSelected ? AppColor.White : AppColor.Primary100,
-                fontSize: 11,
-                height: 1.5,
-              ),
-            ),
-            const SizedBox(width: 3),
-            Icon(
-              Icons.star,
-              color: _isSelected ? AppColor.White : AppColor.Primary100,
-              size: 18,
-            ),
-          ],
+        child: Text(
+          '${widget.text}',
+          style: TextStyle(
+            color: _isSelected ? AppColor.White : AppColor.Primary100,
+            fontSize: 11,
+            height: 1.5,
+          ),
         ),
       ),
     );

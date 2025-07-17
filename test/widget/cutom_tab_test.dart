@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/component/tabs/custom_tab.dart';
+import 'package:flutter_recipe_app/presentation/component/tabs/custom_tab.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

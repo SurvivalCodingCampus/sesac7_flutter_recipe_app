@@ -1,13 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/component/button/big_button.dart';
-import 'package:flutter_recipe_app/component/button/filter_button.dart';
-import 'package:flutter_recipe_app/component/button/rating_button.dart';
-import 'package:flutter_recipe_app/component/button/small_button.dart';
-import 'package:flutter_recipe_app/component/dialog/rating_dialog.dart';
-import 'package:flutter_recipe_app/component/widget/ingredient_item.dart';
-import 'package:flutter_recipe_app/component/widget/recipe_thumbnail.dart';
-import 'package:flutter_recipe_app/screen/home/splash_screen.dart';
-import 'package:flutter_recipe_app/ui/app_color.dart';
+import 'package:flutter_recipe_app/presentation/component/widget/recipe_thumbnail.dart';
+import 'package:flutter_recipe_app/presentation/ui/app_color.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 void main() {
