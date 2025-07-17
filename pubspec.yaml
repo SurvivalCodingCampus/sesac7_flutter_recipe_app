@@ -38,8 +38,12 @@ dependencies:
   json_annotation: ^4.9.0
 
 dev_dependencies:
+  integration_test:
+    sdk: flutter
   flutter_test:
     sdk: flutter
+
+  network_image_mock: ^2.1.1 # Image.network를 테스트에서 mock하기 위해 필요
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

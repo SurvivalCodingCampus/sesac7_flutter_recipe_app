@@ -46,3 +46,10 @@ app.*.map.json
 
 *.g.dart
 *.freezed.dart
+# Xcode Configuration files
+*.xcconfig
+
+# CocoaPods Podfile 및 Podfile.lock 무시하기
+Podfile
+Podfile.lock
+Pods/
