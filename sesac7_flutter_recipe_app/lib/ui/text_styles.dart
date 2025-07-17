@@ -167,4 +167,16 @@ abstract class TextStyles {
     overflow: TextOverflow.ellipsis,
     height: 17 / 11
   );
+
+  /* RecipeCard End */
+
+  /* SavedRecipeScreen Start */
+  static final TextStyle savedRecipeScreenTitle = TextStyle(
+    color: AppColors.labelColor,
+    fontSize: 18.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 27 / 18
+  );
 }
