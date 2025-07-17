@@ -41,35 +41,18 @@ class RatingDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         spacing: 10.0,
         children: [
+          for (final ratingType in [
+            RatingType.gradeOne,
+            RatingType.gradeTwo,
+            RatingType.gradeThree,
+            RatingType.gradeFour,
+            RatingType.gradeFive
+          ])
           GestureDetector(
             onTap: () {
-              onChange(RatingType.gradeOne.getIntValue());
+              onChange(ratingType.getIntValue());
             },
-            child: _getRatingIcon(RatingType.gradeOne),
-          ),
-          GestureDetector(
-            onTap: () {
-              onChange(RatingType.gradeTwo.getIntValue());
-            },
-            child: _getRatingIcon(RatingType.gradeTwo),
-          ),
-          GestureDetector(
-            onTap: () {
-              onChange(RatingType.gradeThree.getIntValue());
-            },
-            child: _getRatingIcon(RatingType.gradeThree),
-          ),
-          GestureDetector(
-            onTap: () {
-              onChange(RatingType.gradeFour.getIntValue());
-            },
-            child: _getRatingIcon(RatingType.gradeFour),
-          ),
-          GestureDetector(
-            onTap: () {
-              onChange(RatingType.gradeFive.getIntValue());
-            },
-            child: _getRatingIcon(RatingType.gradeFive),
+            child: _getRatingIcon(ratingType),
           ),
         ],
       ),

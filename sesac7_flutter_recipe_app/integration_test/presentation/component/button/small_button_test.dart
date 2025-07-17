@@ -7,7 +7,7 @@ import 'package:integration_test/integration_test.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('SmallButton onClick Test', (tester) async {
+  testWidgets('SmallButton end-to-end Test', (tester) async {
     final String smallBtnTitle = '스몰버튼';
     TapStateType? tapStateType;
     final String smallBtnKey = 'SmallBtnKey';

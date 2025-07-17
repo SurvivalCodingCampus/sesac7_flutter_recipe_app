@@ -7,7 +7,7 @@ import 'package:integration_test/integration_test.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('MediumButton onClick Test', (tester) async {
+  testWidgets('MediumButton end-to-end Test', (tester) async {
     final String mediumBtnTitle = '미디움버튼';
     TapStateType? tapStateType;
     final String mediumBtnKey = 'MediumBtnKey';
