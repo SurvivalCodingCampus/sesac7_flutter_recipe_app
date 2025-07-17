@@ -179,4 +179,22 @@ abstract class TextStyles {
     overflow: TextOverflow.ellipsis,
     height: 27 / 18
   );
+  /* SavedRecipeScreen End */
+
+  /* SplashScreen Start */
+  static final TextStyle splashScreenLogoTitle = TextStyle(
+    color: AppColors.white,
+    fontSize: 18.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    height: 27 / 18
+  );
+
+  static final TextStyle splashScreenLogoSubtitle = TextStyle(
+    color: AppColors.white,
+    fontSize: 50.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    height: 60 / 50
+  );
 }
