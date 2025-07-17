@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/ui/app_color.dart';
 
 class BigButton extends StatefulWidget {
-  final Key? key;
   final String buttonText;
   final VoidCallback onTap;
 
-  const BigButton({this.key, required this.buttonText, required this.onTap});
+  const BigButton({super.key, required this.buttonText, required this.onTap});
 
   @override
   State<BigButton> createState() => _BigButtonState();

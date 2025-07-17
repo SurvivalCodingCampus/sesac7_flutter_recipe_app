@@ -28,10 +28,7 @@ class _RatingDialogState extends State<RatingDialog> {
       title: Center(
         child: Text(
           widget.title,
-          style: const TextStyle(
-            fontSize: 17,
-            color: AppColor.Black,
-          ),
+          style: const TextStyle(fontSize: 17, color: AppColor.Black),
         ),
       ),
       content: Column(
@@ -64,7 +61,6 @@ class _RatingDialogState extends State<RatingDialog> {
             onTap: _selectedRating > 0
                 ? () {
                     widget.onRatingChanged(_selectedRating);
-                    Navigator.of(context).pop();
                   }
                 : null,
           ),
