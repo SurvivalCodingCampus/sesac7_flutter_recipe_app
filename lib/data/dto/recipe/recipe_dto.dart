@@ -1,4 +1,4 @@
-import 'ingredient_list_dto.dart';
+import 'ingredients_dto.dart';
 
 class RecipeDto {
   String? category;
@@ -8,7 +8,7 @@ class RecipeDto {
   String? chef;
   String? time;
   double? rating;
-  List<IngredientListDto>? ingredients;
+  List<IngredientsDto>? ingredients;
 
   RecipeDto({
     this.category,
@@ -30,7 +30,7 @@ class RecipeDto {
     time: json['time'] as String?,
     rating: (json['rating'] as num?)?.toDouble(),
     ingredients: (json['ingredients'] as List<dynamic>?)
-        ?.map((e) => IngredientListDto.fromJson(e as Map<String, dynamic>))
+        ?.map((e) => IngredientsDto.fromJson(e as Map<String, dynamic>))
         .toList(),
   );
 
