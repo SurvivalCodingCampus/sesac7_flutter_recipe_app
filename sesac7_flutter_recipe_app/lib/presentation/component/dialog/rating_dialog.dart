@@ -4,7 +4,7 @@ import 'package:flutter_recipe_app/presentation/component/button/rating_dialog_b
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
-class RatingDialog extends StatelessWidget {
+class RatingDialog extends StatefulWidget {
   final String dialogTitle;
   final String dialogButtonTitle;
   final RatingType currentRatingType;
@@ -18,8 +18,19 @@ class RatingDialog extends StatelessWidget {
     required this.onChange,
   });
 
+  @override
+  State<RatingDialog> createState() => _RatingDialogState();
+}
+
+class _RatingDialogState extends State<RatingDialog> {
+  late RatingType _selectedRatingType;
+  @override
+  void initState() {
+    super.initState();
+    _selectedRatingType = widget.currentRatingType;
+  }
   Icon _getRatingIcon(RatingType ratingType) =>
-      ratingType.getIntValue() <= currentRatingType.getIntValue()
+      ratingType.getIntValue() <= _selectedRatingType.getIntValue()
       ? Icon(Icons.star, color: AppColors.rating, size: 20.0)
       : Icon(Icons.star_border_outlined, color: AppColors.rating, size: 20.0);
 
@@ -31,7 +42,7 @@ class RatingDialog extends StatelessWidget {
       elevation: 3.0,
       shadowColor: Colors.black,
       title: Text(
-        dialogTitle,
+        widget.dialogTitle,
         style: TextStyles.ratingDialogTitle,
         textAlign: TextAlign.center,
       ),
@@ -50,7 +61,10 @@ class RatingDialog extends StatelessWidget {
           ])
           GestureDetector(
             onTap: () {
-              onChange(ratingType.getIntValue());
+              widget.onChange(ratingType.getIntValue());
+              setState(() {
+                _selectedRatingType = ratingType;
+              });
             },
             child: _getRatingIcon(ratingType),
           ),
@@ -63,9 +77,9 @@ class RatingDialog extends StatelessWidget {
         Center(
           child: RatingDialogButton(
             buttonTitle: 'Send',
-            buttonActive: currentRatingType.getIntValue() > 0,
+            buttonActive: _selectedRatingType.getIntValue() > 0,
             onTap: () {
-              onChange(0);
+              widget.onChange(0);
             },
           ),
         ),
