@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless_widget/ui/app_colors.dart';
 import 'package:flutter_recipe_app/01_stateless_widget/ui/text_styles.dart';
 
-class MediumButton extends StatelessWidget {
+class MediumButton extends StatefulWidget {
   final String text;
   final void Function() onClick;
 
@@ -13,17 +13,31 @@ class MediumButton extends StatelessWidget {
   });
 
   @override
+  State<MediumButton> createState() => _MediumButtonState();
+}
+
+class _MediumButtonState extends State<MediumButton> {
+  bool isClicked = true;
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onClick,
-      child: Container(
+      onTap: () {
+        widget.onClick;
+
+        setState(() {
+          isClicked = !isClicked;
+        });
+      },
+      child: AnimatedContainer(
         width: 243,
         height: 54,
         padding: EdgeInsets.fromLTRB(50, 15, 50, 15),
         decoration: BoxDecoration(
-          color: AppColors.primary100,
+          color: isClicked ? AppColors.primary100 : AppColors.gray4,
           borderRadius: BorderRadius.circular(10.0),
         ),
+        duration: Duration(milliseconds: 100),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -31,7 +45,7 @@ class MediumButton extends StatelessWidget {
               width: 114,
               height: 24,
               child: Text(
-                text,
+                widget.text,
                 textAlign: TextAlign.center,
                 style: TextStyles.normalTextBold.copyWith(
                   color: AppColors.white,
@@ -41,13 +55,10 @@ class MediumButton extends StatelessWidget {
             SizedBox(
               width: 9,
             ),
-            SizedBox(
-              width: 20,
-              height: 20,
-              child: Icon(
-                Icons.arrow_forward,
-                color: AppColors.white,
-              ),
+            Icon(
+              size: 20,
+              Icons.arrow_forward,
+              color: AppColors.white,
             ),
           ],
         ),
