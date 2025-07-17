@@ -38,13 +38,15 @@ void main() {
 
       // Assert
       expect(result, isA<Result<List<Recipe>, NetworkError>>());
-      expect(
-        result.when(success: (data) => data, error: (_) => null),
-        isNotNull,
-      );
-      expect(
-        result.when(success: (data) => data, error: (_) => null)?.length,
-        2,
+      result.when(
+        success: (List<Recipe> data) {
+          expect(data.length, 2);
+          expect(data[0].name, 'Test Recipe 1');
+          expect(data[1].name, 'Test Recipe 2');
+        },
+        error: (NetworkError error) {
+          fail('Expected success but got error: $error');
+        },
       );
       verify(mockDataSource.fetchAllRecipes()).called(1);
     });
@@ -142,13 +144,13 @@ void main() {
 
       // Assert
       expect(result, isA<Result<List<Recipe>, NetworkError>>());
-      expect(
-        result.when(success: (data) => data, error: (_) => null),
-        isNotNull,
-      );
-      expect(
-        result.when(success: (data) => data, error: (_) => null)?.isEmpty,
-        isTrue,
+      result.when(
+        success: (List<Recipe> data) {
+          expect(data, isEmpty);
+        },
+        error: (NetworkError error) {
+          fail('Expected success but got error: $error');
+        },
       );
       verify(mockDataSource.fetchAllRecipes()).called(1);
     });
