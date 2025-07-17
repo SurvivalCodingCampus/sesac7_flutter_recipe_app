@@ -2,20 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/component/button/big_button.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/component/dialog/rating_dialog.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/component/small_button.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/main/main_view_model.dart';
 
 import '../../../data/model/person.dart';
 import '../../component/greeting.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
+class MainScreen extends StatelessWidget {
+  final MainViewModel viewModel;
 
-  @override
-  State<MainScreen> createState() => _MainScreenState();
-}
-
-class _MainScreenState extends State<MainScreen> {
-  int count = 0;
-  int score = 0;
+  const MainScreen({
+    super.key,
+    required this.viewModel,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,20 +21,16 @@ class _MainScreenState extends State<MainScreen> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
               key: Key('count'),
-              '$count',
+              '${viewModel.count}',
             ),
             SmallButton(
               key: Key('small_button'),
               text: 'button',
-              onClick: () {
-                setState(() {
-                  count++;
-                });
-              },
+              onClick: viewModel.incrementCount,
             ),
             ElevatedButton(
               onPressed: () {},
@@ -56,7 +50,7 @@ class _MainScreenState extends State<MainScreen> {
                 print(rating);
               },
             ),
-            Text('별점 : $score'),
+            Text('별점 : ${viewModel.score}'),
             ElevatedButton(
               key: Key('dialog_button'),
               onPressed: () {
@@ -64,14 +58,12 @@ class _MainScreenState extends State<MainScreen> {
                   context: context,
                   builder: (_) {
                     return RatingDialog(
-                      score: score,
+                      score: viewModel.score,
                       title: '제목',
                       actionName: '별점',
                       onChange: (int rating) {
                         print(rating);
-                        setState(() {
-                          score = rating;
-                        });
+                        viewModel.setScore(rating);
                         Navigator.pop(context);
                       },
                     );
@@ -81,9 +73,17 @@ class _MainScreenState extends State<MainScreen> {
               child: Text('dialog'),
             ),
             BigButton(
-              buttonText: 'buttonText',
-              onTap: () {},
+              buttonText: '사람 정보',
+              onTap: viewModel.fetchPersonData,
             ),
+            Text(
+              '${viewModel.name}, ${viewModel.age}',
+              style: TextStyle(fontSize: 40),
+            ),
+            if (viewModel.isLoading)
+              Center(
+                child: const CircularProgressIndicator(),
+              ),
           ],
         ),
       ),
