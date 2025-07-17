@@ -26,7 +26,12 @@ class RecipeRepositoryImpl
         return Result.error(error);
       }
 
-      return Result.success(response.body.map((e) => e.toModel()).toList());
+      return Result.success(
+        response.body
+            .map((e) => e.toModel())
+            .where((e) => e.id != Recipe.invalidId)
+            .toList(),
+      );
     } on TimeoutException {
       return Result.error(NetworkError.requestTimeout);
     } on FormatException {
