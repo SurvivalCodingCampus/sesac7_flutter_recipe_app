@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/data/model/ingredient.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../ui/app_colors.dart';
 import '../../ui/text_styles.dart';
@@ -42,7 +43,9 @@ class IngredientItem extends StatelessWidget {
             child: Center(
               child: Text(
                 ingredient.name,
-                style: TextStyles.normalTextBold
+                style: GoogleFonts.poppins(
+                  textStyle: TextStyles.normalTextBold,
+                ),
               ),
             ),
           ),
@@ -52,7 +55,9 @@ class IngredientItem extends StatelessWidget {
             child: Center(
               child: Text(
                 amount,
-                style: TextStyles.smallTextRegular
+                style: GoogleFonts.poppins(
+                  textStyle: TextStyles.smallTextRegular,
+                ),
               ),
             ),
           ),

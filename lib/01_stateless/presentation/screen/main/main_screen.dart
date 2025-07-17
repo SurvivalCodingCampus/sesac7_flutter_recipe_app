@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/data/model/recipe.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/component/buttons/big_button.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/component/buttons/medium_button.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/component/inputs/input_field.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/component/recipe_card.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/component/buttons/small_button.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/component/tabs/tabs_double.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/component/tabs/tabs_triple.dart';
 import '../../../data/model/ingredient.dart';
 import '../../component/ingredient_item.dart';
 
@@ -13,6 +19,7 @@ class MainScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
+            /*
             IngredientItem(
               ingredient: Ingredient(
                 name: 'Tomatos',
@@ -31,6 +38,15 @@ class MainScreen extends StatelessWidget {
               ),
               onTap: () => print("hello")
             ),
+            */
+            SmallButton(text: "Button", onClick: (){} ),
+            MediumButton(text: "Button", onClick: (){}),
+            BigButton(text: "Button", onClick: (){}),
+            TabsDouble(labels: ["0", "1"], selectedIndex: 1, onValueChange: (int a) {print(a); },),
+            InputField(label: "Label", placeHolder: "placeholder", value: "", onValueChange: (s) {
+              print(s);
+            },),
+            TabsTriple(labels: ["0", "1", "2"], selectedIndex: 2, onValueChange: (int b) {print(b);}),
           ],
         ),
       ),
