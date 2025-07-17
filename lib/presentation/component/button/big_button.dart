@@ -8,6 +8,7 @@ class BigButton extends StatefulWidget {
   static const double spacing = 11;
   static const double textWidth = 114;
   static const int textMaxLines = 1;
+  static const Key gestureKey = Key('big button gesture');
 
   final String text;
   final VoidCallback onClick;
@@ -28,6 +29,7 @@ class _BigButtonState extends State<BigButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      key: BigButton.gestureKey,
       onTap: widget.onClick,
       onTapDown: (details) {
         setState(() {
