@@ -1,42 +1,52 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_recipe_app/core/enum/tap_state_type.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
-class SmallButton extends StatelessWidget {
+class SmallButton extends StatefulWidget {
   final String title;
-  final bool isTapDown;
-  final Function(TapStateType) onTapStateChange;
+  final VoidCallback onClick;
 
   const SmallButton({
     super.key,
     required this.title,
-    required this.isTapDown,
-    required this.onTapStateChange,
+    required this.onClick,
   });
 
+  @override
+  State<SmallButton> createState() => _SmallButtonState();
+}
+
+class _SmallButtonState extends State<SmallButton> {
+  bool _isTapDown = false;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTapDown: (_) {
-        onTapStateChange(TapStateType.onTapDown);
+        setState(() {
+          _isTapDown = true;
+        });
       },
       onTapUp: (_) {
-        onTapStateChange(TapStateType.onTapUp);
+        setState(() {
+          _isTapDown = false;
+        });
       },
       onTapCancel: () {
-        onTapStateChange(TapStateType.onTapCancel);
+        setState(() {
+          _isTapDown = false;
+        });
       },
+      onTap: widget.onClick,
       child: Container(
         width: 174.0,
         height: 37.0,
         decoration: BoxDecoration(
-          color: isTapDown? AppColors.gray4 : AppColors.primary100,
+          color: _isTapDown? AppColors.gray4 : AppColors.primary100,
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Center(
           child: Text(
-            title,
+            widget.title,
             style: TextStyles.smallButtonTitle,
             maxLines: 1,
           ),

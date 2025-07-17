@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/enum/rating_type.dart';
-import 'package:flutter_recipe_app/core/enum/tap_state_type.dart';
 import 'package:flutter_recipe_app/data/model/label.dart';
 import 'package:flutter_recipe_app/presentation/component/button/big_button.dart';
 import 'package:flutter_recipe_app/presentation/component/button/filter_button.dart';
@@ -41,9 +40,6 @@ class _MainScreenState extends State<MainScreen> {
   int _selectedIndex = 0;
   bool _ratingSelected = false;
   bool _filterSelected = false;
-  bool _isBigButtonTapDown = false;
-  bool _isMediumButtonTapDown = false;
-  bool _isSmallButtonTapDown = false;
   int _ratingDialogRating = 0;
 
   void _onTabChange(int selectedIndex) {
@@ -98,51 +94,15 @@ class _MainScreenState extends State<MainScreen> {
             ),
             SmallButton(
               title: 'Button',
-              isTapDown: _isSmallButtonTapDown,
-              onTapStateChange: (tapState) {
-                setState(() {
-                  switch (tapState) {
-                    case TapStateType.onTapDown:
-                      _isSmallButtonTapDown = true;
-                      break;
-                    case TapStateType.onTapUp:
-                    case TapStateType.onTapCancel:
-                      _isSmallButtonTapDown = false;
-                  }
-                });
-              },
+              onClick: () {},
             ),
             MediumButton(
               title: 'Button',
-              isTapDown: _isMediumButtonTapDown,
-              onTapStateChange: (tapState) {
-                setState(() {
-                  switch (tapState) {
-                    case TapStateType.onTapDown:
-                      _isMediumButtonTapDown = true;
-                      break;
-                    case TapStateType.onTapUp:
-                    case TapStateType.onTapCancel:
-                      _isMediumButtonTapDown = false;
-                  }
-                });
-              },
+              onClick: () {},
             ),
             BigButton(
               title: 'Button',
-              isTapDown: _isBigButtonTapDown,
-              onTapStateChange: (tapState) {
-                setState(() {
-                  switch (tapState) {
-                    case TapStateType.onTapDown:
-                      _isBigButtonTapDown = true;
-                      break;
-                    case TapStateType.onTapUp:
-                    case TapStateType.onTapCancel:
-                      _isBigButtonTapDown = false;
-                  }
-                });
-              },
+              onClick: () {},
             ),
             InputFiled(
               label: 'Label',
