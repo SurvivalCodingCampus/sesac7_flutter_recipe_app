@@ -15,7 +15,8 @@ class RecipeDataSourceImpl implements RecipeDataSource {
 
   final http.Client _client;
 
-  RecipeDataSourceImpl({required http.Client client}) : _client = client;
+  RecipeDataSourceImpl({http.Client? client})
+    : _client = client ?? http.Client();
 
   @override
   Future<Response<List<RecipeDto>>> fetchAllRecipes() async {
