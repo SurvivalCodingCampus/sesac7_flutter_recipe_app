@@ -5,7 +5,7 @@ import '../../../ui/text_styles.dart';
 
 class SmallButton extends StatelessWidget {
   final String text;
-  final void Function(String)? onClick;
+  final void Function() onClick;
 
   const SmallButton({
     super.key,
@@ -16,9 +16,7 @@ class SmallButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        onClick?.call(text);
-      },
+      onTap: ()=> onClick(),
       child: Container(
         width: 174,
         height: 37,

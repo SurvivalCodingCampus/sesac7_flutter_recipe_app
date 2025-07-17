@@ -8,7 +8,8 @@ plugins {
 android {
     namespace = "com.example.flutter_recipe_app"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    // 여기에 플러그인이 요구하는 NDK 버전을 직접 지정합니다.
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
