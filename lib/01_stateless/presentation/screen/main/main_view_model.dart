@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/data/repository/person_repository.dart';
 
 class MainViewModel with ChangeNotifier {
-  PersonRepository _personRepository;
+  final PersonRepository _personRepository;
 
   MainViewModel({
     required PersonRepository personRepository,
