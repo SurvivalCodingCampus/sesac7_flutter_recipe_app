@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless_widget/ui/app_colors.dart';
 import 'package:flutter_recipe_app/01_stateless_widget/ui/text_styles.dart';
 
-class BigButton extends StatelessWidget {
+class BigButton extends StatefulWidget {
   final String text;
   final void Function() onClick;
 
@@ -13,18 +13,32 @@ class BigButton extends StatelessWidget {
   });
 
   @override
+  State<BigButton> createState() => _BigButtonState();
+}
+
+class _BigButtonState extends State<BigButton> {
+  bool isClicked = true;
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onClick,
-      child: Container(
+      onTap: () {
+        widget.onClick;
+
+        setState(() {
+          isClicked = !isClicked;
+        });
+      },
+      child: AnimatedContainer(
         // width: 315,
         height: 60,
         padding: EdgeInsets.fromLTRB(85, 18, 85, 18),
         margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
         decoration: BoxDecoration(
-          color: AppColors.primary100,
+          color: isClicked ? AppColors.primary100 : AppColors.gray4,
           borderRadius: BorderRadius.circular(10.0),
         ),
+        duration: Duration(milliseconds: 100),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -32,7 +46,7 @@ class BigButton extends StatelessWidget {
               width: 114,
               height: 24,
               child: Text(
-                text,
+                widget.text,
                 textAlign: TextAlign.center,
                 style: TextStyles.normalTextBold.copyWith(
                   color: AppColors.white,
@@ -42,13 +56,10 @@ class BigButton extends StatelessWidget {
             SizedBox(
               width: 11,
             ),
-            SizedBox(
-              width: 20,
-              height: 20,
-              child: Icon(
-                Icons.arrow_forward,
-                color: AppColors.white,
-              ),
+            Icon(
+              size: 20,
+              Icons.arrow_forward,
+              color: AppColors.white,
             ),
           ],
         ),

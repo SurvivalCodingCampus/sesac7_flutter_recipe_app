@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '01_stateless_widget/presentation/screen/main_screen.dart';
+import 'package:flutter_recipe_app/02_stateful_widget/presentation/screen/recipe_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const MainScreen(),
+      home: const RecipeScreen(),
     );
   }
 }

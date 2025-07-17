@@ -31,6 +31,10 @@ dependencies:
   flutter:
     sdk: flutter
 
+  http: ^1.4.0
+  result_dart: ^2.1.1
+  freezed_annotation: ^3.1.0
+
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
@@ -38,6 +42,14 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  build_runner: ^2.4.5
+  freezed: ^3.1.0
+  json_serializable: ^6.9.5
+  network_image_mock: ^2.1.1
+  integration_test:
+    sdk: flutter
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -67,6 +79,42 @@ flutter:
 
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/to/asset-from-package
+
+  assets:
+    - assets/font/ # 폰트 파일이 있는 폴더를 assets으로 등록
+
+  fonts:
+    - family: Poppins # Flutter 코드에서 사용할 폰트 패밀리 이름 (원하는 대로 지정 가능)
+      fonts:
+        - asset: assets/font/Poppins/Poppins-Regular.ttf # 일반 두께 폰트 파일 경로
+        #  weight: 400 # 기본값은 400 (normal)이므로 생략 가능
+
+        - asset: assets/font/Poppins/Poppins-Italic.ttf
+          style: italic # 이탤릭체 스타일
+
+        - asset: assets/font/Poppins/Poppins-Light.ttf
+          weight: 300 # Light 두께
+
+        - asset: assets/font/Poppins/Poppins-Medium.ttf
+          weight: 500 # Medium 두께
+
+        - asset: assets/font/Poppins/Poppins-SemiBold.ttf
+          weight: 600 # SemiBold 두께
+
+        - asset: assets/font/Poppins/Poppins-Bold.ttf
+          weight: 700 # Bold 두께 (FontWeight.bold에 해당)
+
+        - asset: assets/font/Poppins/Poppins-ExtraBold.ttf
+          weight: 800 # ExtraBold 두께
+
+        - asset: assets/font/Poppins/Poppins-Black.ttf
+          weight: 900 # Black (가장 두꺼운) 두께
+
+        # 필요한 경우 다른 스타일이나 두께의 폰트 파일들을 여기에 추가합니다.
+        # 예: Poppins-BoldItalic.ttf (weight: 700, style: italic)
+        # - asset: assets/fonts/Poppins-BoldItalic.ttf
+        #   weight: 700
+        #   style: italic
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
