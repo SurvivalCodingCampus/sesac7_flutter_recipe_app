@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/data/model/recipe.dart';
 import 'package:flutter_recipe_app/presentation/components/buttons/big_button.dart';
 import 'package:flutter_recipe_app/presentation/components/buttons/filter_button.dart';
 import 'package:flutter_recipe_app/presentation/components/buttons/rating_button.dart';

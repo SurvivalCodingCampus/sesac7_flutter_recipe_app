@@ -1,110 +1,102 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/data/model/recipe.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class RecipeCard extends StatelessWidget {
   final Recipe recipe;
+  
   const RecipeCard({required this.recipe});
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10)
+      ),
       width: double.infinity,
       height: 150,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            child: Image.network(
-              recipe.imageUrl,
-              fit: BoxFit.cover,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: Image.network(
+                recipe.imageUrl,
+                fit: BoxFit.cover,
+              ),
             ),
-          ),
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.black.withAlpha(0),
-                    Colors.black.withAlpha(100),
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
+            Positioned.fill(
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Colors.black.withAlpha(0),
+                      Colors.black.withAlpha(100),
+                    ],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
                 ),
               ),
             ),
-          ),
-          Positioned(
-            bottom: 10,
-            left: 10,
-            right: 150, // Ensures text can wrap if the text is long
-            child: Text(
-              recipe.chef,
-              style: TextStyles.smallerTextRegular.copyWith(
-                color: AppColors.gray4,
+            Positioned(
+              bottom: 10,
+              left: 10,
+              right: 150, // Ensures text can wrap if the text is long
+              child: Text(
+                recipe.chef,
+                style: TextStyles.smallerTextRegular.copyWith(
+                  color: AppColors.gray4,
+                ),
               ),
             ),
-          ),
-          Positioned(
-            bottom: 22,
-            left: 10,
-            right: 150, // Ensures text can wrap if the text is long
-            child: Text(
-              recipe.name,
-              style: TextStyles.smallTextBold.copyWith(
-                color: AppColors.white,
+            Positioned(
+              bottom: 22,
+              left: 10,
+              right: 150, // Ensures text can wrap if the text is long
+              child: Text(
+                recipe.name,
+                style: TextStyles.smallTextBold.copyWith(
+                  color: AppColors.white,
+                ),
               ),
             ),
-          ),
-          Positioned(
-            bottom: 13.5,
-            right: 44,
-            child: CookingTimeWidget(cookingTime: recipe.cookingTime),
-          ),
-          Positioned(
-            bottom: 10,
-            right: 10,
-            child: Container(
-              width: 24,
-              height: 24,
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: Icon(
-                Icons.bookmark,
-                size: 16,
-                color: AppColors.primary80,
+            Positioned(
+              bottom: 13.5,
+              right: 44,
+              child: CookingTimeWidget(cookingTime: recipe.cookingTime),
+            ),
+            Positioned(
+              bottom: 10,
+              right: 10,
+              child: Container(
+                width: 24,
+                height: 24,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Icon(
+                  Icons.bookmark,
+                  size: 16,
+                  color: AppColors.primary80,
+                ),
               ),
             ),
-          ),
-          Positioned(
-            top: 10,
-            right: 10,
-            child: RatingWidget(rating: recipe.rating),
-          ),
-        ],
+            Positioned(
+              top: 10,
+              right: 10,
+              child: RatingWidget(rating: recipe.rating),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
 
-class Recipe {
-  final String name;
-  final String imageUrl;
-  final String chef;
-  final String cookingTime;
-  final double rating;
-  final void Function() onChangeFavorite;
 
-  const Recipe({
-    required this.name,
-    required this.imageUrl,
-    required this.chef,
-    required this.cookingTime,
-    required this.rating,
-    required this.onChangeFavorite,
-  });
-}
 
 class CookingTimeWidget extends StatelessWidget {
   final String cookingTime;
