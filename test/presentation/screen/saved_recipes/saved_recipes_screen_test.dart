@@ -25,7 +25,7 @@ void main() {
   }
 
   group('SavedRecipesScreen', () {
-    testWidgets('데이터가 없을 때 "No saved recipes found." 메시지를 표시한다', (tester) async {
+    testWidgets('displays "No saved recipes found." message when there is no data', (tester) async {
       // Arrange
       when(mockViewModel.savedRecipes).thenReturn([]);
       when(mockViewModel.errorMessage).thenReturn(null);
@@ -38,7 +38,7 @@ void main() {
       expect(find.byType(ListView), findsNothing);
     });
 
-    testWidgets('에러 메시지가 있을 때 에러 메시지를 표시한다', (tester) async {
+    testWidgets('displays an error message when there is an error', (tester) async {
       // Arrange
       const errorMessage = 'An error occurred';
       when(mockViewModel.savedRecipes).thenReturn([]);
@@ -52,7 +52,7 @@ void main() {
       expect(find.byType(ListView), findsNothing);
     });
 
-    testWidgets('데이터가 있을 때 RecipeCard 리스트를 표시한다', (tester) async {
+    testWidgets('displays a list of RecipeCards when data is available', (tester) async {
       // Arrange
       final recipes = [
         Recipe(

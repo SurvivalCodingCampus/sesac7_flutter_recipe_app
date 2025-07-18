@@ -19,7 +19,7 @@ void main() {
   final repository = RecipeRepositoryImpl(recipeDataSource: mockDataSource);
 
   group('fetchAllRecipes', () {
-    test('성공 케이스: 정상적인 데이터를 수신했을 때', () async {
+    test('should return success when receiving valid data', () async {
       // Arrange
       final mockResponse = Response(
         statusCode: 200,
@@ -51,7 +51,7 @@ void main() {
       verify(mockDataSource.fetchAllRecipes()).called(1);
     });
 
-    test('실패 케이스: 네트워크 오류 (TimeoutException)', () async {
+    test('Failure Case: Network Error (TimeoutException)', () async {
       // Arrange
       when(
         mockDataSource.fetchAllRecipes(),
@@ -69,7 +69,7 @@ void main() {
       verify(mockDataSource.fetchAllRecipes()).called(1);
     });
 
-    test('실패 케이스: 데이터 파싱 오류 (FormatException)', () async {
+    test('Failure case: Data parsing error (FormatException)', () async {
       // Arrange
       when(
         mockDataSource.fetchAllRecipes(),
@@ -87,7 +87,7 @@ void main() {
       verify(mockDataSource.fetchAllRecipes()).called(1);
     });
 
-    test('실패 케이스: 알 수 없는 오류', () async {
+    test('Failure case: unknown error', () async {
       // Arrange
       when(
         mockDataSource.fetchAllRecipes(),
@@ -105,7 +105,7 @@ void main() {
       verify(mockDataSource.fetchAllRecipes()).called(1);
     });
 
-    test('실패 케이스: HTTP 상태 코드 오류', () async {
+    test('Failure case: HTTP status code error', () async {
       // Arrange
       final mockResponse = Response<List<RecipeDto>>(
         statusCode: 404,
@@ -128,7 +128,7 @@ void main() {
       verify(mockDataSource.fetchAllRecipes()).called(1);
     });
 
-    test('엣지 케이스: 빈 데이터 리스트를 수신했을 때', () async {
+    test('Edge case: when an empty list is received', () async {
       // Arrange
       final mockResponse = Response<List<RecipeDto>>(
         statusCode: 200,
@@ -155,33 +155,36 @@ void main() {
       verify(mockDataSource.fetchAllRecipes()).called(1);
     });
 
-    test('엣지 케이스: 유효하지 않은 ID를 포함하는 데이터를 필터링하는지 검증', () async {
-      // Arrange
-      final mockResponse = Response(
-        statusCode: 200,
-        headers: {},
-        body: [
-          RecipeDto(id: 1, name: 'Valid Recipe'),
-          RecipeDto(id: null, name: 'Invalid Recipe'),
-        ],
-      );
-      when(
-        mockDataSource.fetchAllRecipes(),
-      ).thenAnswer((_) async => mockResponse);
+    test(
+      'Edge case: verifies that data with an invalid ID is filtered',
+      () async {
+        // Arrange
+        final mockResponse = Response(
+          statusCode: 200,
+          headers: {},
+          body: [
+            RecipeDto(id: 1, name: 'Valid Recipe'),
+            RecipeDto(id: null, name: 'Invalid Recipe'),
+          ],
+        );
+        when(
+          mockDataSource.fetchAllRecipes(),
+        ).thenAnswer((_) async => mockResponse);
 
-      // Act
-      final result = await repository.fetchAllRecipes();
+        // Act
+        final result = await repository.fetchAllRecipes();
 
-      // Assert
-      expect(result, isA<Result<List<Recipe>, NetworkError>>());
-      final successData = result.when(
-        success: (data) => data,
-        error: (_) => null,
-      );
-      expect(successData, isNotNull);
-      expect(successData?.length, 1);
-      expect(successData?.first.name, 'Valid Recipe');
-      verify(mockDataSource.fetchAllRecipes()).called(1);
-    });
+        // Assert
+        expect(result, isA<Result<List<Recipe>, NetworkError>>());
+        final successData = result.when(
+          success: (data) => data,
+          error: (_) => null,
+        );
+        expect(successData, isNotNull);
+        expect(successData?.length, 1);
+        expect(successData?.first.name, 'Valid Recipe');
+        verify(mockDataSource.fetchAllRecipes()).called(1);
+      },
+    );
   });
 }

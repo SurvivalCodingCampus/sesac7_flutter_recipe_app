@@ -62,7 +62,7 @@ void main() {
     ];
 
     test(
-      '성공 케이스: 레시피를 성공적으로 불러오면, savedRecipes가 업데이트되고 errorMessage는 null이다',
+      'Success case: When recipes are fetched successfully, savedRecipes is updated and errorMessage is null',
       () async {
         // Arrange
         final successResult = Result<List<Recipe>, NetworkError>.success(
@@ -84,7 +84,7 @@ void main() {
     );
 
     test(
-      '실패 케이스: 레시피를 불러오는 데 실패하면, errorMessage가 업데이트되고 savedRecipes는 비어있다',
+      'Failure case: When fetching recipes fails, errorMessage is updated and savedRecipes is empty',
       () async {
         // Arrange
         final errorResult = Result<List<Recipe>, NetworkError>.error(

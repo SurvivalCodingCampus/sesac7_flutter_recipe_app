@@ -4,7 +4,7 @@ import 'package:flutter_recipe_app/presentation/screen/splash/splash_screen.dart
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('SplashScreen 위젯 렌더링 및 상호작용 테스트', (WidgetTester tester) async {
+  testWidgets('SplashScreen widget rendering and interaction test', (WidgetTester tester) async {
     // Arrange
     await tester.pumpWidget(const MaterialApp(
       home: SplashScreen(),
