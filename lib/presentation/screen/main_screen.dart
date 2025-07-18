@@ -4,6 +4,7 @@ import 'package:flutter_recipe_app/presentation/component/button/medium_button.d
 
 import '../component/button/small_button.dart';
 import '../component/button/test_button.dart';
+import '../component/card/recipe_card.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -18,8 +19,7 @@ class MainScreen extends StatelessWidget {
           children: [
             SmallButton(
               text: 'Button',
-              onClick: (String text) {
-                print(text);
+              onClick: () {
               },
             ),
             SizedBox(height: 16),
@@ -43,6 +43,7 @@ class MainScreen extends StatelessWidget {
                 print(text);
               },
             ),
+            RecipeCard(),
           ],
         ),
       ),
