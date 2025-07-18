@@ -1,0 +1,53 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../../../ui/app_colors.dart';
+import '../../../ui/text_styles.dart';
+
+class BigButton extends StatelessWidget {
+  final String text;
+  final void Function() onClick;
+
+  const BigButton({super.key, required this.text, required this.onClick});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: 60,
+      decoration: BoxDecoration(
+        color: AppColors.primary100,
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Center(
+        child: Row(
+          children: [
+            const Spacer(),
+            SizedBox(
+              width: 114,
+              height: 24,
+              child: Center(
+                child: Text(
+                  text,
+                  style: GoogleFonts.poppins(
+                    textStyle: TextStyles.normalTextBold,
+                    color: Colors.white
+                  )
+                )
+              ),
+            ),
+            const SizedBox(
+              width: 11,
+            ),
+            const Icon(
+              Icons.arrow_forward,
+              size: 20,
+              color: Colors.white
+            ),
+            const Spacer(),
+          ],
+        ),
+      ),
+    );
+  }
+}
