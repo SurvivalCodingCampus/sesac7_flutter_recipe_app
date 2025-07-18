@@ -1,4 +1,4 @@
-package com.example.recipeapp.presentation.component
+package com.example.recipeapp.presentation.component.button
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.background
@@ -18,28 +18,48 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.recipeapp.ui.theme.ButtonTitleTypography
+import com.example.recipeapp.ui.theme.Gray4
 import com.example.recipeapp.ui.theme.Primary100
+import com.example.recipeapp.ui.theme.White
 
 @Composable
 fun BigButton(
+    modifier: Modifier = Modifier,
     title: String,
     onClick: (() -> Unit)? = null,
-    @SuppressLint("ModifierParameter") modifier: Modifier = Modifier
 ) {
+    var isTapDown by remember { mutableStateOf(false) }
     Box(
         modifier = modifier
             .fillMaxWidth()
             .height(60.dp)
             .clip(RoundedCornerShape(10.dp))
-            .background(Primary100)
-            .clickable(enabled = onClick != null) { onClick?.invoke() },
+            .background(if (isTapDown) Gray4 else Primary100)
+            .pointerInput(Unit) {
+                awaitPointerEventScope {
+                    while (true) {
+                        val event = awaitPointerEvent()
+                        val pointer = event.changes.first()
+
+                        isTapDown = pointer.pressed
+                    }
+                }
+            }
+            .clickable(enabled = onClick != null) {
+                onClick?.invoke()
+            },
         contentAlignment = Alignment.Center
     ) {
         Row(
@@ -70,6 +90,7 @@ fun BigButton(
                     .size(20.dp),
                 imageVector = Icons.Default.ArrowForward,
                 contentDescription = null,
+                tint = White
             )
         }
     }
@@ -79,6 +100,8 @@ fun BigButton(
 @Composable
 fun BigButtonPreview() {
     MaterialTheme {
-        BigButton(title = "Button")
+        BigButton(title = "Button", onClick = {
+            print("click!")
+        })
     }
 }
