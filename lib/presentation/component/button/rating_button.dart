@@ -23,7 +23,6 @@ class RatingButton extends StatelessWidget {
         width: 50,
         height: 28,
         padding: const EdgeInsets.symmetric(
-          horizontal: 10,
           vertical: 5,
         ),
         alignment: Alignment.center,
@@ -36,6 +35,7 @@ class RatingButton extends StatelessWidget {
         ),
         child: Row(
           spacing: 5,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               text,
@@ -45,7 +45,7 @@ class RatingButton extends StatelessWidget {
             ),
             Icon(
               Icons.star,
-              size: 15,
+              size: 18,
               color: isSelected ? AppColors.white : AppColors.primary80,
             ),
           ],
