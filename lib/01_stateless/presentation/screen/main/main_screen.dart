@@ -17,6 +17,8 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = viewModel.state;
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -25,7 +27,7 @@ class MainScreen extends StatelessWidget {
           children: [
             Text(
               key: Key('count'),
-              '${viewModel.count}',
+              '${state.count}',
             ),
             SmallButton(
               key: Key('small_button'),
@@ -50,7 +52,7 @@ class MainScreen extends StatelessWidget {
                 print(rating);
               },
             ),
-            Text('별점 : ${viewModel.score}'),
+            Text('별점 : ${state.score}'),
             ElevatedButton(
               key: Key('dialog_button'),
               onPressed: () {
@@ -59,7 +61,7 @@ class MainScreen extends StatelessWidget {
                   builder: (_) {
                     return UnconstrainedBox(
                       child: RatingDialog(
-                        score: viewModel.score,
+                        score: state.score,
                         title: '제목',
                         actionName: '별점',
                         onChange: (int rating) {
@@ -79,10 +81,10 @@ class MainScreen extends StatelessWidget {
               onTap: viewModel.fetchPersonData,
             ),
             Text(
-              '${viewModel.name}, ${viewModel.age}',
+              '${state.name}, ${state.age}',
               style: TextStyle(fontSize: 40),
             ),
-            if (viewModel.isLoading)
+            if (state.isLoading)
               Center(
                 child: const CircularProgressIndicator(),
               ),
