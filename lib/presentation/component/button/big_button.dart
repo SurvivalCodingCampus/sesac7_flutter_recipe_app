@@ -18,53 +18,57 @@ class BigButton extends StatefulWidget {
 }
 
 class _BigButtonState extends State<BigButton> {
-
-  bool isDisabled = false;
+  // 이미 _으로 프라이빗하게 되어있어서 외부에서 접근은 불가
+  // 필드에 프라이빗한 필드를 사용해서 의도와 가독성을 높임
+  bool isPressed = false;
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: GestureDetector(
-        onTapDown: (_) {
-          setState(() {
-            isDisabled = true;
-          });
-        },
-        onTapUp: (_) {
-          setState(() {
-            isDisabled = false;
-          });
-        },
-        onTap: () {
-          if (!isDisabled) {
-            widget.onTap();
-          }
-        },
-        child: Container(
-          height: 60,
-          decoration: BoxDecoration(
-            color: isDisabled ? AppColors.gray4 : AppColors.primary100,
-            borderRadius: BorderRadius.circular(10.0),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Text(
-                widget.text,
-                style: const TextStyle(
-                  color: AppColors.white,
-                  fontSize: 16,
-                ),
-              ),
-              const SizedBox(width: 11),
-              Icon(
-                Icons.arrow_forward,
+    return GestureDetector(
+      onTapDown: (_) {
+        setState(() {
+          isPressed = true;
+        });
+      },
+      onTapUp: (_) {
+        setState(() {
+          isPressed = false;
+        });
+      },
+      onTapCancel: (){
+        setState(() {
+          isPressed = false;
+        });
+      },
+      onTap: () {
+        if (!isPressed) {
+          isPressed = false;
+        } widget.onTap();
+      },
+      child: Container(
+        height: 60,
+        decoration: BoxDecoration(
+          color: isPressed ? AppColors.gray4 : AppColors.primary100,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Text(
+              widget.text,
+              style: const TextStyle(
                 color: AppColors.white,
-                size: 16
-              ),// Text(text),
-            ],
-          ),
+                fontSize: 16,
+              ),
+            ),
+            const SizedBox(width: 11),
+            Icon(
+              Icons.arrow_forward,
+              color: AppColors.white,
+              size: 16
+            ),// Text(text),
+          ],
         ),
       ),
     );
