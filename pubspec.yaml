@@ -13,6 +13,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   google_fonts: ^6.2.1
   freezed_annotation: ^3.1.0
+  http: ^1.4.0
+  mockito: ^5.4.6
 
 dev_dependencies:
   flutter_test:
@@ -26,3 +28,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/images/splash/

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/data/model/recipe.dart';
+import 'package:flutter_recipe_app/data/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/presentation/component/constants/component_constant.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
@@ -131,7 +131,7 @@ class RecipeCard extends StatelessWidget {
                           color: AppColors.gray4,
                         ),
                         Text(
-                          '${recipe.cookingTime.inMinutes} min',
+                          recipe.cookingTime,
                           style: TextStyles.smallerTextRegular.copyWith(
                             color: AppColors.gray4,
                           ),

@@ -7,7 +7,6 @@ class MediumButton extends StatefulWidget {
   static const double width = 243;
   static const double height = 54;
   static const double spacing = 9;
-  static const double textWidth = 114;
   static const int textMaxLines = 1;
 
   final String text;
@@ -48,6 +47,7 @@ class _MediumButtonState extends State<MediumButton> {
       child: Container(
         width: MediumButton.width,
         height: MediumButton.height,
+        padding: const EdgeInsets.symmetric(vertical: 15),
         decoration: BoxDecoration(
           color: isEnabled ? AppColors.primary100 : AppColors.gray4,
           borderRadius: BorderRadius.circular(ComponentConstant.borderRadius),
@@ -56,18 +56,13 @@ class _MediumButtonState extends State<MediumButton> {
           spacing: MediumButton.spacing,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(
-              width: MediumButton.textWidth,
-              child: Center(
-                child: Text(
-                  widget.text,
-                  style: TextStyles.normalTextBold.copyWith(
-                    color: AppColors.white,
-                  ),
-                  maxLines: MediumButton.textMaxLines,
-                  overflow: TextOverflow.ellipsis,
-                ),
+            Text(
+              widget.text,
+              style: TextStyles.normalTextBold.copyWith(
+                color: AppColors.white,
               ),
+              maxLines: MediumButton.textMaxLines,
+              overflow: TextOverflow.ellipsis,
             ),
             Icon(
               Icons.arrow_forward,

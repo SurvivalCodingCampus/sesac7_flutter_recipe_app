@@ -25,8 +25,7 @@ class _RatingDialogState extends State<RatingDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      insetPadding: EdgeInsets.zero,
+    return UnconstrainedBox(
       child: Container(
         width: 170,
         height: 91,
@@ -38,7 +37,6 @@ class _RatingDialogState extends State<RatingDialog> {
           color: AppColors.white,
           borderRadius: BorderRadius.circular(8),
         ),
-        // TODO: Column 가로 사이즈 조절 필요
         child: Column(
           spacing: 5,
           mainAxisAlignment: MainAxisAlignment.center,
