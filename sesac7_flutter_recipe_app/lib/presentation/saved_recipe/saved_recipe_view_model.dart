@@ -24,5 +24,6 @@ class SavedRecipeViewModel with ChangeNotifier {
         // todo 에러 처리
         break;
     }
+    notifyListeners();
   }
 }
