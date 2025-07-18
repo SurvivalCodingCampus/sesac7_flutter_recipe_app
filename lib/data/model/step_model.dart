@@ -1,7 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'step_model.freezed.dart';
-
 part 'step_model.g.dart';
 
 @freezed
