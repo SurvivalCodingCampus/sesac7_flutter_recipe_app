@@ -1,5 +1,3 @@
-import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/data/model/recipe.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
