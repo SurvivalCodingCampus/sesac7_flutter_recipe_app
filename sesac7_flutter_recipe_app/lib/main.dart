@@ -6,12 +6,12 @@ import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_screen
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_view_model.dart';
 import 'package:flutter_recipe_app/presentation/splash/splash_screen.dart';
 
-void main() {
+void main() async {
   // runApp(const MyApp());
   final SavedRecipeViewModel savedRecipeViewModel = SavedRecipeViewModel(
     RecipeRepositoryImpl(RecipeDataSourceImpl()),
   );
-  savedRecipeViewModel.fetchRecipes();
+  await savedRecipeViewModel.fetchRecipes();
 
   runApp(
     SavedRecipeApp(
