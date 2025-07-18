@@ -57,8 +57,7 @@ class MainScreen extends StatelessWidget {
                 showDialog(
                   context: context,
                   builder: (_) {
-                    return Dialog(
-                      insetPadding: EdgeInsets.zero,
+                    return UnconstrainedBox(
                       child: RatingDialog(
                         score: viewModel.score,
                         title: '제목',
