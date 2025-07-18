@@ -1,3 +1,5 @@
+import 'dart:nativewrappers/_internal/vm/lib/ffi_allocation_patch.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/data/model/recipe.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
@@ -23,6 +25,9 @@ class RecipeCard extends StatelessWidget {
           image: DecorationImage(
             image: NetworkImage(recipe.image),
             fit: BoxFit.cover,
+            onError: (exception, stacktrace) {
+              throw Exception('RecipeCard Image Load Error');
+            }
           ),
           borderRadius: BorderRadius.circular(10.0),
         ),
