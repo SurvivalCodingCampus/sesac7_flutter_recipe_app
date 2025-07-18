@@ -1,9 +1,9 @@
-class RecipiesDto {
-  RecipiesDto({
+class RecipeDto {
+  RecipeDto({
     this.recipes,
   });
 
-  RecipiesDto.fromJson(dynamic json) {
+  RecipeDto.fromJson(dynamic json) {
     if (json['recipes'] != null) {
       recipes = [];
       json['recipes'].forEach((v) {
