@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/01_stateless/data/data_source/recipe_data_source_impl.dart';
 import 'package:flutter_recipe_app/01_stateless/data/repository/person_repository_impl.dart';
+import 'package:flutter_recipe_app/01_stateless/data/repository/recipe_repository_impl.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/main/main_screen.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/main/main_view_model.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/saved_recipes/saved_recipes_screen.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/saved_recipes/saved_recipes_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -14,6 +18,46 @@ void main() {
     viewModel = MainViewModel(
       personRepository: PersonRepositoryImpl(),
     );
+  });
+
+  testWidgets('SavedRecipes', (tester) async {
+    final savedRecipesViewModel = SavedRecipesViewModel(
+      recipeRepository: RecipeRepositoryImpl(
+        recipeDataSource: RecipeDataSourceImpl(
+          baseUrl:
+          'https://raw.githubusercontent.com/junsuk5/mock_json/refs/heads/main',
+        ),
+      ),
+    );
+    await savedRecipesViewModel.fetchRecipes();
+
+    await tester.pumpWidget(
+      MaterialApp(
+        home: ListenableBuilder(
+          listenable: savedRecipesViewModel,
+          builder: (context, child) {
+            return SavedRecipesScreen(
+              viewModel: savedRecipesViewModel,
+            );
+          },
+        ),
+      ),
+    );
+
+    await tester.pumpAndSettle();
+
+    final recipeItem10Finder = find.textContaining('id: 10');
+
+    await tester.scrollUntilVisible(
+      recipeItem10Finder, // 찾으려는 위젯
+      500.0, // 한 번에 스크롤할 양 (픽셀)
+      scrollable: find.byType(Scrollable), // 스크롤 가능한 위젯의 타입
+    );
+
+    await tester.pumpAndSettle();
+
+    expect(recipeItem10Finder, findsOneWidget);
+
   });
 
   testWidgets('dialog test', (tester) async {
