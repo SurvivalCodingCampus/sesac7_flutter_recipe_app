@@ -1,7 +1,7 @@
 import 'package:flutter_recipe_app/data/model/recipe/filter_category.dart';
-import 'package:flutter_recipe_app/data/model/recipe/filter_rate.dart';
 import 'package:flutter_recipe_app/data/model/recipe/filter_sort_by.dart';
 import 'package:flutter_recipe_app/data/model/recipe/recipe.dart';
+import 'package:flutter_recipe_app/presentation/screen/search_recipe/filter_search_state.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part "search_recipe_state.freezed.dart";
@@ -12,13 +12,12 @@ abstract class SearchRecipeState with _$SearchRecipeState {
   static const String searchResult = 'Search Result';
 
   const factory SearchRecipeState({
-    @Default([]) List<Recipe> recipes,
+    @Default([]) List<Recipe> allRecipes,
+    @Default([]) List<Recipe> filteredRecipes,
     @Default(SearchRecipeState.recentSearch) String searchState,
     @Default('') String searchFieldValue,
     @Default(0) int resultCount,
-    @Default(FilterSortBy.all) FilterSortBy filterSortBy,
-    @Default(null) FilterRate? filterRate,
-    @Default(FilterCategory.all) FilterCategory filterCategory,
+    @Default(FilterSearchState()) FilterSearchState filterState,
     @Default(null) String? errorMessage,
     @Default(true) bool isLoading,
   }) = _SearchRecipeState;
