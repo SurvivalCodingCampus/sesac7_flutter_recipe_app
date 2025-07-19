@@ -51,13 +51,15 @@ class _SmallButtonState extends State<SmallButton> {
           color: isEnabled ? AppColors.primary100 : AppColors.gray4,
           borderRadius: BorderRadius.circular(ComponentConstant.borderRadius),
         ),
-        child: Text(
-          widget.text,
-          style: TextStyles.smallerTextBold.copyWith(
-            color: AppColors.white,
+        child: Center(
+          child: Text(
+            widget.text,
+            style: TextStyles.smallerTextBold.copyWith(
+              color: AppColors.white,
+            ),
+            maxLines: SmallButton.textMaxLines,
+            overflow: TextOverflow.ellipsis,
           ),
-          maxLines: SmallButton.textMaxLines,
-          overflow: TextOverflow.ellipsis,
         ),
       ),
     );
