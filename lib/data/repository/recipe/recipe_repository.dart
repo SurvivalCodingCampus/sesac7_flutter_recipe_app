@@ -9,7 +9,7 @@ abstract interface class RecipeRepository {
   Future<Result<List<Recipe>, NetworkError>> fetchAllRecipes();
   Future<Result<List<Recipe>, NetworkError>> searchRecipes(String keyword);
   Future<Result<List<Recipe>, NetworkError>> filterRecipes({
-    String keyword,
+    required String keyword,
     FilterSortBy? filterSortBy,
     FilterRate? filterRate,
     FilterCategory? filterCategory,
