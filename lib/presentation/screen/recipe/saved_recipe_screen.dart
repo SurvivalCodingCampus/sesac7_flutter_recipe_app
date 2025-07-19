@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/presentation/component/widget/recipe_thumbnail.dart';
-import 'package:flutter_recipe_app/presentation/screen/recipe/recipe_view_model.dart';
+import 'package:flutter_recipe_app/presentation/component/widget/big_recipe_card.dart';
+import 'package:flutter_recipe_app/presentation/screen/recipe/saved_recipe_view_model.dart';
 
 class SavedRecipeScreen extends StatelessWidget {
   final RecipeViewModel viewModel;
@@ -56,7 +56,7 @@ class SavedRecipeScreen extends StatelessWidget {
 
             return Padding(
               padding: const EdgeInsets.only(bottom: 15.0),
-              child: RecipeThumbnail(
+              child: BigRecipeCard(
                 userName: recipe.chef,
                 firstLine: recipe.name,
                 rating: recipe.rating,
