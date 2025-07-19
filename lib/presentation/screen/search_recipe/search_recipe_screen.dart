@@ -4,6 +4,7 @@ import 'package:flutter_recipe_app/data/repository/recipe/recipe_repository_impl
 import 'package:flutter_recipe_app/presentation/component/button/search_filter_button.dart';
 import 'package:flutter_recipe_app/presentation/component/input/search_field.dart';
 import 'package:flutter_recipe_app/presentation/component/list_item/recipe_search_card.dart';
+import 'package:flutter_recipe_app/presentation/screen/search_recipe/filter_search_bottom_sheet.dart';
 import 'package:flutter_recipe_app/presentation/screen/search_recipe/search_recipe_state.dart';
 import 'package:flutter_recipe_app/presentation/screen/search_recipe/search_recipe_view_model.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
@@ -19,7 +20,8 @@ class SearchRecipeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final recipes = viewModel.state.filteredRecipes;
+    final state = viewModel.state;
+    final recipes = state.filteredRecipes;
 
     return Scaffold(
       appBar: AppBar(
@@ -43,20 +45,32 @@ class SearchRecipeScreen extends StatelessWidget {
                       onValueChange: viewModel.searchRecipe,
                     ),
                   ),
-                  SearchFilterButton(onTap: () {}),
+                  SearchFilterButton(
+                    onTap: () {
+                      showBottomSheet(
+                        context: context,
+                        builder: (context) => FilterSearchBottomSheet(
+                          filterState: state.filterState,
+                          onFilterChange: (filterState) {
+                            viewModel.selectFilter(filterState);
+                            Navigator.pop(context);
+                          },
+                        ),
+                      );
+                    },
+                  ),
                 ],
               ),
               Row(
                 children: [
                   Text(
-                    viewModel.state.searchState,
+                    state.searchState,
                     style: TextStyles.normalTextBold,
                   ),
                   const Spacer(),
-                  if (viewModel.state.searchState ==
-                      SearchRecipeState.searchResult)
+                  if (state.searchState == SearchRecipeState.searchResult)
                     Text(
-                      '${viewModel.state.resultCount} results',
+                      '${state.resultCount} results',
                       style: TextStyles.smallerTextRegular.copyWith(
                         color: AppColors.gray3,
                       ),
@@ -93,11 +107,13 @@ void main() async {
   await viewModel.fetchRecipe();
   runApp(
     MaterialApp(
-      home: ListenableBuilder(
-        listenable: viewModel,
-        builder: (context, child) {
-          return SearchRecipeScreen(viewModel: viewModel);
-        },
+      home: Scaffold(
+        body: ListenableBuilder(
+          listenable: viewModel,
+          builder: (context, child) {
+            return SearchRecipeScreen(viewModel: viewModel);
+          },
+        ),
       ),
     ),
   );
