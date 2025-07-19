@@ -35,7 +35,7 @@ dependencies:
   result_dart: ^2.1.1
   freezed_annotation: ^3.1.0
 
-  # The following adds the Cupertino Icons font to your application.
+  # The following adds the Cupertino Icons fonts to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
 
@@ -64,7 +64,7 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
 
-  # The following line ensures that the Material Icons font is
+  # The following line ensures that the Material Icons fonts is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
@@ -74,40 +74,43 @@ flutter:
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
 
-  # An image asset can refer to one or more resolution-specific "variants", see
+  # An images asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/to/asset-from-package
 
   assets:
-    - assets/font/ # 폰트 파일이 있는 폴더를 assets으로 등록
+    - assets/images/splash_screen_background.jpg
+    - assets/images/splash_screen_logo.png
+
+    - assets/fonts/ # 폰트 파일이 있는 폴더를 assets으로 등록
 
   fonts:
     - family: Poppins # Flutter 코드에서 사용할 폰트 패밀리 이름 (원하는 대로 지정 가능)
       fonts:
-        - asset: assets/font/Poppins/Poppins-Regular.ttf # 일반 두께 폰트 파일 경로
+        - asset: assets/fonts/Poppins/Poppins-Regular.ttf # 일반 두께 폰트 파일 경로
         #  weight: 400 # 기본값은 400 (normal)이므로 생략 가능
 
-        - asset: assets/font/Poppins/Poppins-Italic.ttf
+        - asset: assets/fonts/Poppins/Poppins-Italic.ttf
           style: italic # 이탤릭체 스타일
 
-        - asset: assets/font/Poppins/Poppins-Light.ttf
+        - asset: assets/fonts/Poppins/Poppins-Light.ttf
           weight: 300 # Light 두께
 
-        - asset: assets/font/Poppins/Poppins-Medium.ttf
+        - asset: assets/fonts/Poppins/Poppins-Medium.ttf
           weight: 500 # Medium 두께
 
-        - asset: assets/font/Poppins/Poppins-SemiBold.ttf
+        - asset: assets/fonts/Poppins/Poppins-SemiBold.ttf
           weight: 600 # SemiBold 두께
 
-        - asset: assets/font/Poppins/Poppins-Bold.ttf
+        - asset: assets/fonts/Poppins/Poppins-Bold.ttf
           weight: 700 # Bold 두께 (FontWeight.bold에 해당)
 
-        - asset: assets/font/Poppins/Poppins-ExtraBold.ttf
+        - asset: assets/fonts/Poppins/Poppins-ExtraBold.ttf
           weight: 800 # ExtraBold 두께
 
-        - asset: assets/font/Poppins/Poppins-Black.ttf
+        - asset: assets/fonts/Poppins/Poppins-Black.ttf
           weight: 900 # Black (가장 두꺼운) 두께
 
         # 필요한 경우 다른 스타일이나 두께의 폰트 파일들을 여기에 추가합니다.
@@ -118,8 +121,8 @@ flutter:
 
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
+  # "family" key with the fonts family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the fonts. For
   # example:
   # fonts:
   #   - family: Schyler
