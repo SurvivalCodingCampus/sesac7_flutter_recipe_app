@@ -8,8 +8,6 @@ class InputField extends StatelessWidget {
   static const double spacing = 5;
   static const double labelHeight = 21;
   static const double inputHeight = 55;
-  static const double cursorHeight = 17;
-  static const double cursorWidth = 1;
   static const double borderWidth = 1.5;
   static const EdgeInsetsGeometry inputPadding = EdgeInsets.only(
     left: 20,
@@ -49,9 +47,9 @@ class InputField extends StatelessWidget {
             height: inputHeight,
             child: TextFormField(
               initialValue: value,
-              cursorHeight: cursorHeight,
+              cursorHeight: ComponentConstant.cursorHeight,
               cursorColor: AppColors.black,
-              cursorWidth: cursorWidth,
+              cursorWidth: ComponentConstant.cursorWidth,
               onChanged: onValueChange,
               decoration: InputDecoration(
                 contentPadding: inputPadding,
