@@ -23,10 +23,25 @@ class _BigButtonState extends State<BigButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        widget.onClick;
+        widget.onClick();
 
+        // setState(() {
+        //   isClicked = !isClicked;
+        // });
+      },
+      onTapDown: (TapDownDetails tapDownDetails) {
         setState(() {
-          isClicked = !isClicked;
+          isClicked = false;
+        });
+      },
+      onTapUp: (TapUpDetails tapUpDetails) {
+        setState(() {
+          isClicked = true;
+        });
+      },
+      onTapCancel: () {
+        setState(() {
+          isClicked = true;
         });
       },
       child: AnimatedContainer(

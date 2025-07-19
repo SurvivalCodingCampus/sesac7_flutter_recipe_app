@@ -23,10 +23,25 @@ class _MediumButtonState extends State<MediumButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        widget.onClick;
+        widget.onClick();
 
+        // setState(() {
+        //   isClicked = !isClicked;
+        // });
+      },
+      onTapDown: (TapDownDetails tapDownDetails) {
         setState(() {
-          isClicked = !isClicked;
+          isClicked = false;
+        });
+      },
+      onTapUp: (TapUpDetails tapUpDetails) {
+        setState(() {
+          isClicked = true;
+        });
+      },
+      onTapCancel: () {
+        setState(() {
+          isClicked = true;
         });
       },
       child: AnimatedContainer(
@@ -40,6 +55,7 @@ class _MediumButtonState extends State<MediumButton> {
         duration: Duration(milliseconds: 100),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
               width: 114,
@@ -49,6 +65,7 @@ class _MediumButtonState extends State<MediumButton> {
                 textAlign: TextAlign.center,
                 style: TextStyles.normalTextBold.copyWith(
                   color: AppColors.white,
+                  fontSize: 15,
                 ),
               ),
             ),
