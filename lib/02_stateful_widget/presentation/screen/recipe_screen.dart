@@ -93,6 +93,23 @@ class _RecipeScreenState extends State<RecipeScreen> {
                 GestureDetector(
                   onTap: () {
                     setState(() {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return UnconstrainedBox(
+                            child: AlertDialog(
+                              contentPadding: EdgeInsets.zero,
+                              content: RatingDialog(
+                                title: 'Rate recipe',
+                                actionName: 'Send',
+                                onChange: (int rating) {
+                                  print('현재 선택된 점수는 $rating점 입니다.');
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      );
                       isFilterButtonSelected = !isFilterButtonSelected;
                     });
                   },
