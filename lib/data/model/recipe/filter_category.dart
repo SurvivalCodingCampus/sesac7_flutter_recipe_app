@@ -1,4 +1,5 @@
 enum FilterCategory {
+  all,
   cereal,
   vegetables,
   dinner,
