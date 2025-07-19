@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/presentation/component/input/text_input.dart';
+import 'package:flutter_recipe_app/presentation/component/input/label_text_input.dart';
 import 'package:flutter_recipe_app/presentation/ui/app_color.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -9,7 +9,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: TextInput(
+            body: LabelTextInput(
               labelText: 'label',
               placeholderText: 'place holder',
               onChanged: (value) {},
@@ -28,7 +28,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: TextInput(
+            body: LabelTextInput(
               labelText: '입력 테스트',
               placeholderText: '입력하세요',
               onChanged: (value) {
@@ -49,7 +49,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: TextInput(
+            body: LabelTextInput(
               labelText: '비활성화 테스트',
               placeholderText: '비활성화됨',
               onChanged: (value) {},
@@ -71,7 +71,7 @@ void main() {
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
-            body: TextInput(
+            body: LabelTextInput(
               labelText: '활성화 테스트',
               placeholderText: '활성화됨',
               onChanged: (value) {},

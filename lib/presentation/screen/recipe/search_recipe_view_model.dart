@@ -8,11 +8,6 @@ import 'package:flutter_recipe_app/presentation/screen/recipe/search_recipe_stat
 
 class SearchRecipeViewModel with ChangeNotifier {
   final RecipeRepository _recipeRepository;
-  // List<Recipe> _recipes = [];
-  // List<Recipe> get recipes => _recipes;
-  //
-  // bool _isLoading = false;
-  // bool get isLoading => _isLoading;
 
   SearchRecipeViewModel(this._recipeRepository);
 
@@ -35,7 +30,5 @@ class SearchRecipeViewModel with ChangeNotifier {
     _state = _state.copyWith(isLoading: false);
     notifyListeners();
   }
-
-
 
 }
