@@ -17,11 +17,14 @@ class SearchRecipeViewModel {
 
   SearchRecipeState get state => _state;
 
-  Future<void> searchRecipe() async {
-    _state = _state.copyWith(isLoading: true);
-    final result = await _recipeRepository.searchRecipes(
-      _state.searchFieldValue,
+  Future<void> searchRecipe(String keyword) async {
+    if (keyword.isEmpty) return;
+
+    _state = _state.copyWith(
+      isLoading: true,
+      searchFieldValue: keyword,
     );
+    final result = await _recipeRepository.searchRecipes(keyword);
 
     switch (result) {
       case Success<List<Recipe>, NetworkError>():
