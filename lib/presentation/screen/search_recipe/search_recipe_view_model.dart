@@ -61,8 +61,13 @@ class SearchRecipeViewModel with ChangeNotifier {
       return;
     }
 
+    var lowerCaseKeyword = keyword.toLowerCase();
     final filterdRecipes = state.allRecipes
-        .where((e) => e.name.contains(keyword) || e.creator.contains(keyword))
+        .where(
+          (e) =>
+              e.name.toLowerCase().contains(lowerCaseKeyword) ||
+              e.creator.toLowerCase().contains(lowerCaseKeyword),
+        )
         .toList();
     _state = state.copyWith(
       filteredRecipes: filterdRecipes,
@@ -75,22 +80,22 @@ class SearchRecipeViewModel with ChangeNotifier {
   }
 
   void selectFilter(FilterSearchState filterState) {
-    var filterdRecipes = state.filteredRecipes;
-    filterdRecipes = _filterRecipesSortedBy(
-      filterdRecipes,
+    var recipes = state.allRecipes;
+    recipes = _filterRecipesSortedBy(
+      recipes,
       filterState.filterSortBy,
     );
-    filterdRecipes = _filterRecipesByRate(
-      filterdRecipes,
+    recipes = _filterRecipesByRate(
+      recipes,
       filterState.filterRate,
     );
-    filterdRecipes = _filterRecipesByCategory(
-      filterdRecipes,
+    recipes = _filterRecipesByCategory(
+      recipes,
       filterState.filterCategory,
     );
     _state = state.copyWith(
-      filteredRecipes: filterdRecipes,
-      resultCount: filterdRecipes.length,
+      filteredRecipes: recipes,
+      resultCount: recipes.length,
       searchState: SearchRecipeState.searchResult,
       filterState: filterState,
     );
