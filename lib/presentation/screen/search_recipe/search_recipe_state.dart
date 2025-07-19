@@ -12,7 +12,7 @@ abstract class SearchRecipeState with _$SearchRecipeState {
 
   const factory SearchRecipeState({
     @Default(SearchRecipeState.recentSearch) String searchState,
-    @Default('') String fieldValue,
+    @Default('') String searchFieldValue,
     @Default(0) int resultCount,
     @Default(FilterSortBy.all) FilterSortBy filterSortBy,
     @Default(null) FilterRate? filterRate,
