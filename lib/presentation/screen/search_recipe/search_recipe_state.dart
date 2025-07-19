@@ -17,5 +17,7 @@ abstract class SearchRecipeState with _$SearchRecipeState {
     @Default(FilterSortBy.all) FilterSortBy filterSortBy,
     @Default(null) FilterRate? filterRate,
     @Default(FilterCategory.all) FilterCategory filterCategory,
+    @Default(null) String? errorMessage,
+    @Default(true) bool isLoading,
   }) = _SearchRecipeState;
 }
