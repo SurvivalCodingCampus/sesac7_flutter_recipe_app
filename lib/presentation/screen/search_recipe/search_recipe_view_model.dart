@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/network_error.dart';
 import 'package:flutter_recipe_app/core/result.dart';
 import 'package:flutter_recipe_app/data/model/recipe/filter_category.dart';
@@ -8,7 +9,7 @@ import 'package:flutter_recipe_app/data/repository/recipe/recipe_repository.dart
 import 'package:flutter_recipe_app/presentation/screen/search_recipe/filter_search_state.dart';
 import 'package:flutter_recipe_app/presentation/screen/search_recipe/search_recipe_state.dart';
 
-class SearchRecipeViewModel {
+class SearchRecipeViewModel with ChangeNotifier {
   final RecipeRepository _recipeRepository;
 
   SearchRecipeViewModel({required RecipeRepository recipeRepository})
@@ -44,10 +45,21 @@ class SearchRecipeViewModel {
               'Fail to load data from server. Error: ${result.error.toString()}',
         );
     }
+
+    notifyListeners();
   }
 
   void searchRecipe(String keyword) {
-    if (keyword.isEmpty) return;
+    if (keyword.isEmpty) {
+      _state = state.copyWith(
+        filteredRecipes: state.allRecipes,
+        resultCount: state.allRecipes.length,
+        searchFieldValue: keyword,
+        searchState: SearchRecipeState.recentSearch,
+      );
+      notifyListeners();
+      return;
+    }
 
     final filterdRecipes = state.allRecipes
         .where((e) => e.name.contains(keyword) || e.creator.contains(keyword))
@@ -58,6 +70,8 @@ class SearchRecipeViewModel {
       searchFieldValue: keyword,
       searchState: SearchRecipeState.searchResult,
     );
+
+    notifyListeners();
   }
 
   void selectFilter(FilterSearchState filterState) {
@@ -80,6 +94,8 @@ class SearchRecipeViewModel {
       searchState: SearchRecipeState.searchResult,
       filterState: filterState,
     );
+
+    notifyListeners();
   }
 
   List<Recipe> _filterRecipesSortedBy(
