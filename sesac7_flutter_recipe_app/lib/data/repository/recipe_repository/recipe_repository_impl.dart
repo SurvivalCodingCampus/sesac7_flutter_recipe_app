@@ -30,4 +30,54 @@ class RecipeRepositoryImpl implements RecipeRepository {
       return Error(NetworkError.unKnown);
     }
   }
+
+  // fixme 임시로 전체 레시피 갖고 오도록 처리
+  @override
+  Future<Result<List<Recipe>, NetworkError>> getRecentRecipes() async {
+    try {
+      final Response<RecipesDto> response = await _dataSource.getRecipes();
+      final NetworkError? networkErrorType = response.statusCode
+          .statusCodeToNetworkErrorType();
+
+      if (networkErrorType == null) {
+        return Success(response.body.toModel().recipes);
+      } else {
+        return Error(networkErrorType);
+      }
+    } on FormatException {
+      return Error(NetworkError.jsonParsingError);
+    } catch (e) {
+      return Error(NetworkError.unKnown);
+    }
+  }
+
+  // fixme 임시로 전체 레시피 갖고 오도록 처리
+  @override
+  Future<Result<List<Recipe>, NetworkError>> searchRecipes(
+    String? keyword,
+  ) async {
+    try {
+      final Response<RecipesDto> response = await _dataSource.getRecipes();
+      final NetworkError? networkErrorType = response.statusCode
+          .statusCodeToNetworkErrorType();
+
+      if (networkErrorType == null) {
+        final result = response.body.toModel();
+        if (keyword != null && keyword.isNotEmpty) {
+          return Success(
+            result.recipes
+                .where((recipe) => recipe.name.toLowerCase().contains(keyword.toLowerCase()))
+                .toList(),
+          );
+        }
+        return Success(response.body.toModel().recipes);
+      } else {
+        return Error(networkErrorType);
+      }
+    } on FormatException {
+      return Error(NetworkError.jsonParsingError);
+    } catch (e) {
+      return Error(NetworkError.unKnown);
+    }
+  }
 }
