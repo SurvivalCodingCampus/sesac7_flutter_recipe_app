@@ -1,6 +1,6 @@
 extension StringExtension on String {
   String capitalizeFirstLetter() {
     if (isEmpty) return this;
-    return substring(0, 1).toUpperCase() + substring(1);
+    return '${this[0].toUpperCase()}${substring(1)}';
   }
 }
