@@ -35,6 +35,7 @@ class RatingButton extends StatelessWidget {
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               ratingButtonTitle,
