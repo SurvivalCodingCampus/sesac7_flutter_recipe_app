@@ -78,17 +78,21 @@ class SearchRecipeScreen extends StatelessWidget {
                 ],
               ),
               Expanded(
-                child: GridView.builder(
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 15,
-                    crossAxisSpacing: 15,
-                  ),
-                  itemCount: recipes.length,
-                  itemBuilder: (context, index) {
-                    return RecipeSearchCard(recipe: recipes[index]);
-                  },
-                ),
+                child: state.errorMessage != null
+                    ? Center(
+                        child: Text(state.errorMessage!),
+                      )
+                    : GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          mainAxisSpacing: 15,
+                          crossAxisSpacing: 15,
+                        ),
+                        itemCount: recipes.length,
+                        itemBuilder: (context, index) {
+                          return RecipeSearchCard(recipe: recipes[index]);
+                        },
+                      ),
               ),
             ],
           ),

@@ -71,7 +71,6 @@ class _FilterSearchBottomSheetState extends State<FilterSearchBottomSheet> {
                   ),
                 ],
               ),
-
               Column(
                 spacing: 10,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -95,7 +94,6 @@ class _FilterSearchBottomSheetState extends State<FilterSearchBottomSheet> {
                   ),
                 ],
               ),
-
               Column(
                 spacing: 10,
                 crossAxisAlignment: CrossAxisAlignment.start,
