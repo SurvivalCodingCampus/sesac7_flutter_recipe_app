@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_recipe_app/core/enum/network_error.dart';
+import 'package:flutter_recipe_app/core/enum/rating_type.dart';
+import 'package:flutter_recipe_app/core/enum/search_recipe_filter_category_type.dart';
+import 'package:flutter_recipe_app/core/enum/search_recipe_filter_time_type.dart';
 import 'package:flutter_recipe_app/core/result.dart';
 import 'package:flutter_recipe_app/data/model/recipe.dart';
 import 'package:flutter_recipe_app/data/repository/recipe_repository/recipe_repository.dart';
@@ -7,7 +10,8 @@ import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_sta
 
 class SearchRecipeViewModel with ChangeNotifier {
   final RecipeRepository _recipeRepository;
-  final TextEditingController searchInputFieldController = TextEditingController();
+  TextEditingController searchInputFieldController =
+      TextEditingController();
   SearchRecipesState _searchRecipesState = SearchRecipesState();
 
   SearchRecipesState get searchRecipesState => _searchRecipesState;
@@ -34,18 +38,24 @@ class SearchRecipeViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchSearchResultRecipes({String? keyword}) async {
-    _searchRecipesState = searchRecipesState.copyWith(isLoading: true);
+  Future<void> fetchSearchResultRecipes({
+    String? keyword,
+    SearchRecipeFilterTimeType? timeType,
+    RatingType? ratingType,
+    SearchRecipeFilterCategoryType? categoryType,
+  }) async {
     _searchRecipesState = searchRecipesState.copyWith(
+      isLoading: true,
+      isCategorySearch: keyword == null,
       searchKeyword: keyword ?? '',
     );
     notifyListeners();
     final Result<List<Recipe>, NetworkError> result = await _recipeRepository
-        .searchRecipes(keyword);
+        .searchRecipes(keyword, timeType, ratingType, categoryType);
     switch (result) {
       case Success():
         _searchRecipesState = _searchRecipesState.copyWith(
-          searchResultRecipes: result.data,
+          searchResultRecipes: result.data.isEmpty ? [] : result.data,
         );
         break;
       case Error():
@@ -64,6 +74,7 @@ class SearchRecipeViewModel with ChangeNotifier {
     _searchRecipesState = searchRecipesState.copyWith(
       searchKeyword: '',
       searchResultRecipes: [],
+      isCategorySearch: false,
     );
     _searchRecipesState = searchRecipesState.copyWith(isLoading: false);
     notifyListeners();

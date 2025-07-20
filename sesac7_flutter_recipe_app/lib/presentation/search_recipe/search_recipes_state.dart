@@ -9,6 +9,7 @@ abstract class SearchRecipesState with _$SearchRecipesState {
     @Default('') String searchKeyword,
     @Default([]) List<Recipe> recentRecipes,
     @Default([]) List<Recipe> searchResultRecipes,
+    @Default(false) bool isCategorySearch,
     @Default(false) bool isLoading,
   }) = _SearchRecipesState;
 }
