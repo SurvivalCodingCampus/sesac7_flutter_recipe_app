@@ -108,7 +108,7 @@ class SearchRecipesScreen extends StatelessWidget {
                         ? (viewModel.state.filteredRecipes.isNotEmpty)
                               ? 'Search Result'
                               : 'Recent Search'
-                        : 'Recent Search',
+                        : 'Search Result',
                     style: TextStyles.normalTextBold.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
