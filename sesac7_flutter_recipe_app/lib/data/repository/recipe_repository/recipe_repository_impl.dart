@@ -1,4 +1,7 @@
 import 'package:flutter_recipe_app/core/enum/network_error.dart';
+import 'package:flutter_recipe_app/core/enum/rating_type.dart';
+import 'package:flutter_recipe_app/core/enum/search_recipe_filter_category_type.dart';
+import 'package:flutter_recipe_app/core/enum/search_recipe_filter_time_type.dart';
 import 'package:flutter_recipe_app/core/response.dart';
 import 'package:flutter_recipe_app/core/result.dart';
 import 'package:flutter_recipe_app/data/data_source/recipe_data_source/recipe_data_source.dart';
@@ -55,6 +58,9 @@ class RecipeRepositoryImpl implements RecipeRepository {
   @override
   Future<Result<List<Recipe>, NetworkError>> searchRecipes(
     String? keyword,
+    SearchRecipeFilterTimeType? timeType,
+    RatingType? ratingType,
+    SearchRecipeFilterCategoryType? categoryType,
   ) async {
     try {
       final Response<RecipesDto> response = await _dataSource.getRecipes();
@@ -63,14 +69,39 @@ class RecipeRepositoryImpl implements RecipeRepository {
 
       if (networkErrorType == null) {
         final result = response.body.toModel();
-        if (keyword != null && keyword.isNotEmpty) {
-          return Success(
-            result.recipes
-                .where((recipe) => recipe.name.toLowerCase().contains(keyword.toLowerCase()))
-                .toList(),
-          );
-        }
-        return Success(response.body.toModel().recipes);
+        return Success(
+          result.recipes.where((recipe) {
+            final bool matchesKeyword =
+                keyword == null ||
+                recipe.name.toLowerCase().contains(keyword.toLowerCase());
+
+            // final bool matchesTimeType =
+            //     timeType == null || recipe.time == timeType.value;
+
+            final bool matchesRatingType =
+                ratingType == null ||
+                (ratingType == RatingType.gradeFive && recipe.rating == 5.0) ||
+                (ratingType == RatingType.gradeFour &&
+                    recipe.rating >= 4.0 &&
+                    recipe.rating < 5.0) ||
+                (ratingType == RatingType.gradeThree &&
+                    recipe.rating >= 3.0 &&
+                    recipe.rating < 4.0) ||
+                (ratingType == RatingType.gradeTwo &&
+                    recipe.rating >= 2.0 &&
+                    recipe.rating < 3.0) ||
+                (ratingType == RatingType.gradeOne &&
+                    recipe.rating >= 1.0 &&
+                    recipe.rating < 2.0);
+
+            final bool matchesCategoryType =
+                categoryType == null || recipe.category == categoryType.value;
+            return matchesKeyword &&
+                // matchesTimeType &&
+                matchesRatingType &&
+                matchesCategoryType;
+          }).toList(),
+        );
       } else {
         return Error(networkErrorType);
       }
