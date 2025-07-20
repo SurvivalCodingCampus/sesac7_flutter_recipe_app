@@ -82,12 +82,14 @@ class _RecipeScreenState extends State<RecipeScreen> {
                       : UnclickedRatingButton(
                           text: '5',
                           isSelected: isRatingButtonSelected,
+                          onClick: () {},
                         ),
                 ),
                 SizedBox(width: 20),
                 UnclickedRatingButton(
                   text: '5',
                   isSelected: false,
+                  onClick: () {},
                 ),
                 SizedBox(width: 20),
                 GestureDetector(
@@ -121,12 +123,14 @@ class _RecipeScreenState extends State<RecipeScreen> {
                       : UnclickedFilterButton(
                           text: 'Text',
                           isSelected: isFilterButtonSelected,
+                          onClick: () {},
                         ),
                 ),
                 SizedBox(width: 20),
                 UnclickedFilterButton(
                   text: 'Text',
                   isSelected: isFilterButtonSelected,
+                  onClick: () {},
                 ),
               ],
             ),
