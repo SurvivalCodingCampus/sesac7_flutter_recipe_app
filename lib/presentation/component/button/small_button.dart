@@ -7,6 +7,7 @@ class SmallButton extends StatefulWidget {
   static const double width = 174;
   static const double height = 37;
   static const int textMaxLines = 1;
+  static const Key gestureKey = Key('small button gesture');
 
   final String text;
   final VoidCallback onClick;
@@ -27,6 +28,7 @@ class _SmallButtonState extends State<SmallButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      key: SmallButton.gestureKey,
       onTap: widget.onClick,
       onTapDown: (details) {
         setState(() {
