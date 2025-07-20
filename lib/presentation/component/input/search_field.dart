@@ -6,6 +6,8 @@ import 'package:flutter_recipe_app/ui/text_styles.dart';
 class SearchField extends StatelessWidget {
   static const double height = 40;
   static const double borderWidth = 1.3;
+  static const EdgeInsets inputPadding = EdgeInsets.only(left: 38);
+  static const double iconPadding = 10;
 
   final String placeholder;
   final String? value;
@@ -31,7 +33,7 @@ class SearchField extends StatelessWidget {
             cursorWidth: ComponentConstant.cursorWidth,
             onChanged: onValueChange,
             decoration: InputDecoration(
-              contentPadding: EdgeInsets.only(left: 38),
+              contentPadding: inputPadding,
               enabledBorder: OutlineInputBorder(
                 borderSide: BorderSide(
                   color: AppColors.gray4,
@@ -58,7 +60,7 @@ class SearchField extends StatelessWidget {
             style: TextStyles.smallerTextRegular,
           ),
           Positioned(
-            left: 10,
+            left: iconPadding,
             top: 0,
             bottom: 0,
             child: Icon(
