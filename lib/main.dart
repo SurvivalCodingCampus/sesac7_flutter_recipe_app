@@ -15,6 +15,7 @@ void main() {
   final recipeViewModel = SearchRecipeViewModel(recipeRepository);
 
   recipeViewModel.fetchRecipes();
+  recipeViewModel.fetchCategory();
 
   runApp(MyApp(viewModel: recipeViewModel));
 }

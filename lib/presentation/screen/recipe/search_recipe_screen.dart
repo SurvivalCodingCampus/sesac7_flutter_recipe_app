@@ -55,7 +55,9 @@ class SearchRecipeScreen extends StatelessWidget {
                       context: context,
                       isScrollControlled: true,
                       builder: (BuildContext context) {
-                        return FilterBottomSheet(onTap: () {
+                        return FilterBottomSheet(
+                          categoryList: state.categories,
+                          onTap: () {
                           print('filter');
                           Navigator.pop(context);
                         },);

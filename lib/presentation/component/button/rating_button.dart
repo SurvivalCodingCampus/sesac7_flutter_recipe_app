@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/ui/app_color.dart';
 
 class RatingButton extends StatefulWidget {
-  final int? rating;
+  final String? rating;
   final bool initialIsSelected;
   final VoidCallback? onTap;
 
   const RatingButton({
     super.key,
-    this.rating = 0,
+    this.rating = '0',
     this.initialIsSelected = false,
     this.onTap,
   });

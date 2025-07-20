@@ -1,14 +1,22 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/button/filter_button.dart';
+import 'package:flutter_recipe_app/data/model/recipe/category.dart';
 
-class MultiFilterSection extends StatelessWidget {
+class MultiFilterSection<T> extends StatelessWidget {
   final String title;
-  final bool? isWrap;
+  final List<T> filterItemList;
+  final Function(T item) onItemSelected;
+
+  final String Function(T item) itemTextBuilder;
+  final String Function(T item) itemValueBuilder;
 
   const MultiFilterSection({
     super.key,
     required this.title,
-    this.isWrap = false,
+    required this.filterItemList,
+    required this.onItemSelected,
+    required this.itemTextBuilder,
+    required this.itemValueBuilder,
   });
 
   @override
@@ -19,31 +27,25 @@ class MultiFilterSection extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Time',
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+            title,
+            style: const TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
           ),
-          SizedBox(height: 10),
-          isWrap == true
-              ? Wrap(
-                  alignment: WrapAlignment.start,
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: [
-                    FilterButton(text: 'Breakfast', initialIsSelected: true),
-                    FilterButton(text: 'Lunch'),
-                    FilterButton(text: 'Breakfast', initialIsSelected: true),
-                    FilterButton(text: 'Lunch'),
-                  ],
-                )
-              : Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    FilterButton(text: 'Breakfast', initialIsSelected: true),
-                    FilterButton(text: 'Lunch'),
-                    FilterButton(text: 'Breakfast', initialIsSelected: true),
-                    FilterButton(text: 'Lunch'),
-                  ],
-                ),
+          const SizedBox(height: 10),
+          Wrap(
+            alignment: WrapAlignment.start,
+            spacing: 10,
+            runSpacing: 10,
+            children: filterItemList.map((item) {
+              final String buttonText = itemTextBuilder(item);
+
+              return FilterButton(
+                text: buttonText,
+                onTap: () {
+                  onItemSelected(item);
+                },
+              );
+            }).toList(),
+          ),
         ],
       ),
     );
