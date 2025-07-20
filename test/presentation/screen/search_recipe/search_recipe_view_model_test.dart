@@ -3,6 +3,7 @@ import 'package:flutter_recipe_app/core/result.dart';
 import 'package:flutter_recipe_app/data/model/recipe/filter_category.dart';
 import 'package:flutter_recipe_app/data/model/recipe/filter_rate.dart';
 import 'package:flutter_recipe_app/data/model/recipe/recipe.dart';
+import 'package:flutter_recipe_app/data/model/recipe/search_state_type.dart';
 import 'package:flutter_recipe_app/data/repository/recipe/recipe_repository.dart';
 import 'package:flutter_recipe_app/presentation/screen/search_recipe/filter_search_state.dart';
 import 'package:flutter_recipe_app/presentation/screen/search_recipe/search_recipe_state.dart';
@@ -78,7 +79,7 @@ void main() {
       expect(viewModel.state.allRecipes, mockRecipes);
       expect(viewModel.state.filteredRecipes, mockRecipes);
       expect(viewModel.state.resultCount, mockRecipes.length);
-      expect(viewModel.state.searchState, SearchRecipeState.recentSearch);
+      expect(viewModel.state.searchState, SearchStateType.recentSearch);
       expect(viewModel.state.errorMessage, isNull);
       verify(mockRecipeRepository.fetchAllRecipes()).called(1);
     },
@@ -103,7 +104,7 @@ void main() {
       expect(viewModel.state.allRecipes, isEmpty);
       expect(viewModel.state.filteredRecipes, isEmpty);
       expect(viewModel.state.resultCount, 0);
-      expect(viewModel.state.searchState, SearchRecipeState.recentSearch);
+      expect(viewModel.state.searchState, SearchStateType.recentSearch);
       expect(viewModel.state.errorMessage, contains('NetworkError.unknown'));
       verify(mockRecipeRepository.fetchAllRecipes()).called(1);
     },
@@ -127,7 +128,7 @@ void main() {
       expect(viewModel.state.filteredRecipes, mockRecipes);
       expect(viewModel.state.resultCount, mockRecipes.length);
       expect(viewModel.state.searchFieldValue, '');
-      expect(viewModel.state.searchState, SearchRecipeState.recentSearch);
+      expect(viewModel.state.searchState, SearchStateType.recentSearch);
     },
   );
 
@@ -151,7 +152,7 @@ void main() {
       expect(viewModel.state.filteredRecipes[1].name, 'Chocolate Cake');
       expect(viewModel.state.resultCount, 2);
       expect(viewModel.state.searchFieldValue, 'john');
-      expect(viewModel.state.searchState, SearchRecipeState.searchResult);
+      expect(viewModel.state.searchState, SearchStateType.searchResult);
     },
   );
 
@@ -173,7 +174,7 @@ void main() {
       expect(viewModel.state.filteredRecipes, isEmpty);
       expect(viewModel.state.resultCount, 0);
       expect(viewModel.state.searchFieldValue, 'nonexistent');
-      expect(viewModel.state.searchState, SearchRecipeState.searchResult);
+      expect(viewModel.state.searchState, SearchStateType.searchResult);
     },
   );
 
@@ -196,7 +197,7 @@ void main() {
       expect(viewModel.state.filteredRecipes.length, 1);
       expect(viewModel.state.filteredRecipes[0].name, 'Chocolate Cake');
       expect(viewModel.state.resultCount, 1);
-      expect(viewModel.state.searchState, SearchRecipeState.searchResult);
+      expect(viewModel.state.searchState, SearchStateType.searchResult);
       expect(viewModel.state.filterState, filterState);
     },
   );
@@ -220,7 +221,7 @@ void main() {
       expect(viewModel.state.filteredRecipes.length, 1);
       expect(viewModel.state.filteredRecipes[0].name, 'Vegetable Soup');
       expect(viewModel.state.resultCount, 1);
-      expect(viewModel.state.searchState, SearchRecipeState.searchResult);
+      expect(viewModel.state.searchState, SearchStateType.searchResult);
       expect(viewModel.state.filterState, filterState);
     },
   );
@@ -246,7 +247,7 @@ void main() {
       expect(viewModel.state.filteredRecipes.length, 1);
       expect(viewModel.state.filteredRecipes[0].name, 'Spicy Chicken');
       expect(viewModel.state.resultCount, 1);
-      expect(viewModel.state.searchState, SearchRecipeState.searchResult);
+      expect(viewModel.state.searchState, SearchStateType.searchResult);
       expect(viewModel.state.filterState, filterState);
     },
   );
@@ -271,7 +272,7 @@ void main() {
 
       expect(viewModel.state.filteredRecipes.length, 0);
       expect(viewModel.state.resultCount, 0);
-      expect(viewModel.state.searchState, SearchRecipeState.searchResult);
+      expect(viewModel.state.searchState, SearchStateType.searchResult);
       expect(viewModel.state.filterState, filterState);
     },
   );
@@ -298,7 +299,7 @@ void main() {
       expect(viewModel.state.filteredRecipes.length, 1);
       expect(viewModel.state.filteredRecipes[0].name, 'Spicy Chicken');
       expect(viewModel.state.resultCount, 1);
-      expect(viewModel.state.searchState, SearchRecipeState.searchResult);
+      expect(viewModel.state.searchState, SearchStateType.searchResult);
       expect(viewModel.state.filterState, filterState);
     },
   );

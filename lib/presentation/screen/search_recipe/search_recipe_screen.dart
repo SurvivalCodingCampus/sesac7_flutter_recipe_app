@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/data/data_source/recipe/recipe_data_source_impl.dart';
+import 'package:flutter_recipe_app/data/model/recipe/search_state_type.dart';
 import 'package:flutter_recipe_app/data/repository/recipe/recipe_repository_impl.dart';
 import 'package:flutter_recipe_app/presentation/component/button/search_filter_button.dart';
 import 'package:flutter_recipe_app/presentation/component/input/search_field.dart';
 import 'package:flutter_recipe_app/presentation/component/list_item/recipe_search_card.dart';
 import 'package:flutter_recipe_app/presentation/screen/search_recipe/filter_search_bottom_sheet.dart';
-import 'package:flutter_recipe_app/presentation/screen/search_recipe/search_recipe_state.dart';
 import 'package:flutter_recipe_app/presentation/screen/search_recipe/search_recipe_view_model.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
@@ -64,11 +64,11 @@ class SearchRecipeScreen extends StatelessWidget {
               Row(
                 children: [
                   Text(
-                    state.searchState,
+                    state.searchState.value,
                     style: TextStyles.normalTextBold,
                   ),
                   const Spacer(),
-                  if (state.searchState == SearchRecipeState.searchResult)
+                  if (state.searchState == SearchStateType.searchResult)
                     Text(
                       '${state.resultCount} results',
                       style: TextStyles.smallerTextRegular.copyWith(

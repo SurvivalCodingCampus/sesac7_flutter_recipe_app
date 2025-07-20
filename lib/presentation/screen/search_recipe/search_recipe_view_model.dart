@@ -5,6 +5,7 @@ import 'package:flutter_recipe_app/data/model/recipe/filter_category.dart';
 import 'package:flutter_recipe_app/data/model/recipe/filter_rate.dart';
 import 'package:flutter_recipe_app/data/model/recipe/filter_sort_by.dart';
 import 'package:flutter_recipe_app/data/model/recipe/recipe.dart';
+import 'package:flutter_recipe_app/data/model/recipe/search_state_type.dart';
 import 'package:flutter_recipe_app/data/repository/recipe/recipe_repository.dart';
 import 'package:flutter_recipe_app/presentation/screen/search_recipe/filter_search_state.dart';
 import 'package:flutter_recipe_app/presentation/screen/search_recipe/search_recipe_state.dart';
@@ -29,7 +30,7 @@ class SearchRecipeViewModel with ChangeNotifier {
           allRecipes: result.data,
           filteredRecipes: result.data,
           resultCount: result.data.length,
-          searchState: SearchRecipeState.recentSearch,
+          searchState: SearchStateType.recentSearch,
           filterState: FilterSearchState(),
           isLoading: false,
           errorMessage: null,
@@ -39,7 +40,7 @@ class SearchRecipeViewModel with ChangeNotifier {
           allRecipes: [],
           filteredRecipes: [],
           resultCount: 0,
-          searchState: SearchRecipeState.recentSearch,
+          searchState: SearchStateType.recentSearch,
           isLoading: false,
           errorMessage:
               'Fail to load data from server. Error: ${result.error.toString()}',
@@ -55,7 +56,7 @@ class SearchRecipeViewModel with ChangeNotifier {
         filteredRecipes: state.allRecipes,
         resultCount: state.allRecipes.length,
         searchFieldValue: keyword,
-        searchState: SearchRecipeState.recentSearch,
+        searchState: SearchStateType.recentSearch,
       );
       notifyListeners();
       return;
@@ -73,7 +74,7 @@ class SearchRecipeViewModel with ChangeNotifier {
       filteredRecipes: filteredRecipes,
       resultCount: filteredRecipes.length,
       searchFieldValue: keyword,
-      searchState: SearchRecipeState.searchResult,
+      searchState: SearchStateType.searchResult,
     );
 
     notifyListeners();
@@ -96,7 +97,7 @@ class SearchRecipeViewModel with ChangeNotifier {
     _state = state.copyWith(
       filteredRecipes: recipes,
       resultCount: recipes.length,
-      searchState: SearchRecipeState.searchResult,
+      searchState: SearchStateType.searchResult,
       filterState: filterState,
     );
 
