@@ -93,23 +93,13 @@ class FilterScreen extends StatelessWidget{
   String _timeLabel(TimeFilter value) {
     switch (value) {
       case TimeFilter.all:
-        return '전체';
+        return 'All';
       case TimeFilter.newest:
-        return '최신순';
+        return 'Newest';
       case TimeFilter.oldest:
-        return '오래된순';
+        return 'Oldest';
       case TimeFilter.popularity:
-        return '인기순';
+        return 'Popularity';
     }
   }
-
-// 예시 카테고리 - 실제 데이터로 바꿔야 함
-  List<String> get _categories => [
-    'All',
-    'Breakfast',
-    'Lunch',
-    'Dinner',
-    'Snack',
-    'Dessert',
-  ];
 }
