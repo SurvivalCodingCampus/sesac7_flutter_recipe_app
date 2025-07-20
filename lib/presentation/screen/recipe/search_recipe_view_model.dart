@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/network_error.dart';
 import 'package:flutter_recipe_app/core/result.dart';
+import 'package:flutter_recipe_app/data/model/recipe/category.dart';
 import 'package:flutter_recipe_app/data/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/data/repository/recipe/recipe_repository.dart';
 import 'package:flutter_recipe_app/presentation/screen/recipe/search_recipe_state.dart';
@@ -29,6 +30,23 @@ class SearchRecipeViewModel with ChangeNotifier {
     }
     _state = _state.copyWith(isLoading: false);
     notifyListeners();
+  }
+
+  Future<void> fetchCategory() async {
+    _state = _state.copyWith(isLoading: true);
+    notifyListeners();
+    final response = await _recipeRepository.getCategory();
+    switch (response){
+      case Success<List<Category>, NetworkError>() :
+        _state = _state.copyWith(categories : response.data);
+        break;
+      case Error<List<Category>, NetworkError>() :
+        _state = _state.copyWith(categories: []);
+    }
+
+    _state = _state.copyWith(isLoading: false);
+    notifyListeners();
+
   }
 
 }

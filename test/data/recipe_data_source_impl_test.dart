@@ -1,4 +1,4 @@
-import 'package:flutter_recipe_app/data/mocks/data_source/mock_recipe_data_sourece_impl.dart';
+import 'package:flutter_recipe_app/data/mocks/data_source/mock_recipe_data_source_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_recipe_app/data/repository/recipe/recipe_repository_impl.dart';
 import 'package:flutter_recipe_app/core/result.dart';
@@ -13,7 +13,7 @@ void main() {
     setUp(() {
       // 각 테스트 전에 Mock DataSource와 Repository를 새로 초기화
       mockDataSource = MockRecipeDataSourceImpl();
-      recipeRepository = RecipeRepositoryImpl(mockDataSource);
+      recipeRepository = RecipeRepositoryImpl(dataSource: mockDataSource);
     });
 
     test('getRecipes 호출 시 레시피 목록을 성공적으로 가져와야 함', () async {
