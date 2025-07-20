@@ -62,7 +62,7 @@ class SearchRecipeViewModel with ChangeNotifier {
     }
 
     var lowerCaseKeyword = keyword.toLowerCase();
-    final filterdRecipes = state.allRecipes
+    final filteredRecipes = state.allRecipes
         .where(
           (e) =>
               e.name.toLowerCase().contains(lowerCaseKeyword) ||
@@ -70,8 +70,8 @@ class SearchRecipeViewModel with ChangeNotifier {
         )
         .toList();
     _state = state.copyWith(
-      filteredRecipes: filterdRecipes,
-      resultCount: filterdRecipes.length,
+      filteredRecipes: filteredRecipes,
+      resultCount: filteredRecipes.length,
       searchFieldValue: keyword,
       searchState: SearchRecipeState.searchResult,
     );
