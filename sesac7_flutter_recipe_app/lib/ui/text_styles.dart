@@ -147,7 +147,7 @@ abstract class TextStyles {
     fontFamily: FontFamilyType.poppins.fontFamilyName,
     fontWeight: FontWeight.w600,
     overflow: TextOverflow.ellipsis,
-    height: 21 / 14
+    height: 21 / 14,
   );
 
   static final TextStyle recipeCardChef = TextStyle(
@@ -156,7 +156,7 @@ abstract class TextStyles {
     fontFamily: FontFamilyType.poppins.fontFamilyName,
     fontWeight: FontWeight.w400,
     overflow: TextOverflow.ellipsis,
-    height: 12 / 8
+    height: 12 / 8,
   );
 
   static final TextStyle recipeCardTime = TextStyle(
@@ -165,10 +165,61 @@ abstract class TextStyles {
     fontFamily: FontFamilyType.poppins.fontFamilyName,
     fontWeight: FontWeight.w400,
     overflow: TextOverflow.ellipsis,
-    height: 17 / 11
+    height: 17 / 11,
   );
 
   /* RecipeCard End */
+
+  /* SearchRecipeCard Start */
+  static final TextStyle searchRecipeCardRatingValue = TextStyle(
+    color: AppColors.black,
+    fontSize: 8.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 12 / 8,
+  );
+
+  static final TextStyle searchRecipeCardTitle = TextStyle(
+    color: AppColors.white,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle searchRecipeCardChef = TextStyle(
+    color: AppColors.gray3,
+    fontSize: 8.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 12 / 8,
+  );
+
+  /* SearchRecipeCard End */
+
+  /* SearchRecipeFilterBottomSheet Start */
+  static final TextStyle searchRecipeFilterBottomSheetTitle = TextStyle(
+    color: AppColors.black,
+    fontSize: 14.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 21 / 14,
+  );
+
+  static final TextStyle searchRecipeFilterBottomSheetSubtitle = TextStyle(
+    color: AppColors.black,
+    fontSize: 14.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 21 / 14,
+  );
+
+  /* SearchRecipeFilterBottomSheet End */
 
   /* SavedRecipeScreen Start */
   static final TextStyle savedRecipeScreenTitle = TextStyle(
@@ -177,8 +228,9 @@ abstract class TextStyles {
     fontFamily: FontFamilyType.poppins.fontFamilyName,
     fontWeight: FontWeight.w600,
     overflow: TextOverflow.ellipsis,
-    height: 27 / 18
+    height: 27 / 18,
   );
+
   /* SavedRecipeScreen End */
 
   /* SplashScreen Start */
@@ -187,7 +239,7 @@ abstract class TextStyles {
     fontSize: 18.0,
     fontFamily: FontFamilyType.poppins.fontFamilyName,
     fontWeight: FontWeight.w600,
-    height: 27 / 18
+    height: 27 / 18,
   );
 
   static final TextStyle splashScreenLogoSubtitle = TextStyle(
@@ -195,6 +247,46 @@ abstract class TextStyles {
     fontSize: 50.0,
     fontFamily: FontFamilyType.poppins.fontFamilyName,
     fontWeight: FontWeight.w600,
-    height: 60 / 50
+    height: 60 / 50,
   );
+
+  /* SplashScreen End */
+
+  /* SearchRecipeScreen Start */
+  static final TextStyle searchInputFieldHint = TextStyle(
+    color: AppColors.gray4,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle searchScreenTitle = TextStyle(
+    color: AppColors.neutral100,
+    fontSize: 18.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 27 / 18,
+  );
+
+  static final TextStyle searchScreenSubtitle = TextStyle(
+    color: AppColors.black,
+    fontSize: 16.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 24 / 16,
+  );
+
+  static final TextStyle searchScreenSearchResult = TextStyle(
+    color: AppColors.gray3,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+  /* SearchRecipeScreen End */
 }
