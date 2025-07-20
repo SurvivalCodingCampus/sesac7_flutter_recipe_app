@@ -29,21 +29,21 @@ void main() {
           // 1. 응답이 성공적인지 확인
           expect(result.isSuccess, isTrue);
           expect(result.errorMessage, isNull);
-          expect(result.data, isNotNull);
+          expect(result.body, isNotNull);
 
           // 2. 반환된 데이터(List<Recipe>)가 비어있지 않은지 확인
-          expect(result.data, isNotEmpty);
+          expect(result.body, isNotEmpty);
 
           // 3. 반환된 데이터의 타입이 List<Recipe>인지 확인 (선택적이지만, 타입 안정성 위해 좋음)
-          expect(result.data, isA<List<Recipe>>());
+          expect(result.body, isA<List<Recipe>>());
 
           // 4. 첫 번째 레시피의 내용이 Mock 데이터와 일치하는지 간단히 확인
           //    (모든 필드를 검사할 수도 있고, 주요 필드만 검사할 수도 있습니다)
-          if (result.data!.isNotEmpty) {
+          if (result.body!.isNotEmpty) {
             final firstRecipeFromMock = (jsonDecode(
-                (await mockRecipeDataSource.getRecipes()).body)['recipes']
+                (await mockRecipeDataSource.getRecipes()).body!)['recipes']
             as List)[0];
-            final firstRecipeFromResult = result.data![0];
+            final firstRecipeFromResult = result.body![0];
 
             expect(firstRecipeFromResult.id, firstRecipeFromMock['id']); // ID 타입 일치 주의
             expect(firstRecipeFromResult.name, firstRecipeFromMock['name']);
@@ -51,15 +51,15 @@ void main() {
             // Recipe 모델에 id 필드가 int인지 String인지에 따라 toString() 필요 여부 결정
 
             // 예를 들어, Mock 데이터의 첫 번째 레시피 name: "Traditional spare ribs baked"
-            expect(result.data![0].name, "Traditional spare ribs baked");
-            expect(result.data![0].id, 1); // 또는 1 (int) - Recipe 모델의 id 타입에 따라
+            expect(result.body![0].name, "Traditional spare ribs baked");
+            expect(result.body![0].id, 1); // 또는 1 (int) - Recipe 모델의 id 타입에 따라
           }
 
           // 5. 예상되는 레시피 개수 확인
           final expectedRecipeCount = (jsonDecode(
-              (await mockRecipeDataSource.getRecipes()).body)['recipes'] as List)
+              (await mockRecipeDataSource.getRecipes()).body!)['recipes'] as List)
               .length;
-          expect(result.data!.length, expectedRecipeCount);
+          expect(result.body!.length, expectedRecipeCount);
         });
 
     test('getRecipes 호출 시 DataSource의 getRecipes가 http.Response를 반환하는지 확인 (내부 동작 검증)',
@@ -72,7 +72,7 @@ void main() {
           expect(httpResponse.statusCode, 200);
           expect(httpResponse.body, isNotEmpty);
 
-          final decodedBody = jsonDecode(httpResponse.body);
+          final decodedBody = jsonDecode(httpResponse.body!);
           expect(decodedBody, contains('recipes'));
           expect(decodedBody['recipes'], isA<List>());
         });
