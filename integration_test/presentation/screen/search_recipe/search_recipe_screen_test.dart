@@ -215,12 +215,8 @@ void main() {
       // When: The screen is rendered.
       await pumpTheScreen(tester);
 
-      // Then: An error message should be displayed in the ViewModel.
-      expect(viewModel.state.errorMessage, isNotNull);
-      // Note: We are checking the view model state here.
-      // Displaying the error message on the screen itself would require a UI element for it.
-      // The current implementation logs the error but doesn't show it on the SearchRecipeScreen.
-      // Let's check that the grid is empty.
+      // Then: An error message should be displayed in the UI.
+      expect(find.text(viewModel.state.errorMessage!), findsOneWidget);
       expect(find.byType(RecipeSearchCard), findsNothing);
     });
   });
