@@ -22,17 +22,20 @@ class RecipeSearchCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: Image.network(recipe.imageUrl).image,
-          fit: BoxFit.cover,
-          onError: (exception, stackTrace) =>
-              const Icon(Icons.image_not_supported),
-        ),
         borderRadius: BorderRadius.circular(ComponentConstant.borderRadius),
       ),
       child: Stack(
         children: [
+          Image.network(
+            recipe.imageUrl,
+            width: double.infinity,
+            height: double.infinity,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) =>
+                Icon(Icons.image_not_supported),
+          ),
           Container(
             decoration: BoxDecoration(
               gradient: LinearGradient(
