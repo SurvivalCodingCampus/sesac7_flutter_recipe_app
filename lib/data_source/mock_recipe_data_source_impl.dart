@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter_recipe_app/data_source/recipe_data_source.dart';
-import 'package:http/http.dart' as http;
 
 import '../core/api_response.dart';
 

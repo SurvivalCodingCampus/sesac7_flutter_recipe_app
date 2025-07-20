@@ -2,14 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/input_field/search_inpu_field.dart';
 
 import '../../data/state_holder/filter_search_state.dart';
-import '../../data_source/recipe_data_source_impl.dart';
 import '../../ui/app_colors.dart';
 import '../../ui/text_styles.dart';
-import '../component/card/recipe_card.dart';
 import '../component/card/small_recipe_card.dart';
 import '../view_model/filter_view_model.dart';
 import '../view_model/search_recipe_view_model.dart';
-import '../../repository/recipe_repository_impl.dart';
 import 'filter_search_bottom_sheet.dart';
 
 class SearchRecipeScreen extends StatelessWidget {

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/card/recipe_card.dart';
-import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/presentation/view_model/recipe_view_model.dart';
+import 'package:flutter_recipe_app/ui/app_colors.dart';
 
 import '../../ui/text_styles.dart';
-import '../view_model/filter_view_model.dart';
-import 'filter_search_bottom_sheet.dart';
 
 class SavedRecipesScreen extends StatelessWidget {
   const SavedRecipesScreen({super.key, required this.recipeViewModel});

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../data/state_holder/filter_holder_info.dart';
-import '../../data/state_holder/filter_search_state.dart';
 
 class FilterViewModel with ChangeNotifier {
   List<FilterHolderInfo> _timesState = [

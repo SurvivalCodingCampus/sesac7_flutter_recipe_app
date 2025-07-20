@@ -1,10 +1,10 @@
 
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/data/state_holder/filter_search_state.dart';
 import 'package:flutter_recipe_app/presentation/component/button/custom_chip_with_star_button.dart';
 import 'package:flutter_recipe_app/presentation/component/button/small_button.dart';
 import 'package:flutter_recipe_app/presentation/view_model/filter_view_model.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
-import 'package:flutter_recipe_app/data/state_holder/filter_search_state.dart';
 
 import '../../data/state_holder/filter_holder_info.dart';
 import '../../ui/text_styles.dart';
