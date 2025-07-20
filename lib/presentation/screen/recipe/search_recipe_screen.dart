@@ -57,10 +57,8 @@ class SearchRecipeScreen extends StatelessWidget {
                       builder: (BuildContext context) {
                         return FilterBottomSheet(
                           categoryList: state.categories,
-                          onTap: () {
-                          print('filter');
-                          Navigator.pop(context);
-                        },);
+                          viewModel: viewModel,
+                          );
                       },
                     );
                   },

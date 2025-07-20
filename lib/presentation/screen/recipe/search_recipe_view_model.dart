@@ -42,6 +42,7 @@ class SearchRecipeViewModel with ChangeNotifier {
         break;
       case Error<List<Category>, NetworkError>():
         _state = _state.copyWith(categories: []);
+        break;
     }
 
     _state = _state.copyWith(isLoading: false);
@@ -50,6 +51,12 @@ class SearchRecipeViewModel with ChangeNotifier {
 
   void updateKeyword(String newKeyword) {
     _state = _state.copyWith(keyword: newKeyword);
+    notifyListeners();
+  }
+
+  void updateRating(int newRating) {
+    final int? oldRating = _state.rating;
+    _state = _state.copyWith(rating: oldRating == newRating ? null : newRating);
     notifyListeners();
   }
 
@@ -63,25 +70,34 @@ class SearchRecipeViewModel with ChangeNotifier {
     notifyListeners();
 
     final String inputKeyword = keyword ?? _state.keyword;
+    final int? selectedRatingFilter = _state.rating;
 
-    final bool anyFilterSelected =
+    final bool noFiltersApplied =
         inputKeyword.isEmpty &&
         (category == null || category.isEmpty) &&
         (time == null || time.isEmpty) &&
-        (rating == null || rating.isEmpty);
+        selectedRatingFilter == null;
 
-    switch (anyFilterSelected) {
+    switch (noFiltersApplied) {
       case true:
-        fetchRecipes();
+        await fetchRecipes();
+        await fetchCategory();
         break;
       case false:
-        List<Recipe> filteredRecipes = _state.recipes;
+        List<Recipe> filteredRecipes =
+            _state.recipes;
 
         if (inputKeyword.isNotEmpty) {
           final String lowerCaseKeyword = inputKeyword.toLowerCase();
           filteredRecipes = filteredRecipes.where((recipe) {
             return recipe.name.toLowerCase().contains(lowerCaseKeyword) ||
                 recipe.chef.toLowerCase().contains(lowerCaseKeyword);
+          }).toList();
+        }
+
+        if (selectedRatingFilter != null) {
+          filteredRecipes = filteredRecipes.where((recipe) {
+            return recipe.rating >= selectedRatingFilter;
           }).toList();
         }
 

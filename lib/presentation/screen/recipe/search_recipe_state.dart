@@ -11,5 +11,6 @@ abstract class SearchRecipeState with _$SearchRecipeState {
     @Default([]) List<Category> categories,
     @Default(false) bool isLoading,
     @Default('') String keyword,
+    @Default(null) int? rating,
   }) = _SearchRecipeState;
 }

@@ -4,13 +4,15 @@ import 'package:flutter_recipe_app/presentation/ui/app_color.dart';
 class RatingButton extends StatefulWidget {
   final String? rating;
   final bool initialIsSelected;
-  final VoidCallback? onTap;
+  final VoidCallback onTap;
+  final bool isSelected;
 
   const RatingButton({
     super.key,
-    this.rating = '0',
+    this.rating,
     this.initialIsSelected = false,
-    this.onTap,
+    required this.isSelected,
+    required this.onTap,
   });
 
   @override
@@ -18,32 +20,15 @@ class RatingButton extends StatefulWidget {
 }
 
 class _RatingButtonState extends State<RatingButton> {
-  late bool _isSelected;
-
-  @override
-  void initState() {
-    super.initState();
-    _isSelected = widget.initialIsSelected;
-  }
-
-  void _tapHandler() {
-    setState(() {
-      _isSelected = !_isSelected;
-    });
-
-    if (widget.onTap != null) {
-      widget.onTap!();
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _tapHandler,
+      onTap: widget.onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 5.5, horizontal: 10),
         decoration: BoxDecoration(
-          color: _isSelected ? AppColor.Primary100 : AppColor.White,
+          color: widget.isSelected ? AppColor.Primary100 : AppColor.White,
           border: Border.all(color: AppColor.Primary100, width: 1),
           borderRadius: BorderRadius.circular(10),
         ),
@@ -51,9 +36,9 @@ class _RatingButtonState extends State<RatingButton> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              '${widget.rating}',
+              widget.rating ?? '0',
               style: TextStyle(
-                color: _isSelected ? AppColor.White : AppColor.Primary100,
+                color: widget.isSelected ? AppColor.White : AppColor.Primary100,
                 fontSize: 11,
                 height: 1.5,
               ),
@@ -61,7 +46,7 @@ class _RatingButtonState extends State<RatingButton> {
             const SizedBox(width: 3),
             Icon(
               Icons.star,
-              color: _isSelected ? AppColor.White : AppColor.Primary100,
+              color: widget.isSelected ? AppColor.White : AppColor.Primary100,
               size: 18,
             ),
           ],
