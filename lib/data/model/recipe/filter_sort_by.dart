@@ -7,12 +7,5 @@ enum FilterSortBy {
   popularity;
 
   @override
-  String toString() {
-    return switch (this) {
-      FilterSortBy.all => name.capitalizeFirstLetter(),
-      FilterSortBy.newest => name.capitalizeFirstLetter(),
-      FilterSortBy.oldest => name.capitalizeFirstLetter(),
-      FilterSortBy.popularity => name.capitalizeFirstLetter(),
-    };
-  }
+  String toString() => name.capitalizeFirstLetter();
 }
