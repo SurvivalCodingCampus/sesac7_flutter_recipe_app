@@ -19,29 +19,16 @@ class RecipeCard extends StatelessWidget {
       // width: 315,
       height: 150,
       // padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-      margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
+      // margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
       decoration: BoxDecoration(
-        // gradient: LinearGradient(
-        //   begin: Alignment.topCenter,
-        //   end: Alignment.bottomCenter,
-        //   colors: [
-        //     Colors.white,
-        //     AppColors.black,
-        //   ],
-        //   stops: [0.0, 0.8],
-        // ),
         boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(),
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
+          // BoxShadow(
+          //   color: Colors.black.withValues(),
+          //   spreadRadius: 1,
+          //   blurRadius: 4,
+          //   offset: Offset(0, 2),
+          // ),
         ],
-        // images: DecorationImage(
-        //   fit: BoxFit.cover,
-        //   images: NetworkImage(recipe.images),
-        // ),
         borderRadius: BorderRadius.circular(10),
       ),
       child: ClipRRect(
@@ -66,7 +53,7 @@ class RecipeCard extends StatelessWidget {
                     end: Alignment.bottomCenter,
                     colors: [
                       Colors.black.withValues(alpha: 0.2),
-                      AppColors.black.withValues(alpha: 0.5),
+                      AppColors.black.withValues(alpha: 0.9),
                     ],
                     stops: [0.5, 1.0],
                   ),
@@ -105,8 +92,10 @@ class RecipeCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 60,
+                  Expanded(
+                    child: SizedBox(
+                      height: 60,
+                    ),
                   ),
                   Row(
                     children: [
@@ -125,7 +114,7 @@ class RecipeCard extends StatelessWidget {
                             ),
                             Text(
                               'By ${recipe.chef}',
-                              style: TextStyles.smallTextRegular.copyWith(
+                              style: TextStyles.smallerTextRegular.copyWith(
                                 fontSize: 8,
                                 color: AppColors.gray4,
                               ),
