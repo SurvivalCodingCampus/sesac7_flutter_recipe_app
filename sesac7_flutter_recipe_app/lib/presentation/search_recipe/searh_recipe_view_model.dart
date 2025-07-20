@@ -1,0 +1,77 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_recipe_app/core/enum/network_error.dart';
+import 'package:flutter_recipe_app/core/result.dart';
+import 'package:flutter_recipe_app/data/model/recipe.dart';
+import 'package:flutter_recipe_app/data/repository/recipe_repository/recipe_repository.dart';
+import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_state.dart';
+
+class SearchRecipeViewModel with ChangeNotifier {
+  final RecipeRepository _recipeRepository;
+  final TextEditingController searchInputFieldController = TextEditingController();
+  SearchRecipesState _searchRecipesState = SearchRecipesState();
+
+  SearchRecipesState get searchRecipesState => _searchRecipesState;
+
+  SearchRecipeViewModel({required RecipeRepository recipeRepository})
+    : _recipeRepository = recipeRepository;
+
+  Future<void> fetchRecentRecipes() async {
+    _searchRecipesState = searchRecipesState.copyWith(isLoading: true);
+    notifyListeners();
+    final Result<List<Recipe>, NetworkError> result = await _recipeRepository
+        .getRecentRecipes();
+    switch (result) {
+      case Success():
+        _searchRecipesState = _searchRecipesState.copyWith(
+          recentRecipes: result.data,
+        );
+        break;
+      case Error():
+        _searchRecipesState = _searchRecipesState.copyWith(recentRecipes: []);
+        break;
+    }
+    _searchRecipesState = searchRecipesState.copyWith(isLoading: false);
+    notifyListeners();
+  }
+
+  Future<void> fetchSearchResultRecipes({String? keyword}) async {
+    _searchRecipesState = searchRecipesState.copyWith(isLoading: true);
+    _searchRecipesState = searchRecipesState.copyWith(
+      searchKeyword: keyword ?? '',
+    );
+    notifyListeners();
+    final Result<List<Recipe>, NetworkError> result = await _recipeRepository
+        .searchRecipes(keyword);
+    switch (result) {
+      case Success():
+        _searchRecipesState = _searchRecipesState.copyWith(
+          searchResultRecipes: result.data,
+        );
+        break;
+      case Error():
+        _searchRecipesState = _searchRecipesState.copyWith(
+          searchResultRecipes: [],
+        );
+        break;
+    }
+    _searchRecipesState = searchRecipesState.copyWith(isLoading: false);
+    notifyListeners();
+  }
+
+  void clearSearchResultRecipesAndSearchKeyword() {
+    _searchRecipesState = searchRecipesState.copyWith(isLoading: true);
+    notifyListeners();
+    _searchRecipesState = searchRecipesState.copyWith(
+      searchKeyword: '',
+      searchResultRecipes: [],
+    );
+    _searchRecipesState = searchRecipesState.copyWith(isLoading: false);
+    notifyListeners();
+  }
+
+  @override
+  void dispose() {
+    searchInputFieldController.dispose();
+    super.dispose();
+  }
+}
