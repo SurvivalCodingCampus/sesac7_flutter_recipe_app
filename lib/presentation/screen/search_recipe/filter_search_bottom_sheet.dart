@@ -34,103 +34,105 @@ class _FilterSearchBottomSheetState extends State<FilterSearchBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(30, 31, 30, 56),
-      child: Column(
-        spacing: 30,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Column(
-            spacing: 20,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                'Filter Search',
-                style: TextStyles.smallTextBold,
-              ),
-              Column(
-                spacing: 10,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Time', style: TextStyles.smallTextBold),
-                  Row(
-                    spacing: 10,
-                    children: [
-                      ...FilterSortBy.values.map(
-                        (e) => FilterButton(
-                          text: e.toString(),
-                          isSelected: e == state.filterSortBy,
-                          onTap: (bool oldValue) {
-                            setState(() {
-                              state = state.copyWith(filterSortBy: e);
-                            });
-                          },
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(30, 31, 30, 0),
+        child: Column(
+          spacing: 30,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Column(
+              spacing: 20,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Filter Search',
+                  style: TextStyles.smallTextBold,
+                ),
+                Column(
+                  spacing: 10,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Time', style: TextStyles.smallTextBold),
+                    Row(
+                      spacing: 10,
+                      children: [
+                        ...FilterSortBy.values.map(
+                          (e) => FilterButton(
+                            text: e.toString(),
+                            isSelected: e == state.filterSortBy,
+                            onTap: (bool oldValue) {
+                              setState(() {
+                                state = state.copyWith(filterSortBy: e);
+                              });
+                            },
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Column(
-                spacing: 10,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Rate', style: TextStyles.smallTextBold),
-                  Row(
-                    spacing: 10,
-                    children: [
-                      ...FilterRate.values.map(
-                        (e) => RatingButton(
-                          text: '${e.toInt()}',
-                          isSelected: e == state.filterRate,
-                          onTap: (oldValue) {
-                            setState(() {
-                              state = state.copyWith(filterRate: e);
-                            });
-                          },
+                      ],
+                    ),
+                  ],
+                ),
+                Column(
+                  spacing: 10,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text('Rate', style: TextStyles.smallTextBold),
+                    Row(
+                      spacing: 10,
+                      children: [
+                        ...FilterRate.values.map(
+                          (e) => RatingButton(
+                            text: '${e.toInt()}',
+                            isSelected: e == state.filterRate,
+                            onTap: (oldValue) {
+                              setState(() {
+                                state = state.copyWith(filterRate: e);
+                              });
+                            },
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Column(
-                spacing: 10,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      Text('Category', style: TextStyles.smallTextBold),
-                    ],
-                  ),
-                  Wrap(
-                    spacing: 10,
-                    runSpacing: 10,
-                    children: [
-                      ...FilterCategory.values.map(
-                        (e) => FilterButton(
-                          text: e.toString(),
-                          isSelected: e == state.filterCategory,
-                          onTap: (bool oldValue) {
-                            setState(() {
-                              state = state.copyWith(filterCategory: e);
-                            });
-                          },
+                      ],
+                    ),
+                  ],
+                ),
+                Column(
+                  spacing: 10,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text('Category', style: TextStyles.smallTextBold),
+                      ],
+                    ),
+                    Wrap(
+                      spacing: 10,
+                      runSpacing: 10,
+                      children: [
+                        ...FilterCategory.values.map(
+                          (e) => FilterButton(
+                            text: e.toString(),
+                            isSelected: e == state.filterCategory,
+                            onTap: (bool oldValue) {
+                              setState(() {
+                                state = state.copyWith(filterCategory: e);
+                              });
+                            },
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SmallButton(
-            text: 'Filter',
-            onClick: () {
-              widget.onFilterChange(state);
-            },
-          ),
-        ],
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            SmallButton(
+              text: 'Filter',
+              onClick: () {
+                widget.onFilterChange(state);
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

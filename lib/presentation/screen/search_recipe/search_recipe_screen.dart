@@ -47,7 +47,7 @@ class SearchRecipeScreen extends StatelessWidget {
                   ),
                   SearchFilterButton(
                     onTap: () {
-                      showBottomSheet(
+                      showModalBottomSheet(
                         context: context,
                         builder: (context) => FilterSearchBottomSheet(
                           filterState: state.filterState,
