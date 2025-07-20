@@ -8,6 +8,7 @@ class MediumButton extends StatefulWidget {
   static const double height = 54;
   static const double spacing = 9;
   static const int textMaxLines = 1;
+  static const Key gestureKey = Key('medium button gesture');
 
   final String text;
   final VoidCallback onClick;
@@ -28,6 +29,7 @@ class _MediumButtonState extends State<MediumButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      key: MediumButton.gestureKey,
       onTap: widget.onClick,
       onTapDown: (details) {
         setState(() {
