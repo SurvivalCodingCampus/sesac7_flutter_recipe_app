@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/03_mvvm/data/repository/recipe_repository_impl.dart';
-import 'package:flutter_recipe_app/03_mvvm/presentation/screen/saved_recipes_screen.dart';
+import 'package:flutter_recipe_app/04_ui_state_holder/presentation/screen/search_recipes_screen.dart';
+import 'package:flutter_recipe_app/04_ui_state_holder/presentation/screen/search_recipes_screen_view_model.dart';
 
 import '03_mvvm/data/data_source/recipe_data_source_impl.dart';
-import '03_mvvm/presentation/screen/saved_recipes_view_model.dart';
 
 void main() {
   runApp(
     MyApp(
-      viewModel: SavedRecipesViewModel(
+      viewModel: SearchRecipesScreenViewModel(
         recipeRepository: RecipeRepositoryImpl(
           dataSource: RecipeDataSourceImpl(),
         ),
@@ -18,7 +18,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  final SavedRecipesViewModel viewModel;
+  final SearchRecipesScreenViewModel viewModel;
 
   const MyApp({
     super.key,
@@ -33,11 +33,15 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: ListenableBuilder(
-        listenable: viewModel,
-        builder: (context, child) {
-          return SavedRecipesScreen(viewModel: viewModel);
-        },
+      home: Scaffold(
+        body: ListenableBuilder(
+          listenable: viewModel,
+          builder: (context, child) {
+            return SearchRecipesScreen(
+              viewModel: viewModel,
+            );
+          },
+        ),
       ),
     );
   }
