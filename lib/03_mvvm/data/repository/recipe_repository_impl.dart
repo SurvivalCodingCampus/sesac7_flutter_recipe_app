@@ -26,13 +26,47 @@ class RecipeRepositoryImpl implements RecipeRepository {
 
     return result.firstWhere((e) => e.id == id);
   }
+
+  @override
+  Future<List<Recipe>> getRecipesByName(String name) async {
+    final listOfModels = await _dataSource.getAllRecipes();
+    final result = listOfModels
+        .map((e) => e.toModel(e.recipes?.first.id as int))
+        .toList();
+
+    return result
+        .where(
+          (e) => e.name
+              .replaceAll(' ', '')
+              .toLowerCase()
+              .contains(name.toLowerCase()),
+        )
+        .toList();
+  }
+
+  @override
+  Future<List<Recipe>> getRecipesByChef(String chef) async {
+    final listOfModels = await _dataSource.getAllRecipes();
+    final result = listOfModels
+        .map((e) => e.toModel(e.recipes?.first.id as int))
+        .toList();
+
+    return result
+        .where(
+          (e) => e.chef
+              .replaceAll(' ', '')
+              .toLowerCase()
+              .contains(chef.toLowerCase()),
+        )
+        .toList();
+  }
 }
 
 void main() async {
   final dataSource = RecipeDataSourceImpl();
   final repository = RecipeRepositoryImpl(dataSource: dataSource);
 
-  final result = await repository.getRecipeById(5);
+  final result = await repository.getRecipesByName('er');
 
   print(result);
 }
