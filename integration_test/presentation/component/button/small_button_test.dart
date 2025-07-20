@@ -65,10 +65,7 @@ void main() {
       // Helper function to get the button's container color.
       Color getButtonColor() {
         final container = tester.widget<Container>(
-          find.descendant(
-            of: find.byType(SmallButton),
-            matching: find.byType(Container),
-          ),
+          find.byKey(SmallButton.buttonContainerKey),
         );
         final decoration = container.decoration as BoxDecoration;
         return decoration.color!;

@@ -8,6 +8,7 @@ class SmallButton extends StatefulWidget {
   static const double height = 37;
   static const int textMaxLines = 1;
   static const Key gestureKey = Key('small button gesture');
+  static const Key buttonContainerKey = Key('small button container');
 
   final String text;
   final VoidCallback onClick;
@@ -46,6 +47,7 @@ class _SmallButtonState extends State<SmallButton> {
         });
       },
       child: Container(
+        key: SmallButton.buttonContainerKey,
         width: SmallButton.width,
         height: SmallButton.height,
         padding: const EdgeInsets.symmetric(horizontal: 10),

@@ -8,8 +8,9 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('BigButton Integration Test', () {
-    testWidgets('should display text and icon, and handle tap events',
-        (WidgetTester tester) async {
+    testWidgets('should display text and icon, and handle tap events', (
+      WidgetTester tester,
+    ) async {
       // Given: A variable to track if the button was clicked.
       bool wasClicked = false;
       const buttonText = 'Test Button';
@@ -45,8 +46,9 @@ void main() {
       expect(wasClicked, isTrue);
     });
 
-    testWidgets('should change color on press and release',
-        (WidgetTester tester) async {
+    testWidgets('should change color on press and release', (
+      WidgetTester tester,
+    ) async {
       // Given: The BigButton is on the screen.
       await tester.pumpWidget(
         MaterialApp(
@@ -63,10 +65,9 @@ void main() {
 
       // Helper function to get the button's container color.
       Color getButtonColor() {
-        final container = tester.widget<Container>(find.descendant(
-          of: find.byType(BigButton),
-          matching: find.byType(Container),
-        ));
+        final container = tester.widget<Container>(
+          find.byKey(BigButton.buttonContainerKey),
+        );
         final decoration = container.decoration as BoxDecoration;
         return decoration.color!;
       }
