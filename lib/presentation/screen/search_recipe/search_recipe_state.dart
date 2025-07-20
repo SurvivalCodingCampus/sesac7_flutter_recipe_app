@@ -1,5 +1,3 @@
-import 'package:flutter_recipe_app/data/model/recipe/filter_category.dart';
-import 'package:flutter_recipe_app/data/model/recipe/filter_sort_by.dart';
 import 'package:flutter_recipe_app/data/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/presentation/screen/search_recipe/filter_search_state.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
