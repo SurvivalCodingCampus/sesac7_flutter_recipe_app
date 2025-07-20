@@ -7,7 +7,7 @@ class RecipeCardViewModel with ChangeNotifier {
   final RecipeRepository _repository;
   final Set<int> bookmarkedIds = {}; // 북마크 상태 저장
 
-  RecipeCardViewModel(this._repository);
+  RecipeCardViewModel(this._repository); // repository 가 여러개 들어올 수 있어서 named constructor로 작성하는것이 좋다
 
   List<Recipe> _recipes = [];
   List<Recipe> get recipes => List.unmodifiable(_recipes);
