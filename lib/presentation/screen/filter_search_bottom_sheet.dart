@@ -6,6 +6,7 @@ import 'package:flutter_recipe_app/presentation/view_model/filter_view_model.dar
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/data/state_holder/filter_search_state.dart';
 
+import '../../data/state_holder/filter_holder_info.dart';
 import '../../ui/text_styles.dart';
 import '../component/button/custom_chip_button.dart';
 
@@ -74,9 +75,24 @@ class FilterSearchBottomSheet extends StatelessWidget {
               child: SmallButton(
                 text: 'Filter',
                 onClick: () {
-                  final time = filterViewModel.timesState.firstWhere((item) => item.isSelected).itemName;
-                  final rate = filterViewModel.ratesState.firstWhere((item) => item.isSelected).itemName;
-                  final category = filterViewModel.categoriesState.firstWhere((item) => item.isSelected).itemName;
+
+                  final time = filterViewModel.timesState
+                      .firstWhere(
+                        (item) => item.isSelected,
+                    orElse: () => const FilterHolderInfo(itemName: 'All', isSelected: false),
+                  ).itemName;
+
+                  final rate = filterViewModel.ratesState
+                      .firstWhere(
+                        (item) => item.isSelected,
+                    orElse: () => const FilterHolderInfo(itemName: '0', isSelected: false),
+                  ).itemName;
+
+                  final category = filterViewModel.categoriesState
+                      .firstWhere(
+                        (item) => item.isSelected,
+                    orElse: () => const FilterHolderInfo(itemName: 'All', isSelected: false),
+                  ).itemName;
 
                   onFilterSelected(FilterSearchState(time: time, rate: int.parse(rate), category: category));
                 },

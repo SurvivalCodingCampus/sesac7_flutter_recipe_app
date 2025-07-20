@@ -43,7 +43,7 @@ class FilterViewModel with ChangeNotifier {
           .map(
             (item) => (item.itemName == itemName)
                 ? item.copyWith(isSelected: isSelected)
-                : item.copyWith(isSelected: !isSelected),
+                : item.copyWith(isSelected: false),
           ).toList();
 
       notifyListeners();
@@ -52,7 +52,7 @@ class FilterViewModel with ChangeNotifier {
           .map(
             (item) => (item.itemName == itemName)
             ? item.copyWith(isSelected: isSelected)
-            : item.copyWith(isSelected: !isSelected),
+            : item.copyWith(isSelected: false),
       ).toList();
 
       notifyListeners();
@@ -61,7 +61,7 @@ class FilterViewModel with ChangeNotifier {
           .map(
             (item) => (item.itemName == itemName)
             ? item.copyWith(isSelected: isSelected)
-            : item.copyWith(isSelected: !isSelected),
+            : item.copyWith(isSelected: false),
       ).toList();
 
       notifyListeners();

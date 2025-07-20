@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/data/state_holder/search_recipes_state.dart';
 
+import '../../data/state_holder/filter_search_state.dart';
 import '../../repository/recipe_repository.dart';
 
 class SearchRecipeViewModel with ChangeNotifier {
@@ -47,23 +48,25 @@ class SearchRecipeViewModel with ChangeNotifier {
 
   Future<void> searchRecipes(String keyword) async {
     try {
+      _searchRecipesState = searchRecipesState.copyWith(keyword: keyword);
+
       if (!_searchRecipesState.isOrgRecipesEmpty) {
         final filteredRecipes = _searchRecipesState.orgRecipes.where((recipe) {
           bool isTimeMatch = true;
           bool isRateMatch = true;
           bool isCategoryMatch = true;
 
-          if(_searchRecipesState.filterSearchState != null){
+          if (_searchRecipesState.filterSearchState != null) {
             isTimeMatch =
                 recipe.time == _searchRecipesState.filterSearchState?.time ||
-                    _searchRecipesState.filterSearchState?.time == 'All';
+                _searchRecipesState.filterSearchState?.time == 'All';
             isRateMatch =
                 recipe.rating >=
-                    (_searchRecipesState.filterSearchState?.rate ?? 0);
+                (_searchRecipesState.filterSearchState?.rate ?? 0);
             isCategoryMatch =
                 recipe.category ==
                     _searchRecipesState.filterSearchState?.category ||
-                    _searchRecipesState.filterSearchState?.category == 'All';
+                _searchRecipesState.filterSearchState?.category == 'All';
           }
 
           return (recipe.name.toLowerCase().contains(keyword.toLowerCase()) ||
@@ -88,48 +91,51 @@ class SearchRecipeViewModel with ChangeNotifier {
     }
   }
 
+  void updateSearchFilterOptions(FilterSearchState filterSearchState) {
 
-  void updateSearchFilterOptions(FilterSearchState filterSearchState) {) {
-    /*    _searchRecipesState = _searchRecipesState.copyWith(
-      filterSearchState: _searchRecipesState.filterSearchState?.copyWith(
-        time: time ?? _searchRecipesState.filterSearchState?.time ?? 'All',
-        rate: rate ?? _searchRecipesState.filterSearchState?.rate ?? 0,
-        category: category ?? _searchRecipesState.filterSearchState?.category ?? 'All',
-      ));*/
-    _searchRecipesState = _searchRecipesState.copyWith(
-      filterSearchState: filterSearchState,
-    );
+    try {
+      _searchRecipesState = _searchRecipesState.copyWith(
+        filterSearchState: filterSearchState,
+      );
 
-    notifyListeners();
+      if (!_searchRecipesState.isOrgRecipesEmpty) {
+        final filteredRecipes = _searchRecipesState.orgRecipes.where((recipe) {
+          bool isTimeMatch = true;
+          bool isRateMatch = true;
+          bool isCategoryMatch = true;
+
+          if (_searchRecipesState.filterSearchState != null) {
+            isTimeMatch =
+                recipe.time == _searchRecipesState.filterSearchState?.time ||
+                _searchRecipesState.filterSearchState?.time == 'All';
+            // isRateMatch는 _searchRecipesState.filterSearchState?.rate 값이 null이면 true로 설정
+            // 이외에는 _searchRecipesState.filterSearchState?.rate 값보다 크고 _searchRecipesState.filterSearchState?.rate + 1 값보다 작은지 확인
+            isRateMatch = (_searchRecipesState.filterSearchState?.rate ?? 0) == 0 ? true :
+                recipe.rating >=
+                (_searchRecipesState.filterSearchState?.rate ?? 0) &&
+                recipe.rating <
+                    (_searchRecipesState.filterSearchState?.rate ?? 0) + 1;
+            isCategoryMatch =
+                recipe.category ==
+                    _searchRecipesState.filterSearchState?.category ||
+                _searchRecipesState.filterSearchState?.category == 'All';
+          }
+
+          return isTimeMatch && isRateMatch && isCategoryMatch;
+        }).toList();
+        if (filteredRecipes.isNotEmpty) {
+          _searchRecipesState = searchRecipesState.copyWith(
+            recipes: filteredRecipes,
+          );
+        } else {
+          _searchRecipesState = searchRecipesState.copyWith(
+            recipes: [],
+          );
+        }
+        notifyListeners();
+      }
+    } catch (e) {
+      print('Error fetching recipes: $e');
+    }
   }
 }
-
-/*
-
-void main() {
-  final searchRecipeViewModel = SearchRecipeViewModel(
-    RecipeRepositoryImpl(recipeRepository: null,
-  );
-
-  recipeViewModel.fetchRecipes();
-
-  runApp(MyApp(recipeViewModel: recipeViewModel,));
-}
-
-class MyApp extends StatelessWidget {
-  final RecipeViewModel recipeViewModel;
-
-  const MyApp({super.key, required this.recipeViewModel});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: SavedRecipesScreen(recipeViewModel: recipeViewModel),
-    );
-  }
-}*/
