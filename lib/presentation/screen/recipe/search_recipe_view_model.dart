@@ -47,4 +47,47 @@ class SearchRecipeViewModel with ChangeNotifier {
     _state = _state.copyWith(isLoading: false);
     notifyListeners();
   }
+
+  void updateKeyword(String newKeyword) {
+    _state = _state.copyWith(keyword: newKeyword);
+    notifyListeners();
+  }
+
+  Future<void> filterRecipes({
+    String? keyword,
+    List<String>? category,
+    List<String>? time,
+    List<String>? rating,
+  }) async {
+    _state = _state.copyWith(isLoading: true);
+    notifyListeners();
+
+    final String inputKeyword = keyword ?? _state.keyword;
+
+    final bool anyFilterSelected =
+        inputKeyword.isEmpty &&
+        (category == null || category.isEmpty) &&
+        (time == null || time.isEmpty) &&
+        (rating == null || rating.isEmpty);
+
+    switch (anyFilterSelected) {
+      case true:
+        fetchRecipes();
+        break;
+      case false:
+        List<Recipe> filteredRecipes = _state.recipes;
+
+        if (inputKeyword.isNotEmpty) {
+          final String lowerCaseKeyword = inputKeyword.toLowerCase();
+          filteredRecipes = filteredRecipes.where((recipe) {
+            return recipe.name.toLowerCase().contains(lowerCaseKeyword) ||
+                recipe.chef.toLowerCase().contains(lowerCaseKeyword);
+          }).toList();
+        }
+
+        _state = _state.copyWith(recipes: filteredRecipes, isLoading: false);
+        notifyListeners();
+        break;
+    }
+  }
 }

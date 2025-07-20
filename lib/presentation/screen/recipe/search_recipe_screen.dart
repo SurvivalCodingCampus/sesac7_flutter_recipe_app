@@ -40,7 +40,12 @@ class SearchRecipeScreen extends StatelessWidget {
               children: [
                 IconTextInput(
                   placeholderText: 'Search',
-                  onChanged: (String text) {},
+                  onChanged: (String text) {
+                    viewModel.updateKeyword(text);
+                    viewModel.filterRecipes(
+                     keyword: text,
+                    );
+                  },
                 ),
                 SizedBox(width: 20),
                 SmallIconButton(

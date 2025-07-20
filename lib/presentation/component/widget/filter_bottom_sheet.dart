@@ -37,6 +37,9 @@ class FilterBottomSheet extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 20),
+          SizedBox(height: 20),
+          MultiFilterSection(title: 'Time'),
+          SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
