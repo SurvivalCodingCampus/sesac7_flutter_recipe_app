@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/button/small_icon_button.dart';
 import 'package:flutter_recipe_app/presentation/component/input/icon_text_input.dart';
-import 'package:flutter_recipe_app/presentation/component/widget/filter_option_section.dart';
+import 'package:flutter_recipe_app/presentation/component/widget/filter_bottom_sheet.dart';
+import 'package:flutter_recipe_app/presentation/component/widget/multi_filter_section.dart';
 import 'package:flutter_recipe_app/presentation/component/widget/small_recipe_card.dart';
 import 'package:flutter_recipe_app/presentation/screen/recipe/search_recipe_view_model.dart';
 import 'package:flutter_recipe_app/presentation/ui/app_color.dart';
@@ -45,7 +46,16 @@ class SearchRecipeScreen extends StatelessWidget {
                 SmallIconButton(
                   icon: Icons.tune,
                   onTap: () {
-                    print('filter');
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (BuildContext context) {
+                        return FilterBottomSheet(onTap: () {
+                          print('filter');
+                          Navigator.pop(context);
+                        },);
+                      },
+                    );
                   },
                 ),
               ],
@@ -74,7 +84,6 @@ class SearchRecipeScreen extends StatelessWidget {
                 ),
               ],
             ),
-            FilterOptionSection(),
             SizedBox(height: 20),
             Expanded(
               child: GridView.builder(

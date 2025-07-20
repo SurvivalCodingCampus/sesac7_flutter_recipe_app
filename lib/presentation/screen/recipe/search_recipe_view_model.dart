@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/network_error.dart';
 import 'package:flutter_recipe_app/core/result.dart';
@@ -13,6 +12,7 @@ class SearchRecipeViewModel with ChangeNotifier {
   SearchRecipeViewModel(this._recipeRepository);
 
   SearchRecipeState _state = SearchRecipeState();
+
   SearchRecipeState get state => _state;
 
   Future<void> fetchRecipes() async {
@@ -20,11 +20,11 @@ class SearchRecipeViewModel with ChangeNotifier {
     notifyListeners();
     final response = await _recipeRepository.getRecipes();
 
-    switch (response){
-      case Success<List<Recipe>, NetworkError>() :
+    switch (response) {
+      case Success<List<Recipe>, NetworkError>():
         _state = _state.copyWith(recipes: response.data);
         break;
-      case Error<List<Recipe>, NetworkError>() :
+      case Error<List<Recipe>, NetworkError>():
         _state = _state.copyWith(recipes: []);
         break;
     }
@@ -36,17 +36,15 @@ class SearchRecipeViewModel with ChangeNotifier {
     _state = _state.copyWith(isLoading: true);
     notifyListeners();
     final response = await _recipeRepository.getCategory();
-    switch (response){
-      case Success<List<Category>, NetworkError>() :
-        _state = _state.copyWith(categories : response.data);
+    switch (response) {
+      case Success<List<Category>, NetworkError>():
+        _state = _state.copyWith(categories: response.data);
         break;
-      case Error<List<Category>, NetworkError>() :
+      case Error<List<Category>, NetworkError>():
         _state = _state.copyWith(categories: []);
     }
 
     _state = _state.copyWith(isLoading: false);
     notifyListeners();
-
   }
-
 }

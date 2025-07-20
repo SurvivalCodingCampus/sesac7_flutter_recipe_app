@@ -4,8 +4,14 @@ import 'package:flutter_recipe_app/presentation/ui/app_color.dart';
 class MediumButton extends StatelessWidget {
   final String buttonText;
   final void Function() onTap;
+  final IconData? icon;
 
-  const MediumButton({super.key, required this.buttonText, required this.onTap});
+  const MediumButton({
+    super.key,
+    required this.buttonText,
+    required this.onTap,
+    this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +27,7 @@ class MediumButton extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             ConstrainedBox(
-              constraints: BoxConstraints(
-                minWidth: 114,
-                minHeight: 24,
-              ),
+              constraints: BoxConstraints(minWidth: 114, minHeight: 24),
               child: Center(
                 child: Text(
                   '$buttonText',
@@ -36,8 +39,14 @@ class MediumButton extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(width: 9),
-            Icon(Icons.arrow_forward, color: AppColor.White),
+            icon != null
+                ? Row(
+                    children: [
+                      SizedBox(width: 9),
+                      Icon(icon, color: AppColor.White),
+                    ],
+                  )
+                : Container(),
           ],
         ),
       ),
