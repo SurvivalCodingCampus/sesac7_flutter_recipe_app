@@ -96,7 +96,9 @@ void main() {
       final networkError = NetworkError.unknown;
       when(
         mockRecipeRepository.fetchAllRecipes(),
-      ).thenAnswer((_) async => Error(networkError));
+      ).thenAnswer(
+        (_) async => Error<List<Recipe>, NetworkError>(networkError),
+      );
 
       await viewModel.fetchRecipe();
 
