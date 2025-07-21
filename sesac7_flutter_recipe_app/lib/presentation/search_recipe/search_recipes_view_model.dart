@@ -8,13 +8,13 @@ import 'package:flutter_recipe_app/data/model/recipe.dart';
 import 'package:flutter_recipe_app/data/repository/recipe_repository/recipe_repository.dart';
 import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_state.dart';
 
-class SearchRecipeViewModel with ChangeNotifier {
+class SearchRecipesViewModel with ChangeNotifier {
   final RecipeRepository _recipeRepository;
   SearchRecipesState _searchRecipesState = SearchRecipesState();
 
   SearchRecipesState get searchRecipesState => _searchRecipesState;
 
-  SearchRecipeViewModel({required RecipeRepository recipeRepository})
+  SearchRecipesViewModel({required RecipeRepository recipeRepository})
     : _recipeRepository = recipeRepository;
 
   Future<void> fetchRecentRecipes() async {
