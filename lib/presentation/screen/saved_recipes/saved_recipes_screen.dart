@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/data/data_source/recipe/recipe_data_source_impl.dart';
-import 'package:flutter_recipe_app/data/repository/recipe/recipe_repository_impl.dart';
 import 'package:flutter_recipe_app/presentation/component/list_item/recipe_card.dart';
 import 'package:flutter_recipe_app/presentation/screen/saved_recipes/saved_recipes_view_model.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
@@ -22,9 +20,8 @@ class SavedRecipesScreen extends StatelessWidget {
           style: TextStyles.mediumTextBold,
         ),
       ),
-      body: ListenableBuilder(
-        listenable: viewModel,
-        builder: (context, child) {
+      body: Builder(
+        builder: (context) {
           if (viewModel.errorMessage != null) {
             return Center(
               child: Text(
@@ -58,18 +55,4 @@ class SavedRecipesScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-void main() async {
-  final viewmodel = SavedRecipesViewModel(
-    recipeRepository: RecipeRepositoryImpl(
-      recipeDataSource: RecipeDataSourceImpl(),
-    ),
-  );
-  await viewmodel.fetchSavedRecipes();
-  runApp(
-    MaterialApp(
-      home: SavedRecipesScreen(viewModel: viewmodel),
-    ),
-  );
 }
