@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/ui/app_color.dart';
 
-class RecipeThumbnail extends StatelessWidget {
+class SmallRecipeCard extends StatelessWidget {
   final String userName;
   final String firstLine;
   final double rating;
-  final int minutes;
   final String imageUrl;
   final VoidCallback? onTapList;
-  final VoidCallback? onTapBookmark;
 
-  const RecipeThumbnail({
+  const SmallRecipeCard({
     super.key,
     required this.userName,
     required this.firstLine,
     this.rating = 0.0,
-    this.minutes = 0,
     required this.imageUrl,
     this.onTapList,
-    this.onTapBookmark,
   });
 
   @override
@@ -26,7 +22,6 @@ class RecipeThumbnail extends StatelessWidget {
     return GestureDetector(
       onTap: onTapList,
       child: Container(
-        height: 150,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
         ),
@@ -70,6 +65,8 @@ class RecipeThumbnail extends StatelessWidget {
               padding: const EdgeInsets.all(10),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                // rating 버튼
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -90,63 +87,22 @@ class RecipeThumbnail extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 180,
-                            child: Text(
-                              firstLine,
-                              style: TextStyle(
-                                color: AppColor.White,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            'By $userName',
-                            style: TextStyle(color: AppColor.White, fontSize: 8),
-                          ),
-                        ],
-                      ),
                       Container(
-                        padding: const EdgeInsets.symmetric(vertical: 3.5),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.access_time,
-                                  color: AppColor.White,
-                                  size: 17,
-                                ),
-                                SizedBox(width: 5),
-                                Text(
-                                  '$minutes min',
-                                  style: TextStyle(color: AppColor.White, fontSize: 11),
-                                ),
-                              ],
-                            ),
-                            SizedBox(width: 10,),
-                            GestureDetector(
-                              onTap: onTapBookmark,
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                                decoration: BoxDecoration(
-                                  color: AppColor.White,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                child: Icon(Icons.bookmark_border_rounded, color: AppColor.Primary80, size: 24),
-                              ),
-                            )
-                          ],
+                        child: Text(
+                          firstLine,
+                          style: TextStyle(
+                            color: AppColor.White,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
+                      ),
+                      Text(
+                        'By $userName',
+                        style: TextStyle(color: AppColor.White, fontSize: 8),
                       ),
                     ],
                   ),
