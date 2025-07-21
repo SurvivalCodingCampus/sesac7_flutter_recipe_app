@@ -35,7 +35,7 @@ class MainScreen extends StatelessWidget {
                 SmallButton(
                   text: 'Button',
                   onClick: () {
-                    print('Small Button Clicked!');
+
                   },
                 ),
                 const SizedBox(height: 10),

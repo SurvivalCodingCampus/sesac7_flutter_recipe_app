@@ -72,6 +72,7 @@ flutter:
   assets:
     - assets/images/background_cooking.jpg
     - assets/icons/chef_hat.png # 요리사 모자 아이콘 경로 추가
+    - assets/icons/recipe_filter_setting.png # 요리사 모자 아이콘 경로 추가
 
   fonts:
     - family: Poppins

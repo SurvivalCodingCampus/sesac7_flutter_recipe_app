@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-import '../data/model/recipe.dart';
-import '../repository/recipe_repository.dart';
+import '../../data/model/recipe.dart';
+import '../../repository/recipe_repository.dart';
 
 class RecipeViewModel with ChangeNotifier{
   final RecipeRepository _recipeRepository;
@@ -17,7 +17,7 @@ class RecipeViewModel with ChangeNotifier{
     _isLoading = true;
     notifyListeners();
     final response = await _recipeRepository.getRecipes();
-    final responseData = response.data;
+    final responseData = response.body;
     if (response.isSuccess && responseData != null && responseData.isNotEmpty) {
       _recipes.clear();
       _recipes.addAll(responseData);

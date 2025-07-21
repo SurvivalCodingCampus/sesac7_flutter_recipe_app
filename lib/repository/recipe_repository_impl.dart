@@ -20,13 +20,18 @@ class RecipeRepositoryImpl implements RecipeRepository {
 
     try {
       if (response.statusCode == 200) {
-        final List<dynamic> recipesRawList = jsonDecode(response.body)['recipes'];
-        final recipeDtos = recipesRawList.map((e) => RecipeDto.fromJson(e)).toList();
-        final recipes = recipeDtos.map((e) => e.toRecipe()).toList();
 
-        return ApiResponse.success(data: recipes);
+        if(response.body != null) {
+          final List<dynamic> recipesRawList = jsonDecode(response.body!)['recipes'];
+          final recipeDtos = recipesRawList.map((e) => RecipeDto.fromJson(e)).toList();
+          final recipes = recipeDtos.map((e) => e.toRecipe()).toList();
+
+          return ApiResponse.success(body: recipes);
+        } else {
+          return ApiResponse.failure(errorMessage: 'response.body is null');
+        }
       } else {
-        return ApiResponse.failure(errorMessage: 'Something went wrong');
+        return ApiResponse.failure(errorMessage: 'http status code is not 200');
       }
     } catch (e) {
       return ApiResponse.failure(errorMessage: 'Something went wrong');
