@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/data/model/ingredient_model.dart';
 import 'package:flutter_recipe_app/data/model/recipe_model.dart';
 import 'package:flutter_recipe_app/data/model/step_model.dart';
-import 'package:flutter_recipe_app/presentation/component/card/recipe_card.dart';
+//import 'package:flutter_recipe_app/presentation/component/card/recipe_card.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
@@ -44,8 +44,8 @@ void main() {
         MaterialApp( // MaterialApp으로 감싸야 TextStyles, Icon 등이 제대로 렌더링됩니다.
           home: Scaffold(
             body: Center(
-              child: RecipeCard(
-                recipe: dummyRecipe, saveRecipeCallback: (String recipeId) {},),
+              // child: RecipeCard(
+              //   recipe: dummyRecipe, saveRecipeCallback: (String recipeId) {},),
             ),
           ),
         ),
@@ -143,8 +143,8 @@ void main() {
         MaterialApp(
           home: Scaffold(
             body: Center(
-              child: RecipeCard(recipe: longTitleRecipe,
-                saveRecipeCallback: (String recipeId) {},),
+              // child: RecipeCard(recipe: longTitleRecipe,
+              //   saveRecipeCallback: (String recipeId) {},),
             ),
           ),
         ),

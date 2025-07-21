@@ -20,7 +20,6 @@ class InputField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 315,
       height: 81,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,7 +62,7 @@ class InputField extends StatelessWidget {
                     width: 1.0,
                   ),
                 ),
-                contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12), // 내부 패딩
+                contentPadding: const EdgeInsets.symmetric(horizontal: 16, ), // 내부 패딩
               ),
             ),
           ),

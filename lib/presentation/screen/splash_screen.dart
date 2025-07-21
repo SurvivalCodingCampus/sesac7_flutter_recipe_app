@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/button/big_button.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 
+import '../../core/routing/router.dart';
+import '../../core/routing/routes.dart';
 import '../../ui/text_styles.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -73,7 +75,9 @@ class SplashScreen extends StatelessWidget {
                 SizedBox(height: 64), // 간격
                 Padding(
                   padding: const EdgeInsets.only(left: 40, right: 40),
-                  child: BigButton(text: 'Start Cooking', onClick: (){}),
+                  child: BigButton(text: 'Start Cooking', onClick: (){
+                    router.go(Routes.login);
+                  }),
                 ),
                 SizedBox(height: 84), // 간격
               ],

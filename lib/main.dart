@@ -1,44 +1,32 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/presentation/screen/search_recipe_screen.dart';
-import 'package:flutter_recipe_app/presentation/view_model/filter_view_model.dart';
-import 'package:flutter_recipe_app/presentation/view_model/search_recipe_view_model.dart';
-import 'package:flutter_recipe_app/repository/recipe_repository_impl.dart';
+import 'package:flutter/services.dart';
 
-import 'data_source/recipe_data_source_impl.dart';
+import 'core/routing/router.dart';
 
-void main() {
-  final filterViewModel = FilterViewModel();
-  final searchRecipeViewModel = SearchRecipeViewModel(
-    recipeRepository: RecipeRepositoryImpl(RecipeDataSourceImpl()),
-  );
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-  searchRecipeViewModel.fetchRecipes();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
 
-  runApp(
-    MyApp(
-      searchRecipeViewModel: searchRecipeViewModel,
-      filterViewModel: filterViewModel,
-    ),
-  );
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final SearchRecipeViewModel searchRecipeViewModel;
-  final FilterViewModel filterViewModel;
 
-  const MyApp({super.key, required this.searchRecipeViewModel, required this.filterViewModel});
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
+    return MaterialApp.router(
+      title: 'Recipe App',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: SearchRecipeScreen(searchRecipeViewModel: searchRecipeViewModel, filterViewModel: filterViewModel,),
+      routerConfig: router,
     );
   }
-
 }
