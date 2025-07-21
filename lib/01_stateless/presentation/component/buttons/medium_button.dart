@@ -11,41 +11,42 @@ class MediumButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 243,
-      height: 54,
-      decoration: BoxDecoration(
-        color: AppColors.primary100,
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Center(
-          child: Row(
-            children: [
-              const SizedBox(
-                width: 50
-              ),
-              SizedBox(
-                width: 114,
-                height: 24,
-                child: Center(
-                  child: Text(
-                    text,
-                    style: GoogleFonts.poppins(
-                      textStyle: TextStyles.normalTextBold,
-                      color: Colors.white
-                    )
-                  ),
-                )
-              ),
-              const Icon(
-                Icons.arrow_forward,
-                size: 20,
-                color: Colors.white
-              ),
-              const SizedBox(
-                width: 50
-              )
-            ],)
+    return GestureDetector(
+      onTap: onClick,
+      child: Container(
+        width: 243,
+        height: 54,
+        decoration: BoxDecoration(
+          color: AppColors.primary100,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Center(
+            child: Row(
+              children: [
+                const Spacer(),
+                SizedBox(
+                  height: 24,
+                  child: Center(
+                    child: Text(
+                      text,
+                      style: GoogleFonts.poppins(
+                        textStyle: TextStyles.normalTextBold,
+                        color: Colors.white
+                      )
+                    ),
+                  )
+                ),
+                const SizedBox(
+                  width: 9,
+                ),
+                const Icon(
+                  Icons.arrow_forward,
+                  size: 20,
+                  color: Colors.white
+                ),
+                const Spacer()
+              ],)
+        ),
       ),
     );
   }
