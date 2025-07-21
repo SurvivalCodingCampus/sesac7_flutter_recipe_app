@@ -4,7 +4,7 @@ import 'package:flutter_recipe_app/presentation/component/button/search_recipe_f
 import 'package:flutter_recipe_app/presentation/component/card/search_recipe_card.dart';
 import 'package:flutter_recipe_app/presentation/component/text_field/search_input_field.dart';
 import 'package:flutter_recipe_app/presentation/component/title_bar/screen_title_bar.dart';
-import 'package:flutter_recipe_app/presentation/search_recipe/searh_recipe_view_model.dart';
+import 'package:flutter_recipe_app/presentation/search_recipe/search_recipe_view_model.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 

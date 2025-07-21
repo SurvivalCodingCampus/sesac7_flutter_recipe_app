@@ -5,7 +5,7 @@ import 'package:flutter_recipe_app/presentation/main/main_screen.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_screen.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_view_model.dart';
 import 'package:flutter_recipe_app/presentation/search_recipe/search_recipe_screen.dart';
-import 'package:flutter_recipe_app/presentation/search_recipe/searh_recipe_view_model.dart';
+import 'package:flutter_recipe_app/presentation/search_recipe/search_recipe_view_model.dart';
 import 'package:flutter_recipe_app/presentation/splash/splash_screen.dart';
 
 void main() async {
