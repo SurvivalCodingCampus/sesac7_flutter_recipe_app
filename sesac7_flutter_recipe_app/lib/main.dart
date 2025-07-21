@@ -5,8 +5,8 @@ import 'package:flutter_recipe_app/data/repository/recipe_repository/recipe_repo
 import 'package:flutter_recipe_app/presentation/main/main_screen.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_screen.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_view_model.dart';
-import 'package:flutter_recipe_app/presentation/search_recipe/search_recipe_screen.dart';
-import 'package:flutter_recipe_app/presentation/search_recipe/search_recipe_view_model.dart';
+import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_screen.dart';
+import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_view_model.dart';
 import 'package:flutter_recipe_app/presentation/splash/splash_screen.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 
@@ -44,7 +44,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.white),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.white, surface: AppColors.white),
       ),
       routerConfig: router,
     );
@@ -80,11 +80,11 @@ class SavedRecipeApp extends StatelessWidget {
 }
 
 class SearchRecipeApp extends StatelessWidget {
-  final SearchRecipeViewModel _searchRecipeViewModel;
+  final SearchRecipesViewModel _searchRecipeViewModel;
 
   const SearchRecipeApp({
     super.key,
-    required SearchRecipeViewModel searchRecipeViewModel,
+    required SearchRecipesViewModel searchRecipeViewModel,
   }) : _searchRecipeViewModel = searchRecipeViewModel;
 
   @override
@@ -101,7 +101,7 @@ class SearchRecipeApp extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          return SearchRecipeScreen(searchRecipeViewModel: _searchRecipeViewModel);
+          return SearchRecipesScreen(searchRecipeViewModel: _searchRecipeViewModel);
         })
     );
   }
