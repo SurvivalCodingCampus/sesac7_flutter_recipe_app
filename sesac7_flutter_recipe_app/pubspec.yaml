@@ -120,6 +120,8 @@ flutter:
   assets:
     - assets/splash_screen_background.jpg
     - assets/splash_app_logo.png
+    - assets/facebook.png
+    - assets/icons8-google-240.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
