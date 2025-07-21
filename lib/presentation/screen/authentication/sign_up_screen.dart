@@ -119,8 +119,14 @@ class SignUpScreen extends StatelessWidget {
                   spacing: 25,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    OauthButton(icon: Icons.logo_dev, onTap: () {}),
-                    OauthButton(icon: Icons.logo_dev, onTap: () {}),
+                    OauthButton(
+                      imageAssetPath: 'assets/images/icon/google.png',
+                      onTap: () {},
+                    ),
+                    OauthButton(
+                      imageAssetPath: 'assets/images/icon/facebook.png',
+                      onTap: () {},
+                    ),
                   ],
                 ),
                 const SizedBox(height: 20),

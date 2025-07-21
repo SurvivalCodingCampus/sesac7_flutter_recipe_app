@@ -5,10 +5,14 @@ import 'package:flutter_recipe_app/ui/app_colors.dart';
 class OauthButton extends StatelessWidget {
   static const int shadowColorValue = 0xff696969;
 
-  final IconData icon;
+  final String imageAssetPath;
   final VoidCallback onTap;
 
-  const OauthButton({super.key, required this.icon, required this.onTap});
+  const OauthButton({
+    super.key,
+    required this.imageAssetPath,
+    required this.onTap,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -32,11 +36,10 @@ class OauthButton extends StatelessWidget {
             ),
           ],
         ),
-        child: Center(
-          child: Icon(
-            icon,
-            size: 24,
-          ),
+        child: Image.asset(
+          imageAssetPath,
+          width: 24,
+          height: 24,
         ),
       ),
     );

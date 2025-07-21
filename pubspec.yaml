@@ -33,3 +33,5 @@ flutter:
 
   assets:
     - assets/images/splash/
+    - assets/images/avator/
+    - assets/images/icon/

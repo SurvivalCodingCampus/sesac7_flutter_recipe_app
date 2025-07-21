@@ -46,6 +46,9 @@ class HomeScreen extends StatelessWidget {
                           ComponentConstant.borderRadius,
                         ),
                       ),
+                      child: Image.asset(
+                        'assets/images/avator/avator-sample.png',
+                      ),
                     ),
                   ],
                 ),
