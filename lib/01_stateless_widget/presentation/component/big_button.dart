@@ -48,7 +48,7 @@ class _BigButtonState extends State<BigButton> {
         // width: 315,
         height: 60,
         padding: EdgeInsets.fromLTRB(85, 18, 85, 18),
-        margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
+        // margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
         decoration: BoxDecoration(
           color: isClicked ? AppColors.primary100 : AppColors.gray4,
           borderRadius: BorderRadius.circular(10.0),
