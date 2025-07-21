@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/bottom_sheet/search_recipe_filter_bottom_sheet.dart';
 import 'package:flutter_recipe_app/presentation/component/button/search_recipe_filter_button.dart';
 import 'package:flutter_recipe_app/presentation/component/card/search_recipe_card.dart';
-import 'package:flutter_recipe_app/presentation/component/text_field/search_input_filed.dart';
+import 'package:flutter_recipe_app/presentation/component/text_field/search_input_field.dart';
 import 'package:flutter_recipe_app/presentation/component/title_bar/screen_title_bar.dart';
 import 'package:flutter_recipe_app/presentation/search_recipe/searh_recipe_view_model.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
@@ -49,7 +49,7 @@ class _SearchRecipeScreenState extends State<SearchRecipeScreen> {
             ),
             Row(
               children: [
-                SearchInputFiled(
+                SearchInputField(
                   textEditingController:
                       widget._searchRecipeViewModel.searchInputFieldController,
                   hint: 'Search recipe',

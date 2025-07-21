@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
-class SearchInputFiled extends StatelessWidget {
+class SearchInputField extends StatelessWidget {
   final TextEditingController textEditingController;
   final String hint;
   final Function(String searchKeyword) onSearchKeywordChange;
 
-  const SearchInputFiled({
+  const SearchInputField({
     super.key,
     required this.textEditingController,
     required this.hint,
