@@ -12,7 +12,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import '../saved_recipes/saved_recipes_view_model_test.mocks.dart';
+import 'search_recipe_view_model_test.mocks.dart';
 
 @GenerateNiceMocks([MockSpec<RecipeRepository>()])
 void main() {
