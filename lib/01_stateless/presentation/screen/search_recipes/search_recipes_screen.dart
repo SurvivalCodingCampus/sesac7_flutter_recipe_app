@@ -1,30 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/01_stateless/data/repository/mock/mock_recipe_repository_impl.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/component/bottom_sheet/filter_search_bottom_sheet.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/component/bottom_sheet/filter_search_state.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/component/card/recipe_card.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_view_model.dart';
-
-void main() {
-  final searchRecipesViewModel = SearchRecipesViewModel(
-    recipeRepository: MockRecipeRepositoryImpl(),
-  );
-
-  searchRecipesViewModel.fetchRecipes();
-
-  runApp(
-    MaterialApp(
-      home: ListenableBuilder(
-        listenable: searchRecipesViewModel,
-        builder: (context, child) {
-          return SearchRecipesScreen(
-            viewModel: searchRecipesViewModel,
-          );
-        },
-      ),
-    ),
-  );
-}
 
 class SearchRecipesScreen extends StatelessWidget {
   final SearchRecipesViewModel viewModel;

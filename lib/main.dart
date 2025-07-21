@@ -3,43 +3,24 @@ import 'package:flutter_recipe_app/01_stateless/data/repository/person_repositor
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/main/main_screen.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/main/main_view_model.dart';
 
-void main() {
-  final mainViewModel = MainViewModel(
-    personRepository: PersonRepositoryImpl(),
-  );
-  mainViewModel.fetchPersonData();
+import '01_stateless/core/routing/router.dart';
 
-  runApp(
-    MyApp(
-      mainViewModel: mainViewModel,
-    ),
-  );
+void main() {
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final MainViewModel mainViewModel;
-
-  const MyApp({
-    super.key,
-    required this.mainViewModel,
-  });
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: ListenableBuilder(
-        listenable: mainViewModel,
-        builder: (context, child) {
-          return MainScreen(
-            viewModel: mainViewModel,
-          );
-        },
-      ),
+      routerConfig: router,
     );
   }
 }
