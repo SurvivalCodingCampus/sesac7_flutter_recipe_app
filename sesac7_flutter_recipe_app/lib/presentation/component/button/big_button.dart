@@ -45,31 +45,28 @@ class _BigButtonState extends State<BigButton> {
           color: _isTapDown ? AppColors.gray4 : AppColors.primary100,
           borderRadius: BorderRadius.circular(10.0),
         ),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 114.0,
-                height: 24.0,
-                child: Center(
-                  child: Text(
-                    widget.title,
-                    style: TextStyles.bigButtonTitle,
-                    maxLines: 1,
-                  ),
-                ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            SizedBox(
+              width: 114.0,
+              child: Text(
+                widget.title,
+                style: TextStyles.bigButtonTitle,
+                maxLines: 1,
+                textAlign: TextAlign.center,
               ),
-              SizedBox(
-                width: 11.0,
-              ),
-              SizedBox(
-                width: 20.0,
-                height: 20.0,
-                child: Icon(Icons.arrow_forward),
-              ),
-            ],
-          ),
+            ),
+            SizedBox(
+              width: 11.0,
+            ),
+            Icon(
+              Icons.arrow_forward,
+              color: AppColors.white,
+              size: 20.0,
+            ),
+          ],
         ),
       ),
     );
