@@ -3,6 +3,8 @@ import 'package:flutter_recipe_app/presentation/component/constants/component_co
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 
 class OauthButton extends StatelessWidget {
+  static const int shadowColorValue = 0xff696969;
+
   final IconData icon;
   final VoidCallback onTap;
 
@@ -23,7 +25,7 @@ class OauthButton extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: Color(
-                0xff696969,
+                shadowColorValue,
               ).withAlpha(ComponentConstant.oauthButtonShadowAlpha),
               blurRadius: 5,
               spreadRadius: 3,

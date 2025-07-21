@@ -3,6 +3,8 @@ import 'package:flutter_recipe_app/presentation/component/constants/component_co
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 
 class MainNavigationScreen extends StatelessWidget {
+  static const int shadowColorValue = 0xff6c6c6c;
+
   final Widget child;
   final int currentIndex;
   final void Function(int index) onTabSelected;
@@ -30,7 +32,7 @@ class MainNavigationScreen extends StatelessWidget {
                   boxShadow: [
                     BoxShadow(
                       color: Color(
-                        0xff6c6c6c,
+                        shadowColorValue,
                       ).withAlpha(ComponentConstant.mainNavigationShadowAlpha),
                       blurRadius: 8,
                     ),
