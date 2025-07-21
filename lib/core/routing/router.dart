@@ -2,6 +2,8 @@ import 'package:flutter_recipe_app/core/routing/routes.dart';
 import 'package:flutter_recipe_app/data/data_source/recipe/recipe_data_source_impl.dart';
 import 'package:flutter_recipe_app/data/repository/recipe/recipe_repository.dart';
 import 'package:flutter_recipe_app/data/repository/recipe/recipe_repository_impl.dart';
+import 'package:flutter_recipe_app/presentation/screen/authentication/sign_in_screen.dart';
+import 'package:flutter_recipe_app/presentation/screen/authentication/sign_up_screen.dart';
 import 'package:flutter_recipe_app/presentation/screen/home/home_screen.dart';
 import 'package:flutter_recipe_app/presentation/screen/main_navigation/main_navigation_screen.dart';
 import 'package:flutter_recipe_app/presentation/screen/notifications/notifications_screen.dart';
@@ -21,9 +23,26 @@ final router = GoRouter(
     GoRoute(
       path: Routes.splash,
       builder: (context, state) {
-        return const SplashScreen();
+        return SplashScreen(
+          onStartCookingTap: () {
+            context.go(Routes.signIn);
+          },
+        );
       },
     ),
+    GoRoute(
+      path: Routes.signIn,
+      builder: (context, state) {
+        return const SignInScreen();
+      },
+    ),
+    GoRoute(
+      path: Routes.signUp,
+      builder: (context, state) {
+        return const SignUpScreen();
+      },
+    ),
+
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return MainNavigationScreen(
