@@ -3,11 +3,11 @@ import 'package:flutter_recipe_app/01_stateless_widget/ui/app_colors.dart';
 import 'package:flutter_recipe_app/01_stateless_widget/ui/text_styles.dart';
 import 'package:flutter_recipe_app/02_stateful_widget/data/model/recipe.dart';
 
-class RecipeCard extends StatelessWidget {
+class RecipeCardOnlyWithName extends StatelessWidget {
   final Recipe recipe;
   final void Function() onClick;
 
-  const RecipeCard({
+  const RecipeCardOnlyWithName({
     super.key,
     required this.recipe,
     required this.onClick,
@@ -21,14 +21,6 @@ class RecipeCard extends StatelessWidget {
       // padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
       // margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
       decoration: BoxDecoration(
-        boxShadow: [
-          // BoxShadow(
-          //   color: Colors.black.withValues(),
-          //   spreadRadius: 1,
-          //   blurRadius: 4,
-          //   offset: Offset(0, 2),
-          // ),
-        ],
         borderRadius: BorderRadius.circular(10),
       ),
       child: ClipRRect(
@@ -107,7 +99,7 @@ class RecipeCard extends StatelessWidget {
                               child: Text(
                                 recipe.name,
                                 overflow: TextOverflow.ellipsis,
-                                style: TextStyles.smallTextBold.copyWith(
+                                style: TextStyles.smallerTextBold.copyWith(
                                   color: AppColors.white,
                                 ),
                               ),
@@ -121,55 +113,6 @@ class RecipeCard extends StatelessWidget {
                             ),
                           ],
                         ),
-                      ),
-                      Column(
-                        children: [
-                          SizedBox(
-                            width: 94,
-                            height: 30,
-                          ),
-                          Row(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(
-                                    Icons.watch_later_outlined,
-                                    color: AppColors.gray4,
-                                    size: 17,
-                                  ),
-                                  SizedBox(
-                                    width: 5,
-                                  ),
-                                  Text(
-                                    recipe.cookingTime,
-                                    style: TextStyles.smallTextRegular.copyWith(
-                                      color: AppColors.gray4,
-                                      fontSize: 11.0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(width: 10, height: 24),
-                              GestureDetector(
-                                onTap: onClick,
-                                child: Container(
-                                  width: 24,
-                                  height: 24,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.white,
-                                    borderRadius: BorderRadius.circular(100),
-                                  ),
-                                  child: Icon(
-                                    Icons.bookmark_border,
-                                    size: 16,
-                                    color: AppColors.primary80,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
                       ),
                     ],
                   ),

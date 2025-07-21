@@ -10,7 +10,11 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
-        home: UnclickedRatingButton(text: testText, isSelected: testIsSelected),
+        home: UnclickedRatingButton(
+          text: testText,
+          isSelected: testIsSelected,
+          onClick: () {},
+        ),
       ),
     );
 

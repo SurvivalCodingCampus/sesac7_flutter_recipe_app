@@ -82,17 +82,36 @@ class _RecipeScreenState extends State<RecipeScreen> {
                       : UnclickedRatingButton(
                           text: '5',
                           isSelected: isRatingButtonSelected,
+                          onClick: () {},
                         ),
                 ),
                 SizedBox(width: 20),
                 UnclickedRatingButton(
                   text: '5',
                   isSelected: false,
+                  onClick: () {},
                 ),
                 SizedBox(width: 20),
                 GestureDetector(
                   onTap: () {
                     setState(() {
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return UnconstrainedBox(
+                            child: AlertDialog(
+                              contentPadding: EdgeInsets.zero,
+                              content: RatingDialog(
+                                title: 'Rate recipe',
+                                actionName: 'Send',
+                                onChange: (int rating) {
+                                  print('현재 선택된 점수는 $rating점 입니다.');
+                                },
+                              ),
+                            ),
+                          );
+                        },
+                      );
                       isFilterButtonSelected = !isFilterButtonSelected;
                     });
                   },
@@ -104,12 +123,14 @@ class _RecipeScreenState extends State<RecipeScreen> {
                       : UnclickedFilterButton(
                           text: 'Text',
                           isSelected: isFilterButtonSelected,
+                          onClick: () {},
                         ),
                 ),
                 SizedBox(width: 20),
                 UnclickedFilterButton(
                   text: 'Text',
                   isSelected: isFilterButtonSelected,
+                  onClick: () {},
                 ),
               ],
             ),

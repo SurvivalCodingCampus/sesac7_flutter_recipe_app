@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/01_stateless_widget/presentation/component/left_selected_triple_tabs.dart';
-import 'package:flutter_recipe_app/01_stateless_widget/presentation/component/middle_selected_triple_tabs.dart';
-import 'package:flutter_recipe_app/01_stateless_widget/presentation/component/right_selected_triple_tabs.dart';
-import 'package:flutter_recipe_app/01_stateless_widget/presentation/component/small_button.dart';
 import 'package:flutter_recipe_app/01_stateless_widget/presentation/component/big_button.dart';
 import 'package:flutter_recipe_app/01_stateless_widget/presentation/component/default_input_field.dart';
 import 'package:flutter_recipe_app/01_stateless_widget/presentation/component/filled_input_field.dart';
 import 'package:flutter_recipe_app/01_stateless_widget/presentation/component/focused_input_field.dart';
 import 'package:flutter_recipe_app/01_stateless_widget/presentation/component/left_selected_tabs.dart';
+import 'package:flutter_recipe_app/01_stateless_widget/presentation/component/left_selected_triple_tabs.dart';
 import 'package:flutter_recipe_app/01_stateless_widget/presentation/component/medium_button.dart';
+import 'package:flutter_recipe_app/01_stateless_widget/presentation/component/middle_selected_triple_tabs.dart';
 import 'package:flutter_recipe_app/01_stateless_widget/presentation/component/right_selected_tabs.dart';
+import 'package:flutter_recipe_app/01_stateless_widget/presentation/component/right_selected_triple_tabs.dart';
+import 'package:flutter_recipe_app/01_stateless_widget/presentation/component/small_button.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
