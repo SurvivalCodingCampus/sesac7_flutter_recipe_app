@@ -8,7 +8,7 @@ enum SearchRecipeFilterCategoryType {
   fruit('Fruit'),
   breakFast('BreakFast'),
   spanish('Spanish'),
-  launch('Launch');
+  lunch('Lunch');
 
   final String value;
 
