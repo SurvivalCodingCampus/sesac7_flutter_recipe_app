@@ -295,6 +295,28 @@ abstract class TextStyles {
     overflow: TextOverflow.ellipsis,
     height: 17 / 11,
   );
+  /* SignUpScreen End */
+
+  /* HomeScreen Start */
+  static final TextStyle homeScreenTitle = TextStyle(
+    color: AppColors.black,
+    fontSize: 20,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 30 / 20,
+  );
+
+  static final TextStyle homeScreenSubTitle = TextStyle(
+    color: AppColors.gray3,
+    fontSize: 11,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  /* HomeScreen End */
 
   /* SavedRecipeScreen Start */
   static final TextStyle savedRecipeScreenTitle = TextStyle(
