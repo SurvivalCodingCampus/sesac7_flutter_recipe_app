@@ -90,7 +90,7 @@ class _SearchRecipeScreenState extends State<SearchRecipeScreen> {
                                   ratingType: ratingType,
                                   categoryType: categoryType,
                                 );
-                            widget._searchRecipeViewModel.searchInputFieldController = TextEditingController();
+                            widget._searchRecipeViewModel.searchInputFieldController.clear();
                           },
                         );
                       },
