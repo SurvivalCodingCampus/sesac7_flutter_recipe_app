@@ -1,4 +1,5 @@
 import 'package:flutter_recipe_app/core/routing/routes.dart';
+import 'package:flutter_recipe_app/presentation/home/home_screen.dart';
 import 'package:flutter_recipe_app/presentation/sigin/sign_in_screen.dart';
 import 'package:flutter_recipe_app/presentation/sigin/sign_up_screen.dart';
 import 'package:flutter_recipe_app/presentation/splash/splash_screen.dart';
@@ -19,8 +20,17 @@ final router = GoRouter(
         return SignInScreen();
       },
     ),
-    GoRoute(path: Routes.signUp, builder: (context, state) {
-      return SignUpScreen();
-    })
+    GoRoute(
+      path: Routes.signUp,
+      builder: (context, state) {
+        return SignUpScreen();
+      },
+    ),
+    GoRoute(
+      path: Routes.home,
+      builder: (context, state) {
+        return HomeScreen();
+      },
+    ),
   ],
 );

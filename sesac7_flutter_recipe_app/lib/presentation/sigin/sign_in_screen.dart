@@ -39,7 +39,9 @@ class SignInScreen extends StatelessWidget {
                 value: '',
                 onValueChange: (value) {},
               ),
-              SizedBox(height: 30.0,),
+              SizedBox(
+                height: 30.0,
+              ),
               InputField(
                 label: 'Enter Password',
                 placeHolder: 'Enter Password',
@@ -64,7 +66,9 @@ class SignInScreen extends StatelessWidget {
               ),
               BigButton(
                 title: 'Sign In',
-                onClick: () {},
+                onClick: () {
+                  context.go(Routes.home);
+                },
               ),
               SizedBox(
                 height: 20.0,
