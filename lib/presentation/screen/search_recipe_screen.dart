@@ -87,12 +87,22 @@ class SearchRecipeScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  margin: EdgeInsets.only(top: 20),
-                  child: Text(
-                    searchRecipeViewModel.searchRecipesState.keyword.isEmpty ? 'Recent Search' : 'Search Search',
-                    style: TextStyles.normalTextBold.copyWith(color: AppColors.black),
+                Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          searchRecipeViewModel.searchRecipesState.keyword.isEmpty ? 'Recent Search' : 'Search Search',
+                          style: TextStyles.normalTextBold.copyWith(color: AppColors.black),
+                        ),
+                      ),
+                      Spacer(),
+                      Text('${searchRecipeViewModel.searchRecipesState.recipes.length} result',
+                        style: TextStyles.smallerTextRegular.copyWith(color: AppColors.gray3),),
+                    ],
                   ),
                 ),
 
