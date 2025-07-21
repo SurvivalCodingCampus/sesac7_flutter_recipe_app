@@ -56,8 +56,10 @@ class SignUpScreen extends StatelessWidget {
               ),
               Row(
                 children: [
-                  Transform.scale(
-                    scale: 0.66,
+                  Container(
+                    margin: EdgeInsets.only(left: 8),
+                    width: 20,
+                    height: 20,
                     child: Checkbox(
                       value: true,
                       onChanged: (value) {},
@@ -66,9 +68,9 @@ class SignUpScreen extends StatelessWidget {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
                   ),
+                  SizedBox(width: 8),
                   Text(
                     'Accept terms & Condition',
                     style: TextStyle(
@@ -78,7 +80,9 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              BigButton(buttonText: 'Sign Up', onTap: () {}),
+              BigButton(buttonText: 'Sign Up', onTap: () {
+                context.go('/home');
+              }),
               Column(
                 children: [
                   Row(
