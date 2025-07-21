@@ -4,18 +4,32 @@ import 'package:flutter_recipe_app/data/repository/recipe_repository/recipe_repo
 import 'package:flutter_recipe_app/presentation/main/main_screen.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_screen.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_view_model.dart';
+import 'package:flutter_recipe_app/presentation/search_recipe/search_recipe_screen.dart';
+import 'package:flutter_recipe_app/presentation/search_recipe/search_recipe_view_model.dart';
 import 'package:flutter_recipe_app/presentation/splash/splash_screen.dart';
 
 void main() async {
   // runApp(const MyApp());
-  final SavedRecipeViewModel savedRecipeViewModel = SavedRecipeViewModel(
-    RecipeRepositoryImpl(RecipeDataSourceImpl()),
+  // fixme SavedRecipeScreen 용
+  // final SavedRecipeViewModel savedRecipeViewModel = SavedRecipeViewModel(
+  //   RecipeRepositoryImpl(RecipeDataSourceImpl()),
+  // );
+  // await savedRecipeViewModel.fetchRecipes();
+  //
+  // runApp(
+  //   SavedRecipeApp(
+  //     savedRecipeViewModel: savedRecipeViewModel,
+  //   ),
+  // );
+  // fixme SearchRecipeScreen 용
+  final SearchRecipeViewModel searchRecipeViewModel = SearchRecipeViewModel(
+    recipeRepository: RecipeRepositoryImpl(RecipeDataSourceImpl()),
   );
-  await savedRecipeViewModel.fetchRecipes();
+  await searchRecipeViewModel.fetchRecentRecipes();
 
   runApp(
-    SavedRecipeApp(
-      savedRecipeViewModel: savedRecipeViewModel,
+    SearchRecipeApp(
+      searchRecipeViewModel: searchRecipeViewModel,
     ),
   );
 }
@@ -59,6 +73,34 @@ class SavedRecipeApp extends StatelessWidget {
         }
         return SavedRecipeScreen(savedRecipeViewModel: _savedRecipeViewModel);
       })
+    );
+  }
+}
+
+class SearchRecipeApp extends StatelessWidget {
+  final SearchRecipeViewModel _searchRecipeViewModel;
+
+  const SearchRecipeApp({
+    super.key,
+    required SearchRecipeViewModel searchRecipeViewModel,
+  }) : _searchRecipeViewModel = searchRecipeViewModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        ),
+        // home: SplashScreen(),
+        home: ListenableBuilder(listenable: _searchRecipeViewModel, builder: (context, build) {
+          if (_searchRecipeViewModel.searchRecipesState.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return SearchRecipeScreen(searchRecipeViewModel: _searchRecipeViewModel);
+        })
     );
   }
 }

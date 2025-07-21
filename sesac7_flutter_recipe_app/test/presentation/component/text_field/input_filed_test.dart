@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/presentation/component/text_field/input_filed.dart';
+import 'package:flutter_recipe_app/presentation/component/text_field/input_field.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -11,7 +11,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: InputFiled(
+          body: InputField(
             label: inputFiledLabel,
             placeHolder: inputFiledPlaceHolder,
             value: inputFiledValue,
@@ -39,7 +39,7 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
-          body: InputFiled(
+          body: InputField(
             key: inputFiledKey,
             label: inputFiledLabel,
             placeHolder: inputFiledPlaceHolder,

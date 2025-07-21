@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
-class InputFiled extends StatelessWidget {
+class InputField extends StatelessWidget {
   final String label;
   final String placeHolder;
   final String value;
   final Function(String) onValueChange;
 
-  const InputFiled({
+  const InputField({
     super.key,
     required this.label,
     required this.placeHolder,

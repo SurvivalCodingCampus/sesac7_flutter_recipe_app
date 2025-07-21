@@ -8,7 +8,7 @@ import 'package:flutter_recipe_app/presentation/component/button/rating_button.d
 import 'package:flutter_recipe_app/presentation/component/button/small_button.dart';
 import 'package:flutter_recipe_app/presentation/component/dialog/rating_dialog.dart';
 import 'package:flutter_recipe_app/presentation/component/tab/tabs.dart';
-import 'package:flutter_recipe_app/presentation/component/text_field/input_filed.dart';
+import 'package:flutter_recipe_app/presentation/component/text_field/input_field.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -85,7 +85,7 @@ class _MainScreenState extends State<MainScreen> {
               title: 'Button',
               onClick: () {},
             ),
-            InputFiled(
+            InputField(
               label: 'Label',
               placeHolder: 'PlaceHolder',
               value: 'value',
