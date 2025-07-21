@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/data/repository/mock/mock_recipe_repository_impl.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/component/bottom_sheet/filter_search_bottom_sheet.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/component/bottom_sheet/filter_search_state.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/component/card/recipe_card.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_view_model.dart';
 
@@ -62,7 +64,21 @@ class SearchRecipesScreen extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    showModalBottomSheet<FilterSearchState>(
+                      context: context,
+                      isScrollControlled: true,
+                      builder: (context) {
+                        return FilterSearchBottomSheet(
+                          filterSearchState: viewModel.state.filterSearchState,
+                          onFilter: (state) {
+                            viewModel.filter(state);
+                            Navigator.pop(context);
+                          },
+                        );
+                      },
+                    );
+                  },
                   child: const Text('필터'),
                 ),
               ],
@@ -82,6 +98,7 @@ class SearchRecipesScreen extends StatelessWidget {
                   : GridView.builder(
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
+                        childAspectRatio: 1 / 2,
                       ),
                       itemCount: state.filteredRecipes.length,
                       itemBuilder: (context, index) {

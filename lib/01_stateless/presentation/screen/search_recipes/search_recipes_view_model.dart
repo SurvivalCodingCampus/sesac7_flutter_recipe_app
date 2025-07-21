@@ -1,6 +1,8 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/core/result.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/component/bottom_sheet/filter_search_state.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_state.dart';
 
 import '../../../data/model/recipe.dart';
@@ -34,6 +36,8 @@ class SearchRecipesViewModel with ChangeNotifier {
         // TODO: Handle this case.
         throw UnimplementedError();
     }
+
+    filter(state.filterSearchState);
   }
 
   void search(String query) {
@@ -53,6 +57,46 @@ class SearchRecipesViewModel with ChangeNotifier {
       filteredRecipes: filteredRecipes,
       resultLabel: query.isEmpty ? '' : '${filteredRecipes.length} results',
     );
+    notifyListeners();
+
+    filter(state.filterSearchState);
+  }
+
+  void filter(FilterSearchState filterSearchState) {
+    _state = state.copyWith(
+      filterSearchState: filterSearchState,
+      filteredRecipes: state.filteredRecipes
+          .where((e) => e.rating.toInt() == filterSearchState.rate)
+          .toList(),
+    );
+
+    switch (filterSearchState.time) {
+      case 'All':
+        break;
+      case 'Newest':
+        _state = state.copyWith(
+          filteredRecipes: state.filteredRecipes.sorted(
+            (a, b) => b.createdAt.compareTo(a.createdAt),
+          ),
+        );
+        break;
+      case 'Oldest':
+        _state = state.copyWith(
+          filteredRecipes: state.filteredRecipes.sorted(
+            (a, b) => a.createdAt.compareTo(b.createdAt),
+          ),
+        );
+        break;
+      case 'Popularity':
+        break;
+    }
+
+    _state = state.copyWith(
+      resultLabel: state.query.isEmpty
+          ? ''
+          : '${state.filteredRecipes.length} results',
+    );
+
     notifyListeners();
   }
 }

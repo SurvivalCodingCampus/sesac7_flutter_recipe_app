@@ -17,6 +17,7 @@ extension RecipeDtoToModel on RecipeDto {
       chef: chef ?? '',
       time: time ?? '',
       rating: rating?.toDouble() ?? 0,
+      createdAt: DateTime.now(),
     );
   }
 }

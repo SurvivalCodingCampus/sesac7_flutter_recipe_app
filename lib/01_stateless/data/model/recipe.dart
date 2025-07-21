@@ -12,5 +12,6 @@ abstract class Recipe with _$Recipe {
     required String chef,
     required String time,
     required double rating,
+    required DateTime createdAt,
   }) = _Recipe;
 }

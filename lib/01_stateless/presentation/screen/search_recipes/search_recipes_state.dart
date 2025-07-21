@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import '../../../data/model/recipe.dart';
+import '../../component/bottom_sheet/filter_search_state.dart';
 
 part 'search_recipes_state.freezed.dart';
 
@@ -13,5 +14,6 @@ abstract class SearchRecipesState with _$SearchRecipesState {
     @Default([]) List<Recipe> originalRecipes,
     @Default([]) List<Recipe> filteredRecipes,
     @Default(false) bool isLoading,
+    @Default(FilterSearchState()) FilterSearchState filterSearchState,
   }) = _SearchRecipesState;
 }
