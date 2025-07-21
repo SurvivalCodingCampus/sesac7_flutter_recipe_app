@@ -18,51 +18,48 @@ class InputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 315.0,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 21.0,
-            child: Text(
-              label,
-              style: TextStyles.inputFiledLabel,
-              maxLines: 1,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SizedBox(
+          height: 21.0,
+          child: Text(
+            label,
+            style: TextStyles.inputFiledLabel,
+            maxLines: 1,
           ),
-          SizedBox(height: 5.0),
-          SizedBox(
-            height: 55.0,
-            child: TextField(
-              onChanged: (value) {
-                onValueChange(value);
-              },
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.only(left: 20.0),
-                hintText: placeHolder,
-                hintStyle: TextStyles.inputFiledHint,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(
-                    color: AppColors.gray4,
-                    width: 1.5,
-                  ),
+        ),
+        SizedBox(height: 5.0),
+        SizedBox(
+          height: 55.0,
+          child: TextField(
+            onChanged: (value) {
+              onValueChange(value);
+            },
+            decoration: InputDecoration(
+              contentPadding: EdgeInsets.only(left: 20.0),
+              hintText: placeHolder,
+              hintStyle: TextStyles.inputFiledHint,
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: BorderSide(
+                  color: AppColors.gray4,
+                  width: 1.5,
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(
-                    color: AppColors.primary80,
-                    width: 1.5,
-                  ),
-                ),
-                filled: true,
-                fillColor: AppColors.white,
               ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10.0),
+                borderSide: BorderSide(
+                  color: AppColors.primary80,
+                  width: 1.5,
+                ),
+              ),
+              filled: true,
+              fillColor: AppColors.white,
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
