@@ -11,6 +11,7 @@ import '../../presentation/screen/saved_recipes/saved_recipes_screen.dart';
 import '../../presentation/screen/saved_recipes/saved_recipes_view_model.dart';
 import '../../presentation/screen/search_recipes/search_recipes_screen.dart';
 import '../../presentation/screen/search_recipes/search_recipes_view_model.dart';
+import '../../presentation/screen/tab/tab_screen.dart';
 
 // Repository 이하 : 싱글톤
 final RecipeRepository recipeRepository = MockRecipeRepositoryImpl();
@@ -18,59 +19,157 @@ final RecipeRepository recipeRepository = MockRecipeRepositoryImpl();
 // ViewModel : Factory
 
 final router = GoRouter(
-  initialLocation: Routes.searchRecipes,
+  initialLocation: Routes.main,
   routes: [
-    GoRoute(
-      path: Routes.main,
-      builder: (context, state) {
-        final mainViewModel = MainViewModel(
-          personRepository: PersonRepositoryImpl(),
-        );
-        mainViewModel.fetchPersonData();
-        return ListenableBuilder(
-          listenable: mainViewModel,
-          builder: (context, child) {
-            return MainScreen(
-              viewModel: mainViewModel,
-            );
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        return TabScreen(
+          body: navigationShell,
+          currentIndex: navigationShell.currentIndex,
+          onTap: (int index) {
+            navigationShell.goBranch(index);
           },
         );
       },
-    ),
-    GoRoute(
-      path: Routes.savedRecipes,
-      builder: (context, state) {
-        final savedRecipesViewModel = SavedRecipesViewModel(
-          recipeRepository: recipeRepository,
-        );
-        savedRecipesViewModel.fetchRecipes();
-        return ListenableBuilder(
-          listenable: savedRecipesViewModel,
-          builder: (context, child) {
-            return SavedRecipesScreen(
-              viewModel: savedRecipesViewModel,
-            );
-          },
-        );
-      },
-    ),
-    GoRoute(
-      path: Routes.searchRecipes,
-      builder: (context, state) {
-        final searchRecipesViewModel = SearchRecipesViewModel(
-          recipeRepository: recipeRepository,
-        );
+      branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: Routes.main,
+              builder: (context, state) {
+                final mainViewModel = MainViewModel(
+                  personRepository: PersonRepositoryImpl(),
+                );
+                mainViewModel.fetchPersonData();
+                return ListenableBuilder(
+                  listenable: mainViewModel,
+                  builder: (context, child) {
+                    return MainScreen(
+                      viewModel: mainViewModel,
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: Routes.savedRecipes,
+              builder: (context, state) {
+                final savedRecipesViewModel = SavedRecipesViewModel(
+                  recipeRepository: recipeRepository,
+                );
+                savedRecipesViewModel.fetchRecipes();
+                return ListenableBuilder(
+                  listenable: savedRecipesViewModel,
+                  builder: (context, child) {
+                    return SavedRecipesScreen(
+                      viewModel: savedRecipesViewModel,
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: Routes.searchRecipes,
+              builder: (context, state) {
+                final searchRecipesViewModel = SearchRecipesViewModel(
+                  recipeRepository: recipeRepository,
+                );
 
-        searchRecipesViewModel.fetchRecipes();
-        return ListenableBuilder(
-          listenable: searchRecipesViewModel,
-          builder: (context, child) {
-            return SearchRecipesScreen(
-              viewModel: searchRecipesViewModel,
-            );
-          },
-        );
-      },
+                searchRecipesViewModel.fetchRecipes();
+                return ListenableBuilder(
+                  listenable: searchRecipesViewModel,
+                  builder: (context, child) {
+                    return SearchRecipesScreen(
+                      viewModel: searchRecipesViewModel,
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: Routes.main,
+              builder: (context, state) {
+                final mainViewModel = MainViewModel(
+                  personRepository: PersonRepositoryImpl(),
+                );
+                mainViewModel.fetchPersonData();
+                return ListenableBuilder(
+                  listenable: mainViewModel,
+                  builder: (context, child) {
+                    return MainScreen(
+                      viewModel: mainViewModel,
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        ),
+      ],
     ),
+    // GoRoute(
+    //   path: Routes.main,
+    //   builder: (context, state) {
+    //     final mainViewModel = MainViewModel(
+    //       personRepository: PersonRepositoryImpl(),
+    //     );
+    //     mainViewModel.fetchPersonData();
+    //     return ListenableBuilder(
+    //       listenable: mainViewModel,
+    //       builder: (context, child) {
+    //         return MainScreen(
+    //           viewModel: mainViewModel,
+    //         );
+    //       },
+    //     );
+    //   },
+    // ),
+    // GoRoute(
+    //   path: Routes.savedRecipes,
+    //   builder: (context, state) {
+    //     final savedRecipesViewModel = SavedRecipesViewModel(
+    //       recipeRepository: recipeRepository,
+    //     );
+    //     savedRecipesViewModel.fetchRecipes();
+    //     return ListenableBuilder(
+    //       listenable: savedRecipesViewModel,
+    //       builder: (context, child) {
+    //         return SavedRecipesScreen(
+    //           viewModel: savedRecipesViewModel,
+    //         );
+    //       },
+    //     );
+    //   },
+    // ),
+    // GoRoute(
+    //   path: Routes.searchRecipes,
+    //   builder: (context, state) {
+    //     final searchRecipesViewModel = SearchRecipesViewModel(
+    //       recipeRepository: recipeRepository,
+    //     );
+    //
+    //     searchRecipesViewModel.fetchRecipes();
+    //     return ListenableBuilder(
+    //       listenable: searchRecipesViewModel,
+    //       builder: (context, child) {
+    //         return SearchRecipesScreen(
+    //           viewModel: searchRecipesViewModel,
+    //         );
+    //       },
+    //     );
+    //   },
+    // ),
   ],
 );
