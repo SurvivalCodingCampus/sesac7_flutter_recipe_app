@@ -19,26 +19,33 @@ class FilterButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => onTap(isSelected),
-      child: Container(
-        height: 27,
-        padding: const EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 5,
-        ),
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary100 : AppColors.white,
-          border: Border.all(
-            color: isSelected ? AppColors.primary100 : AppColors.primary80,
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Container(
+            height: 27,
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+              vertical: 5,
+            ),
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              color: isSelected ? AppColors.primary100 : AppColors.white,
+              border: Border.all(
+                color: isSelected ? AppColors.primary100 : AppColors.primary80,
+              ),
+              borderRadius: BorderRadius.circular(
+                ComponentConstant.borderRadius,
+              ),
+            ),
+            child: Text(
+              text,
+              style: TextStyles.smallerTextRegular.copyWith(
+                color: isSelected ? AppColors.white : AppColors.primary80,
+              ),
+            ),
           ),
-          borderRadius: BorderRadius.circular(ComponentConstant.borderRadius),
-        ),
-        child: Text(
-          text,
-          style: TextStyles.smallerTextRegular.copyWith(
-            color: isSelected ? AppColors.white : AppColors.primary80,
-          ),
-        ),
+        ],
       ),
     );
   }

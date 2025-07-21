@@ -8,6 +8,7 @@ class BigButton extends StatefulWidget {
   static const double spacing = 11;
   static const int textMaxLines = 1;
   static const Key gestureKey = Key('big button gesture');
+  static const Key buttonContainerKey = Key('big button container');
 
   final String text;
   final VoidCallback onClick;
@@ -46,6 +47,7 @@ class _BigButtonState extends State<BigButton> {
         });
       },
       child: Container(
+        key: BigButton.buttonContainerKey,
         height: BigButton.height,
         padding: const EdgeInsets.symmetric(vertical: 18),
         decoration: BoxDecoration(

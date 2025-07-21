@@ -11,7 +11,7 @@ class RecipeCard extends StatelessWidget {
   static const double ratingBoxWidth = 37;
   static const double ratingBoxHeight = 16;
   static const double ratingBoxBorderRadius = 20;
-  static const double ratingIconSize = 7;
+  static const double ratingIconSize = 8;
   static const double smallerTextSize = 8;
   static const double timerIconSize = 17;
   static const double bookmarkButtonSize = 24;

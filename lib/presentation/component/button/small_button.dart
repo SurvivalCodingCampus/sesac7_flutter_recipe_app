@@ -7,6 +7,8 @@ class SmallButton extends StatefulWidget {
   static const double width = 174;
   static const double height = 37;
   static const int textMaxLines = 1;
+  static const Key gestureKey = Key('small button gesture');
+  static const Key buttonContainerKey = Key('small button container');
 
   final String text;
   final VoidCallback onClick;
@@ -27,6 +29,7 @@ class _SmallButtonState extends State<SmallButton> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      key: SmallButton.gestureKey,
       onTap: widget.onClick,
       onTapDown: (details) {
         setState(() {
@@ -44,6 +47,7 @@ class _SmallButtonState extends State<SmallButton> {
         });
       },
       child: Container(
+        key: SmallButton.buttonContainerKey,
         width: SmallButton.width,
         height: SmallButton.height,
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -51,13 +55,15 @@ class _SmallButtonState extends State<SmallButton> {
           color: isEnabled ? AppColors.primary100 : AppColors.gray4,
           borderRadius: BorderRadius.circular(ComponentConstant.borderRadius),
         ),
-        child: Text(
-          widget.text,
-          style: TextStyles.smallerTextBold.copyWith(
-            color: AppColors.white,
+        child: Center(
+          child: Text(
+            widget.text,
+            style: TextStyles.smallerTextBold.copyWith(
+              color: AppColors.white,
+            ),
+            maxLines: SmallButton.textMaxLines,
+            overflow: TextOverflow.ellipsis,
           ),
-          maxLines: SmallButton.textMaxLines,
-          overflow: TextOverflow.ellipsis,
         ),
       ),
     );

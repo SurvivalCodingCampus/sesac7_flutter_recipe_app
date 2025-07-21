@@ -4,6 +4,7 @@ import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class RatingDialog extends StatefulWidget {
   static const int maxRating = 5;
+  static const Key actionKey = Key('rating dialog action');
 
   final String title;
   final String actionName;
@@ -61,6 +62,7 @@ class _RatingDialogState extends State<RatingDialog> {
               }),
             ),
             GestureDetector(
+              key: RatingDialog.actionKey,
               onTap: () {
                 if (selectedStar == 0) return;
                 widget.onChange(selectedStar);
