@@ -40,13 +40,13 @@ class SignInScreen extends StatelessWidget {
               const SizedBox(height: 57),
               InputField(
                 label: 'Email',
-                placeholder: 'Enter email',
+                placeholder: 'Enter Email',
                 onValueChange: (value) {},
               ),
               const SizedBox(height: 30),
               InputField(
                 label: 'Enter Password',
-                placeholder: 'Enter password',
+                placeholder: 'Enter Password',
                 onValueChange: (value) {},
               ),
               Padding(

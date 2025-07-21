@@ -40,7 +40,9 @@ final router = GoRouter(
     GoRoute(
       path: Routes.signUp,
       builder: (context, state) {
-        return const SignUpScreen();
+        return SignUpScreen(
+          onSignInTap: () => context.go(Routes.signIn),
+        );
       },
     ),
 
