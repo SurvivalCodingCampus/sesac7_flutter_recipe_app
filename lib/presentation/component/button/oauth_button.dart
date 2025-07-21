@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/constants/component_constant.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 
-class OauthButton extends StatelessWidget {
+class OAuthButton extends StatelessWidget {
   static const int shadowColorValue = 0xff696969;
 
   final String imageAssetPath;
   final VoidCallback onTap;
 
-  const OauthButton({
+  const OAuthButton({
     super.key,
     required this.imageAssetPath,
     required this.onTap,
@@ -40,6 +40,10 @@ class OauthButton extends StatelessWidget {
           imageAssetPath,
           width: 24,
           height: 24,
+          errorBuilder: (context, error, stackTrace) => Icon(
+            Icons.image_not_supported,
+            size: 24,
+          ),
         ),
       ),
     );
