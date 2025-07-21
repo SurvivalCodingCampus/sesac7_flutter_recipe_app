@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/presentation/component/constants/component_constant.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 
 class MainNavigationScreen extends StatelessWidget {
@@ -16,40 +17,73 @@ class MainNavigationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(child: child),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 40),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  _NavigationTab(
-                    icon: Icons.home_outlined,
-                    isSelected: currentIndex == 0,
-                    onTap: () => onTabSelected(0),
-                  ),
-                  _NavigationTab(
-                    icon: Icons.bookmark_border,
-                    isSelected: currentIndex == 1,
-                    onTap: () => onTabSelected(1),
-                  ),
-                  _NavigationTab(
-                    icon: Icons.notifications_none_rounded,
-                    isSelected: currentIndex == 2,
-                    onTap: () => onTabSelected(2),
-                  ),
-                  _NavigationTab(
-                    icon: Icons.person_outline,
-                    isSelected: currentIndex == 3,
-                    onTap: () => onTabSelected(3),
-                  ),
-                ],
+      body: Column(
+        children: [
+          Expanded(child: child),
+          Stack(
+            clipBehavior: Clip.none,
+            children: [
+              Container(
+                padding: const EdgeInsets.fromLTRB(40, 24, 40, 54),
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Color(
+                        0xff6c6c6c,
+                      ).withAlpha(ComponentConstant.mainNavigationShadowAlpha),
+                      blurRadius: 8,
+                    ),
+                  ],
+                ),
+                child: Row(
+                  spacing: 40,
+                  children: [
+                    _NavigationTab(
+                      icon: Icons.home_outlined,
+                      isSelected: currentIndex == 0,
+                      onTap: () => onTabSelected(0),
+                    ),
+                    _NavigationTab(
+                      icon: Icons.bookmark_border,
+                      isSelected: currentIndex == 1,
+                      onTap: () => onTabSelected(1),
+                    ),
+                    const Spacer(),
+                    _NavigationTab(
+                      icon: Icons.notifications_none_rounded,
+                      isSelected: currentIndex == 2,
+                      onTap: () => onTabSelected(2),
+                    ),
+                    _NavigationTab(
+                      icon: Icons.person_outline,
+                      isSelected: currentIndex == 3,
+                      onTap: () => onTabSelected(3),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 72,
+                child: Container(
+                  width: 48,
+                  height: 48,
+                  decoration: BoxDecoration(
+                    color: AppColors.primary100,
+                    shape: BoxShape.circle,
+                  ),
+                  child: Icon(
+                    Icons.add,
+                    color: AppColors.white,
+                    size: 21,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
