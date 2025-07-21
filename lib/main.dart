@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/core/routing/router.dart';
 import 'package:flutter_recipe_app/data/mocks/data_source/mock_recipe_data_source_impl.dart';
 import 'package:flutter_recipe_app/presentation/screen/recipe/search_recipe_screen.dart';
 import 'package:flutter_recipe_app/presentation/screen/recipe/search_recipe_view_model.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
@@ -32,12 +33,13 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(backgroundColor: AppColor.White, elevation: 0),
         useMaterial3: true,
       ),
-      home: ListenableBuilder(
-        listenable: viewModel,
-        builder: (context, child) {
-          return SearchRecipeScreen(viewModel: viewModel);
-        },
-      ),
+      routerConfig: router,
+      // home: ListenableBuilder(
+      //   listenable: viewModel,
+      //   builder: (context, child) {
+      //     return SearchRecipeScreen(viewModel: viewModel);
+      //   },
+      // ),
     );
   }
 }
