@@ -24,16 +24,17 @@ final router = GoRouter(
       path: Routes.splash,
       builder: (context, state) {
         return SplashScreen(
-          onStartCookingTap: () {
-            context.go(Routes.signIn);
-          },
+          onStartCookingTap: () => context.go(Routes.signIn),
         );
       },
     ),
     GoRoute(
       path: Routes.signIn,
       builder: (context, state) {
-        return const SignInScreen();
+        return SignInScreen(
+          onSignInTap: () => context.go(Routes.home),
+          onSignUpTap: () => context.go(Routes.signUp),
+        );
       },
     ),
     GoRoute(
