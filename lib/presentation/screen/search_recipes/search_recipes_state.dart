@@ -3,7 +3,7 @@ import 'package:flutter_recipe_app/data/model/recipe/search_state_type.dart';
 import 'package:flutter_recipe_app/presentation/screen/search_recipes/filter_search_state.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part "search_recipe_state.freezed.dart";
+part "search_recipes_state.freezed.dart";
 
 @freezed
 abstract class SearchRecipesState with _$SearchRecipesState {

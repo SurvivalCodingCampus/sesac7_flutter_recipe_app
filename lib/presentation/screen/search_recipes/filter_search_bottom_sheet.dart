@@ -24,7 +24,7 @@ class FilterSearchBottomSheet extends StatefulWidget {
 }
 
 class _FilterSearchBottomSheetState extends State<FilterSearchBottomSheet> {
-  FilterSearchState state = FilterSearchState();
+  late FilterSearchState state;
 
   @override
   void initState() {
