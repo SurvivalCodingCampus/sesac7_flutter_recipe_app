@@ -4,8 +4,14 @@ import 'package:flutter_recipe_app/presentation/ui/app_color.dart';
 class SmallIconButton extends StatefulWidget {
   final IconData? icon;
   final VoidCallback? onTap;
+  final Color? color;
 
-  const SmallIconButton({super.key, this.icon = Icons.add, required this.onTap});
+  const SmallIconButton({
+    super.key,
+    this.icon = Icons.add,
+    required this.onTap,
+    this.color = AppColor.Primary100,
+  });
 
   @override
   State<SmallIconButton> createState() => _SmallIconButtonState();
@@ -16,7 +22,7 @@ class _SmallIconButtonState extends State<SmallIconButton> {
 
   @override
   Widget build(BuildContext context) {
-    Color buttonColor = _isPressed ? AppColor.Gray4 : AppColor.Primary100;
+    Color buttonColor = _isPressed ? AppColor.Gray4 : widget.color ?? AppColor.Primary100;
     return GestureDetector(
       onTapDown: (_) {
         setState(() {
