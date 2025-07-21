@@ -1,9 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/01_stateless/data/repository/mock/mock_recipe_repository_impl.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/component/card/recipe_card.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_view_model.dart';
 
 void main() {
-  final searchRecipesViewModel = SearchRecipesViewModel();
+  final searchRecipesViewModel = SearchRecipesViewModel(
+    recipeRepository: MockRecipeRepositoryImpl(),
+  );
+
+  searchRecipesViewModel.fetchRecipes();
+
   runApp(
     MaterialApp(
       home: ListenableBuilder(
@@ -69,18 +75,22 @@ class SearchRecipesScreen extends StatelessWidget {
               ],
             ),
             Expanded(
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                ),
-                itemCount: state.filteredRecipes.length,
-                itemBuilder: (context, index) {
-                  final recipe = state.filteredRecipes[index];
-                  return RecipeCard(
-                    recipe: recipe,
-                  );
-                },
-              ),
+              child: state.isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                      ),
+                      itemCount: state.filteredRecipes.length,
+                      itemBuilder: (context, index) {
+                        final recipe = state.filteredRecipes[index];
+                        return RecipeCard(
+                          recipe: recipe,
+                        );
+                      },
+                    ),
             ),
           ],
         ),

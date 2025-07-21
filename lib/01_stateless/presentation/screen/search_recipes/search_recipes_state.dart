@@ -9,8 +9,9 @@ abstract class SearchRecipesState with _$SearchRecipesState {
   const factory SearchRecipesState({
     @Default('') String query,
     @Default('Recent Search') String searchLabel,
-    @Default('255 results') String resultLabel,
+    @Default('') String resultLabel,
     @Default([]) List<Recipe> originalRecipes,
     @Default([]) List<Recipe> filteredRecipes,
+    @Default(false) bool isLoading,
   }) = _SearchRecipesState;
 }
