@@ -8,6 +8,7 @@ import 'package:flutter_recipe_app/repository/recipe_repository_impl.dart';
 import 'data_source/recipe_data_source_impl.dart';
 
 void main() {
+  final filterViewModel = FilterViewModel();
   final searchRecipeViewModel = SearchRecipeViewModel(
     recipeRepository: RecipeRepositoryImpl(RecipeDataSourceImpl()),
   );
@@ -17,14 +18,16 @@ void main() {
   runApp(
     MyApp(
       searchRecipeViewModel: searchRecipeViewModel,
+      filterViewModel: filterViewModel,
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
   final SearchRecipeViewModel searchRecipeViewModel;
+  final FilterViewModel filterViewModel;
 
-  const MyApp({super.key, required this.searchRecipeViewModel});
+  const MyApp({super.key, required this.searchRecipeViewModel, required this.filterViewModel});
 
   // This widget is the root of your application.
   @override
@@ -34,7 +37,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: SearchRecipeScreen(searchRecipeViewModel: searchRecipeViewModel, filterViewModel: FilterViewModel(),),
+      home: SearchRecipeScreen(searchRecipeViewModel: searchRecipeViewModel, filterViewModel: filterViewModel,),
     );
   }
+
 }
