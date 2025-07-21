@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/core/routing/routes.dart';
 import 'package:flutter_recipe_app/presentation/component/button/medium_button.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -88,7 +90,9 @@ class SplashScreen extends StatelessWidget {
                     ),
                     MediumButton(
                       title: 'Start Cooking',
-                      onClick: () {},
+                      onClick: () {
+                        context.go(Routes.signIn);
+                      },
                     ),
                   ],
                 ),

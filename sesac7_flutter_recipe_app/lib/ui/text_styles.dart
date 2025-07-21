@@ -277,6 +277,25 @@ abstract class TextStyles {
   );
   /* SignInScreen End */
 
+  /* SignUpScreen Start */
+  static final TextStyle signUpScreenTitle = TextStyle(
+    color: AppColors.black,
+    fontSize: 20.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 30 / 20,
+  );
+
+  static final TextStyle signUpScreenSubTitle = TextStyle(
+    color: AppColors.labelColor,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
   /* SavedRecipeScreen Start */
   static final TextStyle savedRecipeScreenTitle = TextStyle(
     color: AppColors.labelColor,
