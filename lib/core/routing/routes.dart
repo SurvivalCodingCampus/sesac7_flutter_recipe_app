@@ -9,6 +9,6 @@ abstract class Routes {
   // Main app routes
   static const String home = '/home';
   static const String savedRecipes = '/saved-recipes';
-  static const String searchRecipes = '/search-recipes';
+  static const String notifications = '/notifications';
   static const String profile = '/profile';
 }
