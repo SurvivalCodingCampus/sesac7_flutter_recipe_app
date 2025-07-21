@@ -6,6 +6,7 @@ import 'package:flutter_recipe_app/04_ui_state_holder/presentation/component/fil
 import 'package:flutter_recipe_app/04_ui_state_holder/presentation/component/recipe_card_only_with_name.dart';
 import 'package:flutter_recipe_app/04_ui_state_holder/presentation/component/search_input_field.dart';
 import 'package:flutter_recipe_app/04_ui_state_holder/presentation/screen/filter_search_bottom_sheet.dart';
+import 'package:flutter_recipe_app/04_ui_state_holder/presentation/screen/filter_search_bottom_sheet_state.dart';
 import 'package:flutter_recipe_app/04_ui_state_holder/presentation/screen/search_recipes_screen_view_model.dart';
 
 class SearchRecipesScreen extends StatelessWidget {
@@ -18,6 +19,8 @@ class SearchRecipesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = viewModel.state;
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -70,22 +73,14 @@ class SearchRecipesScreen extends StatelessWidget {
                         backgroundColor: Colors.transparent,
                         builder: (BuildContext context) {
                           return FilterSearchBottomSheet(
-                            initialCategoryFilter:
-                                viewModel.state.selectedCategoryFilter,
-                            initialRatingFilter:
-                                viewModel.state.selectedRatingFilter,
-                            initialTimeFilter:
-                                viewModel.state.selectedTimeFilter,
+                            filterSearchState: state.filterSearchState,
                             onClosing:
                                 (
-                                  String? selectedTimeFilter,
-                                  int? selectedRatingFilter,
-                                  String? selectedCategoryFilter,
+                                  FilterSearchBottomSheetState
+                                  filterSearchState,
                                 ) {
                                   viewModel.fetchFilteredRecipes(
-                                    selectedTimeFilter,
-                                    selectedRatingFilter,
-                                    selectedCategoryFilter,
+                                    filterSearchState,
                                   );
                                 },
                           );
@@ -104,8 +99,8 @@ class SearchRecipesScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    (viewModel.state.query == '')
-                        ? (viewModel.state.filteredRecipes.isNotEmpty)
+                    (state.query == '')
+                        ? (state.filteredRecipes.isNotEmpty)
                               ? 'Search Result'
                               : 'Recent Search'
                         : 'Search Result',
@@ -115,11 +110,11 @@ class SearchRecipesScreen extends StatelessWidget {
                   ),
                   Expanded(child: SizedBox()),
                   Text(
-                    (viewModel.state.query == '')
-                        ? (viewModel.state.filteredRecipes.isNotEmpty)
-                              ? '${viewModel.state.filteredRecipes.length} results'
+                    (state.query == '')
+                        ? (state.filteredRecipes.isNotEmpty)
+                              ? '${state.filteredRecipes.length} results'
                               : ''
-                        : '${viewModel.state.searchedResult.length} results',
+                        : '${state.searchedResult.length} results',
                     style: TextStyles.smallerTextRegular.copyWith(
                       color: AppColors.gray3,
                     ),
@@ -138,14 +133,14 @@ class SearchRecipesScreen extends StatelessWidget {
                     childAspectRatio: 1, // 가로세로 비율
                   ),
                   padding: EdgeInsets.zero,
-                  itemCount: (viewModel.state.query == '')
-                      ? (viewModel.state.filteredRecipes.isNotEmpty)
-                            ? viewModel.state.filteredRecipes.length
-                            : viewModel.state.recipes.length
-                      : viewModel.state.searchedResult.length,
+                  itemCount: (state.query == '')
+                      ? (state.filteredRecipes.isNotEmpty)
+                            ? state.filteredRecipes.length
+                            : state.recipes.length
+                      : state.searchedResult.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return (viewModel.state.query == '')
-                        ? (viewModel.state.filteredRecipes.isNotEmpty)
+                    return (state.query == '')
+                        ? (state.filteredRecipes.isNotEmpty)
                               ? Container(
                                   margin: EdgeInsets.only(bottom: 15),
                                   child: RecipeCardOnlyWithName(
@@ -163,10 +158,9 @@ class SearchRecipesScreen extends StatelessWidget {
                               : Container(
                                   margin: EdgeInsets.only(bottom: 15),
                                   child: RecipeCardOnlyWithName(
-                                    recipe: viewModel.state.recipes[index]
-                                        .copyWith(
-                                          name: getRecipeName(index),
-                                        ),
+                                    recipe: state.recipes[index].copyWith(
+                                      name: getRecipeName(index),
+                                    ),
                                     onClick: () {
                                       print('북마크되었습니다.');
                                     },
@@ -175,10 +169,9 @@ class SearchRecipesScreen extends StatelessWidget {
                         : Container(
                             margin: EdgeInsets.only(bottom: 15),
                             child: RecipeCardOnlyWithName(
-                              recipe: viewModel.state.searchedResult[index]
-                                  .copyWith(
-                                    name: getSearchedRecipeName(index),
-                                  ),
+                              recipe: state.searchedResult[index].copyWith(
+                                name: getSearchedRecipeName(index),
+                              ),
                               onClick: () {
                                 print('북마크되었습니다.');
                               },

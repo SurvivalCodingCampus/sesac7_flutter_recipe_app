@@ -9,23 +9,17 @@ import 'package:flutter_recipe_app/04_ui_state_holder/data/filter_options.dart';
 import 'package:flutter_recipe_app/04_ui_state_holder/presentation/screen/filter_search_bottom_sheet_state.dart';
 
 class FilterSearchBottomSheet extends StatefulWidget {
-  final String? initialTimeFilter;
-  final int? initialRatingFilter;
-  final String? initialCategoryFilter;
+  final FilterSearchBottomSheetState? filterSearchState;
 
   final void Function(
-    String? selectedTimeFilter,
-    int? selectedRatingFilter,
-    String? selectedCategoryFilter,
+    FilterSearchBottomSheetState filterSearchState,
   )
   onClosing;
 
   const FilterSearchBottomSheet({
     super.key,
     required this.onClosing,
-    this.initialTimeFilter,
-    this.initialRatingFilter,
-    this.initialCategoryFilter,
+    this.filterSearchState,
   });
 
   @override
@@ -36,17 +30,16 @@ class FilterSearchBottomSheet extends StatefulWidget {
 class _FilterSearchBottomSheetState extends State<FilterSearchBottomSheet> {
   final int ratingLength = 5;
 
-  FilterSearchBottomSheetState filterSearchState =
-      const FilterSearchBottomSheetState();
+  late FilterSearchBottomSheetState filterSearchState;
 
   @override
   void initState() {
     super.initState();
     // 위젯으로부터 전달받은 초기 필터 값들로 filterSearchState를 초기화합니다.
     filterSearchState = FilterSearchBottomSheetState(
-      selectedTimeFilter: widget.initialTimeFilter,
-      selectedRatingFilter: widget.initialRatingFilter,
-      selectedCategoryFilter: widget.initialCategoryFilter,
+      selectedTimeFilter: widget.filterSearchState?.selectedTimeFilter,
+      selectedRatingFilter: widget.filterSearchState?.selectedRatingFilter,
+      selectedCategoryFilter: widget.filterSearchState?.selectedCategoryFilter,
     );
   }
 
@@ -234,11 +227,7 @@ class _FilterSearchBottomSheetState extends State<FilterSearchBottomSheet> {
               SmallButton(
                 text: 'Filter',
                 onClick: () {
-                  widget.onClosing(
-                    filterSearchState.selectedTimeFilter,
-                    filterSearchState.selectedRatingFilter,
-                    filterSearchState.selectedCategoryFilter,
-                  );
+                  widget.onClosing(filterSearchState);
                   Navigator.pop(context);
                 },
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_recipe_app/02_stateful_widget/data/model/recipe.dart';
 import 'package:flutter_recipe_app/03_mvvm/data/repository/recipe_repository.dart';
+import 'package:flutter_recipe_app/04_ui_state_holder/presentation/screen/filter_search_bottom_sheet_state.dart';
 import 'package:flutter_recipe_app/04_ui_state_holder/presentation/screen/search_recipes_screen_state.dart';
 
 class SearchRecipesScreenViewModel with ChangeNotifier {
@@ -34,24 +35,20 @@ class SearchRecipesScreenViewModel with ChangeNotifier {
   }
 
   void fetchFilteredRecipes(
-    String? selectedTimeFilter,
-    int? selectedRatingFilter,
-    String? selectedCategoryFilter,
+    FilterSearchBottomSheetState filterSearchState,
   ) async {
     _state = state.copyWith(
-      selectedTimeFilter: selectedTimeFilter,
-      selectedRatingFilter: selectedRatingFilter,
-      selectedCategoryFilter: selectedCategoryFilter,
+      filterSearchState: filterSearchState,
       isLoading: true,
     );
     notifyListeners();
 
-    if (state.selectedRatingFilter != null) {
+    if (state.filterSearchState.selectedRatingFilter != null) {
       final result = state.recipes
           .where(
             (e) =>
-                e.rating >= state.selectedRatingFilter! &&
-                e.rating < state.selectedRatingFilter! + 1,
+                e.rating >= state.filterSearchState.selectedRatingFilter! &&
+                e.rating < state.filterSearchState.selectedRatingFilter! + 1,
           )
           .toList();
 
