@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../model/recipe.dart';
+import '../../data/model/recipe.dart';
 import '../../ui/app_colors.dart';
 import '../../ui/text_styles.dart';
 
@@ -8,8 +7,9 @@ class RecipeCard extends StatelessWidget {
   final Recipe recipe;
   final bool isBookmarked;
   final VoidCallback? onBookmarkTap;
+  final bool? isShowTime;
 
-  const RecipeCard({super.key, required this.recipe, required this.isBookmarked, this.onBookmarkTap});
+  const RecipeCard({super.key, required this.recipe, required this.isBookmarked, this.onBookmarkTap, this.isShowTime,});
 
   @override
   Widget build(BuildContext context) {
@@ -70,8 +70,10 @@ class RecipeCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 // 레시피 이름 & 셰프
-                Container(
-                  width: 200,
+                ConstrainedBox(
+                  constraints: BoxConstraints(
+                    maxWidth: 180,
+                  ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -93,7 +95,7 @@ class RecipeCard extends StatelessWidget {
                 ),
 
                 // 시간 + 북마크
-                Column(
+                (isShowTime ?? false) ? Column(
                   mainAxisAlignment: MainAxisAlignment.start, // 중앙 정렬
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -128,7 +130,7 @@ class RecipeCard extends StatelessWidget {
                       ]
                     ),
                   ],
-                ),
+                ) : const SizedBox.shrink(),
               ],
             ),
           ]

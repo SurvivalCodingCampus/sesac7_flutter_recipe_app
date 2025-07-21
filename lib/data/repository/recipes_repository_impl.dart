@@ -1,6 +1,6 @@
-import 'package:flutter_recipe_app/data_source/remote/recipe_data_source.dart';
-import 'package:flutter_recipe_app/model/recipe.dart';
-import 'package:flutter_recipe_app/repository/recipes_repository.dart';
+import 'package:flutter_recipe_app/data/data_source/remote/recipe_data_source.dart';
+import 'package:flutter_recipe_app/data/model/recipe.dart';
+import 'package:flutter_recipe_app/data/repository/recipes_repository.dart';
 import '../mapper/recipe_mapper.dart';
 
 class RecipeRepositoryImpl implements RecipeRepository {
