@@ -7,18 +7,18 @@ import 'package:flutter_recipe_app/data/model/recipe/filter_sort_by.dart';
 import 'package:flutter_recipe_app/data/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/data/model/recipe/search_state_type.dart';
 import 'package:flutter_recipe_app/data/repository/recipe/recipe_repository.dart';
-import 'package:flutter_recipe_app/presentation/screen/search_recipe/filter_search_state.dart';
-import 'package:flutter_recipe_app/presentation/screen/search_recipe/search_recipe_state.dart';
+import 'package:flutter_recipe_app/presentation/screen/search_recipes/filter_search_state.dart';
+import 'package:flutter_recipe_app/presentation/screen/search_recipes/search_recipes_state.dart';
 
-class SearchRecipeViewModel with ChangeNotifier {
+class SearchRecipesViewModel with ChangeNotifier {
   final RecipeRepository _recipeRepository;
 
-  SearchRecipeViewModel({required RecipeRepository recipeRepository})
+  SearchRecipesViewModel({required RecipeRepository recipeRepository})
     : _recipeRepository = recipeRepository;
 
-  SearchRecipeState _state = SearchRecipeState();
+  SearchRecipesState _state = SearchRecipesState();
 
-  SearchRecipeState get state => _state;
+  SearchRecipesState get state => _state;
 
   Future<void> fetchRecipe() async {
     _state = _state.copyWith(isLoading: true);

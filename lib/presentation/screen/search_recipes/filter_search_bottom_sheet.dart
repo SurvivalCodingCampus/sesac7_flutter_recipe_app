@@ -5,7 +5,7 @@ import 'package:flutter_recipe_app/data/model/recipe/filter_sort_by.dart';
 import 'package:flutter_recipe_app/presentation/component/button/filter_button.dart';
 import 'package:flutter_recipe_app/presentation/component/button/rating_button.dart';
 import 'package:flutter_recipe_app/presentation/component/button/small_button.dart';
-import 'package:flutter_recipe_app/presentation/screen/search_recipe/filter_search_state.dart';
+import 'package:flutter_recipe_app/presentation/screen/search_recipes/filter_search_state.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class FilterSearchBottomSheet extends StatefulWidget {

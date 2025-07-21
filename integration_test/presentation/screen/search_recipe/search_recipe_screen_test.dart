@@ -8,8 +8,8 @@ import 'package:flutter_recipe_app/presentation/component/button/search_filter_b
 import 'package:flutter_recipe_app/presentation/component/button/small_button.dart';
 import 'package:flutter_recipe_app/presentation/component/input/search_field.dart';
 import 'package:flutter_recipe_app/presentation/component/list_item/recipe_search_card.dart';
-import 'package:flutter_recipe_app/presentation/screen/search_recipe/search_recipe_screen.dart';
-import 'package:flutter_recipe_app/presentation/screen/search_recipe/search_recipe_view_model.dart';
+import 'package:flutter_recipe_app/presentation/screen/search_recipes/search_recipes_screen.dart';
+import 'package:flutter_recipe_app/presentation/screen/search_recipes/search_recipes_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -31,7 +31,7 @@ class MockRecipeRepository implements RecipeRepository {
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  late SearchRecipeViewModel viewModel;
+  late SearchRecipesViewModel viewModel;
   late MockRecipeRepository mockRecipeRepository;
 
   // Sample data for testing.
@@ -90,7 +90,7 @@ void main() {
 
   setUp(() {
     mockRecipeRepository = MockRecipeRepository();
-    viewModel = SearchRecipeViewModel(recipeRepository: mockRecipeRepository);
+    viewModel = SearchRecipesViewModel(recipeRepository: mockRecipeRepository);
   });
 
   Future<void> pumpTheScreen(WidgetTester tester) async {
@@ -100,7 +100,7 @@ void main() {
           body: ListenableBuilder(
             listenable: viewModel,
             builder: (context, child) {
-              return SearchRecipeScreen(viewModel: viewModel);
+              return SearchRecipesScreen(viewModel: viewModel);
             },
           ),
         ),

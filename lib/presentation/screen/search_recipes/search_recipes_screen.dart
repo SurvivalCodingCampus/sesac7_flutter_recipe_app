@@ -5,15 +5,15 @@ import 'package:flutter_recipe_app/data/repository/recipe/recipe_repository_impl
 import 'package:flutter_recipe_app/presentation/component/button/search_filter_button.dart';
 import 'package:flutter_recipe_app/presentation/component/input/search_field.dart';
 import 'package:flutter_recipe_app/presentation/component/list_item/recipe_search_card.dart';
-import 'package:flutter_recipe_app/presentation/screen/search_recipe/filter_search_bottom_sheet.dart';
-import 'package:flutter_recipe_app/presentation/screen/search_recipe/search_recipe_view_model.dart';
+import 'package:flutter_recipe_app/presentation/screen/search_recipes/filter_search_bottom_sheet.dart';
+import 'package:flutter_recipe_app/presentation/screen/search_recipes/search_recipes_view_model.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
-class SearchRecipeScreen extends StatelessWidget {
-  final SearchRecipeViewModel viewModel;
+class SearchRecipesScreen extends StatelessWidget {
+  final SearchRecipesViewModel viewModel;
 
-  const SearchRecipeScreen({
+  const SearchRecipesScreen({
     super.key,
     required this.viewModel,
   });
@@ -103,7 +103,7 @@ class SearchRecipeScreen extends StatelessWidget {
 }
 
 void main() async {
-  final viewModel = SearchRecipeViewModel(
+  final viewModel = SearchRecipesViewModel(
     recipeRepository: RecipeRepositoryImpl(
       recipeDataSource: RecipeDataSourceImpl(),
     ),
@@ -115,7 +115,7 @@ void main() async {
         body: ListenableBuilder(
           listenable: viewModel,
           builder: (context, child) {
-            return SearchRecipeScreen(viewModel: viewModel);
+            return SearchRecipesScreen(viewModel: viewModel);
           },
         ),
       ),

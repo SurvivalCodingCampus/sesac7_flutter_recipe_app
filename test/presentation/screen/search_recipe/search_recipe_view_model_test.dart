@@ -5,9 +5,9 @@ import 'package:flutter_recipe_app/data/model/recipe/filter_rate.dart';
 import 'package:flutter_recipe_app/data/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/data/model/recipe/search_state_type.dart';
 import 'package:flutter_recipe_app/data/repository/recipe/recipe_repository.dart';
-import 'package:flutter_recipe_app/presentation/screen/search_recipe/filter_search_state.dart';
-import 'package:flutter_recipe_app/presentation/screen/search_recipe/search_recipe_state.dart';
-import 'package:flutter_recipe_app/presentation/screen/search_recipe/search_recipe_view_model.dart';
+import 'package:flutter_recipe_app/presentation/screen/search_recipes/filter_search_state.dart';
+import 'package:flutter_recipe_app/presentation/screen/search_recipes/search_recipes_state.dart';
+import 'package:flutter_recipe_app/presentation/screen/search_recipes/search_recipes_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
@@ -55,17 +55,17 @@ void main() {
 
   test('SearchRecipeViewModel initial state is correct', () {
     final mockRecipeRepository = MockRecipeRepository();
-    final viewModel = SearchRecipeViewModel(
+    final viewModel = SearchRecipesViewModel(
       recipeRepository: mockRecipeRepository,
     );
-    expect(viewModel.state, SearchRecipeState());
+    expect(viewModel.state, SearchRecipesState());
   });
 
   test(
     'SearchRecipeViewModel fetchRecipe updates state with recipes on success',
     () async {
       final mockRecipeRepository = MockRecipeRepository();
-      final viewModel = SearchRecipeViewModel(
+      final viewModel = SearchRecipesViewModel(
         recipeRepository: mockRecipeRepository,
       );
 
@@ -89,7 +89,7 @@ void main() {
     'SearchRecipeViewModel fetchRecipe updates state with error message on failure',
     () async {
       final mockRecipeRepository = MockRecipeRepository();
-      final viewModel = SearchRecipeViewModel(
+      final viewModel = SearchRecipesViewModel(
         recipeRepository: mockRecipeRepository,
       );
 
@@ -116,7 +116,7 @@ void main() {
     'SearchRecipeViewModel searchRecipe returns all recipes when keyword is empty',
     () async {
       final mockRecipeRepository = MockRecipeRepository();
-      final viewModel = SearchRecipeViewModel(
+      final viewModel = SearchRecipesViewModel(
         recipeRepository: mockRecipeRepository,
       );
 
@@ -138,7 +138,7 @@ void main() {
     'SearchRecipeViewModel searchRecipe filters recipes by name or creator',
     () async {
       final mockRecipeRepository = MockRecipeRepository();
-      final viewModel = SearchRecipeViewModel(
+      final viewModel = SearchRecipesViewModel(
         recipeRepository: mockRecipeRepository,
       );
 
@@ -162,7 +162,7 @@ void main() {
     'SearchRecipeViewModel searchRecipe returns empty list if no match found',
     () async {
       final mockRecipeRepository = MockRecipeRepository();
-      final viewModel = SearchRecipeViewModel(
+      final viewModel = SearchRecipesViewModel(
         recipeRepository: mockRecipeRepository,
       );
 
@@ -184,7 +184,7 @@ void main() {
     'SearchRecipeViewModel selectFilter filters by rate (e.g., 5 stars)',
     () async {
       final mockRecipeRepository = MockRecipeRepository();
-      final viewModel = SearchRecipeViewModel(
+      final viewModel = SearchRecipesViewModel(
         recipeRepository: mockRecipeRepository,
       );
 
@@ -208,7 +208,7 @@ void main() {
     'SearchRecipeViewModel selectFilter filters by rate (e.g., 3 stars)',
     () async {
       final mockRecipeRepository = MockRecipeRepository();
-      final viewModel = SearchRecipeViewModel(
+      final viewModel = SearchRecipesViewModel(
         recipeRepository: mockRecipeRepository,
       );
 
@@ -232,7 +232,7 @@ void main() {
     'SearchRecipeViewModel selectFilter filters by category (e.g., Dinner)',
     () async {
       final mockRecipeRepository = MockRecipeRepository();
-      final viewModel = SearchRecipeViewModel(
+      final viewModel = SearchRecipesViewModel(
         recipeRepository: mockRecipeRepository,
       );
 
@@ -258,7 +258,7 @@ void main() {
     'SearchRecipeViewModel selectFilter filters by category and result count 0 (e.g., Fruit)',
     () async {
       final mockRecipeRepository = MockRecipeRepository();
-      final viewModel = SearchRecipeViewModel(
+      final viewModel = SearchRecipesViewModel(
         recipeRepository: mockRecipeRepository,
       );
 
@@ -283,7 +283,7 @@ void main() {
     'SearchRecipeViewModel selectFilter filters by multiple criteria (rate and category)',
     () async {
       final mockRecipeRepository = MockRecipeRepository();
-      final viewModel = SearchRecipeViewModel(
+      final viewModel = SearchRecipesViewModel(
         recipeRepository: mockRecipeRepository,
       );
 
