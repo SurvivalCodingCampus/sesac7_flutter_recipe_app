@@ -1,48 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/03_mvvm/data/repository/recipe_repository_impl.dart';
-import 'package:flutter_recipe_app/04_ui_state_holder/presentation/screen/search_recipes_screen.dart';
-import 'package:flutter_recipe_app/04_ui_state_holder/presentation/screen/search_recipes_screen_view_model.dart';
+import 'package:flutter_recipe_app/01_stateless_widget/ui/app_colors.dart';
 
-import '03_mvvm/data/data_source/recipe_data_source_impl.dart';
+import '05_navigation/core/router.dart';
 
 void main() {
   runApp(
-    MyApp(
-      viewModel: SearchRecipesScreenViewModel(
-        recipeRepository: RecipeRepositoryImpl(
-          dataSource: RecipeDataSourceImpl(),
-        ),
-      ),
-    ),
+    MyApp(),
   );
 }
 
 class MyApp extends StatelessWidget {
-  final SearchRecipesScreenViewModel viewModel;
+  // final SearchRecipesScreenViewModel viewModel;
 
   const MyApp({
     super.key,
-    required this.viewModel,
+    // required this.viewModel,
   });
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.white),
       ),
-      home: Scaffold(
-        body: ListenableBuilder(
-          listenable: viewModel,
-          builder: (context, child) {
-            return SearchRecipesScreen(
-              viewModel: viewModel,
-            );
-          },
-        ),
-      ),
+      routerConfig: router,
     );
   }
 }
