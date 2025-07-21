@@ -5,7 +5,12 @@ import 'package:flutter_recipe_app/03_mvvm/presentation/component/logo_with_mark
 import 'package:flutter_recipe_app/03_mvvm/presentation/component/splash_screen_main_marketing_comments.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+  final void Function() onStart;
+
+  const SplashScreen({
+    super.key,
+    required this.onStart,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +77,10 @@ class SplashScreen extends StatelessWidget {
                     ),
                   ),
                   // SizedBox(height: 64),
-                  MediumButton(text: 'Start Cooking', onClick: () {}),
+                  MediumButton(
+                    text: 'Start Cooking',
+                    onClick: onStart,
+                  ),
                   Expanded(flex: 1, child: SizedBox()),
                 ],
               ),
