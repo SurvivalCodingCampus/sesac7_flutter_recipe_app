@@ -1,99 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/02_stateful/model/ingredient.dart';
-import 'package:flutter_recipe_app/02_stateful/presentation/component/bookmark_button_widget.dart';
-import 'package:flutter_recipe_app/02_stateful/presentation/component/ingredient_item_widget.dart';
-import 'package:flutter_recipe_app/02_stateful/presentation/component/recipe_list_item_widget.dart';
-import 'package:flutter_recipe_app/02_stateful/presentation/component/start_rate_widget.dart';
+import 'package:flutter_recipe_app/data/data_source/recipe_data_source_impl.dart';
+import 'package:flutter_recipe_app/data/repository/recipe_repository_impl.dart';
+import 'package:flutter_recipe_app/presentation/screen/search/search_view_model.dart';
+import 'package:flutter_recipe_app/presentation/screen/search/search_view_screen.dart';
+
+import 'data/data_source/recipe_data_source.dart';
+import 'data/repository/recipe_repository.dart';
 
 void main() {
-  runApp(const MyApp());
+  final RecipeDataSource recipeDataSource = RecipeDataSourceImpl();
+  final RecipeRepository recipeRepository = RecipeRepositoryImpl(
+    recipeDataSource,
+  );
+  final searchViewModel = SearchViewModel(recipeRepository: recipeRepository);
+
+  runApp(
+    MyApp(
+      searchViewModel: searchViewModel,
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final SearchViewModel searchViewModel;
 
+  const MyApp({
+    super.key,
+    required this.searchViewModel,
+  });
+
+  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'IngredientItem Test',
+      title: 'Flutter Demo',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'Poppins',
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const TestScreen(),
-    );
-  }
-}
-
-class TestScreen extends StatelessWidget {
-  const TestScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('테스트'),
-      ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              RecipeListItem(
-                name: 'Traditonal spare ribs baked',
-                userName: 'By ChefJohn',
-                time: 20,
-                rate: 4,
-                width: 250,
-                imgSrc: 'assets/images/recipe_list_item_thumbnail_1.png',
-                isBookmarked: true,
-                onClick: () {},
-              ),
-              SizedBox(height: 5),
-              RecipeListItem(
-                name: 'Traditonal spare ribs baked',
-                userName: 'By ChefJohn',
-                time: 20,
-                rate: 4,
-                width: 315,
-                imgSrc: 'assets/images/recipe_list_item_thumbnail_1.png',
-                isBookmarked: true,
-                onClick: () {},
-              ),
-              SizedBox(height: 5),
-              RecipeListItem(
-                name: 'spice roasted chicken with flavored rice',
-                userName: 'By ChefJohn',
-                time: 20,
-                rate: 4,
-                imgSrc: 'assets/images/recipe_list_item_thumbnail_2.png',
-                isBookmarked: true,
-                onClick: () {},
-              ),
-              SizedBox(height: 5),
-              StarRateWidget(rating: 0),
-              SizedBox(height: 5),
-              BookmarkButtonWidget(isBookmarked: false, onClick: () {}),
-              IngredientItemWidget(
-                width: 315,
-                ingredient: Ingredient(
-                  name: 'tomato',
-                  quantity: 500,
-                  imgSrc: 'assets/images/tomato.png',
-                ),
-              ),
-              SizedBox(height: 5),
-              IngredientItemWidget(
-                ingredient: Ingredient(
-                  name: 'tomato',
-                  quantity: 500,
-                  imgSrc: 'assets/images/tomato.png',
-                ),
-              ),
-            ],
-          ),
-        ),
+      home: ListenableBuilder(
+        listenable: searchViewModel,
+        builder: (context, child) {
+          return SearchViewScreen(
+            viewModel: searchViewModel,
+          );
+        },
       ),
     );
   }
