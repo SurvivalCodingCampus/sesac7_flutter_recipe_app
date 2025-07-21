@@ -30,6 +30,7 @@ class SavedRecipesScreen extends StatelessWidget {
               ),
             );
           }
+
           if (viewModel.savedRecipes.isEmpty) {
             return Center(
               child: Text(
@@ -38,6 +39,7 @@ class SavedRecipesScreen extends StatelessWidget {
               ),
             );
           }
+
           return ListView.separated(
             padding: const EdgeInsets.symmetric(horizontal: 30),
             itemCount: viewModel.savedRecipes.length,

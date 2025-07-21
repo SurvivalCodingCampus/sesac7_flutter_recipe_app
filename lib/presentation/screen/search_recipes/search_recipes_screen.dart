@@ -77,28 +77,35 @@ class SearchRecipesScreen extends StatelessWidget {
                     ),
                 ],
               ),
-              state.isLoading
-                  ? Center(
+              Builder(
+                builder: (context) {
+                  if (state.errorMessage != null) {
+                    return Center(
+                      child: Text(state.errorMessage!),
+                    );
+                  }
+
+                  if (state.isLoading) {
+                    return Center(
                       child: CircularProgressIndicator(),
-                    )
-                  : Expanded(
-                      child: state.errorMessage != null
-                          ? Center(
-                              child: Text(state.errorMessage!),
-                            )
-                          : GridView.builder(
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    mainAxisSpacing: 15,
-                                    crossAxisSpacing: 15,
-                                  ),
-                              itemCount: recipes.length,
-                              itemBuilder: (context, index) {
-                                return RecipeSearchCard(recipe: recipes[index]);
-                              },
-                            ),
+                    );
+                  }
+
+                  return Expanded(
+                    child: GridView.builder(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        mainAxisSpacing: 15,
+                        crossAxisSpacing: 15,
+                      ),
+                      itemCount: recipes.length,
+                      itemBuilder: (context, index) {
+                        return RecipeSearchCard(recipe: recipes[index]);
+                      },
                     ),
+                  );
+                },
+              ),
             ],
           ),
         ),
