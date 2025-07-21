@@ -37,6 +37,13 @@ class SignUpScreen extends StatelessWidget {
               ),
               Spacer(),
               InputField(
+                label: 'Name',
+                placeHolder: 'Enter Name',
+                value: '',
+                onValueChange: (value) {},
+              ),
+              Spacer(),
+              InputField(
                 label: 'Email',
                 placeHolder: 'Enter Email',
                 value: '',
@@ -44,33 +51,60 @@ class SignUpScreen extends StatelessWidget {
               ),
               Spacer(),
               InputField(
-                label: 'Enter Password',
+                label: 'Password',
                 placeHolder: 'Enter Password',
                 value: '',
                 onValueChange: (value) {},
               ),
-              SizedBox(
-                height: 20.0,
+              Spacer(),
+              InputField(
+                label: 'Confirm Password',
+                placeHolder: 'Retype Password',
+                value: '',
+                onValueChange: (value) {},
               ),
+              Spacer(),
               Padding(
                 padding: const EdgeInsets.only(left: 10.0),
                 child: GestureDetector(
                   onTap: () {},
-                  child: Text(
-                    'Forgot Password?',
-                    style: TextStyles.signInScreenForgotPassword,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: 17.0,
+                        height: 17.0,
+                        child: Checkbox(
+                          side: BorderSide(
+                            width: 1.0,
+                            color: AppColors.secondary100,
+                          ),
+                          activeColor: Colors.white,
+                          value: false,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadiusGeometry.circular(5.0),
+                          ),
+                          checkColor: AppColors.secondary100,
+                          onChanged: (isChecked) {},
+                        ),
+                      ),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      Text(
+                        'Accept Terms & Condition',
+                        style: TextStyles.signInScreenForgotPassword,
+                      ),
+                    ],
                   ),
                 ),
               ),
-              SizedBox(
-                height: 25.0,
-              ),
+              Spacer(),
               BigButton(
-                title: 'Sign In',
+                title: 'Sign Up',
                 onClick: () {},
               ),
               SizedBox(
-                height: 20.0,
+                height: 14.0,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -99,9 +133,7 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 20.0,
-              ),
+              Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -116,31 +148,26 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 55.0,
-              ),
+              Spacer(),
               Align(
                 alignment: Alignment.center,
                 child: GestureDetector(
                   onTap: () {
-                    context.go(Routes.signUp);
+                    context.go(Routes.signIn);
                   },
                   child: Text.rich(
                     TextSpan(
-                      text: 'Don\'t have an account? ',
+                      text: 'Alredy a member? ',
                       style: TextStyles.signInScreenSignUpFirst,
                       children: [
                         TextSpan(
-                          text: 'Sign up',
+                          text: 'Sign In',
                           style: TextStyles.signInScreenSignUpSecond,
                         ),
                       ],
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 65.0,
               ),
             ],
           ),
