@@ -221,6 +221,62 @@ abstract class TextStyles {
 
   /* SearchRecipeFilterBottomSheet End */
 
+  /* SignInScreen Start */
+  static final TextStyle signInScreenTitle = TextStyle(
+    color: AppColors.black,
+    fontSize: 30.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 45 / 30,
+  );
+
+  static final TextStyle signInScreenSubTitle = TextStyle(
+    color: AppColors.black,
+    fontSize: 20.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 30 / 20,
+  );
+
+  static final TextStyle signInScreenForgotPassword = TextStyle(
+    color: AppColors.secondary100,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle signInScreenOrSignInWith = TextStyle(
+    color: AppColors.gray4,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w500,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle signInScreenSignUpFirst = TextStyle(
+    color: AppColors.black,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w500,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle signInScreenSignUpSecond = TextStyle(
+    color: AppColors.secondary100,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w500,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+  /* SignInScreen End */
+
   /* SavedRecipeScreen Start */
   static final TextStyle savedRecipeScreenTitle = TextStyle(
     color: AppColors.labelColor,
