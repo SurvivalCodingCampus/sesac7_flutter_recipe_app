@@ -24,7 +24,6 @@ class InputField extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           SizedBox(
-            width: 38.0,
             height: 21.0,
             child: Text(
               label,
@@ -34,7 +33,6 @@ class InputField extends StatelessWidget {
           ),
           SizedBox(height: 5.0),
           SizedBox(
-            width: double.infinity,
             height: 55.0,
             child: TextField(
               onChanged: (value) {
