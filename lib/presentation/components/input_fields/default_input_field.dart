@@ -42,64 +42,6 @@ class DefaultInputField extends StatelessWidget {
               //   borderSide:BorderSide(color: AppColors.gray4),
               //   borderRadius: BorderRadius.circular(10),
               // ),
-              // focusedBorder: OutlineInputBorder(
-              //   borderRadius: BorderRadius.circular(10),
-              //   borderSide: BorderSide(
-              //     color: AppColors.primary80,
-              //   ),
-              // ),
-            ),
-          ),
-          SizedBox(height: 20,),
-          Text(
-            label,
-            style: TextStyles.smallTextRegular,
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          TextField(
-            onChanged: onValueChange,
-            decoration: InputDecoration(
-              hintText: placeHolder,
-              hintStyle: TextStyle(color: AppColors.gray4),
-              // enabledBorder: OutlineInputBorder(
-              //   borderSide:BorderSide(color: AppColors.gray4),
-              //   borderRadius: BorderRadius.circular(10),
-              // ),
-              // border: OutlineInputBorder(
-              //   borderSide:BorderSide(color: AppColors.gray4),
-              //   borderRadius: BorderRadius.circular(10),
-              // ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(10),
-                borderSide: BorderSide(
-                  color: AppColors.primary80,
-                ),
-              ),
-            ),
-          ),
-          SizedBox(height: 20,),
-          Text(
-            label,
-            style: TextStyles.smallTextRegular,
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          TextField(
-            onChanged: onValueChange,
-            decoration: InputDecoration(
-              hintText: placeHolder,
-              hintStyle: TextStyle(color: AppColors.gray4),
-              enabledBorder: OutlineInputBorder(
-                borderSide:BorderSide(color: AppColors.gray4),
-                borderRadius: BorderRadius.circular(10),
-              ),
-              // border: OutlineInputBorder(
-              //   borderSide:BorderSide(color: AppColors.gray4),
-              //   borderRadius: BorderRadius.circular(10),
-              // ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
                 borderSide: BorderSide(
@@ -112,4 +54,20 @@ class DefaultInputField extends StatelessWidget {
       ),
     );
   }
+}
+
+void main() {
+  // final Recipe recipe = Recipe(name: "Traditional spare ribs baked", imageUrl: "https://cdn.pixabay.com/photo/2017/11/10/15/04/steak-2936531_1280.jpg", chef: "Chef John", cookingTime: "20 min", rating: 4.0, onChangeFavorite: () {},);
+  runApp(
+    MaterialApp(
+      home: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Center(
+            child: DefaultInputField(label: 'test', placeHolder: 'Search recipe', onValueChange: (String value) {  },),
+          ),
+        ),
+      ),
+    ),
+  );
 }
