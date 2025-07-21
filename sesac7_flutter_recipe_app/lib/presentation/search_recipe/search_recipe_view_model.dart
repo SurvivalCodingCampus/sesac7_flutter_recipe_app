@@ -10,8 +10,6 @@ import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_sta
 
 class SearchRecipeViewModel with ChangeNotifier {
   final RecipeRepository _recipeRepository;
-  TextEditingController searchInputFieldController =
-      TextEditingController();
   SearchRecipesState _searchRecipesState = SearchRecipesState();
 
   SearchRecipesState get searchRecipesState => _searchRecipesState;
@@ -80,9 +78,4 @@ class SearchRecipeViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  @override
-  void dispose() {
-    searchInputFieldController.dispose();
-    super.dispose();
-  }
 }

@@ -3,13 +3,11 @@ import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class SearchInputField extends StatelessWidget {
-  final TextEditingController textEditingController;
   final String hint;
   final Function(String searchKeyword) onSearchKeywordChange;
 
   const SearchInputField({
     super.key,
-    required this.textEditingController,
     required this.hint,
     required this.onSearchKeywordChange,
   });
@@ -23,7 +21,6 @@ class SearchInputField extends StatelessWidget {
           onChanged: onSearchKeywordChange,
           textAlignVertical: TextAlignVertical.center,
           maxLines: 1,
-          controller: textEditingController,
           decoration: InputDecoration(
             hintText: hint,
             hintStyle: TextStyles.searchInputFieldHint,
@@ -43,15 +40,10 @@ class SearchInputField extends StatelessWidget {
             ),
             filled: true,
             fillColor: AppColors.white,
-            prefixIcon: GestureDetector(
-              onTap: () {
-                onSearchKeywordChange(textEditingController.text);
-              },
-              child: Icon(
-                Icons.search_outlined,
-                color: AppColors.gray4,
-                size: 18.0,
-              ),
+            prefixIcon: Icon(
+              Icons.search_outlined,
+              color: AppColors.gray4,
+              size: 18.0,
             ),
             contentPadding: EdgeInsets.symmetric(vertical: 11.5),
           ),
