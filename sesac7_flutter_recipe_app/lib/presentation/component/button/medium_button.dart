@@ -39,32 +39,30 @@ class _MediumButtonState extends State<MediumButton> {
       },
       onTap: widget.onClick,
       child: Container(
+        width: 243.0,
         height: 54.0,
         decoration: BoxDecoration(
           color: _isTapDown ? AppColors.gray4 : AppColors.primary100,
           borderRadius: BorderRadius.circular(10.0),
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 50.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                widget.title,
-                style: TextStyles.mediumButtonTitle,
-                maxLines: 1,
-              ),
-              SizedBox(
-                width: 9.0,
-              ),
-              Icon(
-                Icons.arrow_forward,
-                color: AppColors.white,
-                size: 20.0,
-              ),
-            ],
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              widget.title,
+              style: TextStyles.mediumButtonTitle,
+              maxLines: 1,
+            ),
+            SizedBox(
+              width: 9.0,
+            ),
+            Icon(
+              Icons.arrow_forward,
+              color: AppColors.white,
+              size: 20.0,
+            ),
+          ],
         ),
       ),
     );
