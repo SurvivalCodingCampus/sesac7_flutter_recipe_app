@@ -29,7 +29,7 @@ void main() async {
 
   runApp(
     SearchRecipeApp(
-      savedRecipeViewModel: searchRecipeViewModel,
+      searchRecipeViewModel: searchRecipeViewModel,
     ),
   );
 }
@@ -82,8 +82,8 @@ class SearchRecipeApp extends StatelessWidget {
 
   const SearchRecipeApp({
     super.key,
-    required SearchRecipeViewModel savedRecipeViewModel,
-  }) : _searchRecipeViewModel = savedRecipeViewModel;
+    required SearchRecipeViewModel searchRecipeViewModel,
+  }) : _searchRecipeViewModel = searchRecipeViewModel;
 
   @override
   Widget build(BuildContext context) {
