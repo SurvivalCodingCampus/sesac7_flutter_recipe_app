@@ -6,7 +6,6 @@ import '../../ui/text_styles.dart';
 class DefaultInputField extends StatelessWidget {
   final String label;
   final String placeHolder;
-  final String value;
 
   // typeDef가 정의되어있어 ValueChanged<String> 타입도 가능함
   final void Function(String) onValueChange;
@@ -15,16 +14,15 @@ class DefaultInputField extends StatelessWidget {
     super.key,
     required this.label,
     required this.placeHolder,
-    required this.value,
     required this.onValueChange,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       // width: 315,
       height: 81,
-      margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
+      // margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -39,6 +37,7 @@ class DefaultInputField extends StatelessWidget {
               onChanged: onValueChange,
               style: TextStyles.smallerTextRegular,
               decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(left: 20),
                 filled: true,
                 fillColor: AppColors.white,
                 hintText: placeHolder,
@@ -48,6 +47,13 @@ class DefaultInputField extends StatelessWidget {
                 enabledBorder: OutlineInputBorder(
                   borderSide: BorderSide(
                     color: AppColors.gray4,
+                    width: 1.5,
+                  ),
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    color: AppColors.primary80,
                     width: 1.5,
                   ),
                   borderRadius: BorderRadius.circular(10.0),
