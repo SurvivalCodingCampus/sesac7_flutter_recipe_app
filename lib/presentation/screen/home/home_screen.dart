@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsetsGeometry.fromLTRB(30, 20, 30, 15),
+            padding: EdgeInsets.fromLTRB(30, 20, 30, 15),
             child: Column(
               spacing: 30,
               children: [

@@ -19,7 +19,7 @@ class SignUpScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsetsGeometry.fromLTRB(30, 10, 30, 0),
+            padding: EdgeInsets.fromLTRB(30, 10, 30, 0),
             child: Column(
               children: [
                 Column(

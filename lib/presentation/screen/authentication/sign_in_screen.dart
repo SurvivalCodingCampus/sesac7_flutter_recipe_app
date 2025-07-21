@@ -21,7 +21,7 @@ class SignInScreen extends StatelessWidget {
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsetsGeometry.fromLTRB(30, 50, 30, 0),
+            padding: EdgeInsets.fromLTRB(30, 50, 30, 0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
