@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/component/recipe_card.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/component/displays/recipe_card.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/saved_recipes/saved_recipes_view_model.dart';
 import 'package:flutter_recipe_app/01_stateless/ui/text_styles.dart';
 import 'package:google_fonts/google_fonts.dart';

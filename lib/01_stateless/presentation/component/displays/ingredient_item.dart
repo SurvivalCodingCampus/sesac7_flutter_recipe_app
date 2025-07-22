@@ -2,17 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/data/model/ingredient.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../ui/app_colors.dart';
-import '../../ui/text_styles.dart';
+import '../../../ui/app_colors.dart';
+import '../../../ui/text_styles.dart';
 
 class IngredientItem extends StatelessWidget {
   final Ingredient ingredient;
-  final String amount;
 
   const IngredientItem({
     super.key,
     required this.ingredient,
-    required this.amount,
   });
 
   @override
@@ -45,6 +43,7 @@ class IngredientItem extends StatelessWidget {
                 ingredient.name,
                 style: GoogleFonts.poppins(
                   textStyle: TextStyles.normalTextBold,
+                  color: Color.fromRGBO(12, 12, 12, 1),
                 ),
               ),
             ),
@@ -54,9 +53,10 @@ class IngredientItem extends StatelessWidget {
             height: 21,
             child: Center(
               child: Text(
-                amount,
+                '${ingredient.amount}g',
                 style: GoogleFonts.poppins(
                   textStyle: TextStyles.smallTextRegular,
+                  color: AppColors.gray3
                 ),
               ),
             ),

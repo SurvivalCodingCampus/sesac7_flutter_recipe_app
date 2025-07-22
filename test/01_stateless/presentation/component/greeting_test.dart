@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/data/model/person.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/component/greeting.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/component/unused/greeting.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

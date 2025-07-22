@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
 abstract class TextStyles {
+  static const TextStyle smallerTextSmallLabel = TextStyle(
+    fontSize: 8,
+    fontWeight: FontWeight.w400,
+    fontFamily: 'Poppins',
+    height: 1.5,
+  );
   static const TextStyle smallerTextRegular = TextStyle(
     fontSize: 11,
     fontWeight: FontWeight.w400,
