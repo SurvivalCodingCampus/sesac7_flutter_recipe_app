@@ -1,6 +1,8 @@
-import '../core/result.dart';
-import '../dto/image_dto.dart';
 
+
+
+import '../../core/result.dart';
+import '../../dto/image_dto.dart';
 
 abstract interface class ImageDataSource {
   Future<Result<List<ImageDto>, DataSourceException>> searchImages(

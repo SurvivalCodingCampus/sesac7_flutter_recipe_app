@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/example/presentation/screen/image_search_screen.dart';
 import 'package:flutter_recipe_app/01_stateless/example/presentation/view_model/image_search_view_model.dart';
-import 'package:flutter_recipe_app/01_stateless/example/repository/image_repository.dart';
-import 'package:flutter_recipe_app/01_stateless/example/repository/image_repository_impl.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
-import 'data_source/image_data_source.dart';
-import 'data_source/image_data_source_impl.dart';
+import 'data/data_source/image_data_source.dart';
+import 'data/data_source/image_data_source_impl.dart';
+import 'data/repository/image_repository.dart';
+import 'data/repository/image_repository_impl.dart';
 
 void main() {
   // 의존성 주입 (Dependency Injection) 설정

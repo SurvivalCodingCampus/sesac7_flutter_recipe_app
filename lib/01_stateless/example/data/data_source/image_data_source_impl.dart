@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 
-import '../core/result.dart';
-import '../dto/image_dto.dart';
+import '../../core/result.dart';
+import '../../dto/image_dto.dart';
 import 'image_data_source.dart';
 
 class ImageDataSourceImpl implements ImageDataSource {

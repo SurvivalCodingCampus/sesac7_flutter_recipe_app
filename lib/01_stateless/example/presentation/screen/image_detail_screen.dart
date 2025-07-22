@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../model/image_mode.dart';
+import '../../data/model/image_mode.dart';
+
 
 class ImageDetailScreen extends StatelessWidget {
   final ImageModel image;

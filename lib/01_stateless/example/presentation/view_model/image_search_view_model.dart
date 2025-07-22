@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../model/image_mode.dart';
-import '../../repository/image_repository.dart';
+import '../../data/model/image_mode.dart';
+import '../../data/repository/image_repository.dart';
+
 
 class ImageSearchViewModel with ChangeNotifier {
   final ImageRepository _repository;

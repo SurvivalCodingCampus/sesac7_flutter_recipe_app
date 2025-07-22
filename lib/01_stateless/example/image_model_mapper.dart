@@ -1,7 +1,7 @@
 
 
+import 'data/model/image_mode.dart';
 import 'dto/image_dto.dart';
-import 'model/image_mode.dart';
 
 extension ImageMapper on ImageDto {
   // ImageDto를 ImageModel로 변환하는 확장 메서드
