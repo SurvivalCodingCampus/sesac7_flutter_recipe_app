@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../../repository/recipes_repository.dart';
+import 'package:flutter_recipe_app/data/repository/recipes_repository.dart';
 
 class FilterViewModel with ChangeNotifier {
   final RecipeRepository _repository;

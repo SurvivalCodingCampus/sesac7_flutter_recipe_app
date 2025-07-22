@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/button/big_button.dart';
 import 'package:flutter_recipe_app/presentation/screen/splash_screen/splash_screen_view_model.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../core/routes.dart';
 import '../../../ui/app_colors.dart';
 import '../../../ui/text_styles.dart';
 
@@ -66,11 +68,10 @@ class SplashScreen extends StatelessWidget {
                   BigButton(
                     text: 'Start Cooking',
                     onTap: () {
-                      print('');
+                      context.go(Routes.signIn);
                     },
                     isDisabled: false,
                   ),
-
                 ],
               ),
             ],

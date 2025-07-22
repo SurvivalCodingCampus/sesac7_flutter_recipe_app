@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import '../../model/ingredient.dart';
-import 'package:flutter_recipe_app/presentation/component/ingredient/ingredient_item.dart';
+import 'package:flutter_recipe_app/data/repository/ingredient_repository.dart';
 
-import '../../repository/ingredient_repository.dart';
+import 'package:flutter_recipe_app/presentation/component/ingredient/ingredient_item.dart';
+import '../../data/model/ingredient.dart';
 
 
 class IngredientScreen extends StatefulWidget {

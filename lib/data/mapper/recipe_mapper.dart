@@ -1,6 +1,6 @@
 import '../dto/recipe_dto.dart';
 import '../model/recipe.dart' as model;
-import '../mapper/ingredient_mapper.dart';
+import 'ingredient_mapper.dart';
 
 extension RecipesMapper on Recipes {
   model.Recipe toModel() {

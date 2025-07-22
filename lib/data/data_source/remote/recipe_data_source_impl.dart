@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_recipe_app/data_source/remote/recipe_data_source.dart';
+import 'package:flutter_recipe_app/data/data_source/remote/recipe_data_source.dart';
 import 'package:http/http.dart' as http;
 
 import '../../dto/recipe_dto.dart';
