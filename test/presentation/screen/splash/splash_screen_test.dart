@@ -4,11 +4,17 @@ import 'package:flutter_recipe_app/presentation/screen/splash/splash_screen.dart
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('SplashScreen widget rendering and interaction test', (WidgetTester tester) async {
+  testWidgets('SplashScreen widget rendering and interaction test', (
+    WidgetTester tester,
+  ) async {
     // Arrange
-    await tester.pumpWidget(const MaterialApp(
-      home: SplashScreen(),
-    ));
+    await tester.pumpWidget(
+      MaterialApp(
+        home: SplashScreen(
+          onStartCookingTap: () {},
+        ),
+      ),
+    );
 
     // Assert: Verify that all the key widgets are rendered
 
@@ -21,7 +27,10 @@ void main() {
     expect(find.text('Simple way to find Tasty Recipe'), findsOneWidget);
 
     // 3. Button
-    final startCookingButton = find.widgetWithText(MediumButton, 'Start Cooking');
+    final startCookingButton = find.widgetWithText(
+      MediumButton,
+      'Start Cooking',
+    );
     expect(startCookingButton, findsOneWidget);
 
     // Act: Tap the button

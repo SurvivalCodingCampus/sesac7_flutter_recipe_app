@@ -13,12 +13,12 @@ import 'package:flutter_recipe_app/presentation/screen/search_recipes/search_rec
 class SearchRecipesViewModel with ChangeNotifier {
   final RecipeRepository _recipeRepository;
 
-  SearchRecipesViewModel({required RecipeRepository recipeRepository})
-    : _recipeRepository = recipeRepository;
-
   SearchRecipesState _state = SearchRecipesState();
 
   SearchRecipesState get state => _state;
+
+  SearchRecipesViewModel({required RecipeRepository recipeRepository})
+    : _recipeRepository = recipeRepository;
 
   Future<void> fetchRecipe() async {
     _state = _state.copyWith(isLoading: true);
