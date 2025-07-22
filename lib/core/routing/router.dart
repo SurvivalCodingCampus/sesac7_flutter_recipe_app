@@ -18,7 +18,7 @@ final RecipeRepository recipeRepository = RecipeRepositoryImpl(
   recipeDataSource: RecipeDataSourceImpl(),
 );
 
-final router = GoRouter(
+GoRouter createRouter() => GoRouter(
   initialLocation: Routes.splash,
   routes: [
     GoRoute(

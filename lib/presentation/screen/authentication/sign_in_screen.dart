@@ -6,6 +6,9 @@ import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class SignInScreen extends StatelessWidget {
+  static const Key signInButtonKey = Key('SignInScreen sign in button key');
+  static const Key signUpButtonKey = Key('SignInScreen sign up button key');
+
   final VoidCallback onSignInTap;
   final VoidCallback onSignUpTap;
 
@@ -62,7 +65,11 @@ class SignInScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                BigButton(text: 'Sign In', onClick: onSignInTap),
+                BigButton(
+                  key: signInButtonKey,
+                  text: 'Sign In',
+                  onClick: onSignInTap,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20),
                   child: Row(
@@ -113,6 +120,7 @@ class SignInScreen extends StatelessWidget {
                       ),
                     ),
                     GestureDetector(
+                      key: signUpButtonKey,
                       onTap: onSignUpTap,
                       child: Text(
                         'Sign up',

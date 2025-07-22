@@ -4,6 +4,14 @@ import 'package:flutter_recipe_app/ui/app_colors.dart';
 
 class MainNavigationScreen extends StatelessWidget {
   static const int shadowColorValue = 0xff6c6c6c;
+  static const Key homeTabKey = Key('MainNavigationScreen home tab');
+  static const Key savedRecipesTabKey = Key(
+    'MainNavigationScreen saved recipes tab',
+  );
+  static const Key notificationsTabKey = Key(
+    'MainNavigationScreen notifications tab',
+  );
+  static const Key profileTabKey = Key('MainNavigationScreen profile tab');
 
   final Widget child;
   final int currentIndex;
@@ -42,22 +50,26 @@ class MainNavigationScreen extends StatelessWidget {
                   spacing: 40,
                   children: [
                     _NavigationTab(
+                      key: homeTabKey,
                       icon: Icons.home_outlined,
                       isSelected: currentIndex == 0,
                       onTap: () => onTabSelected(0),
                     ),
                     _NavigationTab(
+                      key: savedRecipesTabKey,
                       icon: Icons.bookmark_border,
                       isSelected: currentIndex == 1,
                       onTap: () => onTabSelected(1),
                     ),
                     const Spacer(),
                     _NavigationTab(
+                      key: notificationsTabKey,
                       icon: Icons.notifications_none_rounded,
                       isSelected: currentIndex == 2,
                       onTap: () => onTabSelected(2),
                     ),
                     _NavigationTab(
+                      key: profileTabKey,
                       icon: Icons.person_outline,
                       isSelected: currentIndex == 3,
                       onTap: () => onTabSelected(3),
@@ -97,6 +109,7 @@ class _NavigationTab extends StatelessWidget {
   final VoidCallback onTap;
 
   const _NavigationTab({
+    super.key,
     required this.icon,
     required this.isSelected,
     required this.onTap,
