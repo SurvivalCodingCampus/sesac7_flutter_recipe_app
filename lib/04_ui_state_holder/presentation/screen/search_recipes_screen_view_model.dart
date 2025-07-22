@@ -39,12 +39,14 @@ class SearchRecipesScreenViewModel with ChangeNotifier {
     );
     notifyListeners();
 
+    // 검색이 한 번이라도 실행되었으면 Init 스위치를 끈다
     if (state.searchedResult.isNotEmpty) {
       _state = state.copyWith(
         isInit: false,
       );
     }
 
+    // 첫 검색 전까지는 전체 목록으로 필터링한다
     final List<Recipe> baseList = (state.isInit)
         ? state.recipes
         : state.searchedResult;
