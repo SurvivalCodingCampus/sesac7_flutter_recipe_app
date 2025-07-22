@@ -6,7 +6,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 /* InputField START */
-val inputFiledLabelTextStyle = TextStyle(
+val inputFieldLabelTextStyle = TextStyle(
     fontFamily = poppins,
     fontWeight = FontWeight.Normal,
     fontSize = 14.sp,
@@ -14,7 +14,7 @@ val inputFiledLabelTextStyle = TextStyle(
     color = LabelColor
 )
 
-val inputFiledHintTextStyle = TextStyle(
+val inputFieldHintTextStyle = TextStyle(
     fontFamily = poppins,
     fontWeight = FontWeight.Normal,
     fontSize = 11.sp,
