@@ -15,7 +15,7 @@ class SignUpScreen extends StatelessWidget {
   final String passwordConfirmLabel = 'Confirm Password';
   final String passwordConfirmPlaceHolder = 'Retype Password';
   final String acceptTerms = 'Accept Terms & Condition';
-  final String buttonText = 'Sign in';
+  final String buttonText = 'Sign up';
   final String orSignInWith = '─────── Or Sign in With ───────';
   final String alreadyAMember = 'Already a member?';
   final String signUp = ' Sign up';
@@ -110,7 +110,7 @@ class SignUpScreen extends StatelessWidget {
             ),
             Expanded(flex: 26, child: SizedBox()),
             BigButton(
-              text: signUp,
+              text: buttonText,
               onClick: onSignUp,
             ),
             Expanded(flex: 14, child: SizedBox()),
