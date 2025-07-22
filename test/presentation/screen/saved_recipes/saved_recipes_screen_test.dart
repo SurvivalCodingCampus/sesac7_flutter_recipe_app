@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/data/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/presentation/component/list_item/recipe_card.dart';
 import 'package:flutter_recipe_app/presentation/screen/saved_recipes/saved_recipes_screen.dart';
+import 'package:flutter_recipe_app/presentation/screen/saved_recipes/saved_recipes_state.dart';
 import 'package:flutter_recipe_app/presentation/screen/saved_recipes/saved_recipes_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -25,35 +25,52 @@ void main() {
   }
 
   group('SavedRecipesScreen', () {
-    testWidgets('displays "No saved recipes found." message when there is no data', (tester) async {
-      // Arrange
-      when(mockViewModel.savedRecipes).thenReturn([]);
-      when(mockViewModel.errorMessage).thenReturn(null);
+    testWidgets(
+      'displays "No saved recipes found." message when there is no data',
+      (tester) async {
+        // Given
+        when(
+          mockViewModel.state,
+        ).thenReturn(
+          SavedRecipesState(
+            savedRecipes: [],
+            errorMessage: null,
+          ),
+        );
 
-      // Act
-      await tester.pumpWidget(createWidget());
+        // When
+        await tester.pumpWidget(createWidget());
 
-      // Assert
-      expect(find.text('No saved recipes found.'), findsOneWidget);
-      expect(find.byType(ListView), findsNothing);
-    });
+        // Then
+        expect(find.text('No saved recipes found.'), findsOneWidget);
+        expect(find.byType(ListView), findsNothing);
+      },
+    );
 
-    testWidgets('displays an error message when there is an error', (tester) async {
-      // Arrange
+    testWidgets('displays an error message when there is an error', (
+      tester,
+    ) async {
+      // Given
       const errorMessage = 'An error occurred';
-      when(mockViewModel.savedRecipes).thenReturn([]);
-      when(mockViewModel.errorMessage).thenReturn(errorMessage);
+      when(mockViewModel.state).thenReturn(
+        SavedRecipesState(
+          savedRecipes: [],
+          errorMessage: errorMessage,
+        ),
+      );
 
-      // Act
+      // When
       await tester.pumpWidget(createWidget());
 
-      // Assert
+      // Then
       expect(find.text(errorMessage), findsOneWidget);
       expect(find.byType(ListView), findsNothing);
     });
 
-    testWidgets('displays a list of RecipeCards when data is available', (tester) async {
-      // Arrange
+    testWidgets('displays a list of RecipeCards when data is available', (
+      tester,
+    ) async {
+      // Given
       final recipes = [
         Recipe(
           id: '1',
@@ -66,13 +83,17 @@ void main() {
           ingredients: [],
         ),
       ];
-      when(mockViewModel.savedRecipes).thenReturn(recipes);
-      when(mockViewModel.errorMessage).thenReturn(null);
+      when(mockViewModel.state).thenReturn(
+        SavedRecipesState(
+          savedRecipes: recipes,
+          errorMessage: null,
+        ),
+      );
 
-      // Act
+      // When
       await tester.pumpWidget(createWidget());
 
-      // Assert
+      // Then
       expect(find.byType(ListView), findsOneWidget);
       expect(find.byType(RecipeCard), findsOneWidget);
       expect(find.text('Test Recipe 1'), findsOneWidget);

@@ -76,8 +76,8 @@ void main() {
         await viewModel.fetchSavedRecipes();
 
         // Assert
-        expect(viewModel.savedRecipes, mockRecipes);
-        expect(viewModel.errorMessage, isNull);
+        expect(viewModel.state.savedRecipes, mockRecipes);
+        expect(viewModel.state.errorMessage, isNull);
         verify(mockRecipeRepository.fetchAllRecipes()).called(1);
         verify(listener.call()).called(1);
       },
@@ -98,10 +98,10 @@ void main() {
         await viewModel.fetchSavedRecipes();
 
         // Assert
-        expect(viewModel.savedRecipes, isEmpty);
-        expect(viewModel.errorMessage, isNotNull);
+        expect(viewModel.state.savedRecipes, isEmpty);
+        expect(viewModel.state.errorMessage, isNotNull);
         expect(
-          viewModel.errorMessage,
+          viewModel.state.errorMessage,
           'Failed to fetch saved recipes with error: ${NetworkError.unknown}',
         );
         verify(mockRecipeRepository.fetchAllRecipes()).called(1);
