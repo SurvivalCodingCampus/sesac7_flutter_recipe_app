@@ -7,8 +7,8 @@ import '../../ui/text_styles.dart';
 import '../component/button/big_button.dart';
 import '../component/input_field/input_field.dart';
 
-class Join extends StatelessWidget {
-  const Join({super.key});
+class JoinScreen extends StatelessWidget {
+  const JoinScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

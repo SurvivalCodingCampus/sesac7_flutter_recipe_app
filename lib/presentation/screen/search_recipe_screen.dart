@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/input_field/search_inpu_field.dart';
 
-import '../../data/state_holder/filter_search_state.dart';
 import '../../ui/app_colors.dart';
 import '../../ui/text_styles.dart';
 import '../component/card/small_recipe_card.dart';
-import '../view_model/filter_view_model.dart';
+import '../state_holder/filter_search_state.dart';
+import '../view_model/filter_search_bottom_sheet_view_model.dart';
 import '../view_model/search_recipe_view_model.dart';
 import 'filter_search_bottom_sheet.dart';
 
@@ -13,7 +13,7 @@ class SearchRecipeScreen extends StatelessWidget {
   const SearchRecipeScreen({super.key, required this.searchRecipeViewModel, required this.filterViewModel});
 
   final SearchRecipeViewModel searchRecipeViewModel;
-  final FilterViewModel filterViewModel;
+  final FilterSearchBottomSheetViewModel filterViewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +144,7 @@ class SearchRecipeScreen extends StatelessWidget {
 
 
 // 필터 화면을 바텀 시트로 띄우는 함수
-Future<FilterSearchState> _showFilterBottomSheet(BuildContext context, FilterViewModel filterViewModel) async {
+Future<FilterSearchState> _showFilterBottomSheet(BuildContext context, FilterSearchBottomSheetViewModel filterViewModel) async {
   return await showModalBottomSheet(
     useRootNavigator: true,
     context: context,

@@ -7,8 +7,8 @@ import '../../ui/text_styles.dart';
 import '../component/button/big_button.dart';
 import '../component/input_field/input_field.dart';
 
-class Login extends StatelessWidget {
-  const Login({super.key});
+class LoginScreen extends StatelessWidget {
+  const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

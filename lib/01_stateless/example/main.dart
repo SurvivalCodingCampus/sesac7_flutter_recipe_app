@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/example/presentation/screen/image_search_screen.dart';
-import 'package:flutter_recipe_app/example/presentation/view_model/image_search_view_model.dart';
-import 'package:flutter_recipe_app/example/repository/image_repository.dart';
-import 'package:flutter_recipe_app/example/repository/image_repository_impl.dart';
+import 'package:flutter_recipe_app/01_stateless/example/presentation/screen/image_search_screen.dart';
+import 'package:flutter_recipe_app/01_stateless/example/presentation/view_model/image_search_view_model.dart';
+import 'package:flutter_recipe_app/01_stateless/example/repository/image_repository.dart';
+import 'package:flutter_recipe_app/01_stateless/example/repository/image_repository_impl.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../data/state_holder/filter_holder_info.dart';
+import '../state_holder/filter_holder_info.dart';
 
-class FilterViewModel with ChangeNotifier {
+class FilterSearchBottomSheetViewModel with ChangeNotifier {
   List<FilterHolderInfo> _timesState = [
     FilterHolderInfo(itemName: 'All'),
     FilterHolderInfo(itemName: 'Newest'),

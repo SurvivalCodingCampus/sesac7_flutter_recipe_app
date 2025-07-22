@@ -1,7 +1,8 @@
-import 'package:flutter_recipe_app/data/state_holder/filter_search_state.dart';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../model/recipe.dart';
+import '../../data/model/recipe.dart';
+import 'filter_search_state.dart';
 
 part 'search_recipes_state.freezed.dart';
 

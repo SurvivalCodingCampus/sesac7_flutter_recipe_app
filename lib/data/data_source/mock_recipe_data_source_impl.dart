@@ -1,13 +1,15 @@
 import 'dart:convert';
 
-import 'package:flutter_recipe_app/data_source/recipe_data_source.dart';
+import 'package:flutter_recipe_app/core/response.dart';
+import 'package:flutter_recipe_app/data/data_source/recipe_data_source.dart';
 
-import '../core/api_response.dart';
+import '../../core/api_response.dart';
+
 
 class MockRecipeDataSource implements RecipeDataSource {
   @override
-  Future<ApiResponse<String>> getRecipes() async {
-    return ApiResponse<String>(
+  Future<Response> getRecipes() async {
+    return Response(
       statusCode: 200,
       body: jsonEncode({
         "recipes": [

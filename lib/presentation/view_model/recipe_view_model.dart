@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../core/result.dart';
 import '../../data/model/recipe.dart';
-import '../../repository/recipe_repository.dart';
+import '../../data/repository/recipe_repository.dart';
 
 class RecipeViewModel with ChangeNotifier{
   final RecipeRepository _recipeRepository;
@@ -17,11 +18,19 @@ class RecipeViewModel with ChangeNotifier{
     _isLoading = true;
     notifyListeners();
     final response = await _recipeRepository.getRecipes();
-    final responseData = response.body;
-    if (response.isSuccess && responseData != null && responseData.isNotEmpty) {
-      _recipes.clear();
-      _recipes.addAll(responseData);
-      notifyListeners();
+
+    switch (response) {
+
+      case Success<List<Recipe>, String>():
+        if(response.value.isNotEmpty){
+          _recipes.clear();
+          _recipes.addAll(response.value);
+          notifyListeners();
+        }
+        break;
+      case Failure<List<Recipe>, String>():
+        print(response.exception);
+        break;
     }
     _isLoading = false;
   }

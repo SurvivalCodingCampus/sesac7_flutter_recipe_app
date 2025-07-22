@@ -1,6 +1,7 @@
 
 
-import 'package:flutter_recipe_app/example/image_model_mapper.dart';
+
+import 'package:flutter_recipe_app/01_stateless/example/image_model_mapper.dart';
 
 import '../core/result.dart';
 import '../data_source/image_data_source.dart';

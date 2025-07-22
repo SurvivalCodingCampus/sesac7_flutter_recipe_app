@@ -1,18 +1,18 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/data/state_holder/filter_search_state.dart';
 import 'package:flutter_recipe_app/presentation/component/button/custom_chip_with_star_button.dart';
 import 'package:flutter_recipe_app/presentation/component/button/small_button.dart';
-import 'package:flutter_recipe_app/presentation/view_model/filter_view_model.dart';
+import 'package:flutter_recipe_app/presentation/view_model/filter_search_bottom_sheet_view_model.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 
-import '../../data/state_holder/filter_holder_info.dart';
 import '../../ui/text_styles.dart';
 import '../component/button/custom_chip_button.dart';
+import '../state_holder/filter_holder_info.dart';
+import '../state_holder/filter_search_state.dart';
 
 class FilterSearchBottomSheet extends StatelessWidget {
   final ScrollController scrollController;
-  final FilterViewModel filterViewModel;
+  final FilterSearchBottomSheetViewModel filterViewModel;
   final void Function(FilterSearchState filterSearchState) onFilterSelected;
 
   const FilterSearchBottomSheet({
@@ -117,7 +117,7 @@ Widget _buildSectionTitle(String title) {
 }
 
 Widget _buildTimeFilterChips(
-  FilterViewModel filterViewModel,
+  FilterSearchBottomSheetViewModel filterViewModel,
 ) {
   return Wrap(
     spacing: 10.0, // 가로 간격
@@ -135,7 +135,7 @@ Widget _buildTimeFilterChips(
 }
 
 Widget _buildRateFilterChips(
-    FilterViewModel filterViewModel,
+    FilterSearchBottomSheetViewModel filterViewModel,
     ) {
   return Wrap(
     spacing: 12.0, // 가로 간격
@@ -155,7 +155,7 @@ Widget _buildRateFilterChips(
 }
 
 Widget _buildCategoryFilterChips(
-    FilterViewModel filterViewModel,
+    FilterSearchBottomSheetViewModel filterViewModel,
     ) {
   return Wrap(
     spacing: 10.0, // 가로 간격
