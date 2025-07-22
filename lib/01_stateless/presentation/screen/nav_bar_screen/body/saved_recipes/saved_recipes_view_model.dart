@@ -1,9 +1,8 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-
-import '../../../data/model/recipe.dart';
-import '../../../data/repository/saved_recipes_repository.dart';
+import 'package:flutter_recipe_app/01_stateless/data/model/recipe.dart';
+import 'package:flutter_recipe_app/01_stateless/data/repository/saved_recipes_repository.dart';
 
 class SavedRecipesViewModel with ChangeNotifier {
   SavedRecipesRepository _repo;

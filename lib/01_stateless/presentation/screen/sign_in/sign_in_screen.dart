@@ -6,12 +6,17 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../ui/app_colors.dart';
 import '../../../ui/text_styles.dart';
 
+/*
 void main() {
   runApp(MaterialApp(home: SignInScreen()));
 }
-
+*/
 class SignInScreen extends StatelessWidget {
-  const SignInScreen({super.key});
+
+  final void Function() signInButtonOnTap;
+  final void Function() signUpButtonOnTap;
+
+  const SignInScreen({super.key, required this.signUpButtonOnTap, required this.signInButtonOnTap});
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +86,7 @@ class SignInScreen extends StatelessWidget {
           const SizedBox(height: 25),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 30),
-            child: BigButton(text: 'Sign In', onClick: () {}),
+            child: BigButton(text: 'Sign In', onClick: signInButtonOnTap),
           ),
           const SizedBox(height: 20),
           Row(
@@ -118,7 +123,7 @@ class SignInScreen extends StatelessWidget {
             children: [
               const Spacer(),
               GestureDetector(
-                onTap: () {},
+                onTap: signUpButtonOnTap,
                 child: Row(
                   children: [
                     Text(

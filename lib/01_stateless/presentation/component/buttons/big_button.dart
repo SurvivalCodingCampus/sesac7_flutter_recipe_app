@@ -12,40 +12,43 @@ class BigButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 60,
-      decoration: BoxDecoration(
-        color: AppColors.primary100,
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Center(
-        child: Row(
-          children: [
-            const Spacer(),
-            SizedBox(
-              width: 114,
-              height: 24,
-              child: Center(
-                child: Text(
-                  text,
-                  style: GoogleFonts.poppins(
-                    textStyle: TextStyles.normalTextBold,
-                    color: Colors.white
+    return GestureDetector(
+      onTap: onClick,
+      child: Container(
+        width: double.infinity,
+        height: 60,
+        decoration: BoxDecoration(
+          color: AppColors.primary100,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Center(
+          child: Row(
+            children: [
+              const Spacer(),
+              SizedBox(
+                width: 114,
+                height: 24,
+                child: Center(
+                  child: Text(
+                    text,
+                    style: GoogleFonts.poppins(
+                      textStyle: TextStyles.normalTextBold,
+                      color: Colors.white
+                    )
                   )
-                )
+                ),
               ),
-            ),
-            const SizedBox(
-              width: 11,
-            ),
-            const Icon(
-              Icons.arrow_forward,
-              size: 20,
-              color: Colors.white
-            ),
-            const Spacer(),
-          ],
+              const SizedBox(
+                width: 11,
+              ),
+              const Icon(
+                Icons.arrow_forward,
+                size: 20,
+                color: Colors.white
+              ),
+              const Spacer(),
+            ],
+          ),
         ),
       ),
     );

@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../ui/text_styles.dart';
 
-
+/*
 void main() {
   runApp(
     MaterialApp(
@@ -12,8 +12,12 @@ void main() {
     )
   );
 }
+ */
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+
+  final void Function() splashScreenButtonOnTap;
+
+  const SplashScreen({super.key, required this.splashScreenButtonOnTap});
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +73,10 @@ class SplashScreen extends StatelessWidget {
             left: 0,
             right: 0,
             child: Center(
-              child: MediumButton(text: 'Start Cooking', onClick: () {
-                print('hi');
-              }),
+              child: MediumButton(
+                text: 'Start Cooking',
+                onClick: splashScreenButtonOnTap,
+              ),
             )
           )
         ],

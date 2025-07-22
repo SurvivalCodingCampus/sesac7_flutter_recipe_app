@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/component/recipe_card.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/screen/saved_recipes/saved_recipes_view_model.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/saved_recipes/saved_recipes_view_model.dart';
+import 'package:flutter_recipe_app/01_stateless/ui/text_styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../ui/text_styles.dart';
-
-class SavedRecipesScreen extends StatelessWidget {
+class SavedRecipesBody extends StatelessWidget {
   final SavedRecipesViewModel viewModel;
 
-  const SavedRecipesScreen({
+  const SavedRecipesBody({
     super.key,
     required this.viewModel,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
+    return Column(
         children: [
           Container(
             width: double.infinity,
@@ -48,7 +46,6 @@ class SavedRecipesScreen extends StatelessWidget {
           )
 
         ],
-      ),
     );
   }
 }
