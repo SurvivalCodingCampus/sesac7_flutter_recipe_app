@@ -38,16 +38,14 @@ void main() {
 
       // Assert
       expect(result, isA<Result<List<Recipe>, NetworkError>>());
-      result.when(
-        success: (List<Recipe> data) {
-          expect(data.length, 2);
-          expect(data[0].name, 'Test Recipe 1');
-          expect(data[1].name, 'Test Recipe 2');
-        },
-        error: (NetworkError error) {
-          fail('Expected success but got error: $error');
-        },
-      );
+      switch (result) {
+        case Success<List<Recipe>, NetworkError>():
+          expect(result.data.length, 2);
+          expect(result.data[0].name, 'Test Recipe 1');
+          expect(result.data[1].name, 'Test Recipe 2');
+        case Error<List<Recipe>, NetworkError>():
+          fail('Expected success but got error: ${result.error}');
+      }
       verify(mockDataSource.fetchAllRecipes()).called(1);
     });
 
@@ -62,10 +60,13 @@ void main() {
 
       // Assert
       expect(result, isA<Result<List<Recipe>, NetworkError>>());
-      expect(
-        result.when(success: (_) => null, error: (e) => e),
-        NetworkError.requestTimeout,
-      );
+      switch (result) {
+        case Success<List<Recipe>, NetworkError>():
+          fail('Expected Error but got Success: ${result.data}');
+        case Error<List<Recipe>, NetworkError>():
+          expect(result.error, NetworkError.requestTimeout);
+      }
+
       verify(mockDataSource.fetchAllRecipes()).called(1);
     });
 
@@ -80,10 +81,12 @@ void main() {
 
       // Assert
       expect(result, isA<Result<List<Recipe>, NetworkError>>());
-      expect(
-        result.when(success: (_) => null, error: (e) => e),
-        NetworkError.parseError,
-      );
+      switch (result) {
+        case Success<List<Recipe>, NetworkError>():
+          fail('Expected Error but got Success: ${result.data}');
+        case Error<List<Recipe>, NetworkError>():
+          expect(result.error, NetworkError.parseError);
+      }
       verify(mockDataSource.fetchAllRecipes()).called(1);
     });
 
@@ -98,10 +101,12 @@ void main() {
 
       // Assert
       expect(result, isA<Result<List<Recipe>, NetworkError>>());
-      expect(
-        result.when(success: (_) => null, error: (e) => e),
-        NetworkError.unknown,
-      );
+      switch (result) {
+        case Success<List<Recipe>, NetworkError>():
+          fail('Expected Error but got Success: ${result.data}');
+        case Error<List<Recipe>, NetworkError>():
+          expect(result.error, NetworkError.unknown);
+      }
       verify(mockDataSource.fetchAllRecipes()).called(1);
     });
 
@@ -121,10 +126,12 @@ void main() {
 
       // Assert
       expect(result, isA<Result<List<Recipe>, NetworkError>>());
-      expect(
-        result.when(success: (_) => null, error: (e) => e),
-        NetworkError.notFound,
-      );
+      switch (result) {
+        case Success<List<Recipe>, NetworkError>():
+          fail('Expected Error but got Success: ${result.data}');
+        case Error<List<Recipe>, NetworkError>():
+          expect(result.error, NetworkError.notFound);
+      }
       verify(mockDataSource.fetchAllRecipes()).called(1);
     });
 
@@ -144,14 +151,12 @@ void main() {
 
       // Assert
       expect(result, isA<Result<List<Recipe>, NetworkError>>());
-      result.when(
-        success: (List<Recipe> data) {
-          expect(data, isEmpty);
-        },
-        error: (NetworkError error) {
-          fail('Expected success but got error: $error');
-        },
-      );
+      switch (result) {
+        case Success<List<Recipe>, NetworkError>():
+          expect(result.data, isEmpty);
+        case Error<List<Recipe>, NetworkError>():
+          fail('Expected success but got error: ${result.error}');
+      }
       verify(mockDataSource.fetchAllRecipes()).called(1);
     });
 
@@ -176,13 +181,14 @@ void main() {
 
         // Assert
         expect(result, isA<Result<List<Recipe>, NetworkError>>());
-        final successData = result.when(
-          success: (data) => data,
-          error: (_) => null,
-        );
-        expect(successData, isNotNull);
-        expect(successData?.length, 1);
-        expect(successData?.first.name, 'Valid Recipe');
+        switch (result) {
+          case Success<List<Recipe>, NetworkError>():
+            expect(result.data, isNotNull);
+            expect(result.data.length, 1);
+            expect(result.data.first.name, 'Valid Recipe');
+          case Error<List<Recipe>, NetworkError>():
+            fail('Expected success but got error: ${result.error}');
+        }
         verify(mockDataSource.fetchAllRecipes()).called(1);
       },
     );
