@@ -4,12 +4,10 @@ import 'package:flutter_recipe_app/05_navigation/presentation/component/app_bar_
 import 'package:go_router/go_router.dart';
 
 class CustomBottomAppBar extends StatelessWidget {
-  final BuildContext context; // context.go 사용하기 위해
   final StatefulNavigationShell navigationShell; // index 따오기 위해
 
   const CustomBottomAppBar({
     super.key,
-    required this.context,
     required this.navigationShell,
   });
 
@@ -26,7 +24,6 @@ class CustomBottomAppBar extends StatelessWidget {
           children: [
             // Home
             AppBarNavItem(
-              context: context,
               navigationShell: navigationShell,
               index: 0,
               icon: Icons.home,
@@ -34,7 +31,6 @@ class CustomBottomAppBar extends StatelessWidget {
             ),
             // Bookmark
             AppBarNavItem(
-              context: context,
               navigationShell: navigationShell,
               index: 1,
               icon: Icons.bookmark_rounded,
@@ -43,7 +39,6 @@ class CustomBottomAppBar extends StatelessWidget {
             const SizedBox(width: 48),
             // Notification
             AppBarNavItem(
-              context: context,
               navigationShell: navigationShell,
               index: 2,
               icon: Icons.notifications,
@@ -51,7 +46,6 @@ class CustomBottomAppBar extends StatelessWidget {
             ),
             // MyPage
             AppBarNavItem(
-              context: context,
               navigationShell: navigationShell,
               index: 3,
               icon: Icons.person,

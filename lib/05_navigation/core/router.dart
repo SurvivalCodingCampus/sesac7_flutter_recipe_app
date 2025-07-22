@@ -59,7 +59,6 @@ final router = GoRouter(
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return CustomBottomAppBar(
-          context: context,
           navigationShell: navigationShell,
         );
       },
