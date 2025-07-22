@@ -1,11 +1,10 @@
+// Dto 는 fromJson, toJson 만 있으면 됨
+// JSON을 받아서 Dart 객체로 바꾸고 서버에 다시 보낼 때는 Dart 객체를 JSON으로
+
 class RecipeDto {
   List<Recipes>? recipes;
 
   RecipeDto({this.recipes});
-
-  RecipeDto copyWith({List<Recipes>? recipes}) {
-    return RecipeDto(recipes: recipes ?? this.recipes);
-  }
 
   Map<String, dynamic> toJson() {
     return {'recipes': recipes};
@@ -14,23 +13,10 @@ class RecipeDto {
   factory RecipeDto.fromJson(Map<String, dynamic> json) {
     return RecipeDto(
       recipes: (json['recipes'] as List<dynamic>?)
-          ?.map((e) => Recipes.fromJson(e as Map<String, dynamic>))
-          .toList(),
+        ?.map((e) => Recipes.fromJson(e as Map<String, dynamic>))
+        .toList(),
     );
   }
-
-  @override
-  String toString() => "RecipeDto(recipes: $recipes)";
-
-  @override
-  int get hashCode => recipes.hashCode;
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is RecipeDto &&
-          runtimeType == other.runtimeType &&
-          recipes == other.recipes;
 }
 
 class Recipes {
@@ -103,28 +89,6 @@ class Recipes {
           .toList(),
     );
   }
-
-  @override
-  String toString() =>
-      "Recipes(category: $category,id: $id,name: $name,image: $image,chef: $chef,time: $time,rating: $rating,ingredients: $ingredients)";
-
-  @override
-  int get hashCode =>
-      Object.hash(category, id, name, image, chef, time, rating, ingredients);
-
-  @override
-  bool operator ==(Object other) =>
-    identical(this, other) ||
-    other is Recipes &&
-      runtimeType == other.runtimeType &&
-      category == other.category &&
-      id == other.id &&
-      name == other.name &&
-      image == other.image &&
-      chef == other.chef &&
-      time == other.time &&
-      rating == other.rating &&
-      ingredients == other.ingredients;
 }
 
 class Ingredients {
@@ -132,13 +96,6 @@ class Ingredients {
   int? amount;
 
   Ingredients({this.ingredient, this.amount});
-
-  Ingredients copyWith({Ingredient? ingredient, int? amount}) {
-    return Ingredients(
-      ingredient: ingredient ?? this.ingredient,
-      amount: amount ?? this.amount,
-    );
-  }
 
   Map<String, dynamic> toJson() {
     return {'ingredient': ingredient, 'amount': amount};
@@ -152,20 +109,6 @@ class Ingredients {
       amount: json['amount'] as int?,
     );
   }
-
-  @override
-  String toString() => "Ingredients(ingredient: $ingredient,amount: $amount)";
-
-  @override
-  int get hashCode => Object.hash(ingredient, amount);
-
-  @override
-  bool operator ==(Object other) =>
-    identical(this, other) ||
-    other is Ingredients &&
-      runtimeType == other.runtimeType &&
-      ingredient == other.ingredient &&
-      amount == other.amount;
 }
 
 class Ingredient {
@@ -174,14 +117,6 @@ class Ingredient {
   String? image;
 
   Ingredient({this.id, this.name, this.image});
-
-  Ingredient copyWith({int? id, String? name, String? image}) {
-    return Ingredient(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      image: image ?? this.image,
-    );
-  }
 
   Map<String, dynamic> toJson() {
     return {'id': id, 'name': name, 'image': image};
@@ -194,19 +129,4 @@ class Ingredient {
       image: json['image'] as String?,
     );
   }
-
-  @override
-  String toString() => "Ingredient(id: $id,name: $name,image: $image)";
-
-  @override
-  int get hashCode => Object.hash(id, name, image);
-
-  @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Ingredient &&
-          runtimeType == other.runtimeType &&
-          id == other.id &&
-          name == other.name &&
-          image == other.image;
 }

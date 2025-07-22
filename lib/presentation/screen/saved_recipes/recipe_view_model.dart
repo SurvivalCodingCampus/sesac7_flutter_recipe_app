@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/core/result.dart';
 import 'package:flutter_recipe_app/data/repository/recipes_repository.dart';
 import 'package:flutter_recipe_app/data/model/recipe.dart';
 
@@ -22,7 +23,15 @@ class RecipeCardViewModel with ChangeNotifier {
     try {
       await Future.delayed(const Duration(seconds: 2));
       final fetchedRecipes = await _repository.fetchRecipes();
-      _recipes = fetchedRecipes;
+      // _recipes = fetchedRecipes;
+      fetchedRecipes.when(
+        success: (data) {
+          _recipes = data;
+        },
+        failure: (error) {
+          print('Error fetching recipes: $error');
+        },
+      );
     } catch (e) {
       print('Error fetching recipes: $e');
     }
