@@ -61,3 +61,22 @@ val unSelectedFilterTitle = TextStyle(
 )
 /* FilterButton END */
 
+/* RatingButton START */
+val selectedRatingTitle = TextStyle(
+    fontFamily = poppins,
+    fontWeight = FontWeight.Normal,
+    fontSize = 11.sp,
+    fontStyle = FontStyle.Normal,
+    color = White,
+    lineHeight = 17.sp
+)
+
+val unSelectedRatingTitle = TextStyle(
+    fontFamily = poppins,
+    fontWeight = FontWeight.Normal,
+    fontSize = 11.sp,
+    fontStyle = FontStyle.Normal,
+    color = Primary80,
+    lineHeight = 17.sp
+)
+/* RatingButton END */
