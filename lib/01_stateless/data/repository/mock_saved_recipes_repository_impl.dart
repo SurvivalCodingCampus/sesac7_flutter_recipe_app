@@ -27,7 +27,7 @@ class MockSavedRecipesRepositoryImpl implements SavedRecipesRepository {
           rating: 4.0
       ),
       Recipe(
-          name: "Lamb chops with fruity couscous and mint",
+          name: "Lamb chops with fruity couscous and mint but now with extra long title so that the string cannot possibly fit into the textbox but lets see how the box handles this super long text",
           author: "Spicy Nelly",
           image:  "https://placehold.co/600x400.jpg",
           duration: 20,

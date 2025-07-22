@@ -65,10 +65,67 @@ class RecipeCard extends StatelessWidget {
             ),
           ),
           Positioned(
+            top: 10,
+            right: 10,
+            child: Container(
+              width: 37,
+              height: 16,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: AppColors.secondary20,
+              ),
+              child: Center(
+                child: Row(
+                  children: [
+                    const Spacer(),
+                    Icon(Icons.star, color: AppColors.rating, size: 7),
+                    const SizedBox(width: 3),
+                    Text(
+                      recipe.rating.toStringAsFixed(1),
+                      style: GoogleFonts.poppins(
+                        textStyle: TextStyles.smallerTextSmallLabel,
+                        color: Colors.black,
+                      ),
+                    ),
+                    const Spacer(),
+
+                  ],
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            left: 10,
             bottom: 10,
             right: 10,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        recipe.name,
+                        style: GoogleFonts.poppins(
+                          textStyle: TextStyles.smallerTextBold,
+                          color: Colors.white,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 2,
+                      ),
+                      Text(
+                        'By ${recipe.author}',
+                        style: GoogleFonts.poppins(
+                          textStyle: TextStyles.smallerTextSmallLabel,
+                          color: AppColors.gray4,
+                        )
+                      ),
+                    ],
+                  ),
+                ),
                 Container(
                   width: 60,
                   height: 24,
@@ -114,60 +171,6 @@ class RecipeCard extends StatelessWidget {
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            top: 10,
-            right: 10,
-            child: Container(
-              width: 37,
-              height: 16,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: AppColors.secondary20,
-              ),
-              child: Center(
-                child: Row(
-                  children: [
-                    const Spacer(),
-                    Icon(Icons.star, color: AppColors.rating, size: 7),
-                    const SizedBox(width: 3),
-                    Text(
-                      recipe.rating.toStringAsFixed(1),
-                      style: GoogleFonts.poppins(
-                        textStyle: TextStyles.smallerTextSmallLabel,
-                        color: Colors.black,
-                      ),
-                    ),
-                    const Spacer(),
-
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            left: 10,
-            bottom: 10,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  recipe.name,
-                  style: GoogleFonts.poppins(
-                    textStyle: TextStyles.smallerTextBold,
-                    color: Colors.white,
-                  )
-                ),
-                Text(
-                  'By ${recipe.author}',
-                  style: GoogleFonts.poppins(
-                    textStyle: TextStyles.smallerTextSmallLabel,
-                    color: AppColors.gray4,
-                  )
                 ),
               ],
             ),
