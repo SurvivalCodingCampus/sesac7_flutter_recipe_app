@@ -146,46 +146,44 @@ class SearchRecipeScreen extends StatelessWidget {
 // 필터 화면을 바텀 시트로 띄우는 함수
 Future<FilterSearchState> _showFilterBottomSheet(BuildContext context, FilterViewModel filterViewModel) async {
   return await showModalBottomSheet(
+    useRootNavigator: true,
     context: context,
     isScrollControlled: true, // 바텀 시트가 화면 전체 높이까지 확장될 수 있도록 설정
     backgroundColor: Colors.transparent, // 배경을 투명하게 하여 모서리 둥글게 처리가 잘 보이도록 함
     builder: (BuildContext context) {
-      return PopScope(
-        canPop: false,
-        child: DraggableScrollableSheet(
-          initialChildSize: 0.7,
-          // 초기 바텀 시트 높이 (화면 높이의 70%)
-          minChildSize: 0.5,
-          // 최소 높이
-          maxChildSize: 0.9,
-          // 최대 높이
-          expand: false,
-          // 화면 전체로 확장될지 여부 (여기서는 false로 DraggableScrollableSheet 사용)
-          builder: (BuildContext context, ScrollController scrollController) {
-            return Container(
-              decoration: const BoxDecoration(
-                color: Colors.white, // 바텀 시트의 실제 배경색
-                borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(25.0),
-                ), // 상단 모서리 둥글게
+      return DraggableScrollableSheet(
+        initialChildSize: 0.7,
+        // 초기 바텀 시트 높이 (화면 높이의 70%)
+        minChildSize: 0.5,
+        // 최소 높이
+        maxChildSize: 0.9,
+        // 최대 높이
+        expand: false,
+        // 화면 전체로 확장될지 여부 (여기서는 false로 DraggableScrollableSheet 사용)
+        builder: (BuildContext context, ScrollController scrollController) {
+          return Container(
+            decoration: const BoxDecoration(
+              color: Colors.white, // 바텀 시트의 실제 배경색
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(25.0),
+              ), // 상단 모서리 둥글게
+            ),
+            child: ClipRRect(
+              // 둥근 모서리 내부 콘텐츠도 잘리도록 ClipRRect 사용
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(25.0),
               ),
-              child: ClipRRect(
-                // 둥근 모서리 내부 콘텐츠도 잘리도록 ClipRRect 사용
-                borderRadius: const BorderRadius.vertical(
-                  top: Radius.circular(25.0),
-                ),
-                child: FilterSearchBottomSheet(
-                  scrollController: scrollController,
-                  filterViewModel: filterViewModel,
-                  onFilterSelected: (FilterSearchState filterSearchState) {
-                    // 필터 선택 시 호출되는 콜백
-                    Navigator.pop(context, filterSearchState);
-                  },
-                ), // 필터 화면 전달
-              ),
-            );
-          },
-        ),
+              child: FilterSearchBottomSheet(
+                scrollController: scrollController,
+                filterViewModel: filterViewModel,
+                onFilterSelected: (FilterSearchState filterSearchState) {
+                  // 필터 선택 시 호출되는 콜백
+                  Navigator.pop(context, filterSearchState);
+                },
+              ), // 필터 화면 전달
+            ),
+          );
+        },
       );
     },
   );
