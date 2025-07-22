@@ -4,17 +4,17 @@ import 'package:flutter_recipe_app/presentation/component/button/search_recipe_f
 import 'package:flutter_recipe_app/presentation/component/card/search_recipe_card.dart';
 import 'package:flutter_recipe_app/presentation/component/text_field/search_input_field.dart';
 import 'package:flutter_recipe_app/presentation/component/title_bar/screen_title_bar.dart';
-import 'package:flutter_recipe_app/presentation/search_recipe/search_recipe_view_model.dart';
+import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_view_model.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
-class SearchRecipeScreen extends StatelessWidget {
-  final SearchRecipeViewModel _searchRecipeViewModel;
+class SearchRecipesScreen extends StatelessWidget {
+  final SearchRecipesViewModel _searchRecipesViewModel;
 
-  const SearchRecipeScreen({
+  const SearchRecipesScreen({
     super.key,
-    required SearchRecipeViewModel searchRecipeViewModel,
-  }) : _searchRecipeViewModel = searchRecipeViewModel;
+    required SearchRecipesViewModel searchRecipeViewModel,
+  }) : _searchRecipesViewModel = searchRecipeViewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -42,11 +42,11 @@ class SearchRecipeScreen extends StatelessWidget {
                   hint: 'Search recipe',
                   onSearchKeywordChange: (searchKeyword) {
                     if (searchKeyword.isEmpty) {
-                      _searchRecipeViewModel
+                      _searchRecipesViewModel
                           .clearSearchResultRecipesAndSearchKeyword();
-                      _searchRecipeViewModel.fetchRecentRecipes();
+                      _searchRecipesViewModel.fetchRecentRecipes();
                     } else {
-                      _searchRecipeViewModel.fetchSearchResultRecipes(
+                      _searchRecipesViewModel.fetchSearchResultRecipes(
                         keyword: searchKeyword,
                       );
                     }
@@ -70,7 +70,7 @@ class SearchRecipeScreen extends StatelessWidget {
                       builder: (context) {
                         return SearchRecipeFilterBottomSheet(
                           onValueChange: (timeType, ratingType, categoryType) {
-                            _searchRecipeViewModel
+                            _searchRecipesViewModel
                                 .fetchSearchResultRecipes(
                                   keyword: null,
                                   timeType: timeType,
@@ -91,11 +91,11 @@ class SearchRecipeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    _searchRecipeViewModel
+                    _searchRecipesViewModel
                             .searchRecipesState
                             .searchKeyword
                             .isEmpty
-                        ? _searchRecipeViewModel
+                        ? _searchRecipesViewModel
                                   .searchRecipesState
                                   .isCategorySearch
                               ? 'Search Result'
@@ -105,12 +105,12 @@ class SearchRecipeScreen extends StatelessWidget {
                   ),
                   Spacer(),
                   Text(
-                    _searchRecipeViewModel
+                    _searchRecipesViewModel
                             .searchRecipesState
                             .searchKeyword
                             .isEmpty
                         ? ''
-                        : '${_searchRecipeViewModel.searchRecipesState.searchResultRecipes.length} result',
+                        : '${_searchRecipesViewModel.searchRecipesState.searchResultRecipes.length} result',
                     style: TextStyles.searchScreenSearchResult,
                   ),
                 ],
@@ -126,36 +126,36 @@ class SearchRecipeScreen extends StatelessWidget {
                   childAspectRatio: 1,
                 ),
                 itemCount:
-                    _searchRecipeViewModel
+                    _searchRecipesViewModel
                         .searchRecipesState
                         .searchKeyword
                         .isEmpty
-                    ? _searchRecipeViewModel
+                    ? _searchRecipesViewModel
                               .searchRecipesState
                               .isCategorySearch
-                          ? _searchRecipeViewModel
+                          ? _searchRecipesViewModel
                                 .searchRecipesState
                                 .searchResultRecipes
                                 .length
-                          : _searchRecipeViewModel
+                          : _searchRecipesViewModel
                                 .searchRecipesState
                                 .recentRecipes
                                 .length
-                    : _searchRecipeViewModel
+                    : _searchRecipesViewModel
                           .searchRecipesState
                           .searchResultRecipes
                           .length,
                 itemBuilder: (context, index) {
-                  final searchKeyword = _searchRecipeViewModel
+                  final searchKeyword = _searchRecipesViewModel
                       .searchRecipesState
                       .searchKeyword;
-                  final isCategorySearch = _searchRecipeViewModel
+                  final isCategorySearch = _searchRecipesViewModel
                       .searchRecipesState
                       .isCategorySearch;
-                  final recentList = _searchRecipeViewModel
+                  final recentList = _searchRecipesViewModel
                       .searchRecipesState
                       .recentRecipes;
-                  final searchResultList = _searchRecipeViewModel
+                  final searchResultList = _searchRecipesViewModel
                       .searchRecipesState
                       .searchResultRecipes;
                   return SearchRecipeCard(

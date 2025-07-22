@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/core/routing/router.dart';
 import 'package:flutter_recipe_app/data/data_source/recipe_data_source/recipe_data_source_impl.dart';
 import 'package:flutter_recipe_app/data/repository/recipe_repository/recipe_repository_impl.dart';
 import 'package:flutter_recipe_app/presentation/main/main_screen.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_screen.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_view_model.dart';
-import 'package:flutter_recipe_app/presentation/search_recipe/search_recipe_screen.dart';
-import 'package:flutter_recipe_app/presentation/search_recipe/search_recipe_view_model.dart';
+import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_screen.dart';
+import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_view_model.dart';
 import 'package:flutter_recipe_app/presentation/splash/splash_screen.dart';
+import 'package:flutter_recipe_app/ui/app_colors.dart';
 
 void main() async {
-  // runApp(const MyApp());
+  runApp(const MyApp());
   // fixme SavedRecipeScreen 용
   // final SavedRecipeViewModel savedRecipeViewModel = SavedRecipeViewModel(
   //   RecipeRepositoryImpl(RecipeDataSourceImpl()),
@@ -22,16 +24,16 @@ void main() async {
   //   ),
   // );
   // fixme SearchRecipeScreen 용
-  final SearchRecipeViewModel searchRecipeViewModel = SearchRecipeViewModel(
-    recipeRepository: RecipeRepositoryImpl(RecipeDataSourceImpl()),
-  );
-  await searchRecipeViewModel.fetchRecentRecipes();
-
-  runApp(
-    SearchRecipeApp(
-      searchRecipeViewModel: searchRecipeViewModel,
-    ),
-  );
+  // final SearchRecipeViewModel searchRecipeViewModel = SearchRecipeViewModel(
+  //   recipeRepository: RecipeRepositoryImpl(RecipeDataSourceImpl()),
+  // );
+  // await searchRecipeViewModel.fetchRecentRecipes();
+  //
+  // runApp(
+  //   SearchRecipeApp(
+  //     searchRecipeViewModel: searchRecipeViewModel,
+  //   ),
+  // );
 }
 
 class MyApp extends StatelessWidget {
@@ -39,12 +41,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: AppColors.white, surface: AppColors.white),
       ),
-      home: const MainScreen(),
+      routerConfig: router,
     );
   }
 }
@@ -78,11 +80,11 @@ class SavedRecipeApp extends StatelessWidget {
 }
 
 class SearchRecipeApp extends StatelessWidget {
-  final SearchRecipeViewModel _searchRecipeViewModel;
+  final SearchRecipesViewModel _searchRecipeViewModel;
 
   const SearchRecipeApp({
     super.key,
-    required SearchRecipeViewModel searchRecipeViewModel,
+    required SearchRecipesViewModel searchRecipeViewModel,
   }) : _searchRecipeViewModel = searchRecipeViewModel;
 
   @override
@@ -99,7 +101,7 @@ class SearchRecipeApp extends StatelessWidget {
               child: CircularProgressIndicator(),
             );
           }
-          return SearchRecipeScreen(searchRecipeViewModel: _searchRecipeViewModel);
+          return SearchRecipesScreen(searchRecipeViewModel: _searchRecipeViewModel);
         })
     );
   }

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/core/routing/routes.dart';
 import 'package:flutter_recipe_app/presentation/component/button/medium_button.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -36,40 +38,38 @@ class SplashScreen extends StatelessWidget {
               top: 60.0,
               left: 83.0,
               right: 83.0,
-              child: SizedBox(
-                width: 209.0,
-                height: 120.0,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 65.0),
+                    child: Image.asset(
                       'assets/splash_app_logo.png',
                       width: 79.0,
                       height: 79.0,
                     ),
-                    Spacer(),
-                    Text(
-                      '100K+ Premium Recipe',
-                      style: TextStyles.splashScreenLogoTitle,
-                    ),
-                  ],
-                ),
+                  ),
+                  SizedBox(
+                    height: 14.0,
+                  ),
+                  Text(
+                    '100K+ Premium Recipe',
+                    style: TextStyles.splashScreenLogoTitle,
+                  ),
+                ],
               ),
             ),
             Positioned(
-              bottom: 50.0,
+              bottom: 84.0,
               left: 50.0,
               right: 50.0,
               child: SizedBox(
-                width: 275.0,
-                height: 393.0,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(
-                      width: 213.0,
-                      height: 120.0,
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 30.0),
                       child: Text(
                         'Get Cooking',
                         style: TextStyles.splashScreenLogoSubtitle,
@@ -80,20 +80,19 @@ class SplashScreen extends StatelessWidget {
                     SizedBox(
                       height: 20.0,
                     ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Text(
-                        'Simple way to find Tasty Recipe',
-                        style: TextStyles.splashScreenLogoTitle,
-                        maxLines: 1,
-                      ),
+                    Text(
+                      'Simple way to find Tasty Recipe',
+                      style: TextStyles.splashScreenLogoTitle,
+                      maxLines: 1,
                     ),
                     SizedBox(
                       height: 64.0,
                     ),
                     MediumButton(
                       title: 'Start Cooking',
-                      onClick: () {},
+                      onClick: () {
+                        context.go(Routes.signIn);
+                      },
                     ),
                   ],
                 ),

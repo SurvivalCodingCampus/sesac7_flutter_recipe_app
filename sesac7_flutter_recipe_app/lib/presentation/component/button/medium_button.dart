@@ -18,6 +18,7 @@ class MediumButton extends StatefulWidget {
 
 class _MediumButtonState extends State<MediumButton> {
   bool _isTapDown = false;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -44,31 +45,24 @@ class _MediumButtonState extends State<MediumButton> {
           color: _isTapDown ? AppColors.gray4 : AppColors.primary100,
           borderRadius: BorderRadius.circular(10.0),
         ),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 114.0,
-                height: 24.0,
-                child: Center(
-                  child: Text(
-                    widget.title,
-                    style: TextStyles.mediumButtonTitle,
-                    maxLines: 1,
-                  ),
-                ),
-              ),
-              SizedBox(
-                width: 9.0,
-              ),
-              SizedBox(
-                width: 20.0,
-                height: 20.0,
-                child: Center(child: Icon(Icons.arrow_forward)),
-              ),
-            ],
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              widget.title,
+              style: TextStyles.mediumButtonTitle,
+              maxLines: 1,
+            ),
+            SizedBox(
+              width: 9.0,
+            ),
+            Icon(
+              Icons.arrow_forward,
+              color: AppColors.white,
+              size: 20.0,
+            ),
+          ],
         ),
       ),
     );

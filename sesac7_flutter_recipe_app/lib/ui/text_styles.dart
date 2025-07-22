@@ -221,6 +221,103 @@ abstract class TextStyles {
 
   /* SearchRecipeFilterBottomSheet End */
 
+  /* SignInScreen Start */
+  static final TextStyle signInScreenTitle = TextStyle(
+    color: AppColors.black,
+    fontSize: 30.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 45 / 30,
+  );
+
+  static final TextStyle signInScreenSubTitle = TextStyle(
+    color: AppColors.black,
+    fontSize: 20.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 30 / 20,
+  );
+
+  static final TextStyle signInScreenForgotPassword = TextStyle(
+    color: AppColors.secondary100,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle signInScreenOrSignInWith = TextStyle(
+    color: AppColors.gray4,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w500,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle signInScreenSignUpFirst = TextStyle(
+    color: AppColors.black,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w500,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle signInScreenSignUpSecond = TextStyle(
+    color: AppColors.secondary100,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w500,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+  /* SignInScreen End */
+
+  /* SignUpScreen Start */
+  static final TextStyle signUpScreenTitle = TextStyle(
+    color: AppColors.black,
+    fontSize: 20.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 30 / 20,
+  );
+
+  static final TextStyle signUpScreenSubTitle = TextStyle(
+    color: AppColors.labelColor,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+  /* SignUpScreen End */
+
+  /* HomeScreen Start */
+  static final TextStyle homeScreenTitle = TextStyle(
+    color: AppColors.black,
+    fontSize: 20,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 30 / 20,
+  );
+
+  static final TextStyle homeScreenSubTitle = TextStyle(
+    color: AppColors.gray3,
+    fontSize: 11,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  /* HomeScreen End */
+
   /* SavedRecipeScreen Start */
   static final TextStyle savedRecipeScreenTitle = TextStyle(
     color: AppColors.labelColor,

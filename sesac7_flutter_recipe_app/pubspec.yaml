@@ -37,6 +37,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   freezed_annotation: ^3.1.0
+  go_router: ^16.0.0
 
 dev_dependencies:
   integration_test:
@@ -119,6 +120,9 @@ flutter:
   assets:
     - assets/splash_screen_background.jpg
     - assets/splash_app_logo.png
+    - assets/facebook.png
+    - assets/icons8-google-240.png
+    - assets/profile_image.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
