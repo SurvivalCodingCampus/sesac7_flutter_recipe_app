@@ -93,6 +93,7 @@ final router = GoRouter(
                   repository: recipeRepository,
                 );
                 searchRecipesViewModel.loadRecipes();
+                // 그림은 먼저 그리고 데이터는 받아온 상태에서 notifyListeners(); 로 상태를 업데이트 함
 
                 return SearchRecipeScreen(
                   viewModel: searchRecipesViewModel,

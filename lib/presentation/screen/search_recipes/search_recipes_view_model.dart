@@ -18,12 +18,17 @@ class SearchRecipesViewModel with ChangeNotifier {
   SearchRecipesViewModel({required RecipeRepository repository})
     : _repository = repository;
 
-  List<String> get allCategories {
-    final categories = _allRecipes.map((e) => e.category).toSet().toList();
-    categories.sort();
-    return ['All', ...categories];
-  }
 
+  // List<String> get allCategories {
+  //   final categories = _allRecipes.map((e) => e.category).toSet().toList();
+  //   categories.sort();
+  //   return ['All', ...categories];
+  //   state.originalRecipes.sort();
+  //   notifyListeners();
+  // }
+
+  // get 말고 fetch 해야함
+  // return 하지말고
   Future<void> loadRecipes() async {
     _isLoading = true;
     notifyListeners();
