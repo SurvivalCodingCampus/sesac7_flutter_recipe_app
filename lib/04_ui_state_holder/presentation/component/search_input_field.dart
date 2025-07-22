@@ -4,7 +4,6 @@ import 'package:flutter_recipe_app/01_stateless_widget/ui/text_styles.dart';
 
 class SearchInputField extends StatelessWidget {
   final String placeHolder;
-  final String value;
 
   // typeDef가 정의되어있어 ValueChanged<String> 타입도 가능함
   final void Function(String) onValueChange;
@@ -12,7 +11,6 @@ class SearchInputField extends StatelessWidget {
   const SearchInputField({
     super.key,
     required this.placeHolder,
-    required this.value,
     required this.onValueChange,
   });
 
