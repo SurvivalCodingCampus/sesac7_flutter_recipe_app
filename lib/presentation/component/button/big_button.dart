@@ -42,6 +42,8 @@ class _BigButtonState extends State<BigButton> {
         widget.onTap();
       },
       child: Container(
+        width: double.infinity,
+        height: 60,
         padding: EdgeInsets.symmetric(horizontal: 85, vertical: 18),
         decoration: BoxDecoration(
           color: buttonColor,

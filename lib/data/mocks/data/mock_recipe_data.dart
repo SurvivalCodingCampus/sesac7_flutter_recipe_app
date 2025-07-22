@@ -94,7 +94,7 @@ const String mockRecipeData = '''
       "image": "https://cdn.pixabay.com/photo/2019/09/07/19/02/spanish-paella-4459519_1280.jpg",
       "chef": "Spicy Nelly",
       "time": "20 min",
-      "rating": 4.0,
+      "rating": 3.3,
       "ingredients": [
         {
           "ingredient": {
@@ -193,7 +193,7 @@ const String mockRecipeData = '''
       "image": "https://cdn.pixabay.com/photo/2019/05/15/18/56/pizza-4205701_1280.jpg",
       "chef": "Mario Batali",
       "time": "15 min",
-      "rating": 4.3,
+      "rating": 2.3,
       "ingredients": [
         {
           "ingredient": {
@@ -212,7 +212,7 @@ const String mockRecipeData = '''
       "image": "https://cdn.pixabay.com/photo/2017/10/15/11/41/sushi-2853382_1280.jpg",
       "chef": "Jiro Ono",
       "time": "60 min",
-      "rating": 4.8,
+      "rating": 1.8,
       "ingredients": [
         {
           "ingredient": {

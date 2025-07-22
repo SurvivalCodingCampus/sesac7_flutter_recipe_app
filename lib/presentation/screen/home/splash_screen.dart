@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/button/medium_button.dart';
 import 'package:flutter_recipe_app/presentation/ui/app_color.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -41,7 +42,7 @@ class SplashScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 222,),
+              SizedBox(height: 222),
               Column(
                 children: [
                   Text(
@@ -67,8 +68,12 @@ class SplashScreen extends StatelessWidget {
                     'Simple way to find Tasty Recipe',
                     style: TextStyle(color: AppColor.White, fontSize: 14),
                   ),
-                  SizedBox(height: 64,),
-                  MediumButton(buttonText: 'Start Cooking', onTap: () {}),
+                  SizedBox(height: 64),
+                  MediumButton(
+                    buttonText: 'Start Cooking',
+                    onTap: () => context.go('/sign-in'),
+                    icon: Icons.arrow_forward,
+                  ),
                 ],
               ),
             ],

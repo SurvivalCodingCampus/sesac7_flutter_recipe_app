@@ -3,7 +3,7 @@ import 'package:flutter_recipe_app/core/result.dart';
 import 'package:flutter_recipe_app/data/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/data/repository/recipe/recipe_repository.dart';
 
-class RecipeViewModel with ChangeNotifier {
+class SavedRecipeViewModel with ChangeNotifier {
   final RecipeRepository _recipeRepository;
 
   List<Recipe> _recipes = [];
@@ -13,7 +13,7 @@ class RecipeViewModel with ChangeNotifier {
   bool get isLoading => _isLoading;
 
 
-  RecipeViewModel(this._recipeRepository);
+  SavedRecipeViewModel(this._recipeRepository);
 
   Future<void> fetchRecipes() async {
     _isLoading = true;

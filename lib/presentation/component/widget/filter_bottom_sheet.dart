@@ -33,6 +33,13 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
   }
 
   @override
+  void dispose() {
+    widget.viewModel.removeListener(_onViewModelChanged);
+    super.dispose();
+  }
+
+
+  @override
   Widget build(BuildContext context) {
     final state = widget.viewModel.state;
 
