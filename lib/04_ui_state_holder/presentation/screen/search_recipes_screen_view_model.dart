@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_recipe_app/02_stateful_widget/data/model/recipe.dart';
 import 'package:flutter_recipe_app/03_mvvm/data/repository/recipe_repository.dart';
 import 'package:flutter_recipe_app/04_ui_state_holder/presentation/screen/filter_search_bottom_sheet_state.dart';
 import 'package:flutter_recipe_app/04_ui_state_holder/presentation/screen/search_recipes_screen_state.dart';
@@ -12,29 +11,22 @@ class SearchRecipesScreenViewModel with ChangeNotifier {
   SearchRecipesScreenState get state => _state;
 
   SearchRecipesScreenViewModel({required RecipeRepository recipeRepository})
-    : _recipeRepository = recipeRepository {
-    fetchRecipes();
-  }
+    : _recipeRepository = recipeRepository;
 
-  void fetchRecipes() async {
+  Future<void> fetchRecipes() async {
     _state = state.copyWith(
+      recipes: await _recipeRepository.getRecipes(),
       isLoading: true,
     );
     notifyListeners();
 
     _state = state.copyWith(
-      recipes: await _recipeRepository.getRecipes(),
-      isLoading: false,
-    );
-    notifyListeners();
-
-    _state = state.copyWith(
       isLoading: false,
     );
     notifyListeners();
   }
 
-  void fetchFilteredRecipes(
+  Future<void> filterRecipes(
     FilterSearchBottomSheetState filterSearchState,
   ) async {
     _state = state.copyWith(
@@ -44,16 +36,22 @@ class SearchRecipesScreenViewModel with ChangeNotifier {
     notifyListeners();
 
     if (state.filterSearchState.selectedRatingFilter != null) {
-      final result = state.recipes
-          .where(
-            (e) =>
-                e.rating >= state.filterSearchState.selectedRatingFilter! &&
-                e.rating < state.filterSearchState.selectedRatingFilter! + 1,
-          )
-          .toList();
+      // final result = state.recipes
+      //     .where(
+      //       (e) =>
+      //           e.rating >= state.filterSearchState.selectedRatingFilter! &&
+      //           e.rating < state.filterSearchState.selectedRatingFilter! + 1,
+      //     )
+      //     .toList();
 
       _state = state.copyWith(
-        filteredRecipes: result,
+        filteredRecipes: state.recipes
+            .where(
+              (e) =>
+                  e.rating >= state.filterSearchState.selectedRatingFilter! &&
+                  e.rating < state.filterSearchState.selectedRatingFilter! + 1,
+            )
+            .toList(),
         isLoading: false,
       );
       notifyListeners();
@@ -66,32 +64,24 @@ class SearchRecipesScreenViewModel with ChangeNotifier {
     }
   }
 
-  void fetchSearchedRecipes(String query) async {
+  Future<void> search(String query) async {
+    final searchedResult = state.recipes
+        .where(
+          (e) =>
+              e.name.toLowerCase().replaceAll(' ', '').contains(query) ||
+              e.chef.toLowerCase().replaceAll(' ', '').contains(query),
+        )
+        .toList();
+
     _state = state.copyWith(
       query: query,
-      isLoading: true,
-    );
-    notifyListeners();
-
-    final List<Recipe> recipesSearchedByName = await _recipeRepository
-        .getRecipesByName(query);
-    final List<Recipe> recipesSearchedByChef = await _recipeRepository
-        .getRecipesByChef(query);
-
-    _state = state.copyWith(
-      recipesSearchedByName: recipesSearchedByName,
-      recipesSearchedByChef: recipesSearchedByChef,
-    );
-    notifyListeners();
-
-    final List<Recipe> searchedByNameAndChef = [
-      ...state.recipesSearchedByChef,
-      ...state.recipesSearchedByName,
-    ];
-
-    _state = state.copyWith(
-      searchedResult: searchedByNameAndChef.toSet().toList(),
-      isLoading: false,
+      searchedResult: searchedResult,
+      searchLabel: (state.recipes.length == searchedResult.length)
+          ? 'Recent Search'
+          : 'Search Result',
+      countingLabel: (state.recipes.length == searchedResult.length)
+          ? ''
+          : '${searchedResult.length} recipes',
     );
     notifyListeners();
   }
