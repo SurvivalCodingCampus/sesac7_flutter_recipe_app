@@ -228,7 +228,7 @@ class _FilterSearchBottomSheetState extends State<FilterSearchBottomSheet> {
                 text: 'Filter',
                 onClick: () {
                   widget.onClosing(filterSearchState);
-                  Navigator.pop(context);
+                  // Navigator.pop(context);
                 },
               ),
               Expanded(child: SizedBox()),

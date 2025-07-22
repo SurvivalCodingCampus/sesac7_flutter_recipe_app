@@ -79,6 +79,7 @@ class SearchRecipesScreen extends StatelessWidget {
                                   FilterSearchBottomSheetState
                                   filterSearchState,
                                 ) {
+                                  Navigator.pop(context);
                                   viewModel.fetchFilteredRecipes(
                                     filterSearchState,
                                   );

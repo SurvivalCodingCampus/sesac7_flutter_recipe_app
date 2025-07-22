@@ -11,8 +11,8 @@ import 'package:flutter_recipe_app/01_stateless_widget/presentation/component/ri
 import 'package:flutter_recipe_app/01_stateless_widget/presentation/component/right_selected_triple_tabs.dart';
 import 'package:flutter_recipe_app/01_stateless_widget/presentation/component/small_button.dart';
 
-class MainScreen extends StatelessWidget {
-  const MainScreen({super.key});
+class StatelessWidgetStudyScreen extends StatelessWidget {
+  const StatelessWidgetStudyScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,6 @@ class MainScreen extends StatelessWidget {
               DefaultInputField(
                 label: 'Label',
                 placeHolder: 'PlaceHolder',
-                value: 'PlaceHolder',
                 onValueChange: (String value) {
                   print(value);
                 },

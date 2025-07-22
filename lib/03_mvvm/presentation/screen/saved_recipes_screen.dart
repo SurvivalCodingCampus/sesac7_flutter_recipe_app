@@ -16,45 +16,48 @@ class SavedRecipesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(height: 54),
-            Container(
-              margin: EdgeInsets.fromLTRB(123, 0, 123, 0),
-              child: Text(
-                'Saved recipes',
-                style: TextStyles.mediumTextBold,
+        child: Container(
+          margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 54),
+              Container(
+                margin: EdgeInsets.fromLTRB(93, 0, 93, 0),
+                child: Text(
+                  'Saved recipes',
+                  style: TextStyles.mediumTextBold,
+                ),
               ),
-            ),
-            SizedBox(height: 20),
-            Expanded(
-              child: ListView.builder(
-                padding: EdgeInsets.zero,
-                itemCount: viewModel.recipes.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    margin: EdgeInsets.only(bottom: 20),
-                    child: RecipeCard(
-                      recipe: Recipe(
-                        category: viewModel.recipes[index].category,
-                        id: viewModel.recipes[index].id,
-                        name: viewModel.getRecipeName(index),
-                        image: viewModel.recipes[index].image,
-                        chef: viewModel.recipes[index].chef,
-                        cookingTime: viewModel.recipes[index].cookingTime,
-                        rating: viewModel.recipes[index].rating,
-                        ingredients: viewModel.recipes[index].ingredients,
+              SizedBox(height: 20),
+              Expanded(
+                child: ListView.builder(
+                  padding: EdgeInsets.zero,
+                  itemCount: viewModel.recipes.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      margin: EdgeInsets.only(bottom: 20),
+                      child: RecipeCard(
+                        recipe: Recipe(
+                          category: viewModel.recipes[index].category,
+                          id: viewModel.recipes[index].id,
+                          name: viewModel.getRecipeName(index),
+                          image: viewModel.recipes[index].image,
+                          chef: viewModel.recipes[index].chef,
+                          cookingTime: viewModel.recipes[index].cookingTime,
+                          rating: viewModel.recipes[index].rating,
+                          ingredients: viewModel.recipes[index].ingredients,
+                        ),
+                        onClick: () {
+                          print('북마크되었습니다.');
+                        },
                       ),
-                      onClick: () {
-                        print('북마크되었습니다.');
-                      },
-                    ),
-                  );
-                },
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
