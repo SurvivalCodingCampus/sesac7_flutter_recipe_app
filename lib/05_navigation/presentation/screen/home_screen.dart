@@ -59,7 +59,6 @@ class HomeScreen extends StatelessWidget {
                     margin: EdgeInsets.only(right: 20.0),
                     child: SearchInputField(
                       placeHolder: 'Search recipe',
-                      value: 'value',
                       onValueChange: (value) {},
                     ),
                   ),
