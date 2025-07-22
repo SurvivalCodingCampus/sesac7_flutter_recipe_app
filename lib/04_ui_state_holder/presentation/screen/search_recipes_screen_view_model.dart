@@ -16,6 +16,7 @@ class SearchRecipesScreenViewModel with ChangeNotifier {
   Future<void> fetchRecipes() async {
     _state = state.copyWith(
       recipes: await _recipeRepository.getRecipes(),
+      filteredResult: await _recipeRepository.getRecipes(),
       isLoading: true,
     );
     notifyListeners();
@@ -31,34 +32,28 @@ class SearchRecipesScreenViewModel with ChangeNotifier {
   ) async {
     _state = state.copyWith(
       filterSearchState: filterSearchState,
-      isLoading: true,
     );
     notifyListeners();
 
+    // rating 필터만 일단 적용
     if (state.filterSearchState.selectedRatingFilter != null) {
-      // final result = state.recipes
-      //     .where(
-      //       (e) =>
-      //           e.rating >= state.filterSearchState.selectedRatingFilter! &&
-      //           e.rating < state.filterSearchState.selectedRatingFilter! + 1,
-      //     )
-      //     .toList();
+      final result = state.searchedResult
+          .where(
+            (e) =>
+                e.rating >= state.filterSearchState.selectedRatingFilter! &&
+                e.rating < state.filterSearchState.selectedRatingFilter! + 1,
+          )
+          .toList();
 
       _state = state.copyWith(
-        filteredRecipes: state.recipes
-            .where(
-              (e) =>
-                  e.rating >= state.filterSearchState.selectedRatingFilter! &&
-                  e.rating < state.filterSearchState.selectedRatingFilter! + 1,
-            )
-            .toList(),
-        isLoading: false,
+        filteredResult: result,
+        countingLabel: '${result.length} recipes',
       );
       notifyListeners();
     } else {
       _state = state.copyWith(
-        filteredRecipes: [],
-        isLoading: false,
+        filteredResult: state.searchedResult,
+        countingLabel: '${state.searchedResult.length} recipes',
       );
       notifyListeners();
     }
@@ -84,5 +79,7 @@ class SearchRecipesScreenViewModel with ChangeNotifier {
           : '${searchedResult.length} recipes',
     );
     notifyListeners();
+
+    filterRecipes(state.filterSearchState);
   }
 }

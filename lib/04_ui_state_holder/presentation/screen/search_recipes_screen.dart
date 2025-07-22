@@ -125,50 +125,19 @@ class SearchRecipesScreen extends StatelessWidget {
                     childAspectRatio: 1, // 가로세로 비율
                   ),
                   padding: EdgeInsets.zero,
-                  itemCount: (state.query == '')
-                      ? (state.filteredRecipes.isNotEmpty)
-                            ? state.filteredRecipes.length
-                            : state.recipes.length
-                      : state.searchedResult.length,
+                  itemCount: state.filteredResult.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return (state.query == '')
-                        ? (state.filteredRecipes.isNotEmpty)
-                              ? Container(
-                                  margin: EdgeInsets.only(bottom: 15),
-                                  child: RecipeCardOnlyWithName(
-                                    recipe: viewModel
-                                        .state
-                                        .filteredRecipes[index]
-                                        .copyWith(
-                                          name: getFilteredRecipeName(index),
-                                        ),
-                                    onClick: () {
-                                      print('북마크되었습니다.');
-                                    },
-                                  ),
-                                )
-                              : Container(
-                                  margin: EdgeInsets.only(bottom: 15),
-                                  child: RecipeCardOnlyWithName(
-                                    recipe: state.recipes[index].copyWith(
-                                      name: getRecipeName(index),
-                                    ),
-                                    onClick: () {
-                                      print('북마크되었습니다.');
-                                    },
-                                  ),
-                                )
-                        : Container(
-                            margin: EdgeInsets.only(bottom: 15),
-                            child: RecipeCardOnlyWithName(
-                              recipe: state.searchedResult[index].copyWith(
-                                name: getSearchedRecipeName(index),
-                              ),
-                              onClick: () {
-                                print('북마크되었습니다.');
-                              },
-                            ),
-                          );
+                    return Container(
+                      margin: EdgeInsets.only(bottom: 15),
+                      child: RecipeCardOnlyWithName(
+                        recipe: state.filteredResult[index].copyWith(
+                          name: getRecipeName(index),
+                        ),
+                        onClick: () {
+                          print('북마크되었습니다.');
+                        },
+                      ),
+                    );
                   },
                 ),
               ),
