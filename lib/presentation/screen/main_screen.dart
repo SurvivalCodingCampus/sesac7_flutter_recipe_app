@@ -14,12 +14,12 @@ class MainScreen extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SmallButton(
+            BigButton(
               text: 'Button',
-              onClick: (String text) {
-                print(text);
+              onClick: (value) {
+                print(value);
               },
             ),
             SizedBox(height: 16),
@@ -30,19 +30,13 @@ class MainScreen extends StatelessWidget {
               },
             ),
             SizedBox(height: 16),
-            BigButton(
+            SmallButton(
               text: 'Button',
               onClick: (String text) {
                 print(text);
               },
             ),
             SizedBox(height: 16),
-            TestButton(
-              text: 'Button',
-              onClick: (String text) {
-                print(text);
-              },
-            ),
           ],
         ),
       ),
