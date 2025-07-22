@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/02_stateful_widget/presentation/component/rating_dialog.dart';
+import 'package:flutter_recipe_app/presentation/component/rating_dialog.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
