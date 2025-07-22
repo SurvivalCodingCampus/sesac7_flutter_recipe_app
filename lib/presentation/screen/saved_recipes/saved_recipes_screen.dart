@@ -13,6 +13,8 @@ class SavedRecipesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = viewModel.state;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -22,16 +24,16 @@ class SavedRecipesScreen extends StatelessWidget {
       ),
       body: Builder(
         builder: (context) {
-          if (viewModel.errorMessage != null) {
+          if (state.errorMessage != null) {
             return Center(
               child: Text(
-                viewModel.errorMessage!,
+                state.errorMessage!,
                 style: TextStyles.mediumTextRegular,
               ),
             );
           }
 
-          if (viewModel.savedRecipes.isEmpty) {
+          if (state.savedRecipes.isEmpty) {
             return Center(
               child: Text(
                 'No saved recipes found.',
@@ -42,10 +44,10 @@ class SavedRecipesScreen extends StatelessWidget {
 
           return ListView.separated(
             padding: const EdgeInsets.symmetric(horizontal: 30),
-            itemCount: viewModel.savedRecipes.length,
+            itemCount: state.savedRecipes.length,
             separatorBuilder: (context, index) => const SizedBox(height: 20),
             itemBuilder: (context, index) {
-              final recipe = viewModel.savedRecipes[index];
+              final recipe = state.savedRecipes[index];
 
               return RecipeCard(
                 recipe: recipe,
