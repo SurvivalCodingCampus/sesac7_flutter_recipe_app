@@ -131,7 +131,7 @@ class SearchRecipesScreen extends StatelessWidget {
                       margin: EdgeInsets.only(bottom: 15),
                       child: RecipeCardOnlyWithName(
                         recipe: state.filteredResult[index].copyWith(
-                          name: getRecipeName(index),
+                          name: getFilteredRecipeName(index),
                         ),
                         onClick: () {
                           print('북마크되었습니다.');

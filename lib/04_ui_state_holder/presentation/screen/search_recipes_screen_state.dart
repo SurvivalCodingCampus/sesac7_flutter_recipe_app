@@ -12,6 +12,7 @@ abstract class SearchRecipesScreenState with _$SearchRecipesScreenState {
     @Default([]) List<Recipe> filteredResult, // 필터가 적용된 결과물
     @Default('') String query, // 검색어
     @Default(false) bool isLoading, // 로딩 중인지를 표시
+    @Default(false) bool isInit,
     @Default('Recent Search') String searchLabel,
     @Default('') String countingLabel,
     @Default(FilterSearchBottomSheetState())
