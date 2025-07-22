@@ -14,7 +14,7 @@ class SearchRecipesScreenViewModel with ChangeNotifier {
   SearchRecipesScreenViewModel({required RecipeRepository recipeRepository})
     : _recipeRepository = recipeRepository;
 
-  Future<void> fetchRecipes() async {
+  void fetchRecipes() async {
     _state = state.copyWith(
       isLoading: true,
       isInit: true,
@@ -31,7 +31,7 @@ class SearchRecipesScreenViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> filterRecipes(
+  void filterRecipes(
     FilterSearchBottomSheetState filterSearchState,
   ) async {
     _state = state.copyWith(
@@ -78,7 +78,7 @@ class SearchRecipesScreenViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> search(String query) async {
+  void search(String query) async {
     final searchedResult = state.recipes
         .where(
           (e) =>
