@@ -17,11 +17,7 @@ extension MakeNameClean on SearchRecipesScreen {
     return _formatRecipeName(viewModel.state.recipes[index].name);
   }
 
-  String getSearchedRecipeName(int index) {
-    return _formatRecipeName(viewModel.state.searchedResult[index].name);
-  }
-
   String getFilteredRecipeName(int index) {
-    return _formatRecipeName(viewModel.state.filteredRecipes[index].name);
+    return _formatRecipeName(viewModel.state.filteredResult[index].name);
   }
 }
