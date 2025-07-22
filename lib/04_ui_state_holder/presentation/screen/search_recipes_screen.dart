@@ -54,9 +54,8 @@ class SearchRecipesScreen extends StatelessWidget {
                   Expanded(
                     child: SearchInputField(
                       placeHolder: 'Search recipe',
-                      value: 'value',
-                      onValueChange: (value) {
-                        viewModel.fetchSearchedRecipes(value);
+                      onValueChange: (value) async {
+                        viewModel.search(value);
                       },
                     ),
                   ),
@@ -80,7 +79,7 @@ class SearchRecipesScreen extends StatelessWidget {
                                   filterSearchState,
                                 ) {
                                   Navigator.pop(context);
-                                  viewModel.fetchFilteredRecipes(
+                                  viewModel.filterRecipes(
                                     filterSearchState,
                                   );
                                 },
@@ -100,22 +99,14 @@ class SearchRecipesScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    (state.query == '')
-                        ? (state.filteredRecipes.isNotEmpty)
-                              ? 'Search Result'
-                              : 'Recent Search'
-                        : 'Search Result',
+                    state.searchLabel,
                     style: TextStyles.normalTextBold.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
                   ),
                   Expanded(child: SizedBox()),
                   Text(
-                    (state.query == '')
-                        ? (state.filteredRecipes.isNotEmpty)
-                              ? '${state.filteredRecipes.length} results'
-                              : ''
-                        : '${state.searchedResult.length} results',
+                    state.countingLabel,
                     style: TextStyles.smallerTextRegular.copyWith(
                       color: AppColors.gray3,
                     ),
