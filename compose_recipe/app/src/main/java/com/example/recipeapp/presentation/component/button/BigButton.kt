@@ -1,8 +1,8 @@
 package com.example.recipeapp.presentation.component.button
 
-import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -38,7 +38,7 @@ import com.example.recipeapp.ui.theme.White
 fun BigButton(
     modifier: Modifier = Modifier,
     title: String,
-    onClick: (() -> Unit)? = null,
+    onClick: () -> Unit,
 ) {
     var isTapDown by remember { mutableStateOf(false) }
     Box(
@@ -48,17 +48,12 @@ fun BigButton(
             .clip(RoundedCornerShape(10.dp))
             .background(if (isTapDown) Gray4 else Primary100)
             .pointerInput(Unit) {
-                awaitPointerEventScope {
-                    while (true) {
-                        val event = awaitPointerEvent()
-                        val pointer = event.changes.first()
-
-                        isTapDown = pointer.pressed
-                    }
-                }
-            }
-            .clickable(enabled = onClick != null) {
-                onClick?.invoke()
+                detectTapGestures(onPress = {
+                    isTapDown = true
+                    tryAwaitRelease()
+                    isTapDown = false
+                    onClick()
+                })
             },
         contentAlignment = Alignment.Center
     ) {
@@ -101,7 +96,7 @@ fun BigButton(
 fun BigButtonPreview() {
     MaterialTheme {
         BigButton(title = "Button", onClick = {
-            print("click!")
+            Log.d("PGT", "BigButtonPreview: click!")
         })
     }
 }

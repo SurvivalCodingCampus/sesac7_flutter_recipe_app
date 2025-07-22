@@ -1,7 +1,9 @@
 package com.example.recipeapp.presentation.component.button
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -37,17 +39,12 @@ fun SmallButton(
             .clip(RoundedCornerShape(10.dp))
             .background(if (isTapDown) Gray4 else Primary100)
             .pointerInput(Unit) {
-                awaitPointerEventScope {
-                    while (true) {
-                        val event = awaitPointerEvent()
-                        val pointer = event.changes.first()
-
-                        isTapDown = pointer.pressed
-                    }
-                }
-            }
-            .clickable(enabled = !isTapDown) {
-                onClick
+                detectTapGestures(onPress = {
+                   isTapDown = true
+                   tryAwaitRelease()
+                   isTapDown = false
+                   onClick()
+                })
             },
         contentAlignment = Alignment.Center
     ) {
@@ -64,6 +61,6 @@ fun SmallButton(
 @Composable
 fun SmallButtonPreview() {
     SmallButton(title = "Button") {
-        print("click!")
+        Log.d("TAG", "SmallButtonPreview: Click!")
     }
 }
