@@ -157,7 +157,7 @@ class SignUpScreen extends StatelessWidget {
                   },
                   child: Text.rich(
                     TextSpan(
-                      text: 'Alredy a member? ',
+                      text: 'Already a member? ',
                       style: TextStyles.signInScreenSignUpFirst,
                       children: [
                         TextSpan(
