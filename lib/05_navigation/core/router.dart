@@ -4,6 +4,8 @@ import 'package:flutter_recipe_app/03_mvvm/data/repository/recipe_repository_imp
 import 'package:flutter_recipe_app/03_mvvm/presentation/screen/saved_recipes_screen.dart';
 import 'package:flutter_recipe_app/03_mvvm/presentation/screen/saved_recipes_view_model.dart';
 import 'package:flutter_recipe_app/03_mvvm/presentation/screen/splash_screen.dart';
+import 'package:flutter_recipe_app/04_ui_state_holder/presentation/screen/search_recipes_screen.dart';
+import 'package:flutter_recipe_app/04_ui_state_holder/presentation/screen/search_recipes_screen_view_model.dart';
 import 'package:flutter_recipe_app/05_navigation/core/routes.dart';
 import 'package:flutter_recipe_app/05_navigation/presentation/component/custom_bottom_app_bar.dart';
 import 'package:flutter_recipe_app/05_navigation/presentation/screen/home_screen.dart';
@@ -13,12 +15,19 @@ import 'package:go_router/go_router.dart';
 
 import '../presentation/screen/sign_in_screen.dart';
 
-final SavedRecipesViewModel viewModel = SavedRecipesViewModel(
+final SavedRecipesViewModel savedRecipesViewModel = SavedRecipesViewModel(
   recipeRepository: RecipeRepositoryImpl(dataSource: RecipeDataSourceImpl()),
 );
 
+final SearchRecipesScreenViewModel searchRecipesViewModel =
+    SearchRecipesScreenViewModel(
+      recipeRepository: RecipeRepositoryImpl(
+        dataSource: RecipeDataSourceImpl(),
+      ),
+    );
+
 final router = GoRouter(
-  initialLocation: Routes.splash,
+  initialLocation: Routes.search,
   routes: [
     GoRoute(
       path: Routes.splash,
@@ -56,6 +65,20 @@ final router = GoRouter(
         );
       },
     ),
+    GoRoute(
+      path: Routes.search,
+      builder: (context, state) {
+        searchRecipesViewModel.fetchRecipes();
+        return ListenableBuilder(
+          listenable: searchRecipesViewModel,
+          builder: (BuildContext context, Widget? child) {
+            return SearchRecipesScreen(
+              viewModel: searchRecipesViewModel,
+            );
+          },
+        );
+      },
+    ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return CustomBottomAppBar(
@@ -70,7 +93,7 @@ final router = GoRouter(
               builder: (context, state) {
                 return MainScreen(
                   body: ListenableBuilder(
-                    listenable: viewModel,
+                    listenable: savedRecipesViewModel,
                     builder: (BuildContext context, Widget? child) {
                       return HomeScreen();
                     },
@@ -87,10 +110,10 @@ final router = GoRouter(
               builder: (context, state) {
                 return MainScreen(
                   body: ListenableBuilder(
-                    listenable: viewModel,
+                    listenable: savedRecipesViewModel,
                     builder: (BuildContext context, Widget? child) {
                       return SavedRecipesScreen(
-                        viewModel: viewModel,
+                        viewModel: savedRecipesViewModel,
                       );
                     },
                   ),
@@ -106,7 +129,7 @@ final router = GoRouter(
               builder: (context, state) {
                 return MainScreen(
                   body: ListenableBuilder(
-                    listenable: viewModel,
+                    listenable: savedRecipesViewModel,
                     builder: (BuildContext context, Widget? child) {
                       return HomeScreen();
                     },
@@ -123,10 +146,10 @@ final router = GoRouter(
               builder: (context, state) {
                 return MainScreen(
                   body: ListenableBuilder(
-                    listenable: viewModel,
+                    listenable: savedRecipesViewModel,
                     builder: (BuildContext context, Widget? child) {
                       return SavedRecipesScreen(
-                        viewModel: viewModel,
+                        viewModel: savedRecipesViewModel,
                       );
                     },
                   ),

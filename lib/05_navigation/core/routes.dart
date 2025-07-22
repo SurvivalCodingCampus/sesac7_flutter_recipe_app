@@ -7,4 +7,6 @@ abstract class Routes {
   static const String bookmark = '/bookmark';
   static const String notification = '/notification';
   static const String myPage = '/my-page';
+
+  static const String search = '/search';
 }
