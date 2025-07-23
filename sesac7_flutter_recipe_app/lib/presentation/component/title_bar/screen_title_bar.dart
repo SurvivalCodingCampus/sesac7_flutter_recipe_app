@@ -16,41 +16,46 @@ class ScreenTitleBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        backButtonClick == null
-            ? SizedBox(
-                width: 20.0,
-              )
-            : GestureDetector(
-                onTap: backButtonClick,
-                child: Icon(
-                  Icons.arrow_back,
-                  color: AppColors.black,
-                  size: 20.0,
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 10.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          backButtonClick == null
+              ? SizedBox(
+                  width: 20.0,
+                )
+              : GestureDetector(
+                  onTap: backButtonClick,
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: AppColors.black,
+                    size: 20.0,
+                  ),
                 ),
-              ),
-        Text(
-          title ?? '',
-          style: TextStyles.searchScreenTitle,
-          maxLines: 1,
-          textAlign: TextAlign.center,
-        ),
-        menuButtonClick == null
-            ? SizedBox(
-                width: 20.0,
-              )
-            : GestureDetector(
-                onTap: menuButtonClick,
-                child: Icon(
-                  Icons.more_horiz,
-                  color: AppColors.black,
-                  size: 24.0,
+          title == null
+              ? Spacer()
+              : Text(
+                  title!,
+                  style: TextStyles.searchScreenTitle,
+                  maxLines: 1,
+                  textAlign: TextAlign.center,
                 ),
-              ),
-      ],
+          menuButtonClick == null
+              ? SizedBox(
+                  width: 20.0,
+                )
+              : GestureDetector(
+                  onTap: menuButtonClick,
+                  child: Icon(
+                    Icons.more_horiz,
+                    color: AppColors.black,
+                    size: 24.0,
+                  ),
+                ),
+        ],
+      ),
     );
   }
 }
