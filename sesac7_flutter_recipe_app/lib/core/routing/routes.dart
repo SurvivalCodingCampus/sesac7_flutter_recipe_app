@@ -9,4 +9,7 @@ abstract class Routes {
   static const String savedRecipes = '/saved-recipes';
   static const String notifications = '/notifications';
   static const String profile = '/profile';
+
+  static const String ingredientRelative = '/ingredient';
+  static String ingredientWithId(int id) => '$ingredientRelative/$id';
 }
