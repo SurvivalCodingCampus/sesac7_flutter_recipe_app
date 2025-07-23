@@ -113,7 +113,7 @@ class SearchRecipeScreen extends StatelessWidget {
                 else
                   Expanded(
                     child: GridView.builder(
-                      padding: const EdgeInsets.only(top: 20, bottom: 20),
+                      padding: const EdgeInsets.only(top: 20, bottom: 100),
                       itemCount: searchRecipeViewModel.searchRecipesState.recipes.length,
                       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,

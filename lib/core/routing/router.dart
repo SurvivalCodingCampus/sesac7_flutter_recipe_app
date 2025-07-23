@@ -59,7 +59,7 @@ final router = GoRouter(
               builder: (context, state) {
                 final recipeDataSource = RecipeDataSourceImpl();
                 final recipeRepository = RecipeRepositoryImpl(recipeDataSource);
-                final savedRecipesViewModel = RecipeViewModel(recipeRepository);
+                final savedRecipesViewModel = RecipeViewModel(recipeRepository: recipeRepository);
                 savedRecipesViewModel.fetchRecipes();
                 return SavedRecipesScreen(recipeViewModel: savedRecipesViewModel);
               },

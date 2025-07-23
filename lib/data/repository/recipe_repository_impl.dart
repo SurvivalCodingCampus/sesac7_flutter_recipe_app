@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:flutter_recipe_app/data/dto/extension/recipe_mapper.dart';
-import 'package:flutter_recipe_app/data/repository/recipe_repository.dart';
+import 'package:flutter_recipe_app/domain/repository/recipe_repository.dart';
 
 import '../../core/result.dart';
+import '../../domain/model/recipe.dart';
 import '../data_source/recipe_data_source.dart';
 import '../dto/recipe_dto.dart';
-import '../model/recipe.dart';
 
 class RecipeRepositoryImpl implements RecipeRepository {
   final RecipeDataSource _recipeDataSource;

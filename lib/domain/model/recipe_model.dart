@@ -1,4 +1,5 @@
-import 'package:flutter_recipe_app/data/model/step_model.dart';
+
+import 'package:flutter_recipe_app/domain/model/step_model.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'ingredient_model.dart';

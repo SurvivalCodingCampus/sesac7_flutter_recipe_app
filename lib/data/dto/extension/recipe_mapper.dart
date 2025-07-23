@@ -1,8 +1,7 @@
 
-
-import '../../model/ingredient.dart';
-import '../../model/recipe.dart';
-import '../../model/recipe_ingredient.dart';
+import '../../../domain/model/ingredient.dart';
+import '../../../domain/model/recipe.dart';
+import '../../../domain/model/recipe_ingredient.dart';
 import '../recipe_dto.dart';
 
 extension RecipeMapper on RecipeDto {

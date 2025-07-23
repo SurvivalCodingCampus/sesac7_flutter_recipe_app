@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/result.dart';
-import 'package:flutter_recipe_app/data/model/recipe.dart';
 
-import '../../data/repository/recipe_repository.dart';
+import '../../domain/repository/recipe_repository.dart';
+import '../../domain/model/recipe.dart';
 import '../state_holder/filter_search_state.dart';
 import '../state_holder/search_recipes_state.dart';
 

@@ -25,13 +25,12 @@ class SavedRecipesScreen extends StatelessWidget {
       body: ListenableBuilder(
         listenable: recipeViewModel,
         builder: (BuildContext context, Widget? child) {
-          return recipeViewModel.isLoading
+          return recipeViewModel.recipeViewState.isLoading
               ? const Center(child: CircularProgressIndicator())
               : Container(
                   color: AppColors.white,
                   child: ListView.builder(
-                    itemCount: recipeViewModel
-                        .recipes
+                    itemCount: recipeViewModel.recipeViewState.recipes
                         .length, // 이미지에 보이는 아이템 개수 (더미 데이터)
                     itemBuilder: (context, index) {
                       // 각 리스트 아이템을 나타내는 카드 위젯
@@ -42,7 +41,7 @@ class SavedRecipesScreen extends StatelessWidget {
                           bottom: 10,
                         ),
                         child: RecipeCard(
-                          recipe: recipeViewModel.recipes[index],
+                          recipe: recipeViewModel.recipeViewState.recipes[index],
                           saveRecipeCallback: (recipeId) {},
                         ),
                       );
