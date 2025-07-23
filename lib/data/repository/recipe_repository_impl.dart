@@ -67,7 +67,7 @@ void main() async {
   final dataSource = RecipeDataSourceImpl();
   final repository = RecipeRepositoryImpl(dataSource: dataSource);
 
-  final result = await repository.getRecipesByName('er');
+  final result = await repository.getRecipeById(2);
 
   print(result);
 }
