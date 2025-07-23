@@ -1,28 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
-import 'package:flutter_recipe_app/feature/search_recipes/domain/model/filter_category.dart';
-import 'package:flutter_recipe_app/feature/search_recipes/domain/model/filter_rate.dart';
-import 'package:flutter_recipe_app/feature/search_recipes/domain/model/filter_sort_by.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/model/search_state_type.dart';
-import 'package:flutter_recipe_app/core/domain/reopsitory/recipe/recipe_repository.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/filter_recipes_use_case.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/get_all_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/filter_search_state.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_state.dart';
 
 class SearchRecipesViewModel with ChangeNotifier {
-  final RecipeRepository _recipeRepository;
+  final GetAllRecipesUseCase _getAllRecipesUseCase;
+  final FilterRecipesUseCase _filterRecipesUseCase;
 
   SearchRecipesState _state = SearchRecipesState();
 
+  SearchRecipesViewModel({
+    required GetAllRecipesUseCase getAllRecipesUseCase,
+    required FilterRecipesUseCase filterRecipesUseCase,
+  }) : _getAllRecipesUseCase = getAllRecipesUseCase,
+       _filterRecipesUseCase = filterRecipesUseCase;
+
   SearchRecipesState get state => _state;
 
-  SearchRecipesViewModel({required RecipeRepository recipeRepository})
-    : _recipeRepository = recipeRepository;
-
-  Future<void> fetchRecipe() async {
+  void fetchRecipe() async {
     _state = _state.copyWith(isLoading: true);
-    final result = await _recipeRepository.fetchAllRecipes();
+    final result = await _getAllRecipesUseCase.execute();
 
     switch (result) {
       case Success<List<Recipe>, NetworkError>():
@@ -51,97 +53,27 @@ class SearchRecipesViewModel with ChangeNotifier {
   }
 
   void searchRecipe(String keyword) {
-    if (keyword.isEmpty) {
-      _state = state.copyWith(
-        filteredRecipes: state.allRecipes,
-        resultCount: state.allRecipes.length,
-        searchFieldValue: keyword,
-        searchState: SearchStateType.recentSearch,
-      );
-      notifyListeners();
-      return;
-    }
+    _searchWithFilter(keyword, state.filterState);
+  }
 
-    var lowerCaseKeyword = keyword.toLowerCase();
-    final filteredRecipes = state.allRecipes
-        .where(
-          (e) =>
-              e.name.toLowerCase().contains(lowerCaseKeyword) ||
-              e.creator.toLowerCase().contains(lowerCaseKeyword),
-        )
-        .toList();
+  void selectFilter(FilterSearchState filterState) {
+    _searchWithFilter(state.searchFieldValue, filterState);
+  }
+
+  void _searchWithFilter(String keyword, FilterSearchState filterState) {
+    final filteredRecipes = _filterRecipesUseCase.execute(
+      state.filteredRecipes,
+      keyword,
+      filterState,
+    );
     _state = state.copyWith(
       filteredRecipes: filteredRecipes,
       resultCount: filteredRecipes.length,
       searchFieldValue: keyword,
       searchState: SearchStateType.searchResult,
-    );
-
-    notifyListeners();
-  }
-
-  void selectFilter(FilterSearchState filterState) {
-    var recipes = state.allRecipes;
-    recipes = _filterRecipesSortedBy(
-      recipes,
-      filterState.filterSortBy,
-    );
-    recipes = _filterRecipesByRate(
-      recipes,
-      filterState.filterRate,
-    );
-    recipes = _filterRecipesByCategory(
-      recipes,
-      filterState.filterCategory,
-    );
-    _state = state.copyWith(
-      filteredRecipes: recipes,
-      resultCount: recipes.length,
-      searchState: SearchStateType.searchResult,
       filterState: filterState,
     );
 
     notifyListeners();
-  }
-
-  List<Recipe> _filterRecipesSortedBy(
-    List<Recipe> recipes,
-    FilterSortBy sortBy,
-  ) {
-    return switch (sortBy) {
-      FilterSortBy.all => recipes,
-      FilterSortBy.newest => recipes,
-      FilterSortBy.oldest => recipes,
-      FilterSortBy.popularity => recipes,
-    };
-  }
-
-  List<Recipe> _filterRecipesByRate(
-    List<Recipe> recipes,
-    FilterRate? filterRate,
-  ) {
-    if (filterRate == null) return recipes;
-
-    return switch (filterRate) {
-      FilterRate.one => recipes.where((e) => e.rating < 2).toList(),
-      FilterRate.two =>
-        recipes.where((e) => e.rating >= 2 && e.rating < 3).toList(),
-      FilterRate.three =>
-        recipes.where((e) => e.rating >= 3 && e.rating < 4).toList(),
-      FilterRate.four =>
-        recipes.where((e) => e.rating >= 4 && e.rating < 5).toList(),
-      FilterRate.five => recipes.where((e) => e.rating >= 5).toList(),
-    };
-  }
-
-  List<Recipe> _filterRecipesByCategory(
-    List<Recipe> recipes,
-    FilterCategory filterCategory,
-  ) {
-    if (filterCategory == FilterCategory.all) return recipes;
-
-    return recipes
-        .where((e) => e.category == filterCategory.toString())
-        .toList();
   }
 }

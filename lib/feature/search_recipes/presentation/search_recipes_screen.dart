@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/core/data/data_source/recipe/recipe_data_source_impl.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/model/search_state_type.dart';
-import 'package:flutter_recipe_app/core/data/repository/recipe/recipe_repository_impl.dart';
 import 'package:flutter_recipe_app/core/presentation/component/button/search_filter_button.dart';
 import 'package:flutter_recipe_app/core/presentation/component/input/search_field.dart';
 import 'package:flutter_recipe_app/core/presentation/component/list_item/recipe_search_card.dart';
@@ -112,25 +110,4 @@ class SearchRecipesScreen extends StatelessWidget {
       ),
     );
   }
-}
-
-void main() async {
-  final viewModel = SearchRecipesViewModel(
-    recipeRepository: RecipeRepositoryImpl(
-      recipeDataSource: RecipeDataSourceImpl(),
-    ),
-  );
-  await viewModel.fetchRecipe();
-  runApp(
-    MaterialApp(
-      home: Scaffold(
-        body: ListenableBuilder(
-          listenable: viewModel,
-          builder: (context, child) {
-            return SearchRecipesScreen(viewModel: viewModel);
-          },
-        ),
-      ),
-    ),
-  );
 }

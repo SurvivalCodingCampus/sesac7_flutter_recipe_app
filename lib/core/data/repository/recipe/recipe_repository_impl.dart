@@ -1,8 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/network_validator_mixin.dart';
-import 'package:flutter_recipe_app/core/utils/result.dart';
 import 'package:flutter_recipe_app/core/data/data_source/recipe/recipe_data_source.dart';
 import 'package:flutter_recipe_app/core/data/mapper/recipe/recipe_mapper.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
@@ -17,27 +15,17 @@ class RecipeRepositoryImpl
     : _recipeDataSource = recipeDataSource;
 
   @override
-  Future<Result<List<Recipe>, NetworkError>> fetchAllRecipes() async {
-    try {
-      final response = await _recipeDataSource.fetchAllRecipes();
-      final error = checkStatusCodeError(response.statusCode);
+  Future<List<Recipe>> fetchAllRecipes() async {
+    final response = await _recipeDataSource.fetchAllRecipes();
+    final error = checkStatusCodeError(response.statusCode);
 
-      if (error != null) {
-        return Result.error(error);
-      }
-
-      return Result.success(
-        response.body
-            .map((e) => e.toModel())
-            .where((e) => e.id != Recipe.invalidId)
-            .toList(),
-      );
-    } on TimeoutException {
-      return Result.error(NetworkError.requestTimeout);
-    } on FormatException {
-      return Result.error(NetworkError.parseError);
-    } catch (e) {
-      return Result.error(NetworkError.unknown);
+    if (error != null) {
+      throw error;
     }
+
+    return response.body
+        .map((e) => e.toModel())
+        .where((e) => e.id != Recipe.invalidId)
+        .toList();
   }
 }
