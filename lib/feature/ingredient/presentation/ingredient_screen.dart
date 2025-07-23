@@ -29,144 +29,164 @@ class IngredientScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.fromLTRB(30, 54, 30, 0),
         child: Column(
+          spacing: 10,
           children: [
-            Column(
-              spacing: 10,
+            Row(
               children: [
-                Row(
-                  children: [
-                    GestureDetector(
-                      onTap: onBackTap,
-                      child: Icon(
-                        Icons.arrow_back,
-                        size: 20,
-                      ),
-                    ),
-                    const Spacer(),
-                    GestureDetector(
-                      onTap: onMenuTap,
-                      child: Icon(
-                        Icons.more_horiz,
-                        size: 24,
-                      ),
-                    ),
-                  ],
+                GestureDetector(
+                  onTap: onBackTap,
+                  child: Icon(
+                    Icons.arrow_back,
+                    size: 20,
+                  ),
                 ),
-                IngredientRecipeCard(
-                  recipe: state.recipe,
-                  onBookmarkTap: () {},
+                const Spacer(),
+                GestureDetector(
+                  onTap: onMenuTap,
+                  child: Icon(
+                    Icons.more_horiz,
+                    size: 24,
+                  ),
                 ),
-                Row(
-                  spacing: 18,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              ],
+            ),
+            Builder(
+              builder: (context) {
+                if (state.isLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+
+                if (state.errorMessage.isNotEmpty) {
+                  return Center(
+                    child: Text(state.errorMessage),
+                  );
+                }
+
+                return Column(
                   children: [
-                    Flexible(
-                      child: Text(
-                        state.recipe.name,
-                        style: TextStyles.smallTextBold,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    Text(
-                      '(${state.reviewCount} Reviews)',
-                      style: TextStyles.smallTextRegular.copyWith(
-                        color: AppColors.gray3,
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  spacing: 10,
-                  children: [
-                    CircleAvatar(
-                      radius: 20,
-                    ),
                     Column(
-                      spacing: 2,
+                      spacing: 10,
                       children: [
-                        Text(
-                          state.recipe.creator,
-                          style: TextStyles.smallTextBold,
+                        IngredientRecipeCard(
+                          recipe: state.recipe,
+                          onBookmarkTap: () {},
                         ),
                         Row(
-                          spacing: 1,
+                          spacing: 18,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Icon(
-                              Icons.location_on,
-                              size: 17,
-                              color: AppColors.primary80,
+                            Flexible(
+                              child: Text(
+                                state.recipe.name,
+                                style: TextStyles.smallTextBold,
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
                             ),
                             Text(
-                              'Lagos, Nigeria',
-                              style: TextStyles.smallerTextRegular.copyWith(
+                              '(${state.reviewCount} Reviews)',
+                              style: TextStyles.smallTextRegular.copyWith(
                                 color: AppColors.gray3,
                               ),
                             ),
                           ],
                         ),
+                        Row(
+                          spacing: 10,
+                          children: [
+                            CircleAvatar(
+                              radius: 20,
+                            ),
+                            Column(
+                              spacing: 2,
+                              children: [
+                                Text(
+                                  state.recipe.creator,
+                                  style: TextStyles.smallTextBold,
+                                ),
+                                Row(
+                                  spacing: 1,
+                                  children: [
+                                    Icon(
+                                      Icons.location_on,
+                                      size: 17,
+                                      color: AppColors.primary80,
+                                    ),
+                                    Text(
+                                      'Lagos, Nigeria',
+                                      style: TextStyles.smallerTextRegular
+                                          .copyWith(
+                                            color: AppColors.gray3,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const Spacer(),
+                            SmallButton(
+                              text: 'Follow',
+                              onClick: () {},
+                              width: 85,
+                            ),
+                          ],
+                        ),
                       ],
                     ),
-                    const Spacer(),
-                    SmallButton(
-                      text: 'Follow',
-                      onClick: () {},
-                      width: 85,
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    TwoTabs(
+                      labels: ['Ingredient', 'Procedure'],
+                      selectedIndex: state.tabType.index,
+                      onValueChange: viewModel.tabChange,
+                    ),
+                    const SizedBox(
+                      height: 22,
+                    ),
+                    Row(
+                      spacing: 5,
+                      children: [
+                        Icon(
+                          Icons.room_service,
+                          size: 17,
+                          color: AppColors.gray3,
+                        ),
+                        Text(
+                          '${state.recipe.serve} serve',
+                          style: TextStyles.smallerTextRegular.copyWith(
+                            color: AppColors.gray3,
+                          ),
+                        ),
+                        const Spacer(),
+                        Text(
+                          '${state.ingredients.length} Items',
+                          style: TextStyles.smallerTextRegular.copyWith(
+                            color: AppColors.gray3,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Expanded(
+                      child: Builder(
+                        builder: (context) {
+                          return switch (state.tabType) {
+                            IngredientTabType.ingredient => _IngredientList(
+                              ingredients: state.ingredients,
+                            ),
+                            IngredientTabType.procedure => _ProcedureList(
+                              procedure: state.procedure,
+                            ),
+                          };
+                        },
+                      ),
                     ),
                   ],
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 8,
-            ),
-            TwoTabs(
-              labels: ['Ingredient', 'Procedure'],
-              selectedIndex: state.tabType.index,
-              onValueChange: viewModel.tabChange,
-            ),
-            const SizedBox(
-              height: 22,
-            ),
-            Row(
-              spacing: 5,
-              children: [
-                Icon(
-                  Icons.room_service,
-                  size: 17,
-                  color: AppColors.gray3,
-                ),
-                Text(
-                  '${state.recipe.serve} serve',
-                  style: TextStyles.smallerTextRegular.copyWith(
-                    color: AppColors.gray3,
-                  ),
-                ),
-                const Spacer(),
-                Text(
-                  '${state.ingredients.length} Items',
-                  style: TextStyles.smallerTextRegular.copyWith(
-                    color: AppColors.gray3,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Expanded(
-              child: Builder(
-                builder: (context) {
-                  return switch (state.tabType) {
-                    IngredientTabType.ingredient => _IngredientList(
-                      ingredients: state.ingredients,
-                    ),
-                    IngredientTabType.procedure => _ProcedureList(
-                      procedure: state.procedure,
-                    ),
-                  };
-                },
-              ),
+                );
+              },
             ),
           ],
         ),
