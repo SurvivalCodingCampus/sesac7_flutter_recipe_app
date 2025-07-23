@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/presentation/component/button/medium_button.dart';
-import 'package:flutter_recipe_app/presentation/screen/splash/splash_screen.dart';
+import 'package:flutter_recipe_app/core/presentation/component/button/medium_button.dart';
+import 'package:flutter_recipe_app/feature/splash/presentation/splash_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

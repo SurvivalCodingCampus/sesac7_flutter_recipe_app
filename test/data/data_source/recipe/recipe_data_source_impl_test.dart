@@ -3,8 +3,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:flutter_recipe_app/data/data_source/recipe/recipe_data_source_impl.dart';
-import 'package:flutter_recipe_app/data/dto/recipe/recipe_dto.dart';
+import 'package:flutter_recipe_app/core/data/data_source/recipe/recipe_data_source_impl.dart';
+import 'package:flutter_recipe_app/core/data/dto/recipe/recipe_dto.dart';
 import 'package:http/testing.dart' as http;
 
 void main() {

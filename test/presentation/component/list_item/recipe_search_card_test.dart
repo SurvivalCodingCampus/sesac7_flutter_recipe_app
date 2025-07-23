@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/data/model/recipe/recipe.dart';
-import 'package:flutter_recipe_app/presentation/component/list_item/recipe_search_card.dart';
+import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
+import 'package:flutter_recipe_app/core/presentation/component/list_item/recipe_search_card.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 

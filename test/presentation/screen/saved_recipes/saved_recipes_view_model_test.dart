@@ -1,8 +1,8 @@
-import 'package:flutter_recipe_app/core/network_error.dart';
-import 'package:flutter_recipe_app/core/result.dart';
-import 'package:flutter_recipe_app/data/model/recipe/recipe.dart';
-import 'package:flutter_recipe_app/data/repository/recipe/recipe_repository.dart';
-import 'package:flutter_recipe_app/presentation/screen/saved_recipes/saved_recipes_view_model.dart';
+import 'package:flutter_recipe_app/core/utils/network_error.dart';
+import 'package:flutter_recipe_app/core/utils/result.dart';
+import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
+import 'package:flutter_recipe_app/core/domain/reopsitory/recipe/recipe_repository.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/routing/router.dart';
-import 'package:flutter_recipe_app/presentation/screen/authentication/sign_in_screen.dart';
-import 'package:flutter_recipe_app/presentation/screen/authentication/sign_up_screen.dart';
-import 'package:flutter_recipe_app/presentation/screen/home/home_screen.dart';
-import 'package:flutter_recipe_app/presentation/screen/main_navigation/main_navigation_screen.dart';
-import 'package:flutter_recipe_app/presentation/screen/notifications/notifications_screen.dart';
-import 'package:flutter_recipe_app/presentation/screen/profile/profile_screen.dart';
-import 'package:flutter_recipe_app/presentation/screen/saved_recipes/saved_recipes_screen.dart';
-import 'package:flutter_recipe_app/presentation/screen/splash/splash_screen.dart';
+import 'package:flutter_recipe_app/feature/authentication/presentation/sign_in_screen.dart';
+import 'package:flutter_recipe_app/feature/authentication/presentation/sign_up_screen.dart';
+import 'package:flutter_recipe_app/feature/home/presentation/home_screen.dart';
+import 'package:flutter_recipe_app/feature/main_navigation/presentation/main_navigation_screen.dart';
+import 'package:flutter_recipe_app/feature/notifications/presentation/notifications_screen.dart';
+import 'package:flutter_recipe_app/feature/profile/presentation/profile_screen.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_screen.dart';
+import 'package:flutter_recipe_app/feature/splash/presentation/splash_screen.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 

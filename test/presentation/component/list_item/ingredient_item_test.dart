@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/data/model/recipe/ingredient.dart';
-import 'package:flutter_recipe_app/presentation/component/list_item/ingredient_item.dart';
+import 'package:flutter_recipe_app/core/domain/model/recipe/ingredient.dart';
+import 'package:flutter_recipe_app/core/presentation/component/list_item/ingredient_item.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
 void main() {
   mockNetworkImagesFor(() {
     group('IngredientItem', () {
-      testWidgets('displays ingredient name and whole number weight', (tester) async {
+      testWidgets('displays ingredient name and whole number weight', (
+        tester,
+      ) async {
         final ingredient = Ingredient(
           id: '1',
           name: 'Sugar',
@@ -15,7 +17,9 @@ void main() {
           weight: 100.0,
         );
 
-        await tester.pumpWidget(MaterialApp(home: IngredientItem(ingredient: ingredient)));
+        await tester.pumpWidget(
+          MaterialApp(home: IngredientItem(ingredient: ingredient)),
+        );
 
         expect(find.text('Sugar'), findsOneWidget);
         expect(find.text('100g'), findsOneWidget);
@@ -24,7 +28,9 @@ void main() {
         expect(find.byIcon(Icons.image_not_supported), findsNothing);
       });
 
-      testWidgets('displays ingredient name and decimal weight', (tester) async {
+      testWidgets('displays ingredient name and decimal weight', (
+        tester,
+      ) async {
         final ingredient = Ingredient(
           id: '2',
           name: 'Flour',
@@ -32,14 +38,18 @@ void main() {
           weight: 150.5,
         );
 
-        await tester.pumpWidget(MaterialApp(home: IngredientItem(ingredient: ingredient)));
+        await tester.pumpWidget(
+          MaterialApp(home: IngredientItem(ingredient: ingredient)),
+        );
 
         expect(find.text('Flour'), findsOneWidget);
         expect(find.text('150.5g'), findsOneWidget);
         expect(find.byIcon(Icons.image_not_supported), findsNothing);
       });
 
-      testWidgets('displays error icon when image fails to load', (tester) async {
+      testWidgets('displays error icon when image fails to load', (
+        tester,
+      ) async {
         final ingredient = Ingredient(
           id: '3',
           name: 'Salt',
@@ -47,7 +57,9 @@ void main() {
           weight: 10.0,
         );
 
-        await tester.pumpWidget(MaterialApp(home: IngredientItem(ingredient: ingredient)));
+        await tester.pumpWidget(
+          MaterialApp(home: IngredientItem(ingredient: ingredient)),
+        );
         await tester.pumpAndSettle(); // Wait for image to load/fail
 
         expect(find.text('Salt'), findsOneWidget);
@@ -55,20 +67,25 @@ void main() {
         expect(find.byIcon(Icons.image_not_supported), findsOneWidget);
       });
 
-      testWidgets('does not display CircularProgressIndicator as image loads instantly', (tester) async {
-        final ingredient = Ingredient(
-          id: '4',
-          name: 'Water',
-          imageUrl: 'https://example.com/water.jpg',
-          weight: 200.0,
-        );
+      testWidgets(
+        'does not display CircularProgressIndicator as image loads instantly',
+        (tester) async {
+          final ingredient = Ingredient(
+            id: '4',
+            name: 'Water',
+            imageUrl: 'https://example.com/water.jpg',
+            weight: 200.0,
+          );
 
-        await tester.pumpWidget(MaterialApp(home: IngredientItem(ingredient: ingredient)));
+          await tester.pumpWidget(
+            MaterialApp(home: IngredientItem(ingredient: ingredient)),
+          );
 
-        // With mockNetworkImagesFor, the image loads instantly, so the indicator should not be visible
-        expect(find.byType(CircularProgressIndicator), findsNothing);
-        expect(find.byIcon(Icons.image_not_supported), findsNothing);
-      });
+          // With mockNetworkImagesFor, the image loads instantly, so the indicator should not be visible
+          expect(find.byType(CircularProgressIndicator), findsNothing);
+          expect(find.byIcon(Icons.image_not_supported), findsNothing);
+        },
+      );
     });
   });
 }

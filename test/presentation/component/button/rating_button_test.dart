@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/presentation/component/button/rating_button.dart';
+import 'package:flutter_recipe_app/core/presentation/component/button/rating_button.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
