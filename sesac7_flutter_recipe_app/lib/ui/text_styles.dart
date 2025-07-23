@@ -200,6 +200,26 @@ abstract class TextStyles {
 
   /* SearchRecipeCard End */
 
+  /* IngredientCard Start */
+  static final ingredientCardTitle = TextStyle(
+    color: AppColors.labelColor,
+    fontSize: 16.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 24 / 16,
+  );
+
+  static final ingredientCardAmount = TextStyle(
+    color: AppColors.gray3,
+    fontSize: 14.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 21 / 14,
+  );
+  /* IngredientCard End */
+
   /* SearchRecipeFilterBottomSheet Start */
   static final TextStyle searchRecipeFilterBottomSheetTitle = TextStyle(
     color: AppColors.black,
