@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/core/routing/query_parameters.dart';
 import 'package:flutter_recipe_app/core/routing/routes.dart';
 import 'package:flutter_recipe_app/core/data/data_source/recipe/recipe_data_source_impl.dart';
 import 'package:flutter_recipe_app/core/data/repository/recipe/recipe_repository_impl.dart';
 import 'package:flutter_recipe_app/feature/authentication/presentation/sign_in_screen.dart';
 import 'package:flutter_recipe_app/feature/authentication/presentation/sign_up_screen.dart';
 import 'package:flutter_recipe_app/feature/home/presentation/home_screen.dart';
+import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_screen.dart';
 import 'package:flutter_recipe_app/feature/main_navigation/presentation/main_navigation_screen.dart';
 import 'package:flutter_recipe_app/feature/notifications/presentation/notifications_screen.dart';
 import 'package:flutter_recipe_app/feature/profile/presentation/profile_screen.dart';
@@ -93,9 +95,26 @@ GoRouter createRouter() => GoRouter(
                   builder: (context, child) {
                     return SavedRecipesScreen(
                       viewModel: viewModel,
+                      onRecipeCardTap: (String id) {
+                        context.push(
+                          // Routes.ingredient,
+                          Uri(
+                            path: Routes.ingredient,
+                            queryParameters: {QueryParameters.id: id},
+                          ).toString(),
+                        );
+                      },
                     );
                   },
                 );
+              },
+            ),
+            GoRoute(
+              path: Routes.ingredient,
+              builder: (context, state) {
+                final id = state.uri.queryParameters[QueryParameters.id];
+
+                return IngredientScreen();
               },
             ),
           ],

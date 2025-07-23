@@ -5,10 +5,12 @@ import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class SavedRecipesScreen extends StatelessWidget {
   final SavedRecipesViewModel viewModel;
+  final void Function(String id) onRecipeCardTap;
 
   const SavedRecipesScreen({
     super.key,
     required this.viewModel,
+    required this.onRecipeCardTap,
   });
 
   @override
@@ -50,6 +52,7 @@ class SavedRecipesScreen extends StatelessWidget {
               final recipe = state.savedRecipes[index];
 
               return RecipeCard(
+                onTap: () => onRecipeCardTap(recipe.id),
                 recipe: recipe,
                 onBookmarkTap: () => viewModel.removeSavedRecipe(recipe.id),
               );
