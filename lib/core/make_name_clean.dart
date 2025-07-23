@@ -1,7 +1,5 @@
-import '../presentation/screen/search_recipes_screen.dart';
-
-extension MakeNameClean on SearchRecipesScreen {
-  String _formatRecipeName(String name) {
+class NameOptimizer {
+  static String _formatRecipeName(String name) {
     final List<String> listOfName = name.split(' ');
 
     if (listOfName.length > 3) {
@@ -13,11 +11,7 @@ extension MakeNameClean on SearchRecipesScreen {
     return '\n$name';
   }
 
-  String getRecipeName(int index) {
-    return _formatRecipeName(viewModel.state.recipes[index].name);
-  }
-
-  String getFilteredRecipeName(int index) {
-    return _formatRecipeName(viewModel.state.filteredResult[index].name);
+  static String getRecipeName(String name) {
+    return _formatRecipeName(name);
   }
 }
