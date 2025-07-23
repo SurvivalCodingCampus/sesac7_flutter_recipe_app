@@ -62,7 +62,7 @@ class SearchRecipesViewModel with ChangeNotifier {
 
   void _searchWithFilter(String keyword, FilterSearchState filterState) {
     final filteredRecipes = _filterRecipesUseCase.execute(
-      state.filteredRecipes,
+      state.allRecipes,
       keyword,
       filterState,
     );
