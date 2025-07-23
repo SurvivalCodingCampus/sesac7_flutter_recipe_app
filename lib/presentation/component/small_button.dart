@@ -46,7 +46,7 @@ class _SmallButtonState extends State<SmallButton> {
         });
       },
       child: AnimatedContainer(
-        width: 174,
+        // width: 174,
         height: 37,
         padding: EdgeInsets.fromLTRB(30, 10, 30, 10),
         decoration: BoxDecoration(
@@ -55,12 +55,12 @@ class _SmallButtonState extends State<SmallButton> {
         ),
         duration: Duration(milliseconds: 100),
         child: SizedBox(
-          width: 114,
+          // width: 114,
           height: 17,
           child: Text(
             widget.text,
             textAlign: TextAlign.center,
-            style: TextStyles.smallTextBold.copyWith(color: AppColors.white),
+            style: TextStyles.smallerTextBold.copyWith(color: AppColors.white),
           ),
         ),
       ),
