@@ -38,18 +38,18 @@ class _SmallButtonState extends State<SmallButton> {
       },
       onTap: widget.onClick,
       child: Container(
-        width: 174.0,
         height: 37.0,
+        padding: const EdgeInsets.symmetric(horizontal: 30.0),
         decoration: BoxDecoration(
           color: _isTapDown? AppColors.gray4 : AppColors.primary100,
           borderRadius: BorderRadius.circular(10.0),
         ),
-        child: Center(
-          child: Text(
-            widget.title,
-            style: TextStyles.smallButtonTitle,
-            maxLines: 1,
-          ),
+        alignment: Alignment.center,
+        child: Text(
+          widget.title,
+          style: TextStyles.smallButtonTitle,
+          maxLines: 1,
+          textAlign: TextAlign.center,
         ),
       ),
     );
