@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/card/recipe_card.dart';
+import 'package:flutter_recipe_app/presentation/component/title_bar/screen_title_bar.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_view_model.dart';
-import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class SavedRecipeScreen extends StatelessWidget {
   final SavedRecipeViewModel _savedRecipeViewModel;
@@ -14,25 +14,19 @@ class SavedRecipeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Saved recipes',
-          style: TextStyles.savedRecipeScreenTitle,
-          maxLines: 1,
-        ),
-        centerTitle: true,
-      ),
-      body: SizedBox(
-        width: double.infinity,
-        height: double.infinity,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            ScreenTitleBar(
+              title: 'Saved recipes',
+            ),
             Expanded(
               child: ListView.separated(
                 itemCount: _savedRecipeViewModel.savedRecipeState.recipes.length,
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                 itemBuilder: (context, index) {
                   return RecipeCard(
                     recipe: _savedRecipeViewModel.savedRecipeState.recipes[index],
