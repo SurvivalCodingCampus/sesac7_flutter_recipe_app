@@ -15,6 +15,8 @@ abstract class Recipe with _$Recipe {
     required String creator,
     required String cookingTime,
     required double rating,
+    required int reviewCount,
+    required int serve,
     required List<Ingredient> ingredients,
   }) = _Recipe;
 }

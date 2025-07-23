@@ -13,6 +13,8 @@ extension RecipeDtoToModel on RecipeDto {
       cookingTime: time ?? '',
       rating: rating ?? 0,
       ingredients: ingredients?.map((e) => e.toModel()).toList() ?? [],
+      reviewCount: 0,
+      serve: 0,
     );
   }
 
