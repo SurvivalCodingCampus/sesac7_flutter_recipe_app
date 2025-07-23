@@ -9,6 +9,7 @@ abstract class Ingredient with _$Ingredient {
     required int id,
     required String name,
     required String image,
+    required int amount,
   }) = _Ingredient;
 
   factory Ingredient.fromJson(Map<String, Object?> json) =>
