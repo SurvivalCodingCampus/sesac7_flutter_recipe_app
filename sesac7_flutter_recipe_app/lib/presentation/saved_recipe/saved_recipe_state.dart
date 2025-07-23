@@ -6,6 +6,6 @@ part 'saved_recipe_state.freezed.dart';
 @freezed
 abstract class SavedRecipeState with _$SavedRecipeState {
   const factory SavedRecipeState({
-    @Default([]) List<Recipe> recipes,
+    @Default([]) List<Recipe> savedRecipes,
   }) = _SavedRecipeState;
 }
