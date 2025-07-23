@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/routes.dart';
+import 'package:flutter_recipe_app/data/data_source/mock_bookmark_data_source_impl.dart';
+import 'package:flutter_recipe_app/data/data_source/mock_procedure_data_source_impl.dart';
+import 'package:flutter_recipe_app/data/repository/mock_bookmark_repository_impl.dart';
+import 'package:flutter_recipe_app/data/repository/mock_procedure_repository_impl.dart';
+import 'package:flutter_recipe_app/presentation/screen/ingredient_screen.dart';
 import 'package:go_router/go_router.dart';
 
 import '../data/data_source/recipe_data_source_impl.dart';
 import '../data/repository/recipe_repository_impl.dart';
 import '../presentation/component/custom_bottom_app_bar.dart';
 import '../presentation/screen/home_screen.dart';
+import '../presentation/screen/ingredient_screen_view_model.dart';
 import '../presentation/screen/main_screen.dart';
 import '../presentation/screen/saved_recipes_screen.dart';
 import '../presentation/screen/saved_recipes_view_model.dart';
@@ -15,9 +21,23 @@ import '../presentation/screen/sign_in_screen.dart';
 import '../presentation/screen/sign_up_screen.dart';
 import '../presentation/screen/splash_screen.dart';
 
+// ViewModel
 final SavedRecipesViewModel savedRecipesViewModel = SavedRecipesViewModel(
   recipeRepository: RecipeRepositoryImpl(dataSource: RecipeDataSourceImpl()),
+  bookmarkRepository: MockBookmarkRepositoryImpl(
+    dataSource: MockBookmarkDataSourceImpl(),
+  ),
 );
+
+final IngredientScreenViewModel ingredientScreenViewModel =
+    IngredientScreenViewModel(
+      recipeRepository: RecipeRepositoryImpl(
+        dataSource: RecipeDataSourceImpl(),
+      ),
+      procedureRepository: MockProcedureRepositoryImpl(
+        procedureDataSource: MockProcedureDataSourceImpl(),
+      ),
+    );
 
 final SearchRecipesScreenViewModel searchRecipesViewModel =
     SearchRecipesScreenViewModel(
@@ -27,7 +47,7 @@ final SearchRecipesScreenViewModel searchRecipesViewModel =
     );
 
 final router = GoRouter(
-  initialLocation: Routes.search,
+  initialLocation: Routes.bookmark,
   routes: [
     GoRoute(
       path: Routes.splash,
@@ -79,6 +99,22 @@ final router = GoRouter(
         );
       },
     ),
+    GoRoute(
+      path: '${Routes.ingredient}/:id',
+      builder: (context, state) {
+        final id = int.parse(state.pathParameters['id']!);
+        ingredientScreenViewModel.fetchRecipeById(id);
+
+        return ListenableBuilder(
+          listenable: ingredientScreenViewModel,
+          builder: (BuildContext context, Widget? child) {
+            return IngredientScreen(
+              viewModel: ingredientScreenViewModel,
+            );
+          },
+        );
+      },
+    ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return CustomBottomAppBar(
@@ -114,6 +150,9 @@ final router = GoRouter(
                     builder: (BuildContext context, Widget? child) {
                       return SavedRecipesScreen(
                         viewModel: savedRecipesViewModel,
+                        onClickCard: (id) {
+                          context.push('${Routes.ingredient}/$id');
+                        },
                       );
                     },
                   ),
@@ -150,6 +189,7 @@ final router = GoRouter(
                     builder: (BuildContext context, Widget? child) {
                       return SavedRecipesScreen(
                         viewModel: savedRecipesViewModel,
+                        onClickCard: (id) {},
                       );
                     },
                   ),
