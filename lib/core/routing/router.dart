@@ -83,6 +83,7 @@ GoRouter createRouter() => GoRouter(
               builder: (context, state) {
                 final viewModel = SavedRecipesViewModel(
                   getSavedRecipesUseCase: _getSavedRecipesUseCase,
+                  bookmarkRepository: _mockBookmarkRepository,
                 );
 
                 viewModel.fetchSavedRecipes();

@@ -51,7 +51,7 @@ class SavedRecipesScreen extends StatelessWidget {
 
               return RecipeCard(
                 recipe: recipe,
-                onBookmarkTap: () {},
+                onBookmarkTap: () => viewModel.removeSavedRecipe(recipe.id),
               );
             },
           );
