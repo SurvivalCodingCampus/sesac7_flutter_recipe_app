@@ -25,6 +25,7 @@ abstract class IngredientState with _$IngredientState {
     Recipe recipe,
     @Default([]) List<Ingredient> ingredients,
     @Default([]) List<String> procedure,
+    @Default('') String reviewCount,
     @Default(IngredientTabType.ingredient) IngredientTabType tabType,
     @Default(false) bool isLoading,
     @Default('') String errorMessage,

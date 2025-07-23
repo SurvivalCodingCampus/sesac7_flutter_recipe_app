@@ -11,6 +11,7 @@ import 'package:flutter_recipe_app/feature/ingredient/data/repository/mocks/mock
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_all_ingredients_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_procedure_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_recipe_use_case.dart';
+import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/format_review_count_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_screen.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_view_model.dart';
 import 'package:flutter_recipe_app/feature/main_navigation/presentation/main_navigation_screen.dart';
@@ -51,6 +52,8 @@ final _fetchAllIngredientsUseCase = FetchAllIngredientsUseCase(
 final _fetchProcedureUseCase = FetchProcedureUseCase(
   procedureRepository: _mockProcedureRepository,
 );
+
+final _formatReviewCountUseCase = FormatReviewCountUseCase();
 
 GoRouter createRouter() => GoRouter(
   // initialLocation: Routes.splash,
@@ -169,6 +172,7 @@ GoRouter createRouter() => GoRouter(
           fetchRecipeUseCase: _fetchRecipeUseCase,
           fetchAllIngredientsUseCase: _fetchAllIngredientsUseCase,
           fetchProcedureUseCase: _fetchProcedureUseCase,
+          formatReviewCountUseCase: _formatReviewCountUseCase,
         );
 
         viewModel.fetchRecipe();

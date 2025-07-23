@@ -7,6 +7,7 @@ import 'package:flutter_recipe_app/feature/ingredient/domain/model/ingredient_ta
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_all_ingredients_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_procedure_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_recipe_use_case.dart';
+import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/format_review_count_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_state.dart';
 
 class IngredientViewModel with ChangeNotifier {
@@ -14,6 +15,7 @@ class IngredientViewModel with ChangeNotifier {
   final FetchRecipeUseCase _fetchRecipeUseCase;
   final FetchAllIngredientsUseCase _fetchAllIngredientsUseCase;
   final FetchProcedureUseCase _fetchProcedureUseCase;
+  final FormatReviewCountUseCase _formatReviewCountUseCase;
 
   IngredientState _state = IngredientState();
 
@@ -22,9 +24,11 @@ class IngredientViewModel with ChangeNotifier {
     required FetchRecipeUseCase fetchRecipeUseCase,
     required FetchAllIngredientsUseCase fetchAllIngredientsUseCase,
     required FetchProcedureUseCase fetchProcedureUseCase,
+    required FormatReviewCountUseCase formatReviewCountUseCase,
   }) : _fetchRecipeUseCase = fetchRecipeUseCase,
        _fetchAllIngredientsUseCase = fetchAllIngredientsUseCase,
-       _fetchProcedureUseCase = fetchProcedureUseCase;
+       _fetchProcedureUseCase = fetchProcedureUseCase,
+       _formatReviewCountUseCase = formatReviewCountUseCase;
 
   IngredientState get state => _state;
 
@@ -34,7 +38,15 @@ class IngredientViewModel with ChangeNotifier {
 
     switch (result) {
       case Success<Recipe, NetworkError>():
-        _state = state.copyWith(recipe: result.data, isLoading: false);
+        final recipe = result.data;
+        final reviewCount = _formatReviewCountUseCase.execute(
+          recipe.reviewCount,
+        );
+        _state = state.copyWith(
+          recipe: recipe,
+          reviewCount: reviewCount,
+          isLoading: false,
+        );
       case Error<Recipe, NetworkError>():
         _errorState(result.error.toString());
     }

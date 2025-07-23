@@ -69,7 +69,7 @@ class IngredientScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '(13k Reviews)',
+                      '(${state.reviewCount} Reviews)',
                       style: TextStyles.smallTextRegular.copyWith(
                         color: AppColors.gray3,
                       ),
