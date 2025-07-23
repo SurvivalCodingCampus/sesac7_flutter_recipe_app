@@ -2,6 +2,7 @@ import 'package:flutter_recipe_app/core/presentation/component/nav_bar/bottom_na
 import 'package:flutter_recipe_app/home/presentation/screen/home_screen.dart';
 import 'package:flutter_recipe_app/saved_recipes/presentation/saved_recipes_view_model.dart';
 import 'package:go_router/go_router.dart';
+import '../../recipe_ingredients/presentation/recipe_ingredients_screen.dart';
 import '../../saved_recipes/domain/use_case/fetch_recipes_use_case.dart';
 import '../../saved_recipes/domain/use_case/unsaved_recipe_use_case.dart';
 import '../../saved_recipes/presentation/saved_recipes_state.dart';
@@ -51,6 +52,14 @@ final router = GoRouter(
         viewModel: SignUpViewModel(),
       ),
     ),
+    // recipe ingredients
+    GoRoute(
+      path: '${Routes.recipeIngredients}/:id',
+      builder: (context, state) {
+        final id = int.parse(state.pathParameters['id']!);
+        return RecipeIngredientsScreen(recipeId: id);
+      },
+    ),
 
     // 탭 영역 BottomNavBar
     StatefulShellRoute.indexedStack(
@@ -94,6 +103,9 @@ final router = GoRouter(
             ),
           ],
         ),
+
+
+
 
         // 3번 탭: Search
         StatefulShellBranch(

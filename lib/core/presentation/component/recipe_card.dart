@@ -6,10 +6,16 @@ import '../../../ui/text_styles.dart';
 class RecipeCard extends StatelessWidget {
   final Recipe recipe;
   final bool isBookmarked;
-  final VoidCallback? onBookmarkTap;
+  final void Function()? onBookmarkTap;
   final bool? isShowTime;
 
-  const RecipeCard({super.key, required this.recipe, required this.isBookmarked, this.onBookmarkTap, this.isShowTime,});
+  const RecipeCard({
+    super.key,
+    required this.recipe,
+    required this.isBookmarked,
+    this.onBookmarkTap,
+    this.isShowTime,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,21 +34,22 @@ class RecipeCard extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Colors.transparent,
-              AppColors.black.withAlpha(255),
-            ],
+            colors: [Colors.transparent, AppColors.black.withAlpha(255)],
           ),
           borderRadius: BorderRadius.circular(10),
         ),
         padding: const EdgeInsets.all(10),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.stretch,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 7,
+                    vertical: 2,
+                  ),
                   decoration: BoxDecoration(
                     color: AppColors.secondary20,
                     borderRadius: BorderRadius.circular(20),
@@ -52,11 +59,11 @@ class RecipeCard extends StatelessWidget {
                       const Icon(Icons.star, color: AppColors.rating, size: 16),
                       const SizedBox(width: 3),
                       Text(
-                          recipe.rating.toStringAsFixed(1),
-                          style: AppTextStyles.smallerRegular.copyWith(
-                            color: AppColors.black,
-                            height: 1.5,
-                          )
+                        recipe.rating.toStringAsFixed(1),
+                        style: AppTextStyles.smallerRegular.copyWith(
+                          color: AppColors.black,
+                          height: 1.5,
+                        ),
                       ),
                     ],
                   ),
@@ -71,9 +78,7 @@ class RecipeCard extends StatelessWidget {
               children: [
                 // 레시피 이름 & 셰프
                 ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxWidth: 180,
-                  ),
+                  constraints: BoxConstraints(maxWidth: 180),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -91,49 +96,57 @@ class RecipeCard extends StatelessWidget {
                         ),
                       ),
                     ],
-                  )
+                  ),
                 ),
 
                 // 시간 + 북마크
-                (isShowTime ?? false) ? Column(
-                  mainAxisAlignment: MainAxisAlignment.start, // 중앙 정렬
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Row(
-                      children: [
-                        const Icon(Icons.access_time, color: AppColors.gray4, size: 14),
-                        const SizedBox(width: 4),
-                        Text(
-                          recipe.time ?? '',
-                          style: AppTextStyles.smallerRegular.copyWith(
-                            color: AppColors.gray4,
-                            height: 1.5,
+                (isShowTime ?? false)
+                    ? Column(
+                        mainAxisAlignment: MainAxisAlignment.start, // 중앙 정렬
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Row(
+                            children: [
+                              const Icon(
+                                Icons.access_time,
+                                color: AppColors.gray4,
+                                size: 14,
+                              ),
+                              const SizedBox(width: 4),
+                              Text(
+                                recipe.time ?? '',
+                                style: AppTextStyles.smallerRegular.copyWith(
+                                  color: AppColors.gray4,
+                                  height: 1.5,
+                                ),
+                              ),
+                              const SizedBox(width: 10),
+                              GestureDetector(
+                                onTap: onBookmarkTap,
+                                child: Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Icon(
+                                    isBookmarked
+                                        ? Icons.bookmark
+                                        : Icons.bookmark_border,
+                                    size: 16,
+                                    color: AppColors.primary100,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        const SizedBox(width: 10),
-                        GestureDetector(
-                          onTap: onBookmarkTap,
-                          child: Container(
-                            width: 24,
-                            height: 24,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(
-                              isBookmarked ? Icons.bookmark : Icons.bookmark_border,
-                              size: 16,
-                              color: AppColors.primary100
-                            ),
-                          ),
-                        ),
-                      ]
-                    ),
-                  ],
-                ) : const SizedBox.shrink(),
+                        ],
+                      )
+                    : const SizedBox.shrink(),
               ],
             ),
-          ]
+          ],
         ),
       ),
     );
