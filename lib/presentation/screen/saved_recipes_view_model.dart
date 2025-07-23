@@ -1,31 +1,21 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_recipe_app/data/repository/bookmark_repository.dart';
 
 import '../../data/model/recipe.dart';
 import '../../data/repository/recipe_repository.dart';
 
 class SavedRecipesViewModel with ChangeNotifier {
   final RecipeRepository _recipeRepository;
+  final BookmarkRepository _bookmarkRepository;
 
   bool isLoading = false;
   List<Recipe> recipes = [];
 
-  String getRecipeName(int index) {
-    final List<String> listOfName = recipes[index].name.split(' ');
-    final List<String> result = [];
-    if (listOfName.length > 3) {
-      final String firstWord = listOfName.sublist(0, 3).join(' ');
-      final String lastWord = listOfName.sublist(3).join(' ');
-
-      result.add(firstWord);
-      result.add(lastWord);
-      return result.join('\n');
-    }
-
-    return '\n${recipes[index].name}';
-  }
-
-  SavedRecipesViewModel({required RecipeRepository recipeRepository})
-    : _recipeRepository = recipeRepository {
+  SavedRecipesViewModel({
+    required RecipeRepository recipeRepository,
+    required BookmarkRepository bookmarkRepository,
+  }) : _recipeRepository = recipeRepository,
+       _bookmarkRepository = bookmarkRepository {
     fetchRecipes();
   }
 
@@ -33,9 +23,14 @@ class SavedRecipesViewModel with ChangeNotifier {
     isLoading = true;
     notifyListeners();
 
-    recipes = await _recipeRepository.getRecipes();
+    recipes = await _bookmarkRepository.getSavedRecipes();
 
     isLoading = false;
+    notifyListeners();
+  }
+
+  void deleteRecipe(int id) async {
+    recipes.removeWhere((recipe) => recipe.id == id);
     notifyListeners();
   }
 }
