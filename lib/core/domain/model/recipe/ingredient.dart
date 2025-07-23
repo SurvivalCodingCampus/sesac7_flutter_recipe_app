@@ -3,22 +3,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part "ingredient.freezed.dart";
 
 @freezed
-class Ingredient with _$Ingredient {
+abstract class Ingredient with _$Ingredient {
   static const String invalidId = 'invalid_id';
 
-  @override
-  final String id;
-  @override
-  final String name;
-  @override
-  final String imageUrl;
-  @override
-  final double weight;
-
-  const Ingredient({
-    required this.id,
-    required this.name,
-    required this.imageUrl,
-    required this.weight,
-  });
+  const factory Ingredient({
+    required String id,
+    required String name,
+    required String imageUrl,
+    required double weight,
+  }) = _Ingredient;
 }
