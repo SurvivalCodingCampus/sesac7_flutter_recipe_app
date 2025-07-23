@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/domain/model/label.dart';
 import 'package:flutter_recipe_app/presentation/component/tab/tabs.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -7,16 +6,13 @@ void main() {
   testWidgets('Tabs Finder Test', (tester) async {
     final String labelTitle1 = 'Label1';
     final String labelTitle2 = 'Label2';
-    final List<Label> labels = [
-      Label(labelTitle: labelTitle1),
-      Label(labelTitle: labelTitle2),
-    ];
+    final List<String> labels = [labelTitle1, labelTitle2];
 
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
           body: Tabs(
-            labels: labels,
+            labelTitles: labels,
             selectedIndex: 0,
             onValueChange: (index) {},
           ),
@@ -34,9 +30,9 @@ void main() {
     final Key tabsKey = Key('TabsKey');
     final String labelTitle1 = 'Label1';
     final String labelTitle2 = 'Label2';
-    final List<Label> labels = [
-      Label(labelTitle: labelTitle1),
-      Label(labelTitle: labelTitle2),
+    final List<String> labels = [
+      labelTitle1,
+      labelTitle2,
     ];
 
     int selectedIndex = -1;
@@ -46,7 +42,7 @@ void main() {
         home: Scaffold(
           body: Tabs(
             key: tabsKey,
-            labels: labels,
+            labelTitles: labels,
             selectedIndex: selectedIndex,
             onValueChange: (index) {
               selectedIndex = index;

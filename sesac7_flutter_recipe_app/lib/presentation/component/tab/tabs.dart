@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/domain/model/label.dart';
 import 'package:flutter_recipe_app/presentation/component/button/label_button.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 
 class Tabs extends StatelessWidget {
-  final List<Label> labels;
+  final List<String> labelTitles;
   final int selectedIndex;
   final Function(int selectedIndex) onValueChange;
 
   const Tabs({
     super.key,
-    required this.labels,
+    required this.labelTitles,
     required this.selectedIndex,
     required this.onValueChange,
   });
@@ -23,18 +22,17 @@ class Tabs extends StatelessWidget {
       decoration: BoxDecoration(color: AppColors.white),
       child: Center(
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: labels
-              .map(
-                (label) => LabelButton(
-                  labelName: label.labelTitle,
-                  isSelected: labels.indexOf(label) == selectedIndex,
-                  onValueChange: (label) {
-                    onValueChange(labels.indexOf(label));
-                  },
-                ),
-              )
-              .toList(),
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            for (int i = 0; i < labelTitles.length; i++)
+              LabelButton(
+                labelName: labelTitles[i],
+                isSelected: selectedIndex == i,
+                onValueChange: () {
+                  onValueChange(i);
+                },
+              ),
+          ],
         ),
       ),
     );
