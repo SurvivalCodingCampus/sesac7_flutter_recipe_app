@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/domain/model/ingredient.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class IngredientCard extends StatelessWidget {
-  final Ingredient ingredient;
+  final String name;
+  final String image;
   final int amount;
 
   const IngredientCard({
     super.key,
-    required this.ingredient,
+    required this.name,
+    required this.image,
     required this.amount,
   });
 
@@ -31,7 +32,7 @@ class IngredientCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Image.network(
-                ingredient.image,
+                image,
                 width: 40.0,
                 height: 40.0,
               ),
@@ -40,7 +41,7 @@ class IngredientCard extends StatelessWidget {
               width: 16.0,
             ),
             Text(
-              ingredient.name,
+              name,
               style: TextStyles.ingredientCardTitle,
               textAlign: TextAlign.left,
             ),
