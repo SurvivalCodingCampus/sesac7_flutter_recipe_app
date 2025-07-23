@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/button/big_button.dart';
 import 'package:flutter_recipe_app/presentation/component/button/medium_button.dart';
+import 'package:flutter_recipe_app/presentation/component/inputfield/input_field.dart';
 
 import '../component/button/small_button.dart';
-import '../component/button/test_button.dart';
-import '../component/card/recipe_card.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -15,11 +14,12 @@ class MainScreen extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SmallButton(
+            BigButton(
               text: 'Button',
-              onClick: () {
+              onClick: (value) {
+                print(value);
               },
             ),
             SizedBox(height: 16),
@@ -30,20 +30,22 @@ class MainScreen extends StatelessWidget {
               },
             ),
             SizedBox(height: 16),
-            BigButton(
+            SmallButton(
               text: 'Button',
               onClick: (String text) {
                 print(text);
               },
             ),
             SizedBox(height: 16),
-            TestButton(
-              text: 'Button',
-              onClick: (String text) {
-                print(text);
+            InputField(
+              label: 'Label',
+              placeHolder: 'Placeholder',
+              value: 'Value',
+              onValueChange: (String value) {
+                print(value);
               },
             ),
-            RecipeCard(),
+            SizedBox(height: 16),
           ],
         ),
       ),

@@ -5,7 +5,7 @@ import '../../../ui/text_styles.dart';
 
 class BigButton extends StatelessWidget {
   final String text;
-  final void Function(String)? onClick;
+  final void Function(String) onClick;
 
   const BigButton({
     super.key,
@@ -15,36 +15,46 @@ class BigButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double buttonWidth = 315.0;
+    final double buttonHeight = 60.0;
+    final double iconSize = 20.0;
+
     return GestureDetector(
       onTap: () {
-        onClick?.call(text);
+        onClick('$text, Big button');
       },
       child: Container(
-        width: 315,
-        height: 60,
+        width: buttonWidth,
+        height: buttonHeight,
         decoration: BoxDecoration(
           color: AppColors.primary100,
           borderRadius: BorderRadius.circular(10.0),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 4,
+              offset: Offset(0, 2),
+            ),
+          ],
         ),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                key: const Key('big button'),
-                text,
-                style: TextStyles.normalTextBold.copyWith(
-                  color: AppColors.white,
-                ),
-              ),
-              SizedBox(width: 30), // 간격
-              Icon(
-                Icons.arrow_forward_outlined,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              text,
+              style: TextStyles.mediumTextBold.copyWith(
                 color: AppColors.white,
-                size: 20,
               ),
-            ],
-          ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(width: 11),
+            Icon(
+              Icons.arrow_forward,
+              size: iconSize,
+              color: AppColors.white,
+            ),
+          ],
         ),
       ),
     );

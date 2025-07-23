@@ -5,7 +5,7 @@ import '../../../ui/text_styles.dart';
 
 class MediumButton extends StatelessWidget {
   final String text;
-  final void Function(String)? onClick;
+  final void Function(String) onClick;
 
   const MediumButton({
     super.key,
@@ -15,41 +15,46 @@ class MediumButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double buttonWidth = 243.0;
+    final double buttonHeight = 54.0;
+    final double iconSize = 20.0;
+
     return GestureDetector(
       onTap: () {
-        onClick?.call(text);
+        onClick('$text, Medium button');
       },
       child: Container(
-        width: 243,
-        height: 54,
+        width: buttonWidth,
+        height: buttonHeight,
         decoration: BoxDecoration(
           color: AppColors.primary100,
           borderRadius: BorderRadius.circular(10.0),
+          boxShadow: const [
+            BoxShadow(
+              color: Colors.black26,
+              blurRadius: 4,
+              offset: Offset(0, 2),
+            ),
+          ],
         ),
-        child: Center(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                key: const Key('medium button'),
-                text,
-                style: TextStyles.normalTextBold.copyWith(
-                  color: AppColors.white,
-                ),
-              ),
-              SizedBox(width: 30), // 간격
-              Icon(
-                Icons.arrow_forward_outlined,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              text,
+              style: TextStyles.mediumTextBold.copyWith(
                 color: AppColors.white,
-                size: 20,
               ),
-              // Image.asset(
-              //   'assets/Arrow_Right.png',
-              //   width: 20,
-              //   height: 20,
-              // ),
-            ],
-          ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(width: 9),
+            Icon(
+              Icons.arrow_forward,
+              size: iconSize,
+              color: AppColors.white,
+            ),
+          ],
         ),
       ),
     );
