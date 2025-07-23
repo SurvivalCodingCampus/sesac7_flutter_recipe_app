@@ -2,8 +2,11 @@ import 'package:flutter_recipe_app/feature/ingredient/domain/repository/procedur
 
 class MockProcedureRepositoryImpl implements ProcedureRepository {
   @override
-  Future<List<String>> fetchProcedure(String recipeId) {
-    // TODO: implement fetchProcedure
-    throw UnimplementedError();
+  Future<List<String>> fetchProcedure(String recipeId) async {
+    return [
+      'Lorem Ipsum tempor incididunt ut labore et dolore,in voluptate velit esse cillum dolore eu fugiat nulla pariatur?',
+      'Lorem Ipsum tempor incididunt ut labore et dolore,in voluptate velit esse cillum dolore eu fugiat nulla pariatur?\nTempor incididunt ut labore et dolore,in voluptate velit esse cillum dolore eu fugiat nulla pariatur?',
+      'Lorem Ipsum tempor incididunt ut labore et dolore,in voluptate velit esse cillum dolore eu fugiat nulla pariatur?',
+    ];
   }
 }

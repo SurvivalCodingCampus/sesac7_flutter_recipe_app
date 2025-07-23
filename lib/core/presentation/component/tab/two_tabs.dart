@@ -9,8 +9,6 @@ class TwoTabs extends StatelessWidget {
   static const double tabHeight = 33;
   static const int textMaxLines = 1;
   static const EdgeInsetsGeometry tabPadding = EdgeInsets.only(
-    left: 30,
-    right: 30,
     top: 12,
     bottom: 13,
   );

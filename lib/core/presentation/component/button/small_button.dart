@@ -4,7 +4,7 @@ import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class SmallButton extends StatefulWidget {
-  static const double width = 174;
+  static const double defaultWidth = 174;
   static const double height = 37;
   static const int textMaxLines = 1;
   static const Key gestureKey = Key('small button gesture');
@@ -12,11 +12,13 @@ class SmallButton extends StatefulWidget {
 
   final String text;
   final VoidCallback onClick;
+  final double? width;
 
   const SmallButton({
     super.key,
     required this.text,
     required this.onClick,
+    this.width,
   });
 
   @override
@@ -48,9 +50,9 @@ class _SmallButtonState extends State<SmallButton> {
       },
       child: Container(
         key: SmallButton.buttonContainerKey,
-        width: SmallButton.width,
+        width: widget.width ?? SmallButton.defaultWidth,
         height: SmallButton.height,
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
           color: isEnabled ? AppColors.primary100 : AppColors.gray4,
           borderRadius: BorderRadius.circular(ComponentConstant.borderRadius),

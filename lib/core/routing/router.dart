@@ -6,7 +6,13 @@ import 'package:flutter_recipe_app/core/data/repository/recipe/recipe_repository
 import 'package:flutter_recipe_app/feature/authentication/presentation/sign_in_screen.dart';
 import 'package:flutter_recipe_app/feature/authentication/presentation/sign_up_screen.dart';
 import 'package:flutter_recipe_app/feature/home/presentation/home_screen.dart';
+import 'package:flutter_recipe_app/feature/ingredient/data/repository/mocks/mock_ingredient_repository_impl.dart';
+import 'package:flutter_recipe_app/feature/ingredient/data/repository/mocks/mock_procedure_repository_impl.dart';
+import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_all_ingredients_use_case.dart';
+import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_procedure_use_case.dart';
+import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_recipe_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_screen.dart';
+import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_view_model.dart';
 import 'package:flutter_recipe_app/feature/main_navigation/presentation/main_navigation_screen.dart';
 import 'package:flutter_recipe_app/feature/notifications/presentation/notifications_screen.dart';
 import 'package:flutter_recipe_app/feature/profile/presentation/profile_screen.dart';
@@ -17,15 +23,33 @@ import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_reci
 import 'package:flutter_recipe_app/feature/splash/presentation/splash_screen.dart';
 import 'package:go_router/go_router.dart';
 
+// Repository
 final _recipeRepository = RecipeRepositoryImpl(
   recipeDataSource: RecipeDataSourceImpl(),
 );
 
 final _mockBookmarkRepository = MockBookmarkRepositoryImpl();
 
+final _mockIngredientRespository = MockIngredientRepositoryImpl();
+
+final _mockProcedureRepository = MockProcedureRepositoryImpl();
+
+// Use Case
 final _getSavedRecipesUseCase = GetSavedRecipesUseCase(
   recipeRepository: _recipeRepository,
   bookmarkRepository: _mockBookmarkRepository,
+);
+
+final _fetchRecipeUseCase = FetchRecipeUseCase(
+  recipeRepository: _recipeRepository,
+);
+
+final _fetchAllIngredientsUseCase = FetchAllIngredientsUseCase(
+  ingredientRepository: _mockIngredientRespository,
+);
+
+final _fetchProcedureUseCase = FetchProcedureUseCase(
+  procedureRepository: _mockProcedureRepository,
 );
 
 GoRouter createRouter() => GoRouter(
@@ -112,9 +136,28 @@ GoRouter createRouter() => GoRouter(
             GoRoute(
               path: Routes.ingredient,
               builder: (context, state) {
-                final id = state.uri.queryParameters[QueryParameters.id];
+                final id = state.uri.queryParameters[QueryParameters.id]!;
+                final viewModel = IngredientViewModel(
+                  recipeId: id,
+                  fetchRecipeUseCase: _fetchRecipeUseCase,
+                  fetchAllIngredientsUseCase: _fetchAllIngredientsUseCase,
+                  fetchProcedureUseCase: _fetchProcedureUseCase,
+                );
 
-                return IngredientScreen();
+                viewModel.fetchRecipe();
+                viewModel.fetchIngredients();
+                viewModel.fetchProcedure();
+
+                return ListenableBuilder(
+                  listenable: viewModel,
+                  builder: (context, child) {
+                    return IngredientScreen(
+                      viewModel: viewModel,
+                      onBackTap: () => context.pop(),
+                      onMenuTap: () {},
+                    );
+                  },
+                );
               },
             ),
           ],

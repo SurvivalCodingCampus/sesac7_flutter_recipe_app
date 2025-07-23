@@ -15,9 +15,8 @@ class FetchRecipeUseCase {
     String recipeId,
   ) async {
     try {
-      final recipe = await _recipeRepository.fetchRecipe(
-        recipeId,
-      );
+      final recipes = await _recipeRepository.fetchAllRecipes();
+      final recipe = recipes.firstWhere((e) => e.id == recipeId);
 
       return Result.success(recipe);
     } on TimeoutException {

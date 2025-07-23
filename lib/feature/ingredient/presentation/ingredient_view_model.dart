@@ -3,6 +3,7 @@ import 'package:flutter_recipe_app/core/domain/model/recipe/ingredient.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
+import 'package:flutter_recipe_app/feature/ingredient/domain/model/ingredient_tab_type.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_all_ingredients_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_procedure_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_recipe_use_case.dart';
@@ -37,6 +38,8 @@ class IngredientViewModel with ChangeNotifier {
       case Error<Recipe, NetworkError>():
         _errorState(result.error.toString());
     }
+
+    notifyListeners();
   }
 
   void fetchIngredients() async {
@@ -49,6 +52,8 @@ class IngredientViewModel with ChangeNotifier {
       case Error<List<Ingredient>, NetworkError>():
         _errorState(result.error.toString());
     }
+
+    notifyListeners();
   }
 
   void fetchProcedure() async {
@@ -61,6 +66,14 @@ class IngredientViewModel with ChangeNotifier {
       case Error<List<String>, NetworkError>():
         _errorState(result.error.toString());
     }
+
+    notifyListeners();
+  }
+
+  void tabChange(int index) {
+    _state = state.copyWith(tabType: IngredientTabType.values[index]);
+
+    notifyListeners();
   }
 
   void _errorState(String message) {
