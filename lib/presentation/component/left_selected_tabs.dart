@@ -18,15 +18,11 @@ class LeftSelectedTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // width: 375,
       height: 58,
-      padding: EdgeInsets.fromLTRB(30, 12, 30, 13),
-      margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
       decoration: BoxDecoration(
         color: AppColors.white,
       ),
       child: SizedBox(
-        // width: 315,
         height: 33,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -36,22 +32,24 @@ class LeftSelectedTabs extends StatelessWidget {
                 onTap: () {
                   onValueChange(0);
                 },
-                child: Container(
+                child: AnimatedContainer(
                   // width: 120,
                   height: 33,
                   decoration: BoxDecoration(
-                    color: AppColors.primary100,
+                    color: (selectedIndex == 0)
+                        ? AppColors.primary100
+                        : AppColors.white,
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  child: Container(
-                    // width: 120,
-                    height: 17,
-                    padding: EdgeInsets.fromLTRB(0, 8, 0, 8),
+                  duration: Duration(milliseconds: 100),
+                  child: Center(
                     child: Text(
                       listOfLables[0],
                       textAlign: TextAlign.center,
                       style: TextStyles.smallerTextBold.copyWith(
-                        color: AppColors.white,
+                        color: (selectedIndex == 0)
+                            ? AppColors.white
+                            : AppColors.primary80,
                       ),
                     ),
                   ),
@@ -64,22 +62,24 @@ class LeftSelectedTabs extends StatelessWidget {
                 onTap: () {
                   onValueChange(1);
                 },
-                child: Container(
+                child: AnimatedContainer(
                   // width: 120,
                   height: 33,
                   decoration: BoxDecoration(
-                    color: AppColors.white,
+                    color: (selectedIndex == 1)
+                        ? AppColors.primary100
+                        : AppColors.white,
                     borderRadius: BorderRadius.circular(10.0),
                   ),
-                  child: Container(
-                    // width: 120,
-                    height: 17,
-                    padding: EdgeInsets.fromLTRB(9, 8, 9, 8),
+                  duration: Duration(milliseconds: 100),
+                  child: Center(
                     child: Text(
                       listOfLables[1],
                       textAlign: TextAlign.center,
                       style: TextStyles.smallerTextBold.copyWith(
-                        color: AppColors.primary80,
+                        color: (selectedIndex == 1)
+                            ? AppColors.white
+                            : AppColors.primary80,
                       ),
                     ),
                   ),
