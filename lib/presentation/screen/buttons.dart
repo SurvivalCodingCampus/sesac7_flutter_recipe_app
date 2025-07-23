@@ -36,7 +36,7 @@ class _ButtonsState extends State<Buttons> {
         FilterButton(
           text: '5',
           isSelected: isFilterSelected,
-          onClick: () {
+          onTap: () {
             setState(() {
               isFilterSelected = !isFilterSelected ;
             });

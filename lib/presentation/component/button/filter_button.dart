@@ -2,35 +2,22 @@ import 'package:flutter/material.dart';
 
 import '../../../ui/app_colors.dart';
 
-class FilterButton extends StatefulWidget{
+class FilterButton extends StatelessWidget{
 
   final String text;
   final bool isSelected;
-  final void Function() onClick;
+  final void Function() onTap;
 
   const FilterButton({
     required this.text,
     required this.isSelected,
-    required this.onClick,
+    required this.onTap,
   });
-
-  @override
-  State<FilterButton> createState() => _FilterButtonState();
-}
-
-class _FilterButtonState extends State<FilterButton> {
-
-  bool isSelected = false;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: (){
-        widget.onClick();
-        setState(() {
-          isSelected = !isSelected;
-        });
-      },
+      onTap: onTap,
       child: Container(
         height: 28,
         padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -46,7 +33,7 @@ class _FilterButtonState extends State<FilterButton> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              widget.text,
+              text,
               style: TextStyle(
                 color: isSelected ? AppColors.white : AppColors.primary100,
                 fontSize: 11,

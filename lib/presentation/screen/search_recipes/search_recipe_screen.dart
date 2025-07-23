@@ -3,6 +3,7 @@ import 'package:flutter_recipe_app/presentation/screen/search_recipes/search_rec
 import 'package:flutter_svg/svg.dart';
 import '../../../core/router.dart';
 import '../../../ui/app_colors.dart';
+import '../../component/bottom_sheet/filter_search_bottom_sheet.dart';
 import '../../component/recipe_card.dart';
 import '../../component/search/search_input.dart';
 
@@ -27,6 +28,9 @@ class SearchRecipeScreen extends StatelessWidget {
   final SearchRecipesViewModel viewModel;
 
   const SearchRecipeScreen({super.key, required this.viewModel});
+
+  // viewModel 안에서 실제로 모델을 받아서 repository impl를 활용해 생성자를 활용해 구현체를 만들면
+  // 교체할 타이밍이 없어서 테스트가 어려워진다.
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +75,22 @@ class SearchRecipeScreen extends StatelessWidget {
                     ),
                     const SizedBox(width: 10),
                     GestureDetector(
-                      // onTap: viewModel.onPressed,
+                      onTap: () async {
+                        showModalBottomSheet<FilterSearchBottomSheet>(
+                          context: context,
+                          isScrollControlled: true,
+                          builder: (context) {
+                            return FilterSearchBottomSheet(
+                              initialFilter: viewModel.state.filterSearchState,
+                              onFilterApplied: (appliedFilter) {
+                                print('[DEBUG] 필터 적용: $appliedFilter');
+                                viewModel.filter(appliedFilter);
+                                Navigator.pop(context);
+                              },
+                            );
+                          }
+                        );
+                      },
                       child: Material(
                         color: Colors.transparent, // 리플
                         borderRadius: BorderRadius.circular(12),
@@ -119,7 +138,7 @@ class SearchRecipeScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 Expanded(
-                  child: viewModel.isLoading
+                  child: viewModel.state.isLoading
                       ? const Center(child: CircularProgressIndicator())
                       : GridView.builder(
                           gridDelegate:
