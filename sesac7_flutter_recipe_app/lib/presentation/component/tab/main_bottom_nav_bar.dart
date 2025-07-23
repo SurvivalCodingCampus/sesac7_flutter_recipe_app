@@ -18,7 +18,7 @@ class MainBottomNavBar extends StatelessWidget {
     // 중앙 버튼의 크기
     final double centerButtonSize = 48.0;
     // 바의 높이 (중앙 버튼이 튀어나오는 부분 고려)
-    final double barHeight = 72.0; // 기본 바 높이
+    final double barHeight = 106.0; // 기본 바 높이
     final double totalHeight =
         barHeight + centerButtonSize / 2; // 전체 높이 (튀어나온 부분 포함)
 
@@ -59,7 +59,7 @@ class MainBottomNavBar extends StatelessWidget {
 
           // 내비게이션 아이템들 (아이콘들)
           Positioned(
-            top: totalHeight / 2,
+            top: (totalHeight - 34.0) / 2,
             left: 0,
             right: 0,
             child: Row(

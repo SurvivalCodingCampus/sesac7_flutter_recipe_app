@@ -17,12 +17,15 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(child: body),
-            MainBottomNavBar(selectedIndex: currentIndex, onItemTapped: onTap),
-          ],
+        child: SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: body,
         ),
+      ),
+      bottomNavigationBar: MainBottomNavBar(
+        selectedIndex: currentIndex,
+        onItemTapped: onTap,
       ),
     );
   }
