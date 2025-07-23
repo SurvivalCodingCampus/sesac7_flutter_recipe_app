@@ -6,7 +6,7 @@ import '../../ui/text_styles.dart';
 
 class RecipeCard extends StatelessWidget {
   final Recipe recipe;
-  final void Function() onClick;
+  final void Function(int id) onClick;
 
   const RecipeCard({
     super.key,
@@ -17,19 +17,8 @@ class RecipeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      // width: 315,
       height: 150,
-      // padding: EdgeInsets.fromLTRB(10, 10, 10, 10),
-      // margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
       decoration: BoxDecoration(
-        boxShadow: [
-          // BoxShadow(
-          //   color: Colors.black.withValues(),
-          //   spreadRadius: 1,
-          //   blurRadius: 4,
-          //   offset: Offset(0, 2),
-          // ),
-        ],
         borderRadius: BorderRadius.circular(10),
       ),
       child: ClipRRect(
@@ -102,19 +91,18 @@ class RecipeCard extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              child: Text(
-                                recipe.name,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyles.smallTextBold.copyWith(
-                                  color: AppColors.white,
-                                ),
+                            Text(
+                              recipe.name,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyles.smallTextBold.copyWith(
+                                color: AppColors.white,
                               ),
                             ),
                             Text(
-                              'By ${recipe.chef}',
+                              recipe.chef,
                               style: TextStyles.smallerTextRegular.copyWith(
                                 fontSize: 8,
                                 color: AppColors.gray4,
@@ -153,7 +141,9 @@ class RecipeCard extends StatelessWidget {
                               ),
                               SizedBox(width: 10, height: 24),
                               GestureDetector(
-                                onTap: onClick,
+                                onTap: () {
+                                  onClick(recipe.id);
+                                },
                                 child: Container(
                                   width: 24,
                                   height: 24,
