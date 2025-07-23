@@ -68,7 +68,7 @@ class SavedRecipeApp extends StatelessWidget {
       ),
       // home: SplashScreen(),
       home: ListenableBuilder(listenable: _savedRecipeViewModel, builder: (context, build) {
-        if (_savedRecipeViewModel.recipes.isEmpty) {
+        if (_savedRecipeViewModel.savedRecipeState.recipes.isEmpty) {
           return const Center(
             child: CircularProgressIndicator(),
           );

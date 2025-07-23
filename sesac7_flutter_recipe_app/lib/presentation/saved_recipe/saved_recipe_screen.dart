@@ -31,11 +31,11 @@ class SavedRecipeScreen extends StatelessWidget {
           children: [
             Expanded(
               child: ListView.separated(
-                itemCount: _savedRecipeViewModel.recipes.length,
+                itemCount: _savedRecipeViewModel.savedRecipeState.recipes.length,
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 itemBuilder: (context, index) {
                   return RecipeCard(
-                    recipe: _savedRecipeViewModel.recipes[index],
+                    recipe: _savedRecipeViewModel.savedRecipeState.recipes[index],
                     onFavoritePressed: () {},
                   );
                 },
