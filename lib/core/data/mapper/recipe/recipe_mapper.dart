@@ -1,5 +1,4 @@
 import 'package:flutter_recipe_app/core/data/dto/recipe/recipe_dto.dart';
-import 'package:flutter_recipe_app/core/data/mapper/recipe/ingredient_mapper.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
 
 extension RecipeDtoToModel on RecipeDto {
@@ -12,7 +11,6 @@ extension RecipeDtoToModel on RecipeDto {
       creator: chef ?? '',
       cookingTime: time ?? '',
       rating: rating ?? 0,
-      ingredients: ingredients?.map((e) => e.toModel()).toList() ?? [],
       reviewCount: 0,
       serve: 0,
     );
@@ -33,7 +31,6 @@ extension RecipeModelToDto on Recipe {
       chef: creator,
       time: cookingTime,
       rating: rating,
-      ingredients: ingredients.map((e) => e.toDto()).toList(),
     );
   }
 }

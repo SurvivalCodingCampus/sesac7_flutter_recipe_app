@@ -8,21 +8,7 @@ part "ingredient_state.freezed.dart";
 @freezed
 abstract class IngredientState with _$IngredientState {
   const factory IngredientState({
-    @Default(
-      Recipe(
-        id: '',
-        category: '',
-        name: '',
-        imageUrl: '',
-        creator: '',
-        cookingTime: '',
-        rating: 0,
-        reviewCount: 0,
-        serve: 0,
-        ingredients: [],
-      ),
-    )
-    Recipe recipe,
+    @Default(Recipe.empty) Recipe recipe,
     @Default([]) List<Ingredient> ingredients,
     @Default([]) List<String> procedure,
     @Default('') String reviewCount,

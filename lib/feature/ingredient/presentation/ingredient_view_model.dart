@@ -70,6 +70,9 @@ class IngredientViewModel with ChangeNotifier {
 
   void fetchProcedure() async {
     _state = state.copyWith(isLoading: true);
+
+    notifyListeners();
+
     final result = await _fetchProcedureUseCase.execute(recipeId);
 
     switch (result) {
