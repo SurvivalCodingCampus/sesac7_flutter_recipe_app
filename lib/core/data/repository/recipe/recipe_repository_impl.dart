@@ -28,4 +28,10 @@ class RecipeRepositoryImpl
         .where((e) => e.id != Recipe.invalidId)
         .toList();
   }
+
+  @override
+  Future<Recipe> fetchRecipe(String id) {
+    // TODO: implement fetchRecipe
+    throw UnimplementedError();
+  }
 }
