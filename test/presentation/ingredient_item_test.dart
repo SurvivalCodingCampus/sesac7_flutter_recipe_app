@@ -13,14 +13,14 @@ void main() {
         name: 'Tomatos',
         image:
             'https://cdn.pixabay.com/photo/2017/10/06/17/17/tomato-2823826_1280.jpg',
+        amount: 500,
       );
-      final int quantity = 500;
       final testKey = 'testKeyIngredientItem';
 
       await tester.pumpWidget(
         MaterialApp(
           key: Key(testKey),
-          home: IngredientItem(ingredient: ingredient, quantity: quantity),
+          home: IngredientItem(ingredient: ingredient),
         ),
       );
 

@@ -14,6 +14,7 @@ void main() {
         name: 'Tomatos',
         image:
             'https://cdn.pixabay.com/photo/2017/10/06/17/17/tomato-2823826_1280.jpg',
+        amount: 500,
       );
 
       final Recipe recipe = Recipe(
@@ -35,7 +36,7 @@ void main() {
           key: Key(testKey),
           home: RecipeCard(
             recipe: recipe,
-            onClick: () {
+            onClick: (id) {
               print('북마크되었습니다.');
             },
           ),
