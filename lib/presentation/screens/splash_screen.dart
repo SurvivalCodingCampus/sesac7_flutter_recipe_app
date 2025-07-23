@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/presentation/components/buttons/medium_button.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import '../../ui/text_styles.dart';
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({super.key});
+  final VoidCallback onTapStartCooking;
+
+  const SplashScreen({super.key, required this.onTapStartCooking});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +15,7 @@ class SplashScreen extends StatelessWidget {
         decoration: BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              'assets/images/vegi.png',
+              'assets/images/splash.jpg',
             ),
             fit: BoxFit.cover,
           ),
@@ -28,35 +31,19 @@ class SplashScreen extends StatelessWidget {
                   Text(
                     '100K+ Premium Recipe',
                     style: TextStyles.mediumTextBold.copyWith(
-                      color: AppColors.gray3,
+                      color: AppColors.white,
                     ),
                   ),
                 ],
               ),
               Spacer(),
               Column(children: [
-                Text('Get\nCooking', textAlign: TextAlign.center, style: TextStyle(fontSize: 50,fontWeight: FontWeight.w600, color: AppColors.gray3,)),
+                Text('Get\nCooking', textAlign: TextAlign.center, style: TextStyle(fontSize: 50,fontWeight: FontWeight.w600, color: AppColors.white,)),
                 SizedBox(height: 20),
-                Text('Simple way to find Tasty Recipe', style: TextStyles.normalTextRegular.copyWith(color: AppColors.gray3), )
+                Text('Simple way to find Tasty Recipe', style: TextStyles.normalTextRegular.copyWith(color: AppColors.white), )
               ],),
               SizedBox(height: 64),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  alignment: Alignment.center,
-                  fixedSize: Size(243, 54),
-                  backgroundColor: AppColors.primary100,
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                ),
-                onPressed: () {},
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('Start Cooking', style: TextStyles.normalTextBold.copyWith(color: AppColors.white)),
-                    SizedBox(width: 9),
-                    Icon(Icons.arrow_forward_outlined, color: AppColors.white, size: 20,),
-                  ],
-                ),
-              ),
+              MediumButton(text: 'Start Cooking', onClick: onTapStartCooking),
               SizedBox(height: 84),
             ],
           ),
@@ -66,10 +53,10 @@ class SplashScreen extends StatelessWidget {
   }
 }
 
-void main() {
-  runApp(
-    MaterialApp(
-      home: SplashScreen(),
-    ),
-  );
-}
+// void main() {
+//   runApp(
+//     MaterialApp(
+//       home: SplashScreen(),
+//     ),
+//   );
+// }

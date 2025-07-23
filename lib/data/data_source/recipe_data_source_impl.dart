@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 class RecipeDataSourceImpl implements RecipeDataSource {
   final http.Client _client;
 
-  RecipeDataSourceImpl(this._client);
+  RecipeDataSourceImpl({http.Client? client}) : _client = client ?? http.Client();
 
   @override
   Future<List<RecipeDto>> getSavedRecipeDtos() async {
@@ -20,4 +20,5 @@ class RecipeDataSourceImpl implements RecipeDataSource {
         .map((json) => RecipeDto.fromJson(json))
         .toList();
   }
+
 }

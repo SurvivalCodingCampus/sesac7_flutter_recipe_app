@@ -14,29 +14,47 @@ class MediumButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 243,
-      height: 54,
-      decoration: BoxDecoration(
-        color: AppColors.primary100,
-        borderRadius: BorderRadius.circular(10),
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        alignment: Alignment.center,
+        fixedSize: Size(243, 54),
+        backgroundColor: AppColors.primary100,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       ),
+      onPressed: onClick,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(
-            width: 114,
-            height: 24,
-            child: Text(
-              text,
-              style: TextStyles.normalTextBold.copyWith(color: AppColors.white),
-
-            ),
-          ),
+          Text(text, style: TextStyles.normalTextBold.copyWith(color: AppColors.white)),
           SizedBox(width: 9),
-          Icon(Icons.arrow_forward_outlined, color: AppColors.white,size: 20,),
+          Icon(Icons.arrow_forward_outlined, color: AppColors.white, size: 20,),
         ],
       ),
     );
   }
 }
+
+// Container(
+// width: 243,
+// height: 54,
+// decoration: BoxDecoration(
+// color: AppColors.primary100,
+// borderRadius: BorderRadius.circular(10),
+// ),
+// child: Row(
+// mainAxisAlignment: MainAxisAlignment.center,
+// children: [
+// SizedBox(
+// width: 114,
+// height: 24,
+// child: Text(
+// text,
+// style: TextStyles.normalTextBold.copyWith(color: AppColors.white),
+//
+// ),
+// ),
+// SizedBox(width: 9),
+// Icon(Icons.arrow_forward_outlined, color: AppColors.white,size: 20,),
+// ],
+// ),
+// )

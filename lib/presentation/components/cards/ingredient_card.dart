@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
+import '../../../data/model/ingredient.dart';
+
 class IngredientCard extends StatelessWidget {
   final Ingredient ingredient;
 
@@ -55,18 +57,6 @@ class IngredientCard extends StatelessWidget {
       ),
     );
   }
-}
-
-class Ingredient {
-  final String title;
-  final String imageUrl;
-  final int quantity;
-
-  Ingredient({
-    required this.title,
-    required this.imageUrl,
-    required this.quantity,
-  });
 }
 
 void main() {

@@ -65,19 +65,19 @@ class SavedRecipesScreen extends StatelessWidget {
   }
 }
 
-void main() {
-  final recipesViewModel = SavedRecipesViewModel(
-    RecipeRepositoryImpl(MockRecipeDataSourceImpl()),
-  );
-
-  recipesViewModel.fetchRecipes();
-
-  runApp(
-    MaterialApp(
-      home: SavedRecipesScreen(viewModel: recipesViewModel,),
-    ),
-  );
-}
+// void main() {
+//   final recipesViewModel = SavedRecipesViewModel(
+//     RecipeRepositoryImpl(MockRecipeDataSourceImpl()),
+//   );
+//
+//   recipesViewModel.fetchRecipes();
+//
+//   runApp(
+//     MaterialApp(
+//       home: SavedRecipesScreen(viewModel: recipesViewModel,),
+//     ),
+//   );
+// }
 
 
 // @override
