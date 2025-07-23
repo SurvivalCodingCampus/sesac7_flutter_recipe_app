@@ -15,7 +15,7 @@ extension IngredientsModelToDto on Ingredients {
   IngredientsDto toDto() {
     return IngredientsDto(
       ingredient: ingredient.toDto(),
-      amount: amount.toInt(),
+      amount: amount,
     );
   }
 }

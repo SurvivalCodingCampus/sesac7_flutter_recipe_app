@@ -8,7 +8,7 @@ class Recipe with _$Recipe {
   @override
   String category;
   @override
-  num id;
+  int id;
   @override
   String name;
   @override

@@ -8,7 +8,7 @@ class Ingredients with _$Ingredients{
   @override
   final Ingredient ingredient;
   @override
-  final num amount;
+  final int amount;
 
   Ingredients({
     required this.ingredient,

@@ -14,7 +14,7 @@ extension IngredientDtoToModel on IngredientDto {
 extension IngredientModelToDto on Ingredient {
   IngredientDto toDto() {
     return IngredientDto(
-      id: id.toDouble(),
+      id: id.toInt(),
       name: name,
       image: image,
     );
