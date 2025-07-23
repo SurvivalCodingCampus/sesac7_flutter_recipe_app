@@ -38,8 +38,8 @@ class _RecipeScreenState extends State<RecipeScreen> {
                 name: 'Tomatos',
                 image:
                     'https://cdn.pixabay.com/photo/2017/10/06/17/17/tomato-2823826_1280.jpg',
+                amount: 500,
               ),
-              quantity: 500,
             ),
             SizedBox(height: 20),
             RecipeCard(
@@ -58,12 +58,11 @@ class _RecipeScreenState extends State<RecipeScreen> {
                     name: 'Tomatos',
                     image:
                         'https://cdn.pixabay.com/photo/2017/10/06/17/17/tomato-2823826_1280.jpg',
+                    amount: 500,
                   ),
                 ],
               ),
-              onClick: () {
-                print('북마크되었습니다.');
-              },
+              onClick: (id) {},
             ),
             SizedBox(height: 20),
             Row(
