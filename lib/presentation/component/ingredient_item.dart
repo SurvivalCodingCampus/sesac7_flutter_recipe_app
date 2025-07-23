@@ -6,21 +6,19 @@ import '../../ui/text_styles.dart';
 
 class IngredientItem extends StatelessWidget {
   final Ingredient ingredient;
-  final int quantity;
 
   const IngredientItem({
     super.key,
     required this.ingredient,
-    required this.quantity,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 76,
-      margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
+      // margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
       decoration: BoxDecoration(
-        color: AppColors.gray4,
+        color: AppColors.gray4.withValues(alpha: 0.5),
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -65,7 +63,7 @@ class IngredientItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '${quantity}g',
+                  '${ingredient.amount}g',
                   style: TextStyles.smallTextRegular.copyWith(
                     color: AppColors.gray3,
                   ),
