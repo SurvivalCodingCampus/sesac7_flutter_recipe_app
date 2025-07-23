@@ -56,7 +56,7 @@ class IngredientItem extends StatelessWidget {
                 '${ingredient.amount}g',
                 style: GoogleFonts.poppins(
                   textStyle: TextStyles.smallTextRegular,
-                  color: AppColors.gray3
+                  color: AppColors.gray3,
                 ),
               ),
             ),

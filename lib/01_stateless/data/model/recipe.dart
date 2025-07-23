@@ -1,16 +1,15 @@
-class Recipe {
-  final String name;
-  final String author;
-  final String image;
-  final int duration;
-  final double rating;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  const Recipe({
-    required this.name,
-    required this.author,
-    required this.image,
-    required this.duration,
-    required this.rating
-  });
+part 'recipe.freezed.dart';
 
+@freezed
+abstract class Recipe with _$Recipe {
+  const factory Recipe({
+    required String name,
+    required String author,
+    required String image,
+    required int duration,
+    required double rating,
+    required int id,
+  }) = _Recipe;
 }

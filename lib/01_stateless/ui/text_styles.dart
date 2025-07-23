@@ -25,6 +25,12 @@ abstract class TextStyles {
     fontFamily: 'Poppins',
     height: 1.5,
   );
+  static const TextStyle smallTextBold = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w600,
+    fontFamily: 'Poppins',
+    height: 1.5,
+  );
   static const TextStyle smallTextRegular = TextStyle(
     fontSize: 14,
     fontWeight: FontWeight.w400,
@@ -70,6 +76,12 @@ abstract class TextStyles {
   static const TextStyle titleTextBold = TextStyle(
     fontSize: 50,
     fontWeight: FontWeight.w600,
+    fontFamily: 'Poppins',
+    height: 1.5,
+  );
+  static const TextStyle labelRegular = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
     fontFamily: 'Poppins',
     height: 1.5,
   );

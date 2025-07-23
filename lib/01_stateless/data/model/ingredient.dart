@@ -24,6 +24,6 @@ class Ingredient {
 
   @override
   String toString() {
-    return 'Person{name: $name, image: $image, amount: $amount}';
+    return 'Ingredient{name: $name, image: $image, amount: $amount}';
   }
 }

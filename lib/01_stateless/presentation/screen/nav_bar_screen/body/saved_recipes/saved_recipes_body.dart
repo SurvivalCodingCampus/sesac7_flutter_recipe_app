@@ -6,10 +6,12 @@ import 'package:google_fonts/google_fonts.dart';
 
 class SavedRecipesBody extends StatelessWidget {
   final SavedRecipesViewModel viewModel;
+  final void Function(int id) toDetailScreen;
 
   const SavedRecipesBody({
     super.key,
     required this.viewModel,
+    required this.toDetailScreen,
   });
 
   @override
@@ -38,9 +40,9 @@ class SavedRecipesBody extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 20),
-                    child: RecipeCard(recipe: viewModel.recipes[index], onTap: (){
+                    child: RecipeCard(recipe: viewModel.recipes[index], onBookmarkTap: (){
                       viewModel.removeBookmarkedRecipe(index);
-                    })
+                    }, onDetailTap: () => toDetailScreen(viewModel.recipes[index].id),)
                   );
                 },
               ),

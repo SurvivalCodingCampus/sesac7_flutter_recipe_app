@@ -6,29 +6,27 @@ import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   final Recipe recipe = Recipe(
-      name: "Traditional spare ribs baked",
-      author: "Chef John",
-      image:  "https://placehold.co/600x400.jpg",
-      duration: 20,
-      rating: 4.0
+    id: 0,
+    name: "Traditional spare ribs baked",
+    author: "Chef John",
+    image: "https://placehold.co/600x400.jpg",
+    duration: 20,
+    rating: 4.0,
   );
   runApp(
-      MaterialApp(
-          home: Scaffold(
-              body: SizedBox(
-                width: 150,
-                height: 150,
-                child:
-                  RecipeSquare(recipe: recipe)
-                ,
-              )
-          )
-      )
+    MaterialApp(
+      home: Scaffold(
+        body: SizedBox(
+          width: 150,
+          height: 150,
+          child: RecipeSquare(recipe: recipe),
+        ),
+      ),
+    ),
   );
 }
 
 class RecipeSquare extends StatelessWidget {
-
   final Recipe recipe;
 
   const RecipeSquare({super.key, required this.recipe});
@@ -85,13 +83,12 @@ class RecipeSquare extends StatelessWidget {
                         ),
                       ),
                       const Spacer(),
-
                     ],
                   ),
                 ),
               ),
             ),
-            Positioned  (
+            Positioned(
               bottom: 10,
               left: 10,
               right: 10,
@@ -110,15 +107,15 @@ class RecipeSquare extends StatelessWidget {
                   ),
                   const SizedBox(height: 3),
                   Text(
-                      'By ${recipe.author}',
-                      style: GoogleFonts.poppins(
-                        textStyle: TextStyles.smallerTextSmallLabel,
-                        color: AppColors.gray3,
-                      )
-                  )
+                    'By ${recipe.author}',
+                    style: GoogleFonts.poppins(
+                      textStyle: TextStyles.smallerTextSmallLabel,
+                      color: AppColors.gray3,
+                    ),
+                  ),
                 ],
-              )
-            )
+              ),
+            ),
           ],
         ),
       ),
