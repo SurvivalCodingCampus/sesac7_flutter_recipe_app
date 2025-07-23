@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/routing/router.dart';
 import 'package:flutter_recipe_app/data/data_source/recipe_data_source/recipe_data_source_impl.dart';
-import 'package:flutter_recipe_app/data/repository/recipe_repository/recipe_repository_impl.dart';
+import 'package:flutter_recipe_app/data/repository/recipe_repository_impl.dart';
 import 'package:flutter_recipe_app/presentation/main/main_screen.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_screen.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_view_model.dart';

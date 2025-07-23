@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_recipe_app/core/enum/network_error.dart';
 import 'package:flutter_recipe_app/core/result.dart';
 import 'package:flutter_recipe_app/domain/model/recipe.dart';
-import 'package:flutter_recipe_app/domain/repository/recipe_repository/recipe_repository.dart';
+import 'package:flutter_recipe_app/domain/repository/recipe_repository.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_state.dart';
 
 class SavedRecipeViewModel with ChangeNotifier {
