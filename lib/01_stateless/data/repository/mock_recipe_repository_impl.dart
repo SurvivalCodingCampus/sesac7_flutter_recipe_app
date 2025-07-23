@@ -1,7 +1,7 @@
 import 'package:flutter_recipe_app/01_stateless/data/model/recipe.dart';
-import 'package:flutter_recipe_app/01_stateless/data/repository/saved_recipes_repository.dart';
+import 'package:flutter_recipe_app/01_stateless/data/repository/recipe_repository.dart';
 
-class MockSavedRecipesRepositoryImpl implements SavedRecipesRepository {
+class MockRecipeRepositoryImpl implements RecipeRepository {
   @override
   Future<List<Recipe>> getRecipes() async {
     return [

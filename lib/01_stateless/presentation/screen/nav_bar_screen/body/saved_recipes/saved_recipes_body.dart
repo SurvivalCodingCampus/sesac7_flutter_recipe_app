@@ -38,7 +38,9 @@ class SavedRecipesBody extends StatelessWidget {
                 itemBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.only(bottom: 20),
-                    child: RecipeCard(recipe: viewModel.recipes[index], onTap: (){})
+                    child: RecipeCard(recipe: viewModel.recipes[index], onTap: (){
+                      viewModel.removeBookmarkedRecipe(index);
+                    })
                   );
                 },
               ),

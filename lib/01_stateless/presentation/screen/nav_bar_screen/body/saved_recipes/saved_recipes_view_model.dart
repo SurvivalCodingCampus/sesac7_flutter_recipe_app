@@ -2,14 +2,19 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/data/model/recipe.dart';
-import 'package:flutter_recipe_app/01_stateless/data/repository/saved_recipes_repository.dart';
+import 'package:flutter_recipe_app/01_stateless/data/repository/bookmark_recipe_repository.dart';
 
 class SavedRecipesViewModel with ChangeNotifier {
-  SavedRecipesRepository _repo;
+  BookmarkRecipeRepository _repo;
 
   SavedRecipesViewModel({
-    required SavedRecipesRepository repo,
+    required BookmarkRecipeRepository repo,
   }) : _repo = repo;
+
+
+  set repo(BookmarkRecipeRepository s) {
+    _repo = s;
+  }
 
   List<Recipe> _recipes = [];
   bool _isLoading = false;
@@ -17,18 +22,30 @@ class SavedRecipesViewModel with ChangeNotifier {
   UnmodifiableListView<Recipe> get recipes => UnmodifiableListView(_recipes);
   bool get isLoading => _isLoading;
 
-  Future<void> fetchRecipeData() async {
+  Future<void> fetchBookmarkedRecipeData() async {
     _isLoading = true;
     notifyListeners();
 
-    _recipes = await _repo.getRecipes();
+    _recipes = await _repo.getBookmarkedRecipes();
     _isLoading = false;
     notifyListeners();
   }
 
-  set repo(SavedRecipesRepository s) {
-    _repo = s;
+  Future<void> addBookmarkedRecipe() async {
+    //TODO
+    return;
   }
+
+  Future<void> removeBookmarkedRecipe(int index) async {
+    final result = await _repo.removeBookmarkRecipe(index);
+    if (result) {
+      fetchBookmarkedRecipeData();
+    }
+    else {
+      print('Failed to remove bookmark?');
+    }
+  }
+
 
 
 }

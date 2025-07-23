@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/ui/app_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../ui/text_styles.dart';
+import '../../../../../ui/text_styles.dart';
 
 class MainBody extends StatelessWidget {
   final String userId;

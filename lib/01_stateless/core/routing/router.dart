@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_recipe_app/01_stateless/core/routing/routes.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/main_body.dart';
-import 'package:flutter_recipe_app/01_stateless/data/repository/mock_saved_recipes_repository_impl.dart';
-import 'package:flutter_recipe_app/01_stateless/data/repository/saved_recipes_repository.dart';
+import 'package:flutter_recipe_app/01_stateless/data/repository/bookmark_recipe_repository.dart';
+import 'package:flutter_recipe_app/01_stateless/data/repository/mock_bookmark_recipe_repository_impl.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/home/main_body.dart';
+import 'package:flutter_recipe_app/01_stateless/data/repository/mock_recipe_repository_impl.dart';
+import 'package:flutter_recipe_app/01_stateless/data/repository/recipe_repository.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/saved_recipes/saved_recipes_body.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/saved_recipes/saved_recipes_view_model.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/sign_in/sign_in_screen.dart';
@@ -13,7 +15,8 @@ import 'package:go_router/go_router.dart';
 import '../../presentation/screen/nav_bar_screen/nav_bar_screen.dart';
 
 // Repositories made singleton?
-final SavedRecipesRepository savedRecipesRepository = MockSavedRecipesRepositoryImpl();
+final RecipeRepository recipeRepository = MockRecipeRepositoryImpl();
+final BookmarkRecipeRepository bookmarkRecipeRepository = MockBookmarkRecipeRepositoryImpl();
 
 // view models factory
 
@@ -47,9 +50,9 @@ final router = GoRouter(
               path: Routes.savedRecipes,
               builder: (context, state) {
                 final savedRecipesViewModel = SavedRecipesViewModel(
-                  repo: savedRecipesRepository,
+                  repo: bookmarkRecipeRepository,
                 );
-                savedRecipesViewModel.fetchRecipeData();
+                savedRecipesViewModel.fetchBookmarkedRecipeData();
                 return ListenableBuilder(
                   listenable: savedRecipesViewModel,
                   builder: (context, child) {
