@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/component/bottom_sheet/filter_search_bottom_sheet.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/component/bottom_sheet/filter_search_state.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/component/card/recipe_card.dart';
+import 'package:flutter_recipe_app/01_stateless/core/presentation/component/bottom_sheet/filter_search_bottom_sheet.dart';
+import 'package:flutter_recipe_app/01_stateless/core/presentation/component/bottom_sheet/filter_search_state.dart';
+import 'package:flutter_recipe_app/01_stateless/core/presentation/component/card/recipe_card.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_view_model.dart';
 
 class SearchRecipesScreen extends StatelessWidget {

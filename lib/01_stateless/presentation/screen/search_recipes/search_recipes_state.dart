@@ -1,7 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../data/model/recipe.dart';
-import '../../component/bottom_sheet/filter_search_state.dart';
+import '../../../domain/model/recipe.dart';
+import '../../../core/presentation/component/bottom_sheet/filter_search_state.dart';
 
 part 'search_recipes_state.freezed.dart';
 

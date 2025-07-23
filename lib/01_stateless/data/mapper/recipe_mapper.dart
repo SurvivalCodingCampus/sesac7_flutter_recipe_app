@@ -1,5 +1,5 @@
 import '../dto/recipes_response_dto.dart';
-import '../model/recipe.dart';
+import '../../domain/model/recipe.dart';
 
 extension RecipesDtoToRecipes on RecipesResponseDto {
   List<Recipe> toRecipes() {

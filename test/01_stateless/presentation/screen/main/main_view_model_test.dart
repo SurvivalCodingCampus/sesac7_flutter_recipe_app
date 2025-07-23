@@ -1,4 +1,4 @@
-import 'package:flutter_recipe_app/01_stateless/data/repository/person_repository.dart';
+import 'package:flutter_recipe_app/01_stateless/domain/repository/person_repository.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/main/main_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';

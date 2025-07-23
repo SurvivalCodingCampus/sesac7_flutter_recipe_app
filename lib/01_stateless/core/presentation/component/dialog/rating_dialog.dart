@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../ui/app_colors.dart';
-import '../../../ui/text_styles.dart';
+import '../../../../ui/app_colors.dart';
+import '../../../../ui/text_styles.dart';
 
 class RatingDialog extends StatefulWidget {
   final String title;

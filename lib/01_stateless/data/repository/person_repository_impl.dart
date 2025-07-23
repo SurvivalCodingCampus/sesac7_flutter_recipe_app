@@ -1,4 +1,4 @@
-import 'person_repository.dart';
+import '../../domain/repository/person_repository.dart';
 
 class PersonRepositoryImpl implements PersonRepository {
   @override

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/01_stateless/data/model/person.dart';
+import 'package:flutter_recipe_app/01_stateless/domain/model/person.dart';
 
 class Greeting extends StatelessWidget {
   final String name;

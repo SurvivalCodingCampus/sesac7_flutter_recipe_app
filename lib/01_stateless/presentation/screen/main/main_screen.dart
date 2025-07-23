@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/component/button/big_button.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/component/dialog/rating_dialog.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/component/small_button.dart';
+import 'package:flutter_recipe_app/01_stateless/core/presentation/component/button/big_button.dart';
+import 'package:flutter_recipe_app/01_stateless/core/presentation/component/dialog/rating_dialog.dart';
+import 'package:flutter_recipe_app/01_stateless/core/presentation/component/small_button.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/main/main_view_model.dart';
 
-import '../../../data/model/person.dart';
-import '../../component/greeting.dart';
+import '../../../domain/model/person.dart';
+import '../../../core/presentation/component/greeting.dart';
 
 class MainScreen extends StatelessWidget {
   final MainViewModel viewModel;

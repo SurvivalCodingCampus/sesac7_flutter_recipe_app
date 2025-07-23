@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../ui/app_colors.dart';
+import '../../../ui/app_colors.dart';
 
 class Tabs extends StatelessWidget {
   final List<String> labels;

@@ -1,6 +1,6 @@
 import 'package:flutter_recipe_app/01_stateless/core/result.dart';
-import 'package:flutter_recipe_app/01_stateless/data/model/recipe.dart';
-import 'package:flutter_recipe_app/01_stateless/data/repository/recipe_repository.dart';
+import 'package:flutter_recipe_app/01_stateless/domain/model/recipe.dart';
+import 'package:flutter_recipe_app/01_stateless/domain/repository/recipe_repository.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/saved_recipes/saved_recipes_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -50,7 +50,7 @@ void main() {
 
   setUp(() {
     mockRecipeRepository = MockRecipeRepository();
-    viewModel = SavedRecipesViewModel(recipeRepository: mockRecipeRepository);
+    viewModel = SavedRecipesViewModel(_recipeRepository: mockRecipeRepository);
   });
 
   group('SavedRecipesViewModel', () {

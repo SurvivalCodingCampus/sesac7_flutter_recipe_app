@@ -22,7 +22,7 @@ void main() {
 
   testWidgets('SavedRecipes', (tester) async {
     final savedRecipesViewModel = SavedRecipesViewModel(
-      recipeRepository: RecipeRepositoryImpl(
+      _recipeRepository: RecipeRepositoryImpl(
         recipeDataSource: RecipeDataSourceImpl(
           baseUrl:
           'https://raw.githubusercontent.com/junsuk5/mock_json/refs/heads/main',

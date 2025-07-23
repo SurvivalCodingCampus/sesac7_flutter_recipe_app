@@ -1,14 +1,13 @@
-import 'package:flutter_recipe_app/01_stateless/core/result.dart';
-import 'package:flutter_recipe_app/01_stateless/data/model/recipe.dart';
-import 'package:flutter_recipe_app/01_stateless/data/repository/recipe_repository.dart';
+import 'package:flutter_recipe_app/01_stateless/domain/model/recipe.dart';
+import 'package:flutter_recipe_app/01_stateless/domain/repository/recipe_repository.dart';
 
 class MockRecipeRepositoryImpl implements RecipeRepository {
   @override
-  Future<Result<List<Recipe>>> getRecipes() async {
+  Future<List<Recipe>> getRecipes() async {
     // return Result.error('Failed to fetch recipes');
 
     await Future.delayed(Duration(seconds: 2));
-    return Result.success([
+    return [
       Recipe(
         category: '한식',
         id: 101,
@@ -49,7 +48,6 @@ class MockRecipeRepositoryImpl implements RecipeRepository {
         createdAt: DateTime.now().subtract(Duration(days: 1)),
         rating: 4.2,
       ),
-
-    ]);
+    ];
   }
 }

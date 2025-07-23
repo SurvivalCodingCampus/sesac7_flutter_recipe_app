@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../ui/app_colors.dart';
+import '../../../../ui/app_colors.dart';
 
 class BigButton extends StatefulWidget {
   final String buttonText;

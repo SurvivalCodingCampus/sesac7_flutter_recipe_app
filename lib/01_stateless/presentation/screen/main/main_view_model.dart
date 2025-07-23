@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/01_stateless/data/repository/person_repository.dart';
+import 'package:flutter_recipe_app/01_stateless/domain/repository/person_repository.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/main/main_state.dart';
 
 class MainViewModel with ChangeNotifier {

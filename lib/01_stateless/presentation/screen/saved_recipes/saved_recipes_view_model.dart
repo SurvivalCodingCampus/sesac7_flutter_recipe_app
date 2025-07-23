@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/core/result.dart';
-import 'package:flutter_recipe_app/01_stateless/data/model/recipe.dart';
-import 'package:flutter_recipe_app/01_stateless/data/repository/recipe_repository.dart';
+import 'package:flutter_recipe_app/01_stateless/domain/model/recipe.dart';
+
+import '../../../domain/use_case/fetch_recipes_use_case.dart';
 
 class SavedRecipesViewModel with ChangeNotifier {
-  final RecipeRepository _recipeRepository;
+  final GetRecipesUseCase _fetchRecipesUseCase;
 
   List<Recipe> _recipes = [];
 
@@ -19,14 +20,14 @@ class SavedRecipesViewModel with ChangeNotifier {
   String? get errorMessage => _errorMessage;
 
   SavedRecipesViewModel({
-    required RecipeRepository recipeRepository,
-  }) : _recipeRepository = recipeRepository;
+    required GetRecipesUseCase fetchRecipesUseCase,
+  }) : _fetchRecipesUseCase = fetchRecipesUseCase;
 
   Future<void> fetchRecipes() async {
     _isLoading = true;
     notifyListeners();
 
-    final result = await _recipeRepository.getRecipes();
+    final result = await _fetchRecipesUseCase.execute();
 
     switch (result) {
       case Success<List<Recipe>>():

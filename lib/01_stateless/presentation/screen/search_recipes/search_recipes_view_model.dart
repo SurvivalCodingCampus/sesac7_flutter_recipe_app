@@ -1,29 +1,32 @@
-import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/01_stateless/core/presentation/component/bottom_sheet/filter_search_state.dart';
 import 'package:flutter_recipe_app/01_stateless/core/result.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/component/bottom_sheet/filter_search_state.dart';
+import 'package:flutter_recipe_app/01_stateless/domain/use_case/fetch_recipes_use_case.dart';
+import 'package:flutter_recipe_app/01_stateless/domain/use_case/search_recipes_use_case.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_state.dart';
 
-import '../../../data/model/recipe.dart';
-import '../../../data/repository/recipe_repository.dart';
+import '../../../domain/model/recipe.dart';
 
 class SearchRecipesViewModel with ChangeNotifier {
-  final RecipeRepository _recipeRepository;
+  final GetRecipesUseCase _getRecipesUseCase;
+  final SearchRecipesUseCase _searchRecipesUseCase;
 
   SearchRecipesState _state = SearchRecipesState();
 
   SearchRecipesState get state => _state;
 
   SearchRecipesViewModel({
-    required RecipeRepository recipeRepository,
-  }) : _recipeRepository = recipeRepository;
+    required GetRecipesUseCase getRecipesUseCase,
+    required SearchRecipesUseCase searchRecipesUseCase,
+  }) : _getRecipesUseCase = getRecipesUseCase,
+       _searchRecipesUseCase = searchRecipesUseCase;
 
   void fetchRecipes() async {
     _state = state.copyWith(isLoading: true);
     notifyListeners();
 
-    final result = await _recipeRepository.getRecipes();
+    final result = await _getRecipesUseCase.execute();
     switch (result) {
       case Success<List<Recipe>>():
         _state = state.copyWith(
@@ -40,63 +43,44 @@ class SearchRecipesViewModel with ChangeNotifier {
     filter(state.filterSearchState);
   }
 
-  void search(String query) {
-    final filteredRecipes = state.originalRecipes
-        .where(
-          (e) =>
-              e.name.toLowerCase().contains(query.toLowerCase()) ||
-              e.chef.toLowerCase().contains(query.toLowerCase()),
-        )
-        .toList();
+  void _searchWithFilter(String query, FilterSearchState filterSearchState) {
+    final searchedRecipes = _searchRecipesUseCase.execute(
+      state.originalRecipes,
+      query,
+      filterSearchState,
+    );
 
     _state = state.copyWith(
       query: query,
-      searchLabel: state.originalRecipes.length == filteredRecipes.length
+      searchLabel: state.originalRecipes.length == searchedRecipes.length
           ? 'Recent Search'
           : 'Search Result',
-      filteredRecipes: filteredRecipes,
-      resultLabel: query.isEmpty ? '' : '${filteredRecipes.length} results',
+      filteredRecipes: searchedRecipes,
+      filterSearchState: filterSearchState,
+      resultLabel: query.isEmpty ? '' : '${searchedRecipes.length} results',
     );
-    notifyListeners();
 
-    filter(state.filterSearchState);
+    notifyListeners();
+  }
+
+  void search(String query) {
+    _searchWithFilter(query, state.filterSearchState);
   }
 
   void filter(FilterSearchState filterSearchState) {
-    _state = state.copyWith(
-      filterSearchState: filterSearchState,
-      filteredRecipes: state.filteredRecipes
-          .where((e) => e.rating.toInt() == filterSearchState.rate)
-          .toList(),
-    );
+    _searchWithFilter(state.query, filterSearchState);
+  }
+}
 
-    switch (filterSearchState.time) {
-      case 'All':
-        break;
-      case 'Newest':
-        _state = state.copyWith(
-          filteredRecipes: state.filteredRecipes.sorted(
-            (a, b) => b.createdAt.compareTo(a.createdAt),
-          ),
-        );
-        break;
-      case 'Oldest':
-        _state = state.copyWith(
-          filteredRecipes: state.filteredRecipes.sorted(
-            (a, b) => a.createdAt.compareTo(b.createdAt),
-          ),
-        );
-        break;
-      case 'Popularity':
-        break;
-    }
+void main() {
+  final person = Person();
+  print(person(10));
+}
 
-    _state = state.copyWith(
-      resultLabel: state.query.isEmpty
-          ? ''
-          : '${state.filteredRecipes.length} results',
-    );
+class Person {
+  String name = 'aaa';
 
-    notifyListeners();
+  String call(int age) {
+    return '$name $age';
   }
 }
