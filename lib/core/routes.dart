@@ -9,4 +9,5 @@ abstract class Routes {
   static const String myPage = '/my-page';
 
   static const String search = '/search';
+  static const String ingredient = '/ingredient';
 }
