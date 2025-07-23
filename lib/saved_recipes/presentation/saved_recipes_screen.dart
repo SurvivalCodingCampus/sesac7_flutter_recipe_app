@@ -17,10 +17,12 @@ class RecipeCardScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return ListenableBuilder(
       listenable: viewModel,
       builder: (context, child) {
+
+        final state = viewModel.state;
+
         return Scaffold(
           body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,19 +40,23 @@ class RecipeCardScreen extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Expanded(
-                child: ListView.separated(
-                  itemCount: viewModel.bookmarkedRecipes.length,
-                  itemBuilder: (context, index) {
-                    final recipe = viewModel.bookmarkedRecipes[index];
-                    return RecipeCard(
-                      recipe: recipe,
-                      isBookmarked: true,
-                      onBookmarkTap: () => viewModel.unsave(recipe.id),
-                      isShowTime: true,
-                    );
-                  },
-                  separatorBuilder: (context, index) => const SizedBox(height: 12),
-                ),
+                child: state.isLoading ? const ShimmerList()
+                  : Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: ListView.separated(
+                    itemCount: viewModel.bookmarkedRecipes.length,
+                    itemBuilder: (context, index) {
+                      final recipe = viewModel.bookmarkedRecipes[index];
+                      return RecipeCard(
+                        recipe: recipe,
+                        isBookmarked: true,
+                        onBookmarkTap: () => viewModel.unsave(recipe.id),
+                        isShowTime: true,
+                      );
+                    },
+                    separatorBuilder: (context, index) => const SizedBox(height: 12),
+                                    ),
+                  ),
               ),
             ],
           ),

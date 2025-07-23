@@ -37,6 +37,7 @@ class SavedRecipesViewModel with ChangeNotifier {
     notifyListeners();
 
     final result = await _fetchRecipesUseCase.execute();
+
     switch (result) {
       case Success<SavedRecipesState, NetworkError>():
         _state = result.value;
@@ -44,6 +45,7 @@ class SavedRecipesViewModel with ChangeNotifier {
         break;
       case Failure<SavedRecipesState, NetworkError>():
         print('Error fetching recipes: $NetworkError');
+        _state = _state.copyWith(isLoading: false);
         break;
     }
 
@@ -74,7 +76,7 @@ class SavedRecipesViewModel with ChangeNotifier {
 
   List<Recipe> get bookmarkedRecipes {
     return _state.recipes
-        .where((recipe) => _state.bookmarkedIds.contains(recipe.id))
-        .toList();
+      .where((recipe) => _state.bookmarkedIds.contains(recipe.id))
+      .toList();
   }
 }
