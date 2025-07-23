@@ -32,7 +32,7 @@ class Tap extends StatelessWidget {
                 onValueChange(i);
               },
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(7.5, 12.0, 7.5, 12.0),
+                padding: const EdgeInsets.fromLTRB(7.5, 12.0, 7.5, 13.0),
                 child: Container(
                   width: tabWidth,
                   height: tabHeight,
