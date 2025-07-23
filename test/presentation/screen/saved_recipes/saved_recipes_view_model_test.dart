@@ -1,7 +1,7 @@
 import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
-import 'package:flutter_recipe_app/core/domain/reopsitory/recipe/recipe_repository.dart';
+import 'package:flutter_recipe_app/core/domain/repository/recipe/recipe_repository.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -73,7 +73,7 @@ void main() {
         ).thenAnswer((_) async => successResult);
 
         // Act
-        await viewModel.fetchSavedRecipes();
+        viewModel.fetchSavedRecipes();
 
         // Assert
         expect(viewModel.state.savedRecipes, mockRecipes);
@@ -95,7 +95,7 @@ void main() {
         ).thenAnswer((_) async => errorResult);
 
         // Act
-        await viewModel.fetchSavedRecipes();
+        viewModel.fetchSavedRecipes();
 
         // Assert
         expect(viewModel.state.savedRecipes, isEmpty);

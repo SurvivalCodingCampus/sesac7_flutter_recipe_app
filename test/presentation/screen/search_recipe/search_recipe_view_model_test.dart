@@ -4,7 +4,7 @@ import 'package:flutter_recipe_app/feature/search_recipes/domain/model/filter_ca
 import 'package:flutter_recipe_app/feature/search_recipes/domain/model/filter_rate.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/model/search_state_type.dart';
-import 'package:flutter_recipe_app/core/domain/reopsitory/recipe/recipe_repository.dart';
+import 'package:flutter_recipe_app/core/domain/repository/recipe/recipe_repository.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/filter_search_state.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_state.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_view_model.dart';
@@ -73,7 +73,7 @@ void main() {
         (_) async => Result<List<Recipe>, NetworkError>.success(mockRecipes),
       );
 
-      await viewModel.fetchRecipe();
+      viewModel.fetchRecipe();
 
       expect(viewModel.state.isLoading, false);
       expect(viewModel.state.allRecipes, mockRecipes);
@@ -100,7 +100,7 @@ void main() {
         (_) async => Error<List<Recipe>, NetworkError>(networkError),
       );
 
-      await viewModel.fetchRecipe();
+      viewModel.fetchRecipe();
 
       expect(viewModel.state.isLoading, false);
       expect(viewModel.state.allRecipes, isEmpty);
@@ -123,7 +123,7 @@ void main() {
       when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
         (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
       );
-      await viewModel.fetchRecipe();
+      viewModel.fetchRecipe();
 
       viewModel.searchRecipe('');
 
@@ -145,7 +145,7 @@ void main() {
       when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
         (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
       );
-      await viewModel.fetchRecipe();
+      viewModel.fetchRecipe();
 
       viewModel.searchRecipe('john');
 
@@ -169,7 +169,7 @@ void main() {
       when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
         (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
       );
-      await viewModel.fetchRecipe();
+      viewModel.fetchRecipe();
 
       viewModel.searchRecipe('nonexistent');
 
@@ -191,7 +191,7 @@ void main() {
       when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
         (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
       );
-      await viewModel.fetchRecipe();
+      viewModel.fetchRecipe();
 
       final filterState = FilterSearchState(filterRate: FilterRate.five);
       viewModel.selectFilter(filterState);
@@ -215,7 +215,7 @@ void main() {
       when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
         (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
       );
-      await viewModel.fetchRecipe();
+      viewModel.fetchRecipe();
 
       final filterState = FilterSearchState(filterRate: FilterRate.three);
       viewModel.selectFilter(filterState);
@@ -239,7 +239,7 @@ void main() {
       when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
         (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
       );
-      await viewModel.fetchRecipe();
+      viewModel.fetchRecipe();
 
       final filterState = FilterSearchState(
         filterCategory: FilterCategory.dinner,
@@ -265,7 +265,7 @@ void main() {
       when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
         (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
       );
-      await viewModel.fetchRecipe();
+      viewModel.fetchRecipe();
 
       final filterState = FilterSearchState(
         filterCategory: FilterCategory.fruit,
@@ -290,7 +290,7 @@ void main() {
       when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
         (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
       );
-      await viewModel.fetchRecipe();
+      viewModel.fetchRecipe();
 
       final filterState = FilterSearchState(
         filterRate: FilterRate.four,

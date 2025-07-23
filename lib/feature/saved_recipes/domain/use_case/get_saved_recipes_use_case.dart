@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
-import 'package:flutter_recipe_app/core/domain/reopsitory/recipe/recipe_repository.dart';
+import 'package:flutter_recipe_app/core/domain/repository/recipe/recipe_repository.dart';
 import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/repository/bookmark_repository.dart';
