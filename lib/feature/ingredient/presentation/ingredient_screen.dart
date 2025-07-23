@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/ingredient.dart';
 import 'package:flutter_recipe_app/core/presentation/component/button/small_button.dart';
-import 'package:flutter_recipe_app/core/presentation/component/constants/component_constant.dart';
 import 'package:flutter_recipe_app/core/presentation/component/list_item/ingredient_item.dart';
 import 'package:flutter_recipe_app/core/presentation/component/tab/two_tabs.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/model/ingredient_tab_type.dart';

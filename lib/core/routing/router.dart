@@ -133,33 +133,6 @@ GoRouter createRouter() => GoRouter(
                 );
               },
             ),
-            GoRoute(
-              path: Routes.ingredient,
-              builder: (context, state) {
-                final id = state.uri.queryParameters[QueryParameters.id]!;
-                final viewModel = IngredientViewModel(
-                  recipeId: id,
-                  fetchRecipeUseCase: _fetchRecipeUseCase,
-                  fetchAllIngredientsUseCase: _fetchAllIngredientsUseCase,
-                  fetchProcedureUseCase: _fetchProcedureUseCase,
-                );
-
-                viewModel.fetchRecipe();
-                viewModel.fetchIngredients();
-                viewModel.fetchProcedure();
-
-                return ListenableBuilder(
-                  listenable: viewModel,
-                  builder: (context, child) {
-                    return IngredientScreen(
-                      viewModel: viewModel,
-                      onBackTap: () => context.pop(),
-                      onMenuTap: () {},
-                    );
-                  },
-                );
-              },
-            ),
           ],
         ),
 
@@ -185,6 +158,34 @@ GoRouter createRouter() => GoRouter(
           ],
         ),
       ],
+    ),
+
+    GoRoute(
+      path: Routes.ingredient,
+      builder: (context, state) {
+        final id = state.uri.queryParameters[QueryParameters.id]!;
+        final viewModel = IngredientViewModel(
+          recipeId: id,
+          fetchRecipeUseCase: _fetchRecipeUseCase,
+          fetchAllIngredientsUseCase: _fetchAllIngredientsUseCase,
+          fetchProcedureUseCase: _fetchProcedureUseCase,
+        );
+
+        viewModel.fetchRecipe();
+        viewModel.fetchIngredients();
+        viewModel.fetchProcedure();
+
+        return ListenableBuilder(
+          listenable: viewModel,
+          builder: (context, child) {
+            return IngredientScreen(
+              viewModel: viewModel,
+              onBackTap: () => context.pop(),
+              onMenuTap: () {},
+            );
+          },
+        );
+      },
     ),
   ],
 );
