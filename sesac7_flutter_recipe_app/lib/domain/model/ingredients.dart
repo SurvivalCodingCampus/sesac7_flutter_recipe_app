@@ -1,4 +1,4 @@
-import 'package:flutter_recipe_app/data/model/ingredient.dart';
+import 'package:flutter_recipe_app/domain/model/ingredient.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'ingredients.freezed.dart';

@@ -1,6 +1,6 @@
 import 'dart:collection';
 
-import 'package:flutter_recipe_app/data/model/recipe.dart';
+import 'package:flutter_recipe_app/domain/model/recipe.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'search_recipes_state.freezed.dart';

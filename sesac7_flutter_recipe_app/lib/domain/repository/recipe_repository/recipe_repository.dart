@@ -3,7 +3,7 @@ import 'package:flutter_recipe_app/core/enum/rating_type.dart';
 import 'package:flutter_recipe_app/core/enum/search_recipe_filter_category_type.dart';
 import 'package:flutter_recipe_app/core/enum/search_recipe_filter_time_type.dart';
 import 'package:flutter_recipe_app/core/result.dart';
-import 'package:flutter_recipe_app/data/model/recipe.dart';
+import 'package:flutter_recipe_app/domain/model/recipe.dart';
 
 abstract interface class RecipeRepository {
   Future<Result<List<Recipe>, NetworkError>> getRecipes();

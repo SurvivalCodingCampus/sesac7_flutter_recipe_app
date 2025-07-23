@@ -7,8 +7,8 @@ import 'package:flutter_recipe_app/core/result.dart';
 import 'package:flutter_recipe_app/data/data_source/recipe_data_source/recipe_data_source.dart';
 import 'package:flutter_recipe_app/data/dto/recipes_dto.dart';
 import 'package:flutter_recipe_app/data/mapper/recipes_mapper.dart';
-import 'package:flutter_recipe_app/data/model/recipe.dart';
-import 'package:flutter_recipe_app/data/repository/recipe_repository/recipe_repository.dart';
+import 'package:flutter_recipe_app/domain/model/recipe.dart';
+import 'package:flutter_recipe_app/domain/repository/recipe_repository/recipe_repository.dart';
 
 class RecipeRepositoryImpl implements RecipeRepository {
   final RecipeDataSource _dataSource;

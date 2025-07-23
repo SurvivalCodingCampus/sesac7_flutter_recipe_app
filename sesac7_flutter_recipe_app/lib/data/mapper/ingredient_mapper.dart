@@ -1,5 +1,5 @@
 import 'package:flutter_recipe_app/data/dto/ingredient_dto.dart';
-import 'package:flutter_recipe_app/data/model/ingredient.dart';
+import 'package:flutter_recipe_app/domain/model/ingredient.dart';
 
 extension IngredientDtoToModel on IngredientDto {
   Ingredient toModel() {

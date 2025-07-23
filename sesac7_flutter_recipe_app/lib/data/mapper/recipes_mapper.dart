@@ -1,6 +1,6 @@
 import 'package:flutter_recipe_app/data/dto/recipes_dto.dart';
 import 'package:flutter_recipe_app/data/mapper/recipe_mapper.dart';
-import 'package:flutter_recipe_app/data/model/recipes.dart';
+import 'package:flutter_recipe_app/domain/model/recipes.dart';
 
 extension RecipesDtoToModel on RecipesDto {
   Recipes toModel() {
