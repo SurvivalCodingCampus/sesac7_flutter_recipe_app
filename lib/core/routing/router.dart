@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/routing/routes.dart';
 import 'package:flutter_recipe_app/core/data/data_source/recipe/recipe_data_source_impl.dart';
-import 'package:flutter_recipe_app/core/domain/reopsitory/recipe/recipe_repository.dart';
 import 'package:flutter_recipe_app/core/data/repository/recipe/recipe_repository_impl.dart';
 import 'package:flutter_recipe_app/feature/authentication/presentation/sign_in_screen.dart';
 import 'package:flutter_recipe_app/feature/authentication/presentation/sign_up_screen.dart';
@@ -9,17 +8,27 @@ import 'package:flutter_recipe_app/feature/home/presentation/home_screen.dart';
 import 'package:flutter_recipe_app/feature/main_navigation/presentation/main_navigation_screen.dart';
 import 'package:flutter_recipe_app/feature/notifications/presentation/notifications_screen.dart';
 import 'package:flutter_recipe_app/feature/profile/presentation/profile_screen.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/data/repository/mock/mock_bookmark_repository_impl.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/get_saved_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_screen.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_view_model.dart';
 import 'package:flutter_recipe_app/feature/splash/presentation/splash_screen.dart';
 import 'package:go_router/go_router.dart';
 
-final RecipeRepository recipeRepository = RecipeRepositoryImpl(
+final _recipeRepository = RecipeRepositoryImpl(
   recipeDataSource: RecipeDataSourceImpl(),
 );
 
+final _mockBookmarkRepository = MockBookmarkRepositoryImpl();
+
+final _getSavedRecipesUseCase = GetSavedRecipesUseCase(
+  recipeRepository: _recipeRepository,
+  bookmarkRepository: _mockBookmarkRepository,
+);
+
 GoRouter createRouter() => GoRouter(
-  initialLocation: Routes.splash,
+  // initialLocation: Routes.splash,
+  initialLocation: Routes.savedRecipes,
   routes: [
     GoRoute(
       path: Routes.splash,
@@ -73,7 +82,7 @@ GoRouter createRouter() => GoRouter(
               path: Routes.savedRecipes,
               builder: (context, state) {
                 final viewModel = SavedRecipesViewModel(
-                  recipeRepository: recipeRepository,
+                  getSavedRecipesUseCase: _getSavedRecipesUseCase,
                 );
 
                 viewModel.fetchSavedRecipes();
