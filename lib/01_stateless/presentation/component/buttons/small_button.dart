@@ -4,35 +4,67 @@ import 'package:google_fonts/google_fonts.dart';
 
 import '../../../ui/text_styles.dart';
 
-
-class SmallButton extends StatelessWidget {
-  final String text;
-  final void Function() onClick;
-
-  const SmallButton({
-    super.key,
-    required this.text,
-    required this.onClick,
-  });
+class _SmallButtonState extends State<SmallButton> {
+  bool isPressed = false;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 174,
-      height: 37,
-      decoration: BoxDecoration(
-        color: AppColors.primary100,
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Center(
+    return GestureDetector(
+      onTap: widget.onClick,
+      onTapDown: (details) {
+        setState(() {
+          isPressed = true;
+        });
+      },
+      onTapUp: (details) {
+        setState(() {
+          isPressed = false;
+        });
+      },
+      onTapCancel: () {
+        setState(() {
+          isPressed = false;
+        });
+      },
+      child: Container(
+        width: widget.width,
+        height: widget.height,
+        decoration: BoxDecoration(
+          color: (widget.isEnabled && !isPressed) ? widget.color : AppColors.gray4,
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Center(
           child: Text(
-            text,
+            widget.text,
             style: GoogleFonts.poppins(
               textStyle: TextStyles.smallerTextBold,
               color: Colors.white,
             ),
-          )
+          ),
+        ),
       ),
     );
   }
+}
+
+class SmallButton extends StatefulWidget {
+  final double width;
+  final double height;
+  final Color color;
+  final String text;
+  final void Function() onClick;
+  final bool isEnabled;
+
+  const SmallButton({
+    super.key,
+    required this.width,
+    required this.height,
+    required this.color,
+    required this.text,
+    required this.onClick,
+    required this.isEnabled,
+  });
+
+  @override
+  State<SmallButton> createState() => _SmallButtonState();
 }
