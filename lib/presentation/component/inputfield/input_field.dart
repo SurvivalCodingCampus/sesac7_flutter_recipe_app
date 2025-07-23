@@ -48,6 +48,7 @@ class InputField extends StatelessWidget {
               color: AppColors.black,
               fontSize: 11,
             ),
+            textAlignVertical: TextAlignVertical.center,
             decoration: InputDecoration(
               hintText: placeHolder,
               hintStyle: TextStyle(
@@ -56,7 +57,7 @@ class InputField extends StatelessWidget {
               ),
               border: InputBorder.none,
               contentPadding: const EdgeInsets.symmetric(
-                vertical: 17.0, // vertical 값을 (55px - 텍스트 높이) / 2
+                vertical: 16.0, // vertical 값을 (55px - 텍스트 높이) / 2
                 horizontal: 20.0,
               ),
             ),
