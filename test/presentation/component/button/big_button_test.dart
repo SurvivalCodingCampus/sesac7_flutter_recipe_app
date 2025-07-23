@@ -12,7 +12,6 @@ void main() {
         home: BigButton(
           text: btnName,
           onClick: (String text) {
-            print(text);
           },
         ),
       ),

@@ -11,7 +11,7 @@ void main() {
       MaterialApp(
         home: SmallButton(
           text: btnName,
-          onClick: () {
+          onClick: (String text) {
           },
         ),
       ),

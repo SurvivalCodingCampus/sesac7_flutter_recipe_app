@@ -12,7 +12,6 @@ void main() {
         home: MediumButton(
           text: btnName,
           onClick: (String text) {
-            print(text);
           },
         ),
       ),
