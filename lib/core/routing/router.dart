@@ -124,7 +124,6 @@ GoRouter createRouter() => GoRouter(
                       viewModel: viewModel,
                       onRecipeCardTap: (String id) {
                         context.push(
-                          // Routes.ingredient,
                           Uri(
                             path: Routes.ingredient,
                             queryParameters: {QueryParameters.id: id},
