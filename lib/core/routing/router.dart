@@ -1,59 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/routing/query_parameters.dart';
 import 'package:flutter_recipe_app/core/routing/routes.dart';
-import 'package:flutter_recipe_app/core/data/data_source/recipe/recipe_data_source_impl.dart';
-import 'package:flutter_recipe_app/core/data/repository/recipe/recipe_repository_impl.dart';
+import 'package:flutter_recipe_app/di/di.dart';
 import 'package:flutter_recipe_app/feature/authentication/presentation/sign_in_screen.dart';
 import 'package:flutter_recipe_app/feature/authentication/presentation/sign_up_screen.dart';
 import 'package:flutter_recipe_app/feature/home/presentation/home_screen.dart';
-import 'package:flutter_recipe_app/feature/ingredient/data/repository/mocks/mock_ingredient_repository_impl.dart';
-import 'package:flutter_recipe_app/feature/ingredient/data/repository/mocks/mock_procedure_repository_impl.dart';
-import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_all_ingredients_use_case.dart';
-import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_procedure_use_case.dart';
-import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_recipe_use_case.dart';
-import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/format_review_count_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_screen.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_view_model.dart';
 import 'package:flutter_recipe_app/feature/main_navigation/presentation/main_navigation_screen.dart';
 import 'package:flutter_recipe_app/feature/notifications/presentation/notifications_screen.dart';
 import 'package:flutter_recipe_app/feature/profile/presentation/profile_screen.dart';
-import 'package:flutter_recipe_app/feature/saved_recipes/data/repository/mock/mock_bookmark_repository_impl.dart';
-import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/get_saved_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_screen.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_view_model.dart';
 import 'package:flutter_recipe_app/feature/splash/presentation/splash_screen.dart';
 import 'package:go_router/go_router.dart';
-
-// Repository
-final _recipeRepository = RecipeRepositoryImpl(
-  recipeDataSource: RecipeDataSourceImpl(),
-);
-
-final _mockBookmarkRepository = MockBookmarkRepositoryImpl();
-
-final _mockIngredientRespository = MockIngredientRepositoryImpl();
-
-final _mockProcedureRepository = MockProcedureRepositoryImpl();
-
-// Use Case
-final _getSavedRecipesUseCase = GetSavedRecipesUseCase(
-  recipeRepository: _recipeRepository,
-  bookmarkRepository: _mockBookmarkRepository,
-);
-
-final _fetchRecipeUseCase = FetchRecipeUseCase(
-  recipeRepository: _recipeRepository,
-);
-
-final _fetchAllIngredientsUseCase = FetchAllIngredientsUseCase(
-  ingredientRepository: _mockIngredientRespository,
-);
-
-final _fetchProcedureUseCase = FetchProcedureUseCase(
-  procedureRepository: _mockProcedureRepository,
-);
-
-final _formatReviewCountUseCase = FormatReviewCountUseCase();
 
 GoRouter createRouter() => GoRouter(
   // initialLocation: Routes.splash,
@@ -111,8 +71,8 @@ GoRouter createRouter() => GoRouter(
               path: Routes.savedRecipes,
               builder: (context, state) {
                 final viewModel = SavedRecipesViewModel(
-                  getSavedRecipesUseCase: _getSavedRecipesUseCase,
-                  bookmarkRepository: _mockBookmarkRepository,
+                  getSavedRecipesUseCase: getIt(),
+                  bookmarkRepository: getIt(),
                 );
 
                 viewModel.fetchSavedRecipes();
@@ -168,10 +128,10 @@ GoRouter createRouter() => GoRouter(
         final id = state.uri.queryParameters[QueryParameters.id]!;
         final viewModel = IngredientViewModel(
           recipeId: id,
-          fetchRecipeUseCase: _fetchRecipeUseCase,
-          fetchAllIngredientsUseCase: _fetchAllIngredientsUseCase,
-          fetchProcedureUseCase: _fetchProcedureUseCase,
-          formatReviewCountUseCase: _formatReviewCountUseCase,
+          fetchRecipeUseCase: getIt(),
+          fetchAllIngredientsUseCase: getIt(),
+          fetchProcedureUseCase: getIt(),
+          formatReviewCountUseCase: getIt(),
         );
 
         // viewModel.fetchRecipe();
