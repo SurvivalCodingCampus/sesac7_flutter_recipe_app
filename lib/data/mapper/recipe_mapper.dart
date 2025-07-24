@@ -38,7 +38,7 @@ extension DtoToModel on RecipeDto {
     }
 
     for (var i = 0; i < result!.first.ingredients!.length; i++) {
-      if (result.first.ingredients?.first.amount is int) {
+      if (result.first.ingredients?[i].amount is int) {
         convertedAmount.add(result.first.ingredients?[i].amount as int);
       } else {
         convertedAmount.add(-1);
