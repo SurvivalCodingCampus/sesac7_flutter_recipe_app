@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 
-import '../../../domain/model/ingredient_model.dart';
+import '../../../domain/model/recipe_ingredient.dart';
 import '../../../ui/text_styles.dart';
 
 class IngredientItem extends StatelessWidget {
@@ -11,12 +11,11 @@ class IngredientItem extends StatelessWidget {
     required this.ingredient,
   });
 
-  final IngredientModel ingredient;
+  final RecipeIngredient ingredient;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         color: AppColors.gray4,
         borderRadius: BorderRadius.circular(12)),
@@ -32,13 +31,13 @@ class IngredientItem extends StatelessWidget {
                 color: AppColors.white,
                 borderRadius: BorderRadius.circular(12)),
             child: Image.network(
-              ingredient.imageUrl,
+              ingredient.ingredient.image,
             ),
           ),
           SizedBox(width: 16),
           Expanded(
             child: Text(
-              ingredient.name,
+              ingredient.ingredient.name,
               style: TextStyles.normalTextBold.copyWith(color: AppColors.colour),
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
@@ -46,34 +45,11 @@ class IngredientItem extends StatelessWidget {
           ),
           Spacer(),
           Text(
-            ingredient.quantity,
+            '${ingredient.amount}g',
             style: TextStyles.smallTextRegular.copyWith(color: AppColors.gray3),
           ),
         ],
       ),
     );
   }
-}
-
-void main() {
-  runApp(
-    MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: Scaffold(
-        body: SafeArea(
-          child: IngredientItem(
-            ingredient: IngredientModel(
-              name: 'Avocado',
-              imageUrl:
-                  'https://cdn.pixabay.com/photo/2020/01/02/01/43/avocado-4734786_1280.jpg',
-              quantity: '500g',
-            ),
-          ),
-        ),
-      ),
-    ),
-  );
 }

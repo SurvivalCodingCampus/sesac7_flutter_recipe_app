@@ -15,7 +15,7 @@ abstract class Recipe with _$Recipe {
     required String chef,
     required String time,
     required num rating,
-    required bool isSaved,
+    @Default(false) bool isSaved,
     required List<RecipeIngredient> ingredients,
     required List<StepInfo> steps, // 조리설명 및 순서
   }) = _Recipe;

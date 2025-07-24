@@ -45,8 +45,7 @@ class SavedRecipesScreen extends StatelessWidget {
                       return GestureDetector(
                         onTap: () {
                           router.push<Recipe>(
-                            Routes.recipesDetail,
-                            extra: searchTerm,
+                            '${Routes.recipesDetail}/${searchTerm.id}',
                           );
                         },
                         child: Padding(

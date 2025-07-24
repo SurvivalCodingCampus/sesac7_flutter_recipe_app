@@ -6,6 +6,6 @@ abstract class Routes {
   static const String notification = '/notification';
   static const String savedRecipes = '/saved-recipes';
   static const String recipesDetail = '$savedRecipes/detail';
-  static const String recipesDetailRelative = 'detail';
+  static const String recipesDetailRelative = 'detail/:id';
   static const String searchRecipes = '/search-recipes';
 }
