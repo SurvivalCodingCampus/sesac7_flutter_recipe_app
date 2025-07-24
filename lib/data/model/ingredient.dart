@@ -1,13 +1,11 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
+class Ingredient {
+  final String name;
+  final String amount;
+  final String imageUrl;
 
-part 'ingredient.freezed.dart';
-
-@freezed
-abstract class Ingredient with _$Ingredient {
-  const factory Ingredient({
-    required int id,
-    required String name,
-    required String imgSrc,
-    required int amount,
-  }) = _Ingredient;
+  Ingredient({
+    required this.name,
+    required this.amount,
+    required this.imageUrl,
+  });
 }
