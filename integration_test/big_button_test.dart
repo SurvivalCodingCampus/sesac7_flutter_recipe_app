@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/01_stateless_widget/presentation/component/big_button.dart';
-import 'package:flutter_recipe_app/01_stateless_widget/ui/app_colors.dart';
+import 'package:flutter_recipe_app/presentation/component/big_button.dart';
+import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
