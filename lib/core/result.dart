@@ -10,3 +10,9 @@ sealed class Result<T, E> with _$Result<T, E> {
   const factory Result.success(T value) = Success<T, E>;
   const factory Result.failure(E error) = Failure<T, E>;
 }
+
+// @freezed
+// sealed class Result<T> with _$Result<T> {
+//   const factory Result.success(T value) = Success;
+//   const factory Result.failure(String message) = Failure;
+// }
