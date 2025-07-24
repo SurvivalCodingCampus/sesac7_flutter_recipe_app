@@ -3,7 +3,6 @@ import 'package:flutter_recipe_app/domain/use_case/get_recipe_detail_use_case.da
 import 'package:get_it/get_it.dart';
 
 import '../../data/data_source/recipe_data_source.dart';
-import '../../data/data_source/recipe_data_source_impl.dart';
 import '../../data/repository/ingredient_repository_impl.dart';
 import '../../domain/repository/ingredient_repository.dart';
 import '../../domain/repository/recipe_repository.dart';

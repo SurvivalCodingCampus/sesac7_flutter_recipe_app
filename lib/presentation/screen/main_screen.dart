@@ -1,14 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/view_model/recipe_home_view_model.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
-import 'package:provider/provider.dart';
 
 import '../../di/di_setup.dart';
 import '../../ui/text_styles.dart';
 import '../component/card/dish_card.dart';
 import '../component/control/recipe_category_selector.dart';
 import '../component/input_field/search_inpu_field.dart';
-import '../view_model/search_recipe_view_model.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});

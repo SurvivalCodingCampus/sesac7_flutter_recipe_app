@@ -1,6 +1,6 @@
+import '../../core/result.dart';
 import '../model/recipe.dart';
 import '../repository/recipe_repository.dart';
-import '../../core/result.dart';
 
 class GetHomeRecipeUseCase {
   final RecipeRepository _recipeRepository;
