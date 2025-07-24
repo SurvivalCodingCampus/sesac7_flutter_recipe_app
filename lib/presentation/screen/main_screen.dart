@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/data/model/recipes.dart';
 import 'package:flutter_recipe_app/presentation/component/button/big_button.dart';
+import 'package:flutter_recipe_app/presentation/component/button/filter_button.dart';
 import 'package:flutter_recipe_app/presentation/component/button/medium_button.dart';
+import 'package:flutter_recipe_app/presentation/component/button/rating_button.dart';
 import 'package:flutter_recipe_app/presentation/component/card/ingredient_item.dart';
 import 'package:flutter_recipe_app/presentation/component/inputfield/input_field.dart';
 import 'package:flutter_recipe_app/presentation/component/tab/tab.dart';
@@ -83,6 +85,26 @@ class MainScreen extends StatelessWidget {
                         'https://cdn.pixabay.com/photo/2017/10/06/17/17/tomato-2823826_1280.jpg',
                   ),
                 ),
+              ),
+              SizedBox(height: 16),
+              Row(
+                children: [
+                  RatingButton(
+                    text: '5',
+                    isSelected: true,
+                    onTap: () {
+                      print('Rating button');
+                    },
+                  ),
+                  SizedBox(width: 16),
+                  FilterButton(
+                    text: 'Text',
+                    isSelected: true,
+                    onTap: () {
+                      print('Text button');
+                    },
+                  ),
+                ],
               ),
             ],
           ),
