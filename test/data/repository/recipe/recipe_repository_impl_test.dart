@@ -1,12 +1,12 @@
 import 'dart:async';
 
-import 'package:flutter_recipe_app/core/network_error.dart';
-import 'package:flutter_recipe_app/core/response.dart';
-import 'package:flutter_recipe_app/core/result.dart';
-import 'package:flutter_recipe_app/data/data_source/recipe/recipe_data_source.dart';
-import 'package:flutter_recipe_app/data/dto/recipe/recipe_dto.dart';
-import 'package:flutter_recipe_app/data/model/recipe/recipe.dart';
-import 'package:flutter_recipe_app/data/repository/recipe/recipe_repository_impl.dart';
+import 'package:flutter_recipe_app/core/utils/network_error.dart';
+import 'package:flutter_recipe_app/core/utils/response.dart';
+import 'package:flutter_recipe_app/core/utils/result.dart';
+import 'package:flutter_recipe_app/core/data/data_source/recipe/recipe_data_source.dart';
+import 'package:flutter_recipe_app/core/data/dto/recipe/recipe_dto.dart';
+import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
+import 'package:flutter_recipe_app/core/data/repository/recipe/recipe_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';

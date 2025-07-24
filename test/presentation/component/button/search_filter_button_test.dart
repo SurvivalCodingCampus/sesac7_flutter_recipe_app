@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/presentation/component/button/search_filter_button.dart';
+import 'package:flutter_recipe_app/core/presentation/component/button/search_filter_button.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('SearchFilterButton Widget Test', () {
-    testWidgets('should display correctly and handle taps',
-        (WidgetTester tester) async {
+    testWidgets('should display correctly and handle taps', (
+      WidgetTester tester,
+    ) async {
       // Given
       bool wasTapped = false;
 
@@ -23,10 +24,12 @@ void main() {
       );
 
       // Then: Verify the initial state
-      final container = tester.widget<Container>(find.descendant(
-        of: find.byType(SearchFilterButton),
-        matching: find.byType(Container),
-      ));
+      final container = tester.widget<Container>(
+        find.descendant(
+          of: find.byType(SearchFilterButton),
+          matching: find.byType(Container),
+        ),
+      );
       final decoration = container.decoration as BoxDecoration;
       final icon = tester.widget<Icon>(find.byType(Icon));
 

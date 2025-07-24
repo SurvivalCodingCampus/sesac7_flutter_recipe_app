@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/core/network_error.dart';
-import 'package:flutter_recipe_app/core/result.dart';
-import 'package:flutter_recipe_app/data/model/recipe/filter_category.dart';
-import 'package:flutter_recipe_app/data/model/recipe/recipe.dart';
-import 'package:flutter_recipe_app/data/repository/recipe/recipe_repository.dart';
-import 'package:flutter_recipe_app/presentation/component/button/search_filter_button.dart';
-import 'package:flutter_recipe_app/presentation/component/button/small_button.dart';
-import 'package:flutter_recipe_app/presentation/component/input/search_field.dart';
-import 'package:flutter_recipe_app/presentation/component/list_item/recipe_search_card.dart';
-import 'package:flutter_recipe_app/presentation/screen/search_recipes/search_recipes_screen.dart';
-import 'package:flutter_recipe_app/presentation/screen/search_recipes/search_recipes_view_model.dart';
+import 'package:flutter_recipe_app/core/utils/network_error.dart';
+import 'package:flutter_recipe_app/core/utils/result.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/model/filter_category.dart';
+import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
+import 'package:flutter_recipe_app/core/domain/repository/recipe/recipe_repository.dart';
+import 'package:flutter_recipe_app/core/presentation/component/button/search_filter_button.dart';
+import 'package:flutter_recipe_app/core/presentation/component/button/small_button.dart';
+import 'package:flutter_recipe_app/core/presentation/component/input/search_field.dart';
+import 'package:flutter_recipe_app/core/presentation/component/list_item/recipe_search_card.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_screen.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
@@ -115,7 +115,7 @@ void main() {
     ) async {
       // Given: A successful result with mock data.
       mockRecipeRepository.setResult(Result.success(mockRecipes));
-      await viewModel.fetchRecipe();
+      viewModel.fetchRecipe();
 
       // When: The screen is rendered.
       await pumpTheScreen(tester);
@@ -135,7 +135,7 @@ void main() {
     ) async {
       // Given: The screen is loaded with mock data.
       mockRecipeRepository.setResult(Result.success(mockRecipes));
-      await viewModel.fetchRecipe();
+      viewModel.fetchRecipe();
       await pumpTheScreen(tester);
       const keyword = 'soup';
 
@@ -155,7 +155,7 @@ void main() {
     ) async {
       // Given: The screen is loaded with mock data.
       mockRecipeRepository.setResult(Result.success(mockRecipes));
-      await viewModel.fetchRecipe();
+      viewModel.fetchRecipe();
       await pumpTheScreen(tester);
       const keyword = 'nonexistentkeyword12345';
 
@@ -174,7 +174,7 @@ void main() {
     ) async {
       // Given: The screen is loaded with mock data.
       mockRecipeRepository.setResult(Result.success(mockRecipes));
-      await viewModel.fetchRecipe();
+      viewModel.fetchRecipe();
       await pumpTheScreen(tester);
 
       // When: The user opens the filter sheet, selects a category, and applies it.
@@ -210,7 +210,7 @@ void main() {
       mockRecipeRepository.setResult(
         const Result.error(NetworkError.serverError),
       );
-      await viewModel.fetchRecipe();
+      viewModel.fetchRecipe();
 
       // When: The screen is rendered.
       await pumpTheScreen(tester);

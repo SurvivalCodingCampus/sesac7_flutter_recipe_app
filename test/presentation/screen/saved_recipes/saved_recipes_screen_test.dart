@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/data/model/recipe/recipe.dart';
-import 'package:flutter_recipe_app/presentation/component/list_item/recipe_card.dart';
-import 'package:flutter_recipe_app/presentation/screen/saved_recipes/saved_recipes_screen.dart';
-import 'package:flutter_recipe_app/presentation/screen/saved_recipes/saved_recipes_state.dart';
-import 'package:flutter_recipe_app/presentation/screen/saved_recipes/saved_recipes_view_model.dart';
+import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
+import 'package:flutter_recipe_app/core/presentation/component/list_item/recipe_card.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_screen.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_state.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
