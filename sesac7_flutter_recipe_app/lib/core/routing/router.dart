@@ -29,7 +29,9 @@ final router = GoRouter(
               path: Routes.home,
               builder: (context, state) {
                 return HomeScreen(
-                  homeViewModel: getIt()..loadCategories(),
+                  homeViewModel: getIt()
+                    ..loadCategories()
+                    ..fetchAllCategoryRecipes(),
                 );
               },
             ),

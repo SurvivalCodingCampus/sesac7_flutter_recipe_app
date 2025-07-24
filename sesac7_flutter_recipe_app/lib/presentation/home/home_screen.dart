@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/bottom_sheet/search_recipe_filter_bottom_sheet.dart';
 import 'package:flutter_recipe_app/presentation/component/button/search_recipe_filter_button.dart';
+import 'package:flutter_recipe_app/presentation/component/card/dish_card.dart';
 import 'package:flutter_recipe_app/presentation/component/selector/recipe_category_selector.dart';
 import 'package:flutter_recipe_app/presentation/component/text_field/search_input_field.dart';
 import 'package:flutter_recipe_app/presentation/home/home_view_model.dart';
@@ -107,9 +108,36 @@ class HomeScreen extends StatelessWidget {
                 RecipeCategorySelector(
                   categories: _homeViewModel.homeState.categories,
                   selectedCategory: _homeViewModel.homeState.category,
-                  onValueChange: (selectedIndex) {
-                    _homeViewModel.fetchCurrentSelectedCategory(selectedIndex);
+                  onValueChange: (category) {
+                    category == 'All'
+                        ? _homeViewModel.fetchAllCategoryRecipes()
+                        : _homeViewModel.fetchCategoryRecipes(category);
                   },
+                ),
+                SizedBox(
+                  height: 15.0,
+                ),
+                SizedBox(
+                  height: 231.0,
+                  child: ListView.separated(
+                    itemBuilder: (context, index) {
+                      return DishCard(
+                        recipe: _homeViewModel.homeState.categoryRecipes[index],
+                        isBookmark: true,
+                        onTapFavorite: (recipe) {},
+                      );
+                    },
+                    separatorBuilder: (context, index) => SizedBox(
+                      width: 15.0,
+                    ),
+                    itemCount: _homeViewModel.homeState.categoryRecipes.length,
+                    padding: const EdgeInsets.only(
+                      top: 0.0,
+                      left: 30.0,
+                      right: 15.0,
+                    ),
+                    scrollDirection: Axis.horizontal,
+                  ),
                 ),
               ],
             ),

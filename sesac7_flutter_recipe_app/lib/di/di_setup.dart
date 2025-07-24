@@ -7,6 +7,7 @@ import 'package:flutter_recipe_app/domain/repository/bookmark_repository.dart';
 import 'package:flutter_recipe_app/domain/repository/procedure_repository.dart';
 import 'package:flutter_recipe_app/domain/repository/recipe_repository.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_procedures_by_recipe_id_use_case.dart';
+import 'package:flutter_recipe_app/domain/usecase/get_recipes_by_category.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_recipes_category_list_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_recipes_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_saved_recipe_find_by_id_use_case.dart';
@@ -42,6 +43,9 @@ void diSetUp() {
   getIt.registerLazySingleton<GetRecipesCategoryListUseCase>(
     () => GetRecipesCategoryListUseCase(getRecipesUseCase: getIt()),
   );
+  getIt.registerLazySingleton<GetRecipesByCategory>(
+    () => GetRecipesByCategory(getRecipesUseCase: getIt()),
+  );
   getIt.registerLazySingleton<GetSavedRecipesUseCase>(
     () => GetSavedRecipesUseCase(bookmarkRepository: getIt()),
   );
@@ -57,7 +61,11 @@ void diSetUp() {
 
   // ViewModel
   getIt.registerFactory<HomeViewModel>(
-    () => HomeViewModel(getRecipesCategoryListUseCase: getIt()),
+    () => HomeViewModel(
+      getRecipesUseCase: getIt(),
+      getRecipesCategoryListUseCase: getIt(),
+      getRecipesByCategory: getIt(),
+    ),
   );
   getIt.registerFactory<SavedRecipeViewModel>(
     () => SavedRecipeViewModel(
