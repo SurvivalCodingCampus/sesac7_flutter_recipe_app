@@ -240,6 +240,45 @@ abstract class TextStyles {
     height: 21 / 14,
   );
 
+  /* DishCard Start */
+  static final TextStyle dishCardTitle = TextStyle(
+    color: AppColors.gray1,
+    fontSize: 14.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 21 / 14,
+  );
+
+  static final TextStyle dishCardTimeTitle = TextStyle(
+    color: AppColors.gray3,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle dishCardTime = TextStyle(
+    color: AppColors.gray1,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle dishCardRatingValue = TextStyle(
+    color: AppColors.black,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  /* DishCard End */
+
   /* IngredientCard End */
 
   /* StepCard Start */
