@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter_recipe_app/core/data/data_source/recipe/recipe_data_source_impl.dart';
 import 'package:flutter_recipe_app/core/data/dto/recipe/recipe_dto.dart';
-import 'package:http/testing.dart' as http;
+import 'package:http/testing.dart' as http_testing;
 
 void main() {
   final sampleJsonString = jsonEncode({
@@ -95,7 +95,7 @@ void main() {
     test(
       'fetchAllRecipes returns a list of RecipeDto on successful response',
       () async {
-        final mockClient = http.MockClient((request) async {
+        final mockClient = http_testing.MockClient((request) async {
           if (request.url == Uri.parse(RecipeDataSourceImpl.baseUrl) &&
               request.headers.toString() ==
                   RecipeDataSourceImpl.headers.toString()) {
@@ -118,7 +118,7 @@ void main() {
     );
 
     test('fetchAllRecipes returns an empty list on 404 response', () async {
-      final mockClient = http.MockClient((request) async {
+      final mockClient = http_testing.MockClient((request) async {
         return http.Response('{}', 404);
       });
       final dataSource = RecipeDataSourceImpl(client: mockClient);
@@ -132,7 +132,7 @@ void main() {
     test(
       'fetchAllRecipes returns an empty list when recipes are empty',
       () async {
-        final mockClient = http.MockClient((request) async {
+        final mockClient = http_testing.MockClient((request) async {
           return http.Response(jsonEncode({'recipes': []}), 200);
         });
         final dataSource = RecipeDataSourceImpl(client: mockClient);
@@ -147,7 +147,7 @@ void main() {
     test(
       'fetchAllRecipes throws an exception when an error occurs during the request',
       () async {
-        final mockClient = http.MockClient((request) async {
+        final mockClient = http_testing.MockClient((request) async {
           throw Exception('Network error');
         });
         final dataSource = RecipeDataSourceImpl(client: mockClient);
@@ -160,7 +160,7 @@ void main() {
     );
 
     test('fetchAllRecipes returns an empty list on 500 response', () async {
-      final mockClient = http.MockClient((request) async {
+      final mockClient = http_testing.MockClient((request) async {
         return http.Response('{}', 500);
       });
       final dataSource = RecipeDataSourceImpl(client: mockClient);
@@ -172,7 +172,7 @@ void main() {
     });
 
     test('fetchAllRecipes throws ClientException on network error', () async {
-      final mockClient = http.MockClient((request) async {
+      final mockClient = http_testing.MockClient((request) async {
         throw http.ClientException('Failed to connect to the server');
       });
       final dataSource = RecipeDataSourceImpl(client: mockClient);
