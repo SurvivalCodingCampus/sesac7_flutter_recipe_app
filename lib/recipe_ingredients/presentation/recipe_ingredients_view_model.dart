@@ -26,12 +26,12 @@ class RecipeIngredientsViewModel with ChangeNotifier{
     _state = _state.copyWith(isLoading: true);
     notifyListeners();
 
-    final result = await _fetchRecipeUseCase.execute(_state.recipeId);
+    final result = await _fetchRecipeUseCase.execute(recipeId);
     final recipeResult = await _recipeRepository.fetchRecipeById(recipeId);
     Recipe? recipe;
 
-    print('레시피 아이디: $recipeId');
-    print('레시피 결과: $recipeResult');
+    // print('레시피 아이디: $recipeId');
+    // print('레시피 결과: $recipeResult');
 
     recipeResult.when (
       success: (fetchedRecipe) {

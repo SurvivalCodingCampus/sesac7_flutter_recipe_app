@@ -5,6 +5,7 @@ import 'package:flutter_recipe_app/core/result.dart';
 import 'package:flutter_recipe_app/core/data/data_source/remote/recipe_data_source.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe.dart';
 import 'package:flutter_recipe_app/core/domain/repository/recipes_repository.dart';
+import 'package:http/http.dart' as http;
 import '../mapper/recipe_mapper.dart';
 
 class RecipeRepositoryImpl implements RecipeRepository {

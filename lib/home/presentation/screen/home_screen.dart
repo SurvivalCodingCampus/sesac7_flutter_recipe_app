@@ -103,7 +103,9 @@ class HomeScreen extends StatelessWidget {
               ],
             ),
           ),
+
           const Spacer(),
+
           // BottomNavBar(
           //   body: null,
           //   selectedIndex: 0,

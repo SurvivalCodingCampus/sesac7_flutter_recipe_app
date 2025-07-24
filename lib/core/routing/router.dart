@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter_recipe_app/core/presentation/component/nav_bar/bottom_nav_bar.dart';
 import 'package:flutter_recipe_app/home/presentation/screen/home_screen.dart';
 import 'package:flutter_recipe_app/saved_recipes/presentation/saved_recipes_view_model.dart';
@@ -19,15 +20,18 @@ import '../../sign_in_up/presentation/screen/sign_in_screen.dart';
 import '../../sign_in_up/domain/model/sign_in_view_model.dart';
 import '../../sign_in_up/presentation/screen/sign_up_screen.dart';
 import '../../sign_in_up/domain/model/sign_up_view_model.dart';
+import '../domain/repository/mock_recipe_repository.dart';
 import 'routes.dart';
 import '../presentation/screen/splash_screen/splash_screen.dart';
 
 // Repository 이하 : 싱글톤
-final recipeRepository = RecipeRepositoryImpl(
-  RecipeDataSourceImpl(
-      baseUrl: 'https://raw.githubusercontent.com/junsuk5/mock_json/refs/heads/main/recipe/recipes.json'
-  ),
-);
+// final recipeRepository = RecipeRepositoryImpl(
+//   RecipeDataSourceImpl(
+//     // baseUrl: 'https://raw.githubusercontent.com/junsuk5/mock_json/refs/heads/main/recipe/recipes.json'
+//     baseUrl: getAssetPath(),
+//   ),
+// );
+final recipeRepository = MockRecipeRepository();
 final ingredientRepository = IngredientRepositoryImpl(recipeRepository);
 
 // UseCase
