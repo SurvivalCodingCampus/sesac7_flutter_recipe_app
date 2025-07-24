@@ -1,0 +1,202 @@
+@startuml
+
+class User {
+  email
+  name
+  address
+  profileImage
+  savedRecipes
+  myRecipes
+  recentSearch
+  followers
+  following
+  job
+  introduce
+  notifications
+}
+note left
+유저 정보를 담기 위한 모델
+password 제외 이유: 앱에서 password를 표시할 일이 없음
+팔로워, 팔로잉은 이메일 리스트
+savedRecipes, myRecipes, recentSearch는 레시피의 id 리스트
+notifications Notification의 id들
+end note
+
+class Recipe {
+  id
+  name
+  category: Category
+  image
+  imageWithBackground
+  rating
+  duration
+  creator
+  createdAt
+  video
+  tags
+  reviews
+  ingredient: List<Ingredient>
+  serve
+  procedure
+}
+note left
+procedure: List<String>으로 충분(순서 보장)
+레시피 url 안 쓰는 이유: 라우트 패스에 이름 붙이면 됨
+creator는 유저 이메일
+reviews는 id list
+end note
+
+enum Rate {
+    one
+    two
+    three
+    four
+    five
+}
+note left
+레시피의 별점을 선택할 때
+레시피 검색 필터에서 선택할 때
+end note
+
+
+enum Time {
+  newest
+  oldest
+  popularity
+}
+note left
+레시피 검색 필터에서 선택할 때
+end note
+
+
+enum Category {
+  cereal
+  vegetables
+  dinner
+  chinese
+  localDish
+  fruit
+  breakFast
+  spanish
+  lunch
+}
+note left
+레시피 검색 필터에서 선택할 때
+end note
+
+
+class Ingredient {
+  name
+  image
+  weight
+}
+note left
+레시피 재료
+레시피 상세 화면에서 표시
+end note
+
+class Review {
+  id
+  writer
+  createdAt
+  description
+  goods
+  bads
+}
+note left
+레시피에 대한 리뷰
+goods, bads는 유저 이메일 리스트
+end note
+
+enum NotificationType {
+  newRecipeAlert
+  saveRecipeAlert
+}
+note left
+알림 종류 구분
+알림 목록에서 아이콘 구분
+end note
+
+class Notification {
+  id
+  title
+  type: NotificationType
+  isRead
+  description
+  createdAt
+}
+note left
+알림
+end note
+
+interface AuthenticationRepository {
+User createUser(String name, String email, String password)
+User login(String email, String password)
+void logout()
+void deleteUser(String email, String password)
+}
+note left
+사용자 인증 관련 처리
+createUser: 회원 가입
+login: 로그인
+logout: 로그아웃
+deleteUser: 회원 탈퇴
+end note
+
+interface UserRepository {
+User getUser(String email)
+User updateProfile(User user)
+void follow(String followTargetEmail, User me)
+void unfollow(String unfollowTargetEmail, User me)
+}
+note left
+사용자 정보 관련 처리
+getUser: 내 정보 혹은 다른 사용자 정보 가져오기
+updateProfile: 내 정보 수정
+follow: 팔로잉
+unfollow: 팔로잉 삭제
+end note
+
+interface RecipeRepository {
+List<Recipe> getAllRecipes()
+List<Recipe> searchRecipe(Time? time, Category? category, Rate? rate, String keyword)
+Recipe getRecipe(int id)
+List<Recipe> getRecipes(List<int> ids)
+void rateRecipe(Rate rating, Recipe recipe)
+void saveRecipe(String email, int recipeId)
+void unsaveRecipe(String email, int recipeId)
+}
+note left
+레시피 관련 처리
+getAllRecipes: 모든 레시피 가져오기
+searchRecipe: 레시피 검색
+getRecipe: 레시피 하나 가져옴
+getRecipes: 사용자의 savedRecipes, myRecipes, recentSearch의 레시피들 가져옴
+rateRecipe: 레시피에 별점 주기
+saveRecipe: 사용자의 savedRecipes에 추가
+unsaveRecipe: 사용자의 savedRecipes에서 제거
+end note
+
+interface ReviewRepository {
+void createReview(int recipeId, String email, String description)
+List<Review> getReviews(List<int> reviewIds)
+void updateReview(Review review)
+}
+note left
+리뷰 관련 처리
+createReview: 레시피에 대한 리뷰 등록
+getReviews: 레시피에 등록된 리뷰들 가져오기
+updateReview: 리뷰에 대한 좋아요, 싫어요 수행
+end note
+
+interface NotificationRepository {
+List<Notification> getAllNotifications(List<int> ids)
+void updateNotification(Notification notification)
+}
+note left
+알림 관련 처리
+getAllNotifications: 사용자에 대한 모든 알림 가져오기
+updateNotification: 알림 읽음, 안 읽음 처리
+end note
+
+@enduml

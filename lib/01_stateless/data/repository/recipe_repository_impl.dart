@@ -24,4 +24,10 @@ class RecipeRepositoryImpl implements RecipeRepository {
 
     return recipesResponseDto.toRecipes();
   }
+
+  @override
+  Future<Recipe> getRecipe(int id) {
+    // TODO: implement getRecipe
+    throw UnimplementedError();
+  }
 }

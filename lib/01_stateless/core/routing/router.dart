@@ -1,13 +1,18 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/core/routing/routes.dart';
 import 'package:flutter_recipe_app/01_stateless/domain/use_case/filter_recipes_use_case.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/ingredient/ingredient_view_model.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../data/repository/mock/mock_recipe_repository_impl.dart';
 import '../../data/repository/person_repository_impl.dart';
+import '../../domain/model/recipe.dart';
 import '../../domain/repository/recipe_repository.dart';
 import '../../domain/use_case/fetch_recipes_use_case.dart';
+import '../../domain/use_case/get_recipe_use_case.dart';
 import '../../domain/use_case/search_recipes_use_case.dart';
+import '../../presentation/screen/ingredient/ingredient_screen.dart';
 import '../../presentation/screen/main/main_screen.dart';
 import '../../presentation/screen/main/main_view_model.dart';
 import '../../presentation/screen/saved_recipes/saved_recipes_screen.dart';
@@ -23,6 +28,10 @@ final RecipeRepository _recipeRepository = MockRecipeRepositoryImpl();
 final _fetchRecipesUseCase = GetRecipesUseCase(
   recipeRepository: _recipeRepository,
 );
+final _getRecipeUseCase = GetRecipeUseCase(
+  recipeRepository: _recipeRepository,
+);
+
 final _filterRecipesUseCase = FilterRecipesUseCase();
 final _searchRecipesUseCase = SearchRecipesUseCase(
   filterRecipesUseCase: _filterRecipesUseCase,
@@ -33,6 +42,33 @@ final _searchRecipesUseCase = SearchRecipesUseCase(
 final router = GoRouter(
   initialLocation: Routes.main,
   routes: [
+    GoRoute(
+      path: Routes.ingredientWithId,
+      builder: (context, state) {
+        final id = state.pathParameters['id'];
+        if (id == null) {
+          return Scaffold(
+            body: Center(
+              child: Text('잘못된 페이지 요청'),
+            ),
+          );
+        }
+
+        final viewModel = IngredientViewModel(
+          getRecipeUseCase: _getRecipeUseCase,
+        );
+        viewModel.fetchRecipe(int.parse(id));
+
+        return ListenableBuilder(
+          listenable: viewModel,
+          builder: (context, child) {
+            return IngredientScreen(
+              viewModel: viewModel,
+            );
+          },
+        );
+      },
+    ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
         return TabScreen(
@@ -79,6 +115,9 @@ final router = GoRouter(
                   builder: (context, child) {
                     return SavedRecipesScreen(
                       viewModel: savedRecipesViewModel,
+                      onTapRecipe: (Recipe recipe) {
+                        context.push(Routes.getIngredientWithId(recipe.id));
+                      },
                     );
                   },
                 );

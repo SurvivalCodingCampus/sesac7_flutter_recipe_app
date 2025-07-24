@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/core/presentation/component/card/recipe_card.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/saved_recipes/saved_recipes_view_model.dart';
 
+import '../../../domain/model/recipe.dart';
+
 class SavedRecipesScreen extends StatelessWidget {
   final SavedRecipesViewModel viewModel;
+  final void Function(Recipe recipe) onTapRecipe;
 
   const SavedRecipesScreen({
     super.key,
     required this.viewModel,
+    required this.onTapRecipe,
   });
 
   @override
@@ -36,7 +40,10 @@ class SavedRecipesScreen extends StatelessWidget {
       itemCount: viewModel.recipes.length,
       itemBuilder: (context, index) {
         final recipe = viewModel.recipes[index];
-        return RecipeCard(recipe: recipe);
+        return GestureDetector(
+          onTap: () => onTapRecipe(recipe),
+          child: RecipeCard(recipe: recipe),
+        );
       },
     );
   }

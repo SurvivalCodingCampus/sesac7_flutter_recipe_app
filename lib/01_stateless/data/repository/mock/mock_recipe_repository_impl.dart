@@ -50,4 +50,9 @@ class MockRecipeRepositoryImpl implements RecipeRepository {
       ),
     ];
   }
+
+  @override
+  Future<Recipe> getRecipe(int id) async {
+    return (await getRecipes()).where((e) => e.id == id).first;
+  }
 }

@@ -19,6 +19,9 @@ class TabScreen extends StatelessWidget {
         children: [
           Expanded(child: body),
           BottomNavigationBar(
+            fixedColor: Colors.black,
+            unselectedItemColor: Colors.grey,
+            type: BottomNavigationBarType.fixed,
             currentIndex: currentIndex,
             onTap: (int index) {
               onTap(index);
@@ -30,7 +33,7 @@ class TabScreen extends StatelessWidget {
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.bookmark),
-                label: 'Bookmark',
+                label: 'Saved Recipes',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.alarm),
