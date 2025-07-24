@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/tab/tab_view_model.dart';
 
 class TabScreen extends StatelessWidget {
   final Widget body;
@@ -14,12 +15,13 @@ class TabScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = TabViewModel.of(context);
     return Scaffold(
       body: Column(
         children: [
           Expanded(child: body),
           BottomNavigationBar(
-            fixedColor: Colors.black,
+            fixedColor: viewModel.color,
             unselectedItemColor: Colors.grey,
             type: BottomNavigationBarType.fixed,
             currentIndex: currentIndex,
