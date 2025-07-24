@@ -2,7 +2,10 @@ import 'package:flutter_recipe_app/core/presentation/component/nav_bar/bottom_na
 import 'package:flutter_recipe_app/home/presentation/screen/home_screen.dart';
 import 'package:flutter_recipe_app/saved_recipes/presentation/saved_recipes_view_model.dart';
 import 'package:go_router/go_router.dart';
+import '../../recipe_ingredients/data/repository/ingredient_repository_impl.dart';
+import '../../recipe_ingredients/domain/use_case/fetch_recipe_use_case.dart';
 import '../../recipe_ingredients/presentation/recipe_ingredients_screen.dart';
+import '../../recipe_ingredients/presentation/recipe_ingredients_view_model.dart';
 import '../../saved_recipes/domain/use_case/fetch_recipes_use_case.dart';
 import '../../saved_recipes/domain/use_case/unsaved_recipe_use_case.dart';
 import '../../saved_recipes/presentation/saved_recipes_state.dart';
@@ -25,6 +28,7 @@ final recipeRepository = RecipeRepositoryImpl(
       baseUrl: 'https://raw.githubusercontent.com/junsuk5/mock_json/refs/heads/main/recipe/recipes.json'
   ),
 );
+final ingredientRepository = IngredientRepositoryImpl(recipeRepository);
 
 // UseCase
 final _fetchRecipesUseCase = FetchRecipesUseCase(
@@ -32,6 +36,9 @@ final _fetchRecipesUseCase = FetchRecipesUseCase(
   state: SavedRecipesState(),
 );
 final _unsaveRecipeUseCase = UnsavedRecipeUseCase();
+final _fetchRecipeIngredientsUseCase = FetchRecipeIngredientsUseCase(
+  ingredientRepository: ingredientRepository,
+);
 
 final router = GoRouter(
   initialLocation: Routes.splash,
@@ -42,24 +49,40 @@ final router = GoRouter(
     ),
     GoRoute(
       path: Routes.signIn,
-      builder: (context, state) => SignInScreen(
-        viewModel: SignInViewModel(),
-      ),
+      builder: (context, state) =>
+          SignInScreen(
+            viewModel: SignInViewModel(),
+          ),
     ),
     GoRoute(
       path: Routes.signUp,
-      builder: (context, state) => SignUpScreen(
-        viewModel: SignUpViewModel(),
-      ),
+      builder: (context, state) =>
+          SignUpScreen(
+            viewModel: SignUpViewModel(),
+          ),
     ),
     // recipe ingredients
     GoRoute(
-      path: '${Routes.recipeIngredients}/:id',
-      builder: (context, state) {
-        final id = int.parse(state.pathParameters['id']!);
-        return RecipeIngredientsScreen(recipeId: id);
-      },
+        path: '${Routes.recipeIngredients}/:id',
+        builder: (context, state) {
+          final id = int.parse(state.pathParameters['id']!);
+          // 1. ViewModel 인스턴스 생성
+          final viewModel = RecipeIngredientsViewModel(
+            recipeId: id,
+            fetchRecipeUseCase: _fetchRecipeIngredientsUseCase,
+            recipeRepository: recipeRepository,
+          );
+          // 2. 데이터 비동기 로드 호출
+          viewModel.fetchRecipeIngredients();
+
+          // 3. 화면 전달
+          return RecipeIngredientsScreen(
+            recipeId: id,
+            viewModel: viewModel,
+          );
+        }
     ),
+
 
     // 탭 영역 BottomNavBar
     StatefulShellRoute.indexedStack(
@@ -78,9 +101,10 @@ final router = GoRouter(
           routes: [
             GoRoute(
               path: Routes.home,
-              builder: (context, state) => HomeScreen(
-                viewModel: HomeViewModel(),
-              ),
+              builder: (context, state) =>
+                  HomeScreen(
+                    viewModel: HomeViewModel(),
+                  ),
             ),
           ],
         ),
@@ -89,22 +113,20 @@ final router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: Routes.savedRecipes,
-              builder: (context, state) {
-                final savedRecipesViewModel = SavedRecipesViewModel(
-                  fetchRecipesUseCase: _fetchRecipesUseCase,
-                  unsaveRecipeUseCase: _unsaveRecipeUseCase,
-                );
-                savedRecipesViewModel.fetchRecipes();
-                return RecipeCardScreen(
-                  viewModel: savedRecipesViewModel,
-                );
-              }
+                path: Routes.savedRecipes,
+                builder: (context, state) {
+                  final savedRecipesViewModel = SavedRecipesViewModel(
+                    fetchRecipesUseCase: _fetchRecipesUseCase,
+                    unsaveRecipeUseCase: _unsaveRecipeUseCase,
+                  );
+                  savedRecipesViewModel.fetchRecipes();
+                  return RecipeCardScreen(
+                    viewModel: savedRecipesViewModel,
+                  );
+                }
             ),
           ],
         ),
-
-
 
 
         // 3번 탭: Search

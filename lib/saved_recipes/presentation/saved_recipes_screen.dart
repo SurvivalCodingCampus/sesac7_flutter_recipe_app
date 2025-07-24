@@ -50,6 +50,7 @@ class RecipeCardScreen extends StatelessWidget {
                             final recipe = viewModel.bookmarkedRecipes[index];
                             return GestureDetector(
                               onTap: () {
+                                print('레시피 아이디: ${recipe.id}');
                                 context.push('${Routes.recipeIngredients}/${recipe.id}');
                               },
                               child: RecipeCard(

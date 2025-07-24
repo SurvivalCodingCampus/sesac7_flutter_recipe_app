@@ -38,4 +38,18 @@ class RecipeRepositoryImpl implements RecipeRepository {
       return Result.failure(NetworkError.unknown);
     }
   }
+
+  @override
+  Future<Result<Recipe, NetworkError>> fetchRecipeById(int id) async {
+    final result = await fetchRecipes();
+    return result.when(
+      success: (List<Recipe> value) {
+        final recipe = value.firstWhere((recipe) => recipe.id == id);
+        return Result.success(recipe);
+      },
+      failure: (NetworkError error) {
+        return Result.failure(error);
+      }
+    );
+  }
 }
