@@ -89,7 +89,9 @@ class HomeScreen extends StatelessWidget {
               categories: HomeRecipeCategory.values
                   .map((e) => e.toString())
                   .toList(),
-              onSelectCategory: (category) {},
+              onSelectCategory: (category) {
+                viewModel.filterHomeRecipeCategory(category);
+              },
             ),
             const SizedBox(
               height: 15,
@@ -113,7 +115,7 @@ class HomeScreen extends StatelessWidget {
                   }
 
                   return DishCard(
-                    recipe: state.recipes[index],
+                    recipe: state.filterdRecipes[index],
                     onTapFavorite: (recipe) {
                       // TODO: User
                     },
@@ -122,7 +124,7 @@ class HomeScreen extends StatelessWidget {
                 separatorBuilder: (context, index) => const SizedBox(
                   width: 15,
                 ),
-                itemCount: state.recipes.length,
+                itemCount: state.filterdRecipes.length,
               ),
             ),
           ],

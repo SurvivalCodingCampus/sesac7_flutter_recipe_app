@@ -62,6 +62,7 @@ GoRouter createRouter() => GoRouter(
               builder: (context, state) {
                 final viewModel = HomeViewModel(
                   fetchAllRecipesUseCase: getIt(),
+                  filterHomeRecipeCategoryUseCase: getIt(),
                 );
 
                 viewModel.fetchAllRecipes();

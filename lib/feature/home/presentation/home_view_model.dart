@@ -3,15 +3,20 @@ import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
 import 'package:flutter_recipe_app/feature/home/domain/use_case/fetch_all_recipes_use_case.dart';
+import 'package:flutter_recipe_app/feature/home/domain/use_case/filter_home_recipe_category_use_case.dart';
 import 'package:flutter_recipe_app/feature/home/presentation/home_state.dart';
 
 class HomeViewModel with ChangeNotifier {
   final FetchAllRecipesUseCase _fetchAllRecipesUseCase;
+  final FilterHomeRecipeCategoryUseCase _filterHomeRecipeCategoryUseCase;
 
   HomeState _state = HomeState();
 
-  HomeViewModel({required FetchAllRecipesUseCase fetchAllRecipesUseCase})
-    : _fetchAllRecipesUseCase = fetchAllRecipesUseCase;
+  HomeViewModel({
+    required FetchAllRecipesUseCase fetchAllRecipesUseCase,
+    required FilterHomeRecipeCategoryUseCase filterHomeRecipeCategoryUseCase,
+  }) : _fetchAllRecipesUseCase = fetchAllRecipesUseCase,
+       _filterHomeRecipeCategoryUseCase = filterHomeRecipeCategoryUseCase;
 
   HomeState get state => _state;
 
@@ -23,7 +28,8 @@ class HomeViewModel with ChangeNotifier {
     switch (result) {
       case Success<List<Recipe>, NetworkError>():
         _state = state.copyWith(
-          recipes: result.data,
+          allRecipes: result.data,
+          filterdRecipes: result.data,
           isLoading: false,
           errorMessage: '',
         );
@@ -32,6 +38,16 @@ class HomeViewModel with ChangeNotifier {
       case Error<List<Recipe>, NetworkError>():
         _errorState(result.error.toString());
     }
+  }
+
+  void filterHomeRecipeCategory(String category) {
+    final filterdRecipes = _filterHomeRecipeCategoryUseCase.execute(
+      recipes: state.allRecipes,
+      category: category,
+    );
+    _state = state.copyWith(filterdRecipes: filterdRecipes);
+
+    notifyListeners();
   }
 
   void _loadingState() {

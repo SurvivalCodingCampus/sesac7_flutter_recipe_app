@@ -3,6 +3,7 @@ import 'package:flutter_recipe_app/core/data/data_source/recipe/recipe_data_sour
 import 'package:flutter_recipe_app/core/data/repository/recipe/recipe_repository_impl.dart';
 import 'package:flutter_recipe_app/core/domain/repository/recipe/recipe_repository.dart';
 import 'package:flutter_recipe_app/feature/home/domain/use_case/fetch_all_recipes_use_case.dart';
+import 'package:flutter_recipe_app/feature/home/domain/use_case/filter_home_recipe_category_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/data/repository/mocks/mock_ingredient_repository_impl.dart';
 import 'package:flutter_recipe_app/feature/ingredient/data/repository/mocks/mock_procedure_repository_impl.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/repository/ingredient_repository.dart';
@@ -59,5 +60,8 @@ void diSetUp() {
   );
   getIt.registerFactory(
     () => FormatReviewCountUseCase(),
+  );
+  getIt.registerFactory(
+    () => FilterHomeRecipeCategoryUseCase(),
   );
 }
