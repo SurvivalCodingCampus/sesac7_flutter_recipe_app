@@ -110,6 +110,27 @@ abstract class TextStyles {
 
   /* RatingButton End */
 
+  /* CategoryButton Start */
+  static final TextStyle selectedCategoryTitle = TextStyle(
+    color: AppColors.white,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle unSelectedCategoryTitle = TextStyle(
+    color: AppColors.primary80,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  /* CategoryButton End */
+
   /* RatingDialog Start */
   static final TextStyle ratingDialogTitle = TextStyle(
     color: AppColors.labelColor,
