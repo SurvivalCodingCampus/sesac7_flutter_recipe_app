@@ -36,7 +36,7 @@ class DishCard extends StatelessWidget {
                     child: Text(
                       overflow: TextOverflow.ellipsis,
                       maxLines: 2,
-                      textAlign: TextAlign.start,
+                      textAlign: TextAlign.center,
                       recipe.name,
                       style: TextStyles.smallTextBold.copyWith(
                         color: AppColors.gray1,
