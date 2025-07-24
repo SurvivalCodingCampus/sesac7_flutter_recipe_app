@@ -48,7 +48,6 @@ class IngredientViewModel with ChangeNotifier {
         _state = state.copyWith(
           recipe: recipe,
           reviewCount: reviewCount,
-          isLoading: false,
         );
       case Error<Recipe, NetworkError>():
         _errorState(recipeResult.error.toString());
@@ -63,7 +62,6 @@ class IngredientViewModel with ChangeNotifier {
       case Success<List<Ingredient>, NetworkError>():
         _state = state.copyWith(
           ingredients: ingredientsResult.data,
-          isLoading: false,
         );
       case Error<List<Ingredient>, NetworkError>():
         _errorState(ingredientsResult.error.toString());
@@ -76,12 +74,13 @@ class IngredientViewModel with ChangeNotifier {
       case Success<List<String>, NetworkError>():
         _state = state.copyWith(
           procedure: procedureResult.data,
-          isLoading: false,
         );
       case Error<List<String>, NetworkError>():
         _errorState(procedureResult.error.toString());
         return;
     }
+
+    _state = state.copyWith(isLoading: false);
 
     notifyListeners();
   }
