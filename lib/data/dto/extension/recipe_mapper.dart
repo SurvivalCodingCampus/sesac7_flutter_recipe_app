@@ -1,7 +1,10 @@
 
+
+
 import '../../../domain/model/ingredient.dart';
 import '../../../domain/model/recipe.dart';
 import '../../../domain/model/recipe_ingredient.dart';
+import '../../../domain/model/step_Info.dart';
 import '../recipe_dto.dart';
 
 extension RecipeMapper on RecipeDto {
@@ -14,9 +17,20 @@ extension RecipeMapper on RecipeDto {
       chef: chef ?? '',
       time: time ?? '',
       rating: rating ?? 0,
+      isSaved: isSaved ?? false,
       ingredients: ingredients?.map((e) => e.toRecipeIngredient()).toList() ?? [],
+      steps: steps?.map((e) => e.toStepInfo()).toList() ?? [],
     );
 
+  }
+}
+
+extension RecipeStepInfoMapper on StepInfoDto {
+  StepInfo toStepInfo() {
+    return StepInfo(
+      stepNumber: stepNumber?.toInt() ?? 0,
+      description: description ?? '',
+    );
   }
 }
 

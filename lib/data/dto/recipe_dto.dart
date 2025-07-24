@@ -1,3 +1,24 @@
+class StepInfoDto {
+  num? stepNumber;
+  String? description;
+
+  StepInfoDto({
+    this.stepNumber,
+    this.description,
+  });
+
+  StepInfoDto.fromJson(dynamic json) {
+    stepNumber = json['stepNumber'];
+    description = json['description'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['stepNumber'] = stepNumber;
+    map['description'] = description;
+    return map;
+  }
+}
 
 class RecipeDto {
   String? category;
@@ -7,17 +28,21 @@ class RecipeDto {
   String? chef;
   String? time;
   num? rating;
+  bool? isSaved;
   List<RecipeIngredientDto>? ingredients;
+  List<StepInfoDto>? steps;
 
   RecipeDto({
-      this.category,
-      this.id,
-      this.name,
-      this.image,
-      this.chef,
-      this.time,
-      this.rating,
-      this.ingredients,});
+    this.category,
+    this.id,
+    this.name,
+    this.image,
+    this.chef,
+    this.time,
+    this.rating,
+    this.isSaved,
+    this.ingredients,
+  });
 
   RecipeDto.fromJson(dynamic json) {
     category = json['category'];
@@ -27,6 +52,7 @@ class RecipeDto {
     chef = json['chef'];
     time = json['time'];
     rating = json['rating'];
+    isSaved = json['saved'] ?? true;
     if (json['ingredients'] != null) {
       ingredients = [];
       json['ingredients'].forEach((v) {
@@ -49,7 +75,6 @@ class RecipeDto {
     }
     return map;
   }
-
 }
 
 class RecipeIngredientDto {
@@ -57,11 +82,14 @@ class RecipeIngredientDto {
   num? amount;
 
   RecipeIngredientDto({
-      this.ingredient,
-      this.amount,});
+    this.ingredient,
+    this.amount,
+  });
 
   RecipeIngredientDto.fromJson(dynamic json) {
-    ingredient = json['ingredient'] != null ? IngredientDto.fromJson(json['ingredient']) : null;
+    ingredient = json['ingredient'] != null
+        ? IngredientDto.fromJson(json['ingredient'])
+        : null;
     amount = json['amount'];
   }
 
@@ -73,7 +101,6 @@ class RecipeIngredientDto {
     map['amount'] = amount;
     return map;
   }
-
 }
 
 class IngredientDto {
@@ -82,9 +109,10 @@ class IngredientDto {
   String? image;
 
   IngredientDto({
-      this.id,
-      this.name,
-      this.image,});
+    this.id,
+    this.name,
+    this.image,
+  });
 
   IngredientDto.fromJson(dynamic json) {
     id = json['id'];
@@ -99,5 +127,4 @@ class IngredientDto {
     map['image'] = image;
     return map;
   }
-
 }

@@ -144,7 +144,7 @@ class RecipeCard extends StatelessWidget {
                           },
                           child: Icon(
                             Icons.bookmark_border,
-                            color: Colors.white,
+                            color: recipe.isSaved ? AppColors.secondary100 : AppColors.white,
                           ),
                         ),
                       ],

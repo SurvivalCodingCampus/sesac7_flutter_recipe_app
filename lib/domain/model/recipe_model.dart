@@ -1,5 +1,5 @@
 
-import 'package:flutter_recipe_app/domain/model/step_model.dart';
+import 'package:flutter_recipe_app/domain/model/step_Info.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'ingredient_model.dart';
@@ -15,7 +15,7 @@ abstract class RecipeModel with _$RecipeModel {
     required String imageUrl, // 레시피 대표 이미지 URL
     required String description, // 간단한 레시피 설명
     required List<IngredientModel> ingredients,
-    required List<StepModel> steps, // 조리설명 및 순서
+    required List<StepInfo> steps, // 조리설명 및 순서
     required int cookTimeMinutes, // 조리시간(분)
     required int servings, // 인분
     required String authorName, // 작성자 ID
