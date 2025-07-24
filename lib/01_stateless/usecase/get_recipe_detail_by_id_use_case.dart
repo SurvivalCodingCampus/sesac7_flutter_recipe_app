@@ -11,17 +11,23 @@ class GetRecipeDetailByIdUseCase {
   final RecipeRepository _recipeRepository;
   final RecipeDetailFragmentRepository _recipeDetailFragmentRepository;
 
-  GetRecipeDetailByIdUseCase(
-    this._userRepository,
-    this._recipeRepository,
-    this._recipeDetailFragmentRepository,
-  );
+  GetRecipeDetailByIdUseCase({
+    required UserRepository userRepository,
+    required RecipeRepository recipeRepository,
+    required RecipeDetailFragmentRepository recipeDetailFragmentRepository,
+  }) :
+    _userRepository = userRepository,
+    _recipeRepository = recipeRepository,
+    _recipeDetailFragmentRepository = recipeDetailFragmentRepository;
+
+
+
 
   Future<DetailedRecipe> execute(int id) async {
     DetailedRecipeFragment recipeFragment = await _recipeDetailFragmentRepository
         .getRecipeDetailFragmentById(id);
     Recipe recipe = await _recipeRepository.getRecipeById(id);
-    User author = await _userRepository.getUserById(id);
+    User author = await _userRepository.getUserById(recipeFragment.authorId);
 
     DetailedRecipe detailedRecipe = DetailedRecipe(
       id: id,

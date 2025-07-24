@@ -12,6 +12,7 @@ void main() {
     image: "https://placehold.co/600x400.jpg",
     duration: 20,
     rating: 4.0,
+    categories: {"Korean", "Chinese", "Japanese"},
   );
   runApp(
     MaterialApp(

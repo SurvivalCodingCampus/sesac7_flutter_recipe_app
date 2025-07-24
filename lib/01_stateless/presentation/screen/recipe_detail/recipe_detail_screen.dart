@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/component/buttons/small_button.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/screen/recipe_detail/recipe_detail_body.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/recipe_detail/body_fragment/recipe_detail_ingredient_and_procedure_fragment.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/recipe_detail/recipe_detail_view_model.dart';
 import 'package:flutter_recipe_app/01_stateless/ui/app_colors.dart';
 import 'package:flutter_recipe_app/01_stateless/ui/text_styles.dart';
@@ -248,7 +248,7 @@ class RecipeDetailScreen extends StatelessWidget {
                       ),
                     ), //Creator's profile
                     const SizedBox(height: 8),
-                    RecipeDetailBody(recipe: viewModel.currentRecipe),
+                    RecipeDetailIngredientAndProcedureFragment(recipe: viewModel.currentRecipe),
                   ],
                 ),
               ),

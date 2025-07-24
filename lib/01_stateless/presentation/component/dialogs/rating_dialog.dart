@@ -38,7 +38,7 @@ class _RatingDialogState extends State<RatingDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 170,
       height: 91,
       child: Column(

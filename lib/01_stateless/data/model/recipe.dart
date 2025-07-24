@@ -11,5 +11,6 @@ abstract class Recipe with _$Recipe {
     required int duration,
     required double rating,
     required int id,
+    required Set<String> categories,
   }) = _Recipe;
 }
