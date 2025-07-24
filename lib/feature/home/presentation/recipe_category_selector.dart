@@ -62,7 +62,9 @@ class _RecipeCategorySelectorState extends State<RecipeCategorySelector> {
                   child: Text(
                     category,
                     style: TextStyles.smallerTextBold.copyWith(
-                      color: AppColors.white,
+                      color: selectedCategory == category
+                          ? AppColors.white
+                          : AppColors.primary80,
                     ),
                   ),
                 ),

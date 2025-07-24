@@ -114,6 +114,7 @@ class IngredientScreen extends StatelessWidget {
                                         color: AppColors.primary80,
                                       ),
                                       Text(
+                                        // TODO: User
                                         'Lagos, Nigeria',
                                         style: TextStyles.smallerTextRegular
                                             .copyWith(

@@ -17,7 +17,7 @@ import 'package:go_router/go_router.dart';
 
 GoRouter createRouter() => GoRouter(
   // initialLocation: Routes.splash,
-  initialLocation: Routes.savedRecipes,
+  initialLocation: Routes.home,
   routes: [
     GoRoute(
       path: Routes.splash,
