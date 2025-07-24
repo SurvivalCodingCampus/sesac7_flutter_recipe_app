@@ -32,6 +32,60 @@ class IngredientViewModel with ChangeNotifier {
 
   IngredientState get state => _state;
 
+  void init() async {
+    _state = state.copyWith(isLoading: true);
+
+    notifyListeners();
+
+    final recipeResult = await _fetchRecipeUseCase.execute(recipeId);
+
+    switch (recipeResult) {
+      case Success<Recipe, NetworkError>():
+        final recipe = recipeResult.data;
+        final reviewCount = _formatReviewCountUseCase.execute(
+          recipe.reviewCount,
+        );
+        _state = state.copyWith(
+          recipe: recipe,
+          reviewCount: reviewCount,
+          isLoading: false,
+        );
+      case Error<Recipe, NetworkError>():
+        _errorState(recipeResult.error.toString());
+        return;
+    }
+
+    final ingredientsResult = await _fetchAllIngredientsUseCase.execute(
+      recipeId,
+    );
+
+    switch (ingredientsResult) {
+      case Success<List<Ingredient>, NetworkError>():
+        _state = state.copyWith(
+          ingredients: ingredientsResult.data,
+          isLoading: false,
+        );
+      case Error<List<Ingredient>, NetworkError>():
+        _errorState(ingredientsResult.error.toString());
+        return;
+    }
+
+    final procedureResult = await _fetchProcedureUseCase.execute(recipeId);
+
+    switch (procedureResult) {
+      case Success<List<String>, NetworkError>():
+        _state = state.copyWith(
+          procedure: procedureResult.data,
+          isLoading: false,
+        );
+      case Error<List<String>, NetworkError>():
+        _errorState(procedureResult.error.toString());
+        return;
+    }
+
+    notifyListeners();
+  }
+
   void fetchRecipe() async {
     _state = state.copyWith(isLoading: true);
     final result = await _fetchRecipeUseCase.execute(recipeId);
@@ -96,5 +150,7 @@ class IngredientViewModel with ChangeNotifier {
       errorMessage: message,
       isLoading: false,
     );
+
+    notifyListeners();
   }
 }
