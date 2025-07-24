@@ -18,7 +18,7 @@ class FilterButton extends StatelessWidget {
         width: 40,
         height: 40,
         decoration: BoxDecoration(
-          color: AppColors.primary80,
+          color: AppColors.primary100,
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Icon(
