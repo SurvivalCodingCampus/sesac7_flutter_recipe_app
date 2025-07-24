@@ -34,7 +34,7 @@ class CustomBottomAppBar extends StatelessWidget {
             AppBarNavItem(
               navigationShell: navigationShell,
               index: 1,
-              icon: Icons.bookmark_rounded,
+              icon: Icons.bookmark_border,
               label: 'Bookmark',
             ),
             const SizedBox(width: 48),
