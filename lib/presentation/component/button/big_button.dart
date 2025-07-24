@@ -42,6 +42,7 @@ class BigButton extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
+              key: const Key('big button'),
               text,
               style: TextStyles.mediumTextBold.copyWith(
                 color: AppColors.white,
