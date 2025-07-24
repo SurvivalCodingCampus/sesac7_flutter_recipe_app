@@ -98,10 +98,8 @@ class HomeScreen extends StatelessWidget {
             ),
             SizedBox(
               height: DishCard.height,
-              child: ListView.separated(
-                scrollDirection: Axis.horizontal,
-                padding: EdgeInsets.only(left: 30),
-                itemBuilder: (context, index) {
+              child: Builder(
+                builder: (context) {
                   if (state.isLoading) {
                     return Center(
                       child: CircularProgressIndicator(),
@@ -114,17 +112,23 @@ class HomeScreen extends StatelessWidget {
                     );
                   }
 
-                  return DishCard(
-                    recipe: state.filteredRecipes[index],
-                    onTapFavorite: (recipe) {
-                      // TODO: User
+                  return ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    padding: EdgeInsets.only(left: 30),
+                    itemBuilder: (context, index) {
+                      return DishCard(
+                        recipe: state.filteredRecipes[index],
+                        onTapFavorite: (recipe) {
+                          // TODO: User
+                        },
+                      );
                     },
+                    separatorBuilder: (context, index) => const SizedBox(
+                      width: 15,
+                    ),
+                    itemCount: state.filteredRecipes.length,
                   );
                 },
-                separatorBuilder: (context, index) => const SizedBox(
-                  width: 15,
-                ),
-                itemCount: state.filteredRecipes.length,
               ),
             ),
           ],
