@@ -139,6 +139,7 @@ GoRouter createRouter() => GoRouter(
       path: Routes.ingredient,
       builder: (context, state) {
         final id = state.uri.queryParameters[QueryParameters.id]!;
+        // TODO: id null 기본 화면
         final viewModel = IngredientViewModel(
           recipeId: id,
           fetchRecipeUseCase: getIt(),

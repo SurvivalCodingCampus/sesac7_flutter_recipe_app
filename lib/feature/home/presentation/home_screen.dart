@@ -115,7 +115,7 @@ class HomeScreen extends StatelessWidget {
                   }
 
                   return DishCard(
-                    recipe: state.filterdRecipes[index],
+                    recipe: state.filteredRecipes[index],
                     onTapFavorite: (recipe) {
                       // TODO: User
                     },
@@ -124,7 +124,7 @@ class HomeScreen extends StatelessWidget {
                 separatorBuilder: (context, index) => const SizedBox(
                   width: 15,
                 ),
-                itemCount: state.filterdRecipes.length,
+                itemCount: state.filteredRecipes.length,
               ),
             ),
           ],

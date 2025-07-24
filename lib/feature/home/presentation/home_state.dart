@@ -7,7 +7,7 @@ part "home_state.freezed.dart";
 abstract class HomeState with _$HomeState {
   const factory HomeState({
     @Default([]) List<Recipe> allRecipes,
-    @Default([]) List<Recipe> filterdRecipes,
+    @Default([]) List<Recipe> filteredRecipes,
     @Default(false) bool isLoading,
     @Default('') String errorMessage,
   }) = _HomeState;

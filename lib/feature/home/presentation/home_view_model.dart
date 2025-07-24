@@ -29,7 +29,7 @@ class HomeViewModel with ChangeNotifier {
       case Success<List<Recipe>, NetworkError>():
         _state = state.copyWith(
           allRecipes: result.data,
-          filterdRecipes: result.data,
+          filteredRecipes: result.data,
           isLoading: false,
           errorMessage: '',
         );
@@ -41,11 +41,11 @@ class HomeViewModel with ChangeNotifier {
   }
 
   void filterHomeRecipeCategory(String category) {
-    final filterdRecipes = _filterHomeRecipeCategoryUseCase.execute(
+    final filteredRecipes = _filterHomeRecipeCategoryUseCase.execute(
       recipes: state.allRecipes,
       category: category,
     );
-    _state = state.copyWith(filterdRecipes: filterdRecipes);
+    _state = state.copyWith(filteredRecipes: filteredRecipes);
 
     notifyListeners();
   }
