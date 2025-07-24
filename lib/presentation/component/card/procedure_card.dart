@@ -43,6 +43,6 @@ class ProcedureCard extends StatelessWidget {
           ),
         ],
       ),
-    );;
+    );
   }
 }

@@ -23,7 +23,7 @@ class DishCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(15.0),
         boxShadow: [
           BoxShadow(
-            color: AppColors.gray3.withOpacity(0.2),
+            color: AppColors.gray3.withValues(alpha: 0.2),
             spreadRadius: 2,
             blurRadius: 5,
             offset: const Offset(0, 3), // 그림자 효과

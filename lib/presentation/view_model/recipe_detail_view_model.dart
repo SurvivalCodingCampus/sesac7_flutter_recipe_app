@@ -7,19 +7,20 @@ import '../../domain/use_case/get_procedure_use_case.dart';
 
 class RecipeDetailViewModel with ChangeNotifier {
   Recipe? _recipe;
+
   Recipe? get recipe => _recipe;
 
-  final GetIngredientsUseCase _getIngredientsUseCase;
-  final GetProcedureUseCase _getProcedureUseCase;
+  //final GetIngredientsUseCase _getIngredientsUseCase;
+  //final GetProcedureUseCase _getProcedureUseCase;
   final GetRecipeDetailUseCase _getRecipeDetailUseCase;
 
   RecipeDetailViewModel({
-    required GetIngredientsUseCase getIngredientsUseCase,
-    required GetProcedureUseCase getProcedureUseCase,
+    //required GetIngredientsUseCase getIngredientsUseCase,
+    //required GetProcedureUseCase getProcedureUseCase,
     required GetRecipeDetailUseCase getRecipeDetailUseCase,
-  }) : _getIngredientsUseCase = getIngredientsUseCase,
-       _getProcedureUseCase = getProcedureUseCase,
-        _getRecipeDetailUseCase = getRecipeDetailUseCase;
+  }) : //_getIngredientsUseCase = getIngredientsUseCase,
+       //_getProcedureUseCase = getProcedureUseCase,
+       _getRecipeDetailUseCase = getRecipeDetailUseCase;
 
   void fetchIngredients(String recipeId) async {
     // _getIngredientsUseCase.getIngredients()의 데이터를 ingredients에 셋팅하고 갱신한다.

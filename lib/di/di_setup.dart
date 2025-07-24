@@ -67,8 +67,8 @@ void diSetup() {
 
   getIt.registerFactory<RecipeDetailViewModel>(
       () => RecipeDetailViewModel(
-        getIngredientsUseCase: getIt(),
-        getProcedureUseCase: getIt(),
+        //getIngredientsUseCase: getIt(),
+        //getProcedureUseCase: getIt(),
         getRecipeDetailUseCase: getIt(),
       )
   );
