@@ -8,7 +8,14 @@ import 'package:flutter_recipe_app/ui/text_styles.dart';
 import 'package:go_router/go_router.dart';
 
 class SignUpScreen extends StatelessWidget {
-  const SignUpScreen({super.key});
+  final VoidCallback onSignUpButtonClick;
+  final VoidCallback onSignInButtonClick;
+
+  const SignUpScreen({
+    super.key,
+    required this.onSignUpButtonClick,
+    required this.onSignInButtonClick,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +108,7 @@ class SignUpScreen extends StatelessWidget {
               Spacer(),
               BigButton(
                 title: 'Sign Up',
-                onClick: () {},
+                onClick: onSignUpButtonClick,
               ),
               SizedBox(
                 height: 14.0,
@@ -152,9 +159,7 @@ class SignUpScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: GestureDetector(
-                  onTap: () {
-                    context.go(Routes.signIn);
-                  },
+                  onTap: onSignInButtonClick,
                   child: Text.rich(
                     TextSpan(
                       text: 'Already a member? ',

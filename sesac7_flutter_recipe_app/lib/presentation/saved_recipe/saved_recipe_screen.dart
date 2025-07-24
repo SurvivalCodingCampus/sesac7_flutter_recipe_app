@@ -7,10 +7,12 @@ import 'package:go_router/go_router.dart';
 
 class SavedRecipeScreen extends StatelessWidget {
   final SavedRecipeViewModel _savedRecipeViewModel;
+  final Function(int id) onSavedRecipeItemClick;
 
   const SavedRecipeScreen({
     super.key,
     required SavedRecipeViewModel savedRecipeViewModel,
+    required this.onSavedRecipeItemClick,
   }) : _savedRecipeViewModel = savedRecipeViewModel;
 
   @override
@@ -37,7 +39,7 @@ class SavedRecipeScreen extends StatelessWidget {
                   return RecipeCard(
                     recipe:
                         _savedRecipeViewModel.savedRecipeState.savedRecipes[index],
-                    onTap: (id) => context.push(Routes.ingredientWithId(id)),
+                    onTap: onSavedRecipeItemClick,
                     onFavoritePressed: () {
                       final id = _savedRecipeViewModel.savedRecipeState.savedRecipes[index].id;
                       _savedRecipeViewModel.removeSavedRecipe(id);

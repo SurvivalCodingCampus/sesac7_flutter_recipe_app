@@ -83,6 +83,9 @@ final router = GoRouter(
                   builder: (context, build) {
                     return SavedRecipeScreen(
                       savedRecipeViewModel: savedRecipeViewModel,
+                      onSavedRecipeItemClick: (int id) {
+                        context.push(Routes.ingredientWithId(id));
+                      },
                     );
                   },
                 );
@@ -95,19 +98,37 @@ final router = GoRouter(
     GoRoute(
       path: Routes.splash,
       builder: (context, state) {
-        return SplashScreen();
+        return SplashScreen(
+          onStartButtonClick: () {
+            context.go(Routes.signIn);
+          },
+        );
       },
     ),
     GoRoute(
       path: Routes.signIn,
       builder: (context, state) {
-        return SignInScreen();
+        return SignInScreen(
+          onSignInButtonClick: () {
+            context.go(Routes.home);
+          },
+          onSignUpButtonClick: () {
+            context.go(Routes.signUp);
+          },
+        );
       },
     ),
     GoRoute(
       path: Routes.signUp,
       builder: (context, state) {
-        return SignUpScreen();
+        return SignUpScreen(
+          onSignUpButtonClick: () {
+            context.go(Routes.home);
+          },
+          onSignInButtonClick: () {
+            context.go(Routes.signIn);
+          },
+        );
       },
     ),
     GoRoute(
