@@ -3,6 +3,7 @@ import 'package:flutter_recipe_app/core/presentation/component/nav_bar/bottom_na
 import 'package:flutter_recipe_app/home/presentation/screen/home_screen.dart';
 import 'package:flutter_recipe_app/saved_recipes/presentation/saved_recipes_view_model.dart';
 import 'package:go_router/go_router.dart';
+import '../../di/di_setup.dart';
 import '../../recipe_ingredients/data/repository/ingredient_repository_impl.dart';
 import '../../recipe_ingredients/domain/use_case/fetch_recipe_use_case.dart';
 import '../../recipe_ingredients/presentation/recipe_ingredients_screen.dart';
@@ -107,7 +108,9 @@ final router = GoRouter(
               path: Routes.home,
               builder: (context, state) =>
                   HomeScreen(
-                    viewModel: HomeViewModel(),
+                    viewModel: HomeViewModel(
+                      fetchRecipesUseCase: getIt(),
+                    ),
                   ),
             ),
           ],

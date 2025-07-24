@@ -49,3 +49,7 @@ app.*.map.json
 
 ios/Pods/
 ios/Flutter/Generated.xcconfig
+ios/
+macos/
+linux/
+windows/

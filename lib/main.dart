@@ -3,8 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'core/routing/router.dart';
+import 'di/di_setup.dart';
 
 void main() {
+  diSetup();
   runApp(const MyApp());
 }
 
@@ -12,10 +14,10 @@ void main() {
 //   WidgetsFlutterBinding.ensureInitialized();
 //   try {
 //     final data = await rootBundle.loadString('mock_json/recipe/recipes.json');
-//     print('🔥 asset read success!');
+//     print('asset read success!');
 //     print(data);
 //   } catch (e) {
-//     print('🚨 asset read fail: $e');
+//     print('asset read fail: $e');
 //   }
 //
 //   runApp(const MyApp());
