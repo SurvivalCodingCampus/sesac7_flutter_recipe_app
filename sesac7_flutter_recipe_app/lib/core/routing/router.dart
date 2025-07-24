@@ -28,7 +28,9 @@ final router = GoRouter(
             GoRoute(
               path: Routes.home,
               builder: (context, state) {
-                return HomeScreen();
+                return HomeScreen(
+                  homeViewModel: getIt()..loadCategories(),
+                );
               },
             ),
           ],
