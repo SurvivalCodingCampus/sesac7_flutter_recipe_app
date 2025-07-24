@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/presentation/component/card/recipe_card.dart'; // 사용되지 않는 import로 보임
 import 'package:flutter_recipe_app/presentation/view_model/recipe_detail_view_model.dart';
 
-import '../../domain/model/recipe.dart';
 import '../../ui/app_colors.dart';
 import '../../ui/text_styles.dart';
 import '../component/card/recipe_ex_card.dart';
 import '../component/tab/tabs.dart';
-import '../view_model/recipe_view_model.dart';
 
 class RecipeDetailScreen extends StatefulWidget {
   final RecipeDetailViewModel _recipeDetailViewModel;

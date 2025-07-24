@@ -1,11 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../domain/model/ingredient.dart';
 import '../../domain/model/recipe.dart';
-import '../../domain/model/recipe_ingredient.dart';
-import '../../domain/model/step_Info.dart';
-import '../../domain/repository/ingrident_repository.dart';
-import '../../domain/repository/procedure_repository.dart';
 import '../../domain/use_case/get_ingrident_use_case.dart';
 import '../../domain/use_case/get_procedure_use_case.dart';
 

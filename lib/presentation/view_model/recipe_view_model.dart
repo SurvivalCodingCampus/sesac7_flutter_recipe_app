@@ -4,7 +4,6 @@ import 'package:flutter_recipe_app/domain/use_case/get_saved_recipes_use_case.da
 import 'package:flutter_recipe_app/presentation/state_holder/recipe_view_state.dart';
 
 import '../../core/result.dart';
-
 import '../../domain/model/recipe.dart';
 import '../../domain/use_case/get_recipe_by_recipe_id.dart';
 

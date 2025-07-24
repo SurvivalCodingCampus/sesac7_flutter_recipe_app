@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/core/routing/router.dart';
 import 'package:flutter_recipe_app/presentation/component/button/small_button.dart';
-import 'package:flutter_recipe_app/presentation/component/tab/tabs.dart';
 
 import '../../../domain/model/recipe.dart';
 import '../../../ui/app_colors.dart';
