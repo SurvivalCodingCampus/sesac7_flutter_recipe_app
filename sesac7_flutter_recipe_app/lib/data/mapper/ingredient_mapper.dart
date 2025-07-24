@@ -1,5 +1,5 @@
 import 'package:flutter_recipe_app/data/dto/ingredient_dto.dart';
-import 'package:flutter_recipe_app/data/model/ingredient.dart';
+import 'package:flutter_recipe_app/domain/model/ingredient.dart';
 
 extension IngredientDtoToModel on IngredientDto {
   Ingredient toModel() {
@@ -14,7 +14,7 @@ extension IngredientDtoToModel on IngredientDto {
 extension IngredientModelToDto on Ingredient {
   IngredientDto toDto() {
     return IngredientDto(
-      id: id.toDouble(),
+      id: id.toInt(),
       name: name,
       image: image,
     );

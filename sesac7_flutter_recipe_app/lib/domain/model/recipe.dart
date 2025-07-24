@@ -1,4 +1,4 @@
-import 'package:flutter_recipe_app/data/model/ingredients.dart';
+import 'package:flutter_recipe_app/domain/model/ingredients.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'recipe.freezed.dart';
@@ -8,7 +8,7 @@ class Recipe with _$Recipe {
   @override
   String category;
   @override
-  num id;
+  int id;
   @override
   String name;
   @override

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/data/model/label.dart';
 import 'package:flutter_recipe_app/presentation/component/button/label_button.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -13,7 +12,7 @@ void main() {
           body: LabelButton(
             labelName: labelButtonTitle,
             isSelected: false,
-            onValueChange: (label) {},
+            onValueChange: () {},
           ),
         ),
       ),
@@ -27,7 +26,7 @@ void main() {
   testWidgets('LabelButton onValueChange Test', (tester) async {
     final Key labelButtonKey = Key('LabelButtonKey');
     final String labelButtonTitle = '라벨버튼';
-    Label? labelModel;
+    bool isClicked = false;
     await tester.pumpWidget(
       MaterialApp(
         home: Scaffold(
@@ -35,8 +34,8 @@ void main() {
             key: labelButtonKey,
             labelName: labelButtonTitle,
             isSelected: false,
-            onValueChange: (label) {
-              labelModel = label;
+            onValueChange: () {
+              isClicked = true;
             },
           ),
         ),
@@ -48,6 +47,6 @@ void main() {
     await tester.tap(labelButtonFinder);
     await tester.pump();
 
-    expect(labelModel?.labelTitle, equals(labelButtonTitle));
+    expect(isClicked, equals(isTrue));
   });
 }

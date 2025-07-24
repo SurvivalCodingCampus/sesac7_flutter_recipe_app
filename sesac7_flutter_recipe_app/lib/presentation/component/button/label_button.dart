@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/data/model/label.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class LabelButton extends StatelessWidget {
   final String labelName;
   final bool isSelected;
-  final Function(Label lable) onValueChange;
+  final VoidCallback onValueChange;
 
   const LabelButton({
     super.key,
@@ -18,9 +17,7 @@ class LabelButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        onValueChange(Label(labelTitle: labelName));
-      },
+      onTap: onValueChange,
       child: Container(
         height: 33.0,
         width: 150.0,

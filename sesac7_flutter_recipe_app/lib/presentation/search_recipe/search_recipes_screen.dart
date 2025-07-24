@@ -7,14 +7,15 @@ import 'package:flutter_recipe_app/presentation/component/title_bar/screen_title
 import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_view_model.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
+import 'package:go_router/go_router.dart';
 
 class SearchRecipesScreen extends StatelessWidget {
   final SearchRecipesViewModel _searchRecipesViewModel;
 
   const SearchRecipesScreen({
     super.key,
-    required SearchRecipesViewModel searchRecipeViewModel,
-  }) : _searchRecipesViewModel = searchRecipeViewModel;
+    required SearchRecipesViewModel searchRecipesViewModel,
+  }) : _searchRecipesViewModel = searchRecipesViewModel;
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +27,13 @@ class SearchRecipesScreen extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.only(
-                top: 54.0,
+                top: 10.0,
                 bottom: 17.0,
               ),
               child: ScreenTitleBar(
                 title: 'Search recipes',
                 backButtonClick: () {
-                  print('Back Button Click!!');
+                  context.pop();
                 },
               ),
             ),

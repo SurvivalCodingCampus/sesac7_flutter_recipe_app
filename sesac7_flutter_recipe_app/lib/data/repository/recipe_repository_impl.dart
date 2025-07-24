@@ -7,18 +7,21 @@ import 'package:flutter_recipe_app/core/result.dart';
 import 'package:flutter_recipe_app/data/data_source/recipe_data_source/recipe_data_source.dart';
 import 'package:flutter_recipe_app/data/dto/recipes_dto.dart';
 import 'package:flutter_recipe_app/data/mapper/recipes_mapper.dart';
-import 'package:flutter_recipe_app/data/model/recipe.dart';
-import 'package:flutter_recipe_app/data/repository/recipe_repository/recipe_repository.dart';
+import 'package:flutter_recipe_app/domain/model/recipe.dart';
+import 'package:flutter_recipe_app/domain/repository/recipe_repository.dart';
 
 class RecipeRepositoryImpl implements RecipeRepository {
-  final RecipeDataSource _dataSource;
+  final RecipeDataSource _recipeDataSource;
 
-  RecipeRepositoryImpl(RecipeDataSource dataSource) : _dataSource = dataSource;
+  RecipeRepositoryImpl({
+    required RecipeDataSource recipeDataSource,
+  }) : _recipeDataSource = recipeDataSource;
 
   @override
   Future<Result<List<Recipe>, NetworkError>> getRecipes() async {
     try {
-      final Response<RecipesDto> response = await _dataSource.getRecipes();
+      final Response<RecipesDto> response = await _recipeDataSource
+          .getRecipes();
       final NetworkError? networkErrorType = response.statusCode
           .statusCodeToNetworkErrorType();
 
@@ -38,7 +41,8 @@ class RecipeRepositoryImpl implements RecipeRepository {
   @override
   Future<Result<List<Recipe>, NetworkError>> getRecentRecipes() async {
     try {
-      final Response<RecipesDto> response = await _dataSource.getRecipes();
+      final Response<RecipesDto> response = await _recipeDataSource
+          .getRecipes();
       final NetworkError? networkErrorType = response.statusCode
           .statusCodeToNetworkErrorType();
 
@@ -63,7 +67,8 @@ class RecipeRepositoryImpl implements RecipeRepository {
     SearchRecipeFilterCategoryType? categoryType,
   ) async {
     try {
-      final Response<RecipesDto> response = await _dataSource.getRecipes();
+      final Response<RecipesDto> response = await _recipeDataSource
+          .getRecipes();
       final NetworkError? networkErrorType = response.statusCode
           .statusCodeToNetworkErrorType();
 

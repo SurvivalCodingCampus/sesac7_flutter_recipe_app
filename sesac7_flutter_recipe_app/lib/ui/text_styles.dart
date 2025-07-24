@@ -200,6 +200,48 @@ abstract class TextStyles {
 
   /* SearchRecipeCard End */
 
+  /* IngredientCard Start */
+  static final ingredientCardTitle = TextStyle(
+    color: AppColors.labelColor,
+    fontSize: 16.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 24 / 16,
+  );
+
+  static final ingredientCardAmount = TextStyle(
+    color: AppColors.gray3,
+    fontSize: 14.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 21 / 14,
+  );
+
+  /* IngredientCard End */
+
+  /* StepCard Start */
+  static final TextStyle stepCardTitle = TextStyle(
+    color: AppColors.labelColor,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle stepCardDescription = TextStyle(
+    color: AppColors.gray3,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  /* StepCard End */
+
   /* SearchRecipeFilterBottomSheet Start */
   static final TextStyle searchRecipeFilterBottomSheetTitle = TextStyle(
     color: AppColors.black,
@@ -275,6 +317,7 @@ abstract class TextStyles {
     overflow: TextOverflow.ellipsis,
     height: 17 / 11,
   );
+
   /* SignInScreen End */
 
   /* SignUpScreen Start */
@@ -295,6 +338,7 @@ abstract class TextStyles {
     overflow: TextOverflow.ellipsis,
     height: 17 / 11,
   );
+
   /* SignUpScreen End */
 
   /* HomeScreen Start */
@@ -385,5 +429,63 @@ abstract class TextStyles {
     overflow: TextOverflow.ellipsis,
     height: 17 / 11,
   );
+
   /* SearchRecipeScreen End */
+
+  /* IngredientScreen Start */
+  static final TextStyle ingredientScreenRecipeName = TextStyle(
+    color: AppColors.black,
+    fontSize: 14.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 20.5 / 14,
+  );
+
+  static final TextStyle ingredientScreenRecipeReviewCount = TextStyle(
+    color: AppColors.gray3,
+    fontSize: 14.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 20 / 14,
+  );
+
+  static final TextStyle ingredientScreenRecipeCreatorName = TextStyle(
+    color: AppColors.labelColor,
+    fontSize: 14.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 21 / 14,
+  );
+
+  static final TextStyle ingredientScreenRecipeCreatorLocation = TextStyle(
+    color: AppColors.gray3,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle ingredientScreenRecipeServe = TextStyle(
+    color: AppColors.gray3,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle ingredientScreenRecipeItemCount = TextStyle(
+    color: AppColors.gray3,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  /* IngredientScreen End */
 }

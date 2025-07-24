@@ -1,5 +1,5 @@
 enum TapStateType {
   onTapDown,
   onTapUp,
-  onTapCancel
+  onTapCancel,
 }

@@ -3,26 +3,28 @@ import 'package:flutter_recipe_app/domain/model/recipe.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
-class SearchRecipeCard extends StatelessWidget {
+class RecipeThumbnailCard extends StatelessWidget {
   final Recipe recipe;
+  final VoidCallback onFavoritePressed;
 
-  const SearchRecipeCard({
+  const RecipeThumbnailCard({
     super.key,
     required this.recipe,
+    required this.onFavoritePressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return AspectRatio(
-      aspectRatio: 150 / 150,
+      aspectRatio: 315.0 / 150.0,
       child: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage(recipe.image),
-            fit: BoxFit.cover,
-            onError: (exception, stacktrace) {
-              throw Exception('RecipeCard Image Load Error');
-            },
+              image: NetworkImage(recipe.image),
+              fit: BoxFit.cover,
+              onError: (exception, stacktrace) {
+                throw Exception('RecipeThumbnailCard Image Load Error');
+              }
           ),
           borderRadius: BorderRadius.circular(10.0),
         ),
@@ -70,12 +72,12 @@ class SearchRecipeCard extends StatelessWidget {
                       size: 8.0,
                     ),
                     SizedBox(
-                      width: 3.0,
+                      width: 2.0,
                     ),
                     SizedBox(
                       child: Text(
                         recipe.rating.toString(),
-                        style: TextStyles.searchRecipeCardRatingValue,
+                        style: TextStyles.recipeCardRatingValue,
                         maxLines: 1,
                       ),
                     ),
@@ -85,22 +87,46 @@ class SearchRecipeCard extends StatelessWidget {
             ),
             Positioned(
               bottom: 10.0,
-              left: 10.0,
               right: 10.0,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              child: Row(
                 children: [
-                  SizedBox(
-                    child: Text(
-                      recipe.name,
-                      style: TextStyles.searchRecipeCardTitle,
-                      maxLines: 2,
-                    ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.timer_sharp,
+                        size: 17.0,
+                        color: AppColors.gray4,
+                      ),
+                      SizedBox(
+                        width: 5.0,
+                      ),
+                      Text(
+                        recipe.time,
+                        style: TextStyles.recipeCardTime,
+                      ),
+                    ],
                   ),
-                  Text(
-                    'By ${recipe.chef}',
-                    style: TextStyles.searchRecipeCardChef,
-                    maxLines: 1,
+                  SizedBox(
+                    width: 10.0,
+                  ),
+                  GestureDetector(
+                    onTap: onFavoritePressed,
+                    child: Container(
+                      width: 24.0,
+                      height: 24.0,
+                      decoration: ShapeDecoration(
+                        shape: CircleBorder(),
+                        color: AppColors.white,
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.bookmark_border_rounded,
+                          color: AppColors.primary80,
+                          size: 16.0,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
