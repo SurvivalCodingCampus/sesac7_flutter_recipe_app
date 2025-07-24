@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/data/state_holder/search_recipes_state.dart';
+import 'package:flutter_recipe_app/core/result.dart';
 
-import '../../data/state_holder/filter_search_state.dart';
-import '../../repository/recipe_repository.dart';
+import '../../domain/model/recipe.dart';
+import '../../domain/repository/recipe_repository.dart';
+import '../state_holder/filter_search_state.dart';
+import '../state_holder/search_recipes_state.dart';
 
 class SearchRecipeViewModel with ChangeNotifier {
   final RecipeRepository _recipeRepository;
@@ -22,21 +24,20 @@ class SearchRecipeViewModel with ChangeNotifier {
     notifyListeners();
     try {
       final response = await _recipeRepository.getRecipes();
-      final responseData = response.body;
 
-      if (response.isSuccess &&
-          responseData != null &&
-          responseData.isNotEmpty) {
-        _searchRecipesState = searchRecipesState.copyWith(
-          orgRecipes: searchRecipesState.isOrgRecipesEmpty
-              ? responseData
-              : _searchRecipesState.orgRecipes,
-          recipes: responseData,
-        );
-        //notifyListeners();
-      } else {
-        _searchRecipesState = searchRecipesState.copyWith(recipes: []);
-        //notifyListeners();
+      switch (response) {
+
+        case Success<List<Recipe>, String>():
+          if(response.value.isNotEmpty){
+            _searchRecipesState = searchRecipesState.copyWith(
+              orgRecipes: searchRecipesState.isOrgRecipesEmpty ? response.value : _searchRecipesState.orgRecipes,
+              recipes: response.value,
+            );
+          } else {
+            _searchRecipesState = searchRecipesState.copyWith(recipes: []);
+          }
+          break;
+        case Failure<List<Recipe>, String>():
       }
     } catch (e) {
       print('Error fetching recipes: $e');

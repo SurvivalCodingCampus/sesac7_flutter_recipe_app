@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 
-import '../../../data/model/ingredient_model.dart';
+import '../../../domain/model/ingredient_model.dart';
 import '../../../ui/text_styles.dart';
 
 class IngredientItem extends StatelessWidget {

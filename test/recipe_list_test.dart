@@ -1,8 +1,8 @@
 import 'dart:convert';
 
-import 'package:flutter_recipe_app/data/model/recipe.dart';
-import 'package:flutter_recipe_app/data_source/mock_recipe_data_source_impl.dart';
-import 'package:flutter_recipe_app/repository/recipe_repository_impl.dart';
+import 'package:flutter_recipe_app/01_stateless/example/core/result.dart';
+import 'package:flutter_recipe_app/data/data_source/mock_recipe_data_source_impl.dart';
+import 'package:flutter_recipe_app/data/repository/recipe_repository_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 
@@ -27,9 +27,11 @@ void main() {
 
           // Assert
           // 1. 응답이 성공적인지 확인
-          expect(result.isSuccess, isTrue);
-          expect(result.errorMessage, isNull);
-          expect(result.body, isNotNull);
+          // expect(result.isSuccess, isTrue);
+          // expect(result.errorMessage, isNull);
+          // expect(result.body, isNotNull);
+          expect(result, isA<Success>());
+          expect(result, isA<String>());
 
           // 2. 반환된 데이터(List<Recipe>)가 비어있지 않은지 확인
           expect(result.body, isNotEmpty);

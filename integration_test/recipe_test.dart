@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/data/model/ingredient_model.dart';
-import 'package:flutter_recipe_app/data/model/recipe_model.dart';
-import 'package:flutter_recipe_app/data/model/step_model.dart';
-//import 'package:flutter_recipe_app/presentation/component/card/recipe_card.dart';
+import 'package:flutter_recipe_app/domain/model/ingredient_model.dart';
+import 'package:flutter_recipe_app/domain/model/recipe_model.dart';
+import 'package:flutter_recipe_app/domain/model/step_Info.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';

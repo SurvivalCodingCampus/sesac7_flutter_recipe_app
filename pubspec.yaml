@@ -40,6 +40,7 @@ dependencies:
   http: ^1.4.0
   intl: ^0.20.2
   go_router: ^16.0.0
+  provider: ^6.0.5
 
 dev_dependencies:
   integration_test:
@@ -71,12 +72,17 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - assets/images/background_cooking.jpg
-    - assets/images/profile_image.png
-    - assets/icons/chef_hat.png # 요리사 모자 아이콘 경로 추가
-    - assets/icons/recipe_filter_setting.png # 요리사 모자 아이콘 경로 추가
-    - assets/icons/google.png
-    - assets/icons/facebook.png
+#    - assets/images/background_cooking.jpg
+#    - assets/images/profile_image.png
+#    - assets/images/profile_another.png
+    - assets/images/
+    - assets/icons/
+#    - assets/icons/chef_hat.png # 요리사 모자 아이콘 경로 추가
+#    - assets/icons/recipe_filter_setting.png # 요리사 모자 아이콘 경로 추가
+#    - assets/icons/google.png
+#    - assets/icons/location.png
+#    - assets/icons/facebook.png
+#    - assets/icons/bell.png
 
   fonts:
     - family: Poppins

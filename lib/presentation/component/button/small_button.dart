@@ -6,12 +6,13 @@ import '../../../ui/text_styles.dart';
 
 class SmallButton extends StatefulWidget {
   final String text;
+  final double? width;
   final void Function() onClick;
 
   const SmallButton({
     super.key,
     required this.text,
-    required this.onClick,
+    required this.onClick, this.width,
   });
 
   @override
@@ -41,7 +42,7 @@ class _SmallButtonState extends State<SmallButton> {
         });
       },
       child: Container(
-        width: 174,
+        width: widget.width ?? 174,
         height: 37,
         decoration: BoxDecoration(
           color: isPressed ? AppColors.gray4 : AppColors.primary100,
