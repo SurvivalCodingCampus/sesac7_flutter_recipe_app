@@ -11,7 +11,6 @@ import 'package:flutter_recipe_app/presentation/component/title_bar/screen_title
 import 'package:flutter_recipe_app/presentation/ingredient/ingredient_view_model.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
-import 'package:go_router/go_router.dart';
 
 class IngredientScreen extends StatelessWidget {
   final IngredientViewModel _ingredientViewModel;

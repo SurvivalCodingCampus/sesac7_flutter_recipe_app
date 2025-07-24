@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/core/routing/routes.dart';
 import 'package:flutter_recipe_app/presentation/component/button/big_button.dart';
 import 'package:flutter_recipe_app/presentation/component/button/sns_login_button.dart';
 import 'package:flutter_recipe_app/presentation/component/text_field/input_field.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
-import 'package:go_router/go_router.dart';
 
 class SignUpScreen extends StatelessWidget {
   final VoidCallback onSignUpButtonClick;

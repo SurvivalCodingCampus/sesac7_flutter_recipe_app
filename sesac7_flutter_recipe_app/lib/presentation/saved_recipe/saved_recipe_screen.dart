@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/core/routing/routes.dart';
 import 'package:flutter_recipe_app/presentation/component/card/recipe_card.dart';
 import 'package:flutter_recipe_app/presentation/component/title_bar/screen_title_bar.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_view_model.dart';
-import 'package:go_router/go_router.dart';
 
 class SavedRecipeScreen extends StatelessWidget {
   final SavedRecipeViewModel _savedRecipeViewModel;
