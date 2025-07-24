@@ -5,6 +5,7 @@ import 'package:flutter_recipe_app/di/di.dart';
 import 'package:flutter_recipe_app/feature/authentication/presentation/sign_in_screen.dart';
 import 'package:flutter_recipe_app/feature/authentication/presentation/sign_up_screen.dart';
 import 'package:flutter_recipe_app/feature/home/presentation/home_screen.dart';
+import 'package:flutter_recipe_app/feature/home/presentation/home_view_model.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_screen.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_view_model.dart';
 import 'package:flutter_recipe_app/feature/main_navigation/presentation/main_navigation_screen.dart';
@@ -59,7 +60,18 @@ GoRouter createRouter() => GoRouter(
             GoRoute(
               path: Routes.home,
               builder: (context, state) {
-                return const HomeScreen();
+                final viewModel = HomeViewModel(
+                  fetchAllRecipesUseCase: getIt(),
+                );
+
+                viewModel.fetchAllRecipes();
+
+                return ListenableBuilder(
+                  listenable: viewModel,
+                  builder: (context, child) {
+                    return HomeScreen(viewModel: viewModel);
+                  },
+                );
               },
             ),
           ],

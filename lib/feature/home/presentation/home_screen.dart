@@ -2,19 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/presentation/component/button/search_filter_button.dart';
 import 'package:flutter_recipe_app/core/presentation/component/constants/component_constant.dart';
 import 'package:flutter_recipe_app/core/presentation/component/input/search_field.dart';
-import 'package:flutter_recipe_app/feature/home/domain/home_recipe_category.dart';
+import 'package:flutter_recipe_app/feature/home/domain/model/home_recipe_category.dart';
+import 'package:flutter_recipe_app/feature/home/presentation/dish_card.dart';
+import 'package:flutter_recipe_app/feature/home/presentation/home_view_model.dart';
 import 'package:flutter_recipe_app/feature/home/presentation/recipe_category_selector.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final HomeViewModel viewModel;
+
+  const HomeScreen({
+    super.key,
+    required this.viewModel,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final state = viewModel.state;
+
     return SafeArea(
       child: SingleChildScrollView(
-        // padding: EdgeInsets.zero,
         child: Column(
           children: [
             Padding(
@@ -85,6 +93,37 @@ class HomeScreen extends StatelessWidget {
             ),
             const SizedBox(
               height: 15,
+            ),
+            SizedBox(
+              height: DishCard.height,
+              child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                padding: EdgeInsets.only(left: 30),
+                itemBuilder: (context, index) {
+                  if (state.isLoading) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+
+                  if (state.errorMessage.isNotEmpty) {
+                    return Center(
+                      child: Text(state.errorMessage),
+                    );
+                  }
+
+                  return DishCard(
+                    recipe: state.recipes[index],
+                    onTapFavorite: (recipe) {
+                      // TODO: User
+                    },
+                  );
+                },
+                separatorBuilder: (context, index) => const SizedBox(
+                  width: 15,
+                ),
+                itemCount: state.recipes.length,
+              ),
             ),
           ],
         ),

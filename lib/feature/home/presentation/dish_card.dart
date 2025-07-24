@@ -4,6 +4,8 @@ import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class DishCard extends StatelessWidget {
+  static const double height = 231;
+
   final Recipe recipe;
   final void Function(Recipe recipe) onTapFavorite;
 
@@ -17,7 +19,7 @@ class DishCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 150,
-      height: 231,
+      height: height,
       child: Stack(
         children: [
           Positioned(
@@ -29,13 +31,19 @@ class DishCard extends StatelessWidget {
                 color: AppColors.gray4,
                 borderRadius: BorderRadius.circular(12),
               ),
-              child: Text(
-                recipe.name,
-                style: TextStyles.smallTextBold.copyWith(
-                  color: AppColors.gray1,
+              child: Center(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    recipe.name,
+                    style: TextStyles.smallTextBold.copyWith(
+                      color: AppColors.gray1,
+                    ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                  ),
                 ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
               ),
             ),
           ),
@@ -85,6 +93,7 @@ class DishCard extends StatelessWidget {
             bottom: 10,
             child: Column(
               spacing: 5,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Time',
