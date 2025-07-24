@@ -4,8 +4,9 @@ import 'package:flutter_recipe_app/domain/model/procedure.dart';
 extension ProcedureDtoToModel on ProcedureDto {
   Procedure toModel() {
     return Procedure(
+      recipeId: recipeId!.toInt(),
       step: step!.toInt(),
-      description: description!,
+      content: content!,
     );
   }
 }
@@ -13,8 +14,9 @@ extension ProcedureDtoToModel on ProcedureDto {
 extension ProcedureModelToDto on Procedure {
   ProcedureDto toDto() {
     return ProcedureDto(
+      recipeId: recipeId.toInt(),
       step: step.toInt(),
-      description: description,
+      content: content,
     );
   }
 }

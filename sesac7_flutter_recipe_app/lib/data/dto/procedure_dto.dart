@@ -1,21 +1,25 @@
 class ProcedureDto {
   ProcedureDto({
+    this.recipeId,
     this.step,
-    this.description,
+    this.content,
   });
 
   ProcedureDto.fromJson(dynamic json) {
+    recipeId = json['recipeId'];
     step = json['step'];
-    description = json['description'];
+    content = json['content'];
   }
 
+  num? recipeId;
   num? step;
-  String? description;
+  String? content;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
+    map['recipeId'] = recipeId;
     map['step'] = step;
-    map['description'] = description;
+    map['content'] = content;
     return map;
   }
 }
