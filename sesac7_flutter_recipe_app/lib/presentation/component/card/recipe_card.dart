@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/domain/model/recipe.dart';
+import 'package:flutter_recipe_app/presentation/component/button/bookmark_button.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class RecipeCard extends StatelessWidget {
   final Recipe recipe;
+  final bool isBookmark;
   final Function(int id) onTap;
   final VoidCallback onFavoritePressed;
 
   const RecipeCard({
     super.key,
     required this.recipe,
+    required this.isBookmark,
     required this.onTap,
     required this.onFavoritePressed,
   });
@@ -31,7 +34,7 @@ class RecipeCard extends StatelessWidget {
               fit: BoxFit.cover,
               onError: (exception, stacktrace) {
                 throw Exception('RecipeCard Image Load Error');
-              }
+              },
             ),
             borderRadius: BorderRadius.circular(10.0),
           ),
@@ -139,23 +142,9 @@ class RecipeCard extends StatelessWidget {
                     SizedBox(
                       width: 10.0,
                     ),
-                    GestureDetector(
-                      onTap: onFavoritePressed,
-                      child: Container(
-                        width: 24.0,
-                        height: 24.0,
-                        decoration: ShapeDecoration(
-                          shape: CircleBorder(),
-                          color: AppColors.white,
-                        ),
-                        child: Center(
-                          child: Icon(
-                            Icons.bookmark_border_rounded,
-                            color: AppColors.primary80,
-                            size: 16.0,
-                          ),
-                        ),
-                      ),
+                    BookmarkButton(
+                      isSelected: isBookmark,
+                      onFavoritePressed: onFavoritePressed,
                     ),
                   ],
                 ),

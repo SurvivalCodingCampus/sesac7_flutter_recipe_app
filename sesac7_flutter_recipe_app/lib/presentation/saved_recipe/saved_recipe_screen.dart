@@ -43,6 +43,7 @@ class SavedRecipeScreen extends StatelessWidget {
                         recipe: _savedRecipeViewModel
                             .savedRecipeState
                             .savedRecipes[index],
+                        isBookmark: true,
                         onTap: onSavedRecipeItemClick,
                         onFavoritePressed: () {
                           final id = _savedRecipeViewModel

@@ -54,7 +54,10 @@ class IngredientScreen extends StatelessWidget {
                               recipe: _ingredientViewModel
                                   .ingredientState
                                   .currentSelectedRecipe!,
-                              onFavoritePressed: () {},
+                              isBookmark: true,
+                              onFavoritePressed: () {
+                                // fixme Bookmark 변경 필요
+                              },
                             ),
                             SizedBox(
                               height: 10.0,
