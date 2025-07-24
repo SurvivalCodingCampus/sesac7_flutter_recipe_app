@@ -4,9 +4,12 @@ import 'package:flutter_recipe_app/core/routing/routes.dart';
 import 'package:flutter_recipe_app/data/data_source/recipe_data_source/recipe_data_source.dart';
 import 'package:flutter_recipe_app/data/data_source/recipe_data_source/recipe_data_source_impl.dart';
 import 'package:flutter_recipe_app/data/repository/mock_bookmark_recipe_impl.dart';
+import 'package:flutter_recipe_app/data/repository/mock_procedure_repository_impl.dart';
 import 'package:flutter_recipe_app/domain/repository/bookmark_repository.dart';
+import 'package:flutter_recipe_app/domain/repository/procedure_repository.dart';
 import 'package:flutter_recipe_app/domain/repository/recipe_repository.dart';
 import 'package:flutter_recipe_app/data/repository/recipe_repository_impl.dart';
+import 'package:flutter_recipe_app/domain/usecase/get_procedures_by_recipe_id_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_saved_recipe_find_by_id_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_saved_recipes_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/remove_saved_recipe_use_case.dart';
@@ -25,6 +28,7 @@ final RecipeDataSource recipeDataSource = RecipeDataSourceImpl();
 final RecipeRepository recipeRepository = RecipeRepositoryImpl(
   recipeDataSource: recipeDataSource,
 );
+final ProcedureRepository procedureRepository = MockProcedureRepositoryImpl();
 final BookmarkRepository bookmarkRepository = MockBookMarkRepositoryImpl();
 
 final GetSavedRecipesUseCase getSavedRecipeUseCase = GetSavedRecipesUseCase(
@@ -34,6 +38,8 @@ final GetSavedRecipeFindByIdUseCase getSavedRecipeFindByIdUseCase =
     GetSavedRecipeFindByIdUseCase(
       getSavedRecipesUseCase: getSavedRecipeUseCase,
     );
+final GetProceduresByRecipeIdUseCase getProceduresByRecipeIdUseCase =
+    GetProceduresByRecipeIdUseCase(procedureRepository: procedureRepository);
 
 final router = GoRouter(
   initialLocation: Routes.splash,
@@ -109,12 +115,16 @@ final router = GoRouter(
       builder: (context, state) {
         final IngredientViewModel ingredientViewModel = IngredientViewModel(
           getSavedRecipeFindByIdUseCase: getSavedRecipeFindByIdUseCase,
+          getProceduresByRecipeIdUseCase: getProceduresByRecipeIdUseCase,
         );
         return ListenableBuilder(
           listenable: ingredientViewModel,
           builder: (context, build) {
             return IngredientScreen(
               ingredientViewModel: ingredientViewModel,
+              onBackButtonClick: () {
+                context.pop();
+              },
             );
           },
         );
@@ -126,13 +136,18 @@ final router = GoRouter(
             final int id = int.parse(state.pathParameters['id']!);
             final IngredientViewModel ingredientViewModel = IngredientViewModel(
               getSavedRecipeFindByIdUseCase: getSavedRecipeFindByIdUseCase,
+              getProceduresByRecipeIdUseCase: getProceduresByRecipeIdUseCase,
             );
             ingredientViewModel.fetchCurrentSelectedRecipe(id);
+            ingredientViewModel.fetchCurrentSelectedRecipeProcedures(id);
             return ListenableBuilder(
               listenable: ingredientViewModel,
               builder: (context, builder) {
                 return IngredientScreen(
                   ingredientViewModel: ingredientViewModel,
+                  onBackButtonClick: () {
+                    context.pop();
+                  },
                 );
               },
             );

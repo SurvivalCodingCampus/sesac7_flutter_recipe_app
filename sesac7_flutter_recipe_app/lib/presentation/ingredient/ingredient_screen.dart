@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/enum/label_type.dart';
+import 'package:flutter_recipe_app/domain/model/procedure.dart';
 import 'package:flutter_recipe_app/domain/model/recipe.dart';
 import 'package:flutter_recipe_app/presentation/component/button/small_button.dart';
 import 'package:flutter_recipe_app/presentation/component/card/ingredient_card.dart';
@@ -14,16 +15,20 @@ import 'package:go_router/go_router.dart';
 
 class IngredientScreen extends StatelessWidget {
   final IngredientViewModel _ingredientViewModel;
+  final VoidCallback onBackButtonClick;
 
   const IngredientScreen({
     super.key,
     required IngredientViewModel ingredientViewModel,
+    required this.onBackButtonClick,
   }) : _ingredientViewModel = ingredientViewModel;
 
   @override
   Widget build(BuildContext context) {
     final Recipe? currentSelectedRecipe =
         _ingredientViewModel.ingredientState.currentSelectedRecipe;
+    final List<Procedure> currentSelectedRecipeProcedures =
+        _ingredientViewModel.ingredientState.currentSelectedRecipeProcedures;
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 30.0),
@@ -33,9 +38,7 @@ class IngredientScreen extends StatelessWidget {
               height: 44.0,
             ),
             ScreenTitleBar(
-              backButtonClick: () {
-                context.pop();
-              },
+              backButtonClick: onBackButtonClick,
               menuButtonClick: () {},
             ),
             currentSelectedRecipe == null
@@ -179,7 +182,7 @@ class IngredientScreen extends StatelessWidget {
                                     maxLines: 1,
                                   )
                                 : Text(
-                                    '${currentSelectedRecipe.ingredients.length} Steps',
+                                    '${currentSelectedRecipeProcedures.length} Steps',
                                     style: TextStyles
                                         .ingredientScreenRecipeItemCount,
                                     maxLines: 1,
@@ -192,7 +195,13 @@ class IngredientScreen extends StatelessWidget {
                         Expanded(
                           child: ListView.separated(
                             padding: const EdgeInsets.all(0.0),
-                            itemCount: currentSelectedRecipe.ingredients.length,
+                            itemCount:
+                                _ingredientViewModel
+                                        .ingredientState
+                                        .selectedLabelIndex ==
+                                    0
+                                ? currentSelectedRecipe.ingredients.length
+                                : currentSelectedRecipeProcedures.length,
                             itemBuilder: (context, index) {
                               return _ingredientViewModel
                                           .ingredientState
@@ -212,8 +221,11 @@ class IngredientScreen extends StatelessWidget {
                                           .amount,
                                     )
                                   : StepCard(
-                                      title: 'Step ${index + 1}',
-                                      description: 'description',
+                                      title:
+                                          'Step ${currentSelectedRecipeProcedures[index].step}',
+                                      description:
+                                          currentSelectedRecipeProcedures[index]
+                                              .content,
                                     );
                             },
                             separatorBuilder: (context, index) {
