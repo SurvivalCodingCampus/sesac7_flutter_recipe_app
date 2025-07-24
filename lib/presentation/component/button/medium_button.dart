@@ -42,6 +42,7 @@ class MediumButton extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
+              key: const Key('medium button'),
               text,
               style: TextStyles.mediumTextBold.copyWith(
                 color: AppColors.white,

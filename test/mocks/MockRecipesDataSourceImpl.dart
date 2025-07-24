@@ -1,8 +1,4 @@
-import 'package:flutter_recipe_app/data/data_source/local/recipe_data_source.dart';
-import 'package:flutter_recipe_app/data/dto/recipe_dto.dart';
-import 'package:flutter_recipe_app/data/model/recipe.dart';
-
-class MockRecipesDataSourceImpl implements RecipeDataSource{
+class MockRecipesDataSourceImpl{
 
   final Map<String,dynamic> mockRecipesJson = {
     "recipes": [
@@ -277,10 +273,4 @@ class MockRecipesDataSourceImpl implements RecipeDataSource{
       }
     ]
   };
-
-  @override
-  Future<List<Recipe>> getAll() async{
-    return [Recipe.fromJson(mockRecipesJson)];
-  }
-
 }

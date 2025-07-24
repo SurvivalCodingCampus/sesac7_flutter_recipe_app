@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 abstract class AppColors {
-
   // Netural Color
   static const Color black = Color(0xFF000000);
   static const Color gray1 = Color(0xFF484848);
