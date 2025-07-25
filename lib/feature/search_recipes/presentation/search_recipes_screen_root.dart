@@ -36,24 +36,28 @@ class _SearchRecipesScreenRootState extends State<SearchRecipesScreenRoot> {
           onAction: (action) {
             switch (action) {
               case TapFilterButton():
-                showModalBottomSheet(
-                  context: context,
-                  builder: (context) => FilterSearchBottomSheet(
-                    filterState: viewModel.state.filterState,
-                    onFilterChange: (filterState) {
-                      viewModel.onAction(
-                        SearchRecipesAction.selectFilter(filterState),
-                      );
-                      Navigator.pop(context);
-                    },
-                  ),
-                );
+                _showFilterBottomSheet(viewModel);
               default:
                 viewModel.onAction(action);
             }
           },
         );
       },
+    );
+  }
+
+  void _showFilterBottomSheet(SearchRecipesViewModel viewModel) {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => FilterSearchBottomSheet(
+        filterState: viewModel.state.filterState,
+        onFilterChange: (filterState) {
+          viewModel.onAction(
+            SearchRecipesAction.selectFilter(filterState),
+          );
+          Navigator.pop(context);
+        },
+      ),
     );
   }
 }
