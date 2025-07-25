@@ -17,6 +17,7 @@ import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_vi
 import 'package:flutter_recipe_app/feature/saved_recipes/data/repository/mock/mock_bookmark_repository_impl.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/repository/bookmark_repository.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/get_saved_recipes_use_case.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/remove_saved_recipe_use_case.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_view_model.dart';
 import 'package:get_it/get_it.dart';
 
@@ -67,6 +68,9 @@ void diSetUp() {
   getIt.registerLazySingleton(
     () => FilterHomeRecipeCategoryUseCase(),
   );
+  getIt.registerLazySingleton(
+    () => RemoveSavedRecipeUseCase(bookmarkRepository: getIt()),
+  );
 
   // View Model
   getIt.registerFactory(
@@ -78,7 +82,7 @@ void diSetUp() {
   getIt.registerFactory(
     () => SavedRecipesViewModel(
       getSavedRecipesUseCase: getIt(),
-      bookmarkRepository: getIt(),
+      removeSavedRecipeUseCase: getIt(),
     ),
   );
   getIt.registerFactory(
