@@ -73,7 +73,7 @@ void main() {
         ).thenAnswer((_) async => successResult);
 
         // Act
-        viewModel.fetchSavedRecipes();
+        viewModel.init();
 
         // Assert
         expect(viewModel.state.savedRecipes, mockRecipes);
@@ -95,7 +95,7 @@ void main() {
         ).thenAnswer((_) async => errorResult);
 
         // Act
-        viewModel.fetchSavedRecipes();
+        viewModel.init();
 
         // Assert
         expect(viewModel.state.savedRecipes, isEmpty);
