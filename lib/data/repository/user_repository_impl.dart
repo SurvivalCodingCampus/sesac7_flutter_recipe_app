@@ -4,25 +4,25 @@ import '../model/user.dart';
 class UserRepositoryImpl implements UserRepository {
   @override
   Future<List<User>> getUsers() async {
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future.delayed(const Duration(milliseconds: 500));
     return [
       User(
-        id: 'user1',
+        id: 'jega',
+        name: 'Jega',
+        profileImageUrl: 'https://placehold.co/50x50/FFCE80/000000?text=J',
+        location: 'Seoul',
+      ),
+      User(
+        id: 'james',
+        name: 'James Milner',
+        profileImageUrl: 'https://placehold.co/25x25/B2DFDB/000000?text=J',
+        location: 'Liverpool',
+      ),
+      User(
+        id: 'laura',
         name: 'Laura Wilson',
-        profileImageUrl: 'https://placehold.co/100x100/EFEFEF/31343C?text=LW',
-        location: 'Lagos, Nigeria',
-      ),
-      User(
-        id: 'user2',
-        name: 'Maria Kelvin',
-        profileImageUrl: 'https://placehold.co/100x100/EFEFEF/31343C?text=MK',
-        location: 'Rome, Italy',
-      ),
-      User(
-        id: 'user3',
-        name: 'Healthy Foodie',
-        profileImageUrl: 'https://placehold.co/100x100/EFEFEF/31343C?text=HF',
-        location: 'California, USA',
+        profileImageUrl: 'https://placehold.co/25x25/B2DFDB/000000?text=L',
+        location: 'London',
       ),
     ];
   }

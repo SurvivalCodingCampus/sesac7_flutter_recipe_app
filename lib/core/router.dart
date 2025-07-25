@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/presentation/screen/home_screen/home_view_model.dart';
 import 'package:flutter_recipe_app/presentation/screen/saved_recipte/recipe_detail_screen.dart';
 import 'package:flutter_recipe_app/presentation/screen/saved_recipte/saved_recipes_screen.dart';
 import 'package:flutter_recipe_app/presentation/screen/saved_recipte/saved_recipes_viewmodel.dart';
@@ -8,6 +9,7 @@ import '../data/repository/user_repository_impl.dart';
 import '../domain/use_case/get_recipes_use_case.dart';
 import '../domain/use_case/get_users_use_case.dart';
 import '../domain/use_case/toggle_bookmark_use_case.dart';
+import '../presentation/screen/home_screen/home_screen.dart';
 import '../presentation/screen/shell/shell_screen.dart';
 
 final userRepository = UserRepositoryImpl();
@@ -23,8 +25,10 @@ final savedRecipesViewModel = SavedRecipesViewModel(
   toggleBookmarkUseCase: toggleBookmarkUseCase,
 );
 
+final homeViewModel = HomeViewModel(getRecipesUseCase, getUsersUseCase);
+
 final router = GoRouter(
-  initialLocation: '/saved',
+  initialLocation: '/home',
   routes: [
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) {
@@ -35,8 +39,9 @@ final router = GoRouter(
           routes: [
             GoRoute(
               path: '/home',
-              builder: (context, state) =>
-                  const Center(child: Text('Home Screen')),
+              builder: (context, state) {
+                return HomeScreen(viewModel: homeViewModel);
+              },
             ),
           ],
         ),
