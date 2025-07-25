@@ -141,14 +141,13 @@ GoRouter createRouter() => GoRouter(
         final id = state.uri.queryParameters[QueryParameters.id]!;
         // TODO: id null 기본 화면
         final viewModel = IngredientViewModel(
-          recipeId: id,
           fetchRecipeUseCase: getIt(),
           fetchAllIngredientsUseCase: getIt(),
           fetchProcedureUseCase: getIt(),
           formatReviewCountUseCase: getIt(),
         );
 
-        viewModel.init();
+        viewModel.init(id);
 
         return ListenableBuilder(
           listenable: viewModel,

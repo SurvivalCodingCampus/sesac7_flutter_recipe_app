@@ -11,7 +11,6 @@ import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/format_rev
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_state.dart';
 
 class IngredientViewModel with ChangeNotifier {
-  final String recipeId;
   final FetchRecipeUseCase _fetchRecipeUseCase;
   final FetchAllIngredientsUseCase _fetchAllIngredientsUseCase;
   final FetchProcedureUseCase _fetchProcedureUseCase;
@@ -20,7 +19,6 @@ class IngredientViewModel with ChangeNotifier {
   IngredientState _state = IngredientState();
 
   IngredientViewModel({
-    required this.recipeId,
     required FetchRecipeUseCase fetchRecipeUseCase,
     required FetchAllIngredientsUseCase fetchAllIngredientsUseCase,
     required FetchProcedureUseCase fetchProcedureUseCase,
@@ -32,7 +30,7 @@ class IngredientViewModel with ChangeNotifier {
 
   IngredientState get state => _state;
 
-  void init() async {
+  void init(String recipeId) async {
     _state = state.copyWith(isLoading: true);
 
     notifyListeners();
