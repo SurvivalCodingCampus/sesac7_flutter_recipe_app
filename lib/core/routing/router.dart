@@ -67,7 +67,17 @@ GoRouter createRouter() => GoRouter(
             GoRoute(
               path: Routes.savedRecipes,
               builder: (context, state) {
-                return SavedRecipesScreenRoot(viewModel: getIt());
+                return SavedRecipesScreenRoot(
+                  viewModel: getIt(),
+                  onTapRecipeCard: (String recipeId) {
+                    context.push(
+                      Uri(
+                        path: Routes.ingredient,
+                        queryParameters: {QueryParameters.id: recipeId},
+                      ).toString(),
+                    );
+                  },
+                );
               },
             ),
           ],
@@ -105,6 +115,7 @@ GoRouter createRouter() => GoRouter(
         return IngredientScreenRoot(
           recipeId: id,
           viewModel: getIt(),
+          onTapBack: () => context.pop(),
         );
       },
     ),

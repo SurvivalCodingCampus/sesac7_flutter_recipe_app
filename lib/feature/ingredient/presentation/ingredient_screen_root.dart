@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_action.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_screen.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_view_model.dart';
-import 'package:go_router/go_router.dart';
 
 class IngredientScreenRoot extends StatefulWidget {
   final String recipeId;
   final IngredientViewModel viewModel;
+  final VoidCallback onTapBack;
 
   const IngredientScreenRoot({
     super.key,
     required this.recipeId,
     required this.viewModel,
+    required this.onTapBack,
   });
 
   @override
@@ -37,7 +38,7 @@ class _IngredientScreenRootState extends State<IngredientScreenRoot> {
           onAction: (action) {
             switch (action) {
               case TapBack():
-                context.pop();
+                widget.onTapBack();
               case TapMenu():
                 // TODO: tap menu.
                 print(action);
