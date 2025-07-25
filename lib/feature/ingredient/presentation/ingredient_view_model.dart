@@ -36,7 +36,15 @@ class IngredientViewModel with ChangeNotifier {
 
     notifyListeners();
 
-    final recipeResult = await _fetchRecipeUseCase.execute(recipeId);
+    final results = await Future.wait([
+      _fetchRecipeUseCase.execute(recipeId),
+      _fetchAllIngredientsUseCase.execute(recipeId),
+      _fetchProcedureUseCase.execute(recipeId),
+    ]);
+    final recipeResult = results[0] as Result<Recipe, NetworkError>;
+    final ingredientsResult =
+        results[1] as Result<List<Ingredient>, NetworkError>;
+    final procedureResult = results[2] as Result<List<String>, NetworkError>;
 
     switch (recipeResult) {
       case Success<Recipe, NetworkError>():
@@ -53,10 +61,6 @@ class IngredientViewModel with ChangeNotifier {
         return;
     }
 
-    final ingredientsResult = await _fetchAllIngredientsUseCase.execute(
-      recipeId,
-    );
-
     switch (ingredientsResult) {
       case Success<List<Ingredient>, NetworkError>():
         _state = state.copyWith(
@@ -66,8 +70,6 @@ class IngredientViewModel with ChangeNotifier {
         _errorState(ingredientsResult.error.toString());
         return;
     }
-
-    final procedureResult = await _fetchProcedureUseCase.execute(recipeId);
 
     switch (procedureResult) {
       case Success<List<String>, NetworkError>():
