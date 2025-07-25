@@ -17,11 +17,10 @@ class MainScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = viewModel.state;
-
     return ListenableBuilder(
       listenable: viewModel,
       builder: (context, child) {
+        final state = viewModel.state;
         return Scaffold(
           body: Center(
             child: Column(
@@ -61,7 +60,7 @@ class MainScreen extends StatelessWidget {
                   onPressed: () {
                     showDialog(
                       context: context,
-                      builder: (_) {
+                      builder: (nestedContext) {
                         return UnconstrainedBox(
                           child: RatingDialog(
                             score: state.score,
@@ -70,7 +69,7 @@ class MainScreen extends StatelessWidget {
                             onChange: (int rating) {
                               print(rating);
                               viewModel.setScore(rating);
-                              Navigator.pop(context);
+                              Navigator.pop(nestedContext);
                             },
                           ),
                         );
@@ -95,7 +94,7 @@ class MainScreen extends StatelessWidget {
             ),
           ),
         );
-      }
+      },
     );
   }
 }
