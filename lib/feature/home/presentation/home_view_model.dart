@@ -63,7 +63,10 @@ class HomeViewModel with ChangeNotifier {
       recipes: state.allRecipes,
       category: category,
     );
-    _state = state.copyWith(filteredRecipes: filteredRecipes);
+    _state = state.copyWith(
+      filteredRecipes: filteredRecipes,
+      selectedCategory: category,
+    );
 
     notifyListeners();
   }

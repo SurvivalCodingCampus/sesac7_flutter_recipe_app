@@ -4,30 +4,17 @@ import 'package:flutter_recipe_app/feature/home/domain/model/home_recipe_categor
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
-class RecipeCategorySelector extends StatefulWidget {
+class RecipeCategorySelector extends StatelessWidget {
   final List<HomeRecipeCategory> categories;
+  final HomeRecipeCategory selectedCategory;
   final void Function(HomeRecipeCategory category) onSelectCategory;
 
   const RecipeCategorySelector({
     super.key,
     required this.categories,
+    required this.selectedCategory,
     required this.onSelectCategory,
   });
-
-  @override
-  State<RecipeCategorySelector> createState() => _RecipeCategorySelectorState();
-}
-
-class _RecipeCategorySelectorState extends State<RecipeCategorySelector> {
-  // TODO: HomeState로 이동 후 stl로 수정
-  late HomeRecipeCategory selectedCategory;
-
-  @override
-  void initState() {
-    super.initState();
-
-    selectedCategory = widget.categories.first;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,13 +27,10 @@ class _RecipeCategorySelectorState extends State<RecipeCategorySelector> {
         ),
         child: Row(
           children: [
-            ...widget.categories.map((category) {
+            ...categories.map((category) {
               return GestureDetector(
                 onTap: () {
-                  setState(() {
-                    selectedCategory = category;
-                  });
-                  widget.onSelectCategory(category);
+                  onSelectCategory(category);
                 },
                 child: Container(
                   padding: EdgeInsets.symmetric(

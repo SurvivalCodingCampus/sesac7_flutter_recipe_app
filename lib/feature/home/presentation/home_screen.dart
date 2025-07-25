@@ -92,6 +92,7 @@ class HomeScreen extends StatelessWidget {
             ),
             RecipeCategorySelector(
               categories: HomeRecipeCategory.values,
+              selectedCategory: state.selectedCategory,
               onSelectCategory: (category) {
                 onAction(HomeAction.selectCategory(category));
               },
