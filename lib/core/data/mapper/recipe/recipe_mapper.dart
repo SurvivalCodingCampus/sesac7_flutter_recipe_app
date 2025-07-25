@@ -8,6 +8,7 @@ extension RecipeDtoToModel on RecipeDto {
       category: category ?? '',
       name: name ?? '',
       imageUrl: image ?? '',
+      imageWithoutBackground: '',
       creator: chef ?? '',
       cookingTime: time ?? '',
       rating: rating ?? 0,
