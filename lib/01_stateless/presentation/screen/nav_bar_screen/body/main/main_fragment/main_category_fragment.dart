@@ -82,6 +82,7 @@ class _MainCategoryFragmentState extends State<MainCategoryFragment> {
                   child: DishCard(
                     recipe: widget.filteredRecipe[index],
                     onBookmark: widget.onBookmarkTap,
+                    isBookmarked: widget.filteredRecipe[index].isBookmarked,
                   ),
                 ),
               );

@@ -34,11 +34,7 @@ class _MainRootState extends State<MainRoot> {
           onAction: (MainAction action) {
             widget.viewModel.onAction(action);
             if(action is ClickOnRecipe) {
-              // go to different page?
               context.push('${Routes.recipeDetail}/${action.recipeId}');
-            }
-            if(action is ClickOnBookmark) {
-              // add on bookmark
             }
           },
         );
