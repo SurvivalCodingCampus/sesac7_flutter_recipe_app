@@ -14,8 +14,8 @@ extension ProcedureDtoToModel on ProcedureDto {
 extension ProcedureModelToDto on Procedure {
   ProcedureDto toDto() {
     return ProcedureDto(
-      recipeId: recipeId.toInt(),
-      step: step.toInt(),
+      recipeId: recipeId,
+      step: step,
       content: content,
     );
   }
