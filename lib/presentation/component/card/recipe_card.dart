@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/ui/app_colors.dart';
 
 import '../../../data/model/recipes.dart';
 
