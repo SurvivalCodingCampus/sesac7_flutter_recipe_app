@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/presentation/component/constants/component_constant.dart';
+import 'package:flutter_recipe_app/feature/home/domain/model/home_recipe_category.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class RecipeCategorySelector extends StatefulWidget {
-  final List<String> categories;
-  final void Function(String category) onSelectCategory;
+  final List<HomeRecipeCategory> categories;
+  final void Function(HomeRecipeCategory category) onSelectCategory;
 
   const RecipeCategorySelector({
     super.key,
@@ -19,7 +20,7 @@ class RecipeCategorySelector extends StatefulWidget {
 
 class _RecipeCategorySelectorState extends State<RecipeCategorySelector> {
   // TODO: HomeState로 이동 후 stl로 수정
-  late String selectedCategory;
+  late HomeRecipeCategory selectedCategory;
 
   @override
   void initState() {
@@ -61,7 +62,7 @@ class _RecipeCategorySelectorState extends State<RecipeCategorySelector> {
                     ),
                   ),
                   child: Text(
-                    category,
+                    category.toString(),
                     style: TextStyles.smallerTextBold.copyWith(
                       color: selectedCategory == category
                           ? AppColors.white
