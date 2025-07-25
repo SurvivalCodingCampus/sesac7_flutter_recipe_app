@@ -6,10 +6,8 @@ import 'package:flutter_recipe_app/01_stateless/usecase/get_recipe_detail_by_id_
 
 class RecipeDetailViewModel with ChangeNotifier {
   final GetRecipeDetailByIdUseCase _getRecipeDetailByIdUseCase;
-  final int id;
 
   RecipeDetailViewModel({
-    required this.id,
     required GetRecipeDetailByIdUseCase getRecipeDetailByIdUseCase,
   }) : _getRecipeDetailByIdUseCase = getRecipeDetailByIdUseCase;
 
@@ -22,6 +20,7 @@ class RecipeDetailViewModel with ChangeNotifier {
       duration: 0,
       rating: 0.0,
       id: 0,
+      categories: {},
     ),
     author: User(
       id: 0,
@@ -34,7 +33,7 @@ class RecipeDetailViewModel with ChangeNotifier {
     reviewCount: 0,
   );
 
-  void getRecipeDetailData() async {
+  void getRecipeDetailData(int id) async {
     currentRecipe = await _getRecipeDetailByIdUseCase.execute(id);
     notifyListeners();
   }

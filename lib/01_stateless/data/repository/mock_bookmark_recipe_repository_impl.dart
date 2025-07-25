@@ -10,6 +10,7 @@ class MockBookmarkRecipeRepositoryImpl implements BookmarkRecipeRepository {
       image: "https://placehold.co/600x400.jpg",
       duration: 20,
       rating: 4.0,
+      categories: {"Korean", "Chinese", "Japanese"},
     ),
     Recipe(
       id: 1,
@@ -18,6 +19,7 @@ class MockBookmarkRecipeRepositoryImpl implements BookmarkRecipeRepository {
       image: "https://placehold.co/600x400.jpg",
       duration: 20,
       rating: 4.0,
+      categories: {"Korean"},
     ),
     Recipe(
       id: 2,
@@ -26,6 +28,7 @@ class MockBookmarkRecipeRepositoryImpl implements BookmarkRecipeRepository {
       image: "https://placehold.co/600x400.jpg",
       duration: 20,
       rating: 4.0,
+      categories: {"Chinese"},
     ),
     Recipe(
       id: 3,
@@ -35,6 +38,7 @@ class MockBookmarkRecipeRepositoryImpl implements BookmarkRecipeRepository {
       image: "https://placehold.co/600x400.jpg",
       duration: 20,
       rating: 5.0,
+      categories: {"Japanese"},
     ),
   ];
 

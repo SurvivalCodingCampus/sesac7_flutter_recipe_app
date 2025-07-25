@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/01_stateless/core/di/di_get_it.dart';
 import '01_stateless/core/routing/router.dart';
 
 void main() {
+  diSetup();
   runApp(const MyApp());
 }
 

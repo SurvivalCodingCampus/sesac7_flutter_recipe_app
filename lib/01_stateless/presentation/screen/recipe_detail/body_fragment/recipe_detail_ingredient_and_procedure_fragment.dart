@@ -6,16 +6,16 @@ import 'package:flutter_recipe_app/01_stateless/ui/app_colors.dart';
 import 'package:flutter_recipe_app/01_stateless/ui/text_styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class RecipeDetailBody extends StatefulWidget {
+class RecipeDetailIngredientAndProcedureFragment extends StatefulWidget {
 
   final DetailedRecipe recipe;
-  const RecipeDetailBody({super.key, required this.recipe});
+  const RecipeDetailIngredientAndProcedureFragment({super.key, required this.recipe});
 
   @override
-  State<RecipeDetailBody> createState() => _RecipeDetailBodyState();
+  State<RecipeDetailIngredientAndProcedureFragment> createState() => _RecipeDetailIngredientAndProcedureFragmentState();
 }
 
-class _RecipeDetailBodyState extends State<RecipeDetailBody> {
+class _RecipeDetailIngredientAndProcedureFragmentState extends State<RecipeDetailIngredientAndProcedureFragment> {
   int _selectedTabIndex = 0;
 
   @override
