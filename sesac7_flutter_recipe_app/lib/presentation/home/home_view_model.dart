@@ -64,7 +64,10 @@ class HomeViewModel with ChangeNotifier {
           categoryRecipes: result.data,
         );
       case Error<List<Recipe>, NetworkError>():
-        _homeState = _homeState.copyWith(categoryRecipes: []);
+        _homeState = _homeState.copyWith(
+            category: category,
+            categoryRecipes: []
+        );
     }
     notifyListeners();
   }
