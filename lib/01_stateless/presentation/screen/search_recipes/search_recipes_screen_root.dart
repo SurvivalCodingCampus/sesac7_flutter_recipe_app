@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_action.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_screen.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_view_model.dart';
 
@@ -29,23 +30,26 @@ class _SearchRecipesScreenRootState extends State<SearchRecipesScreenRoot> {
       builder: (context, state, child) {
         return SearchRecipesScreen(
           state: widget.viewModel.state,
-          onSearch: (String query) {
-            widget.viewModel.search(query);
-          },
-          onOpenDialog: () {
-            showModalBottomSheet<FilterSearchState>(
-              context: context,
-              isScrollControlled: true,
-              builder: (context) {
-                return FilterSearchBottomSheet(
-                  filterSearchState: state.filterSearchState,
-                  onFilter: (state) {
-                    widget.viewModel.filter(state);
-                    Navigator.pop(context);
-                  },
-                );
-              },
-            );
+          onAction: (SearchRecipesAction action) {
+            widget.viewModel.onAction(action);
+
+            if (action is OpenDialog) {
+              showModalBottomSheet<FilterSearchState>(
+                context: context,
+                isScrollControlled: true,
+                builder: (context) {
+                  return FilterSearchBottomSheet(
+                    filterSearchState: state.filterSearchState,
+                    onFilter: (state) {
+                      widget.viewModel.onAction(
+                        SearchRecipesAction.applyFilter(state),
+                      );
+                      Navigator.pop(context);
+                    },
+                  );
+                },
+              );
+            }
           },
         );
       },

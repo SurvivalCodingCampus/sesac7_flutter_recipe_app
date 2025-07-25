@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/core/presentation/component/card/recipe_card.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_action.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_state.dart';
 
 class SearchRecipesScreen extends StatelessWidget {
   final SearchRecipesState state;
-  final void Function(String query) onSearch;
-  final void Function() onOpenDialog;
+  final void Function(SearchRecipesAction action) onAction;
 
   const SearchRecipesScreen({
     super.key,
     required this.state,
-    required this.onSearch,
-    required this.onOpenDialog,
+    required this.onAction,
   });
 
   @override
@@ -29,7 +28,9 @@ class SearchRecipesScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: TextField(
-                    onChanged: onSearch,
+                    onChanged: (value) {
+                      onAction(SearchRecipesAction.changeQuery(value));
+                    },
                     decoration: const InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
@@ -44,7 +45,7 @@ class SearchRecipesScreen extends StatelessWidget {
                 const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () {
-                    onOpenDialog();
+                    onAction(SearchRecipesAction.openDialog());
                   },
                   child: const Text('필터'),
                 ),
@@ -70,8 +71,15 @@ class SearchRecipesScreen extends StatelessWidget {
                       itemCount: state.filteredRecipes.length,
                       itemBuilder: (context, index) {
                         final recipe = state.filteredRecipes[index];
-                        return RecipeCard(
-                          recipe: recipe,
+                        return GestureDetector(
+                          onTap: () {
+                            onAction(
+                              SearchRecipesAction.clickRecipeItem(recipe),
+                            );
+                          },
+                          child: RecipeCard(
+                            recipe: recipe,
+                          ),
                         );
                       },
                     ),

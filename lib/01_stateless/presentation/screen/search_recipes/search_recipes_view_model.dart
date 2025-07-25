@@ -4,6 +4,7 @@ import 'package:flutter_recipe_app/01_stateless/core/presentation/component/bott
 import 'package:flutter_recipe_app/01_stateless/core/result.dart';
 import 'package:flutter_recipe_app/01_stateless/domain/use_case/fetch_recipes_use_case.dart';
 import 'package:flutter_recipe_app/01_stateless/domain/use_case/search_recipes_use_case.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_action.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_state.dart';
 
 import '../../../domain/model/recipe.dart';
@@ -20,6 +21,20 @@ class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
   }) : _getRecipesUseCase = getRecipesUseCase,
        _searchRecipesUseCase = searchRecipesUseCase,
        super(SearchRecipesState());
+
+  void onAction(SearchRecipesAction action) {
+    switch (action) {
+      case ChangeQuery():
+        _search(action.query);
+      case OpenDialog():
+        break;
+      case ClickRecipeItem():
+        print(action.recipe);
+      case ApplyFilter():
+        _filter(action.state);
+    }
+    notifyListeners();
+  }
 
   void fetchRecipes() async {
     value = value.copyWith(isLoading: true);
@@ -39,7 +54,7 @@ class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
         throw UnimplementedError();
     }
 
-    filter(value.filterSearchState);
+    _filter(value.filterSearchState);
   }
 
   void _searchWithFilter(String query, FilterSearchState filterSearchState) {
@@ -62,11 +77,11 @@ class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
     notifyListeners();
   }
 
-  void search(String query) {
+  void _search(String query) {
     _searchWithFilter(query, value.filterSearchState);
   }
 
-  void filter(FilterSearchState filterSearchState) {
+  void _filter(FilterSearchState filterSearchState) {
     _searchWithFilter(value.query, filterSearchState);
   }
 }
