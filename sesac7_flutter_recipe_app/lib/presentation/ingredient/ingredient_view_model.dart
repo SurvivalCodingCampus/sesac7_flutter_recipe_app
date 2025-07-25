@@ -5,6 +5,7 @@ import 'package:flutter_recipe_app/domain/model/procedure.dart';
 import 'package:flutter_recipe_app/domain/model/recipe.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_procedures_by_recipe_id_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_saved_recipe_find_by_id_use_case.dart';
+import 'package:flutter_recipe_app/presentation/ingredient/ingredient_action.dart';
 import 'package:flutter_recipe_app/presentation/ingredient/ingredient_state.dart';
 
 class IngredientViewModel extends ValueNotifier<IngredientState> {
@@ -17,6 +18,15 @@ class IngredientViewModel extends ValueNotifier<IngredientState> {
   }) : _getSavedRecipeFindByIdUseCase = getSavedRecipeFindByIdUseCase,
        _getProceduresByRecipeIdUseCase = getProceduresByRecipeIdUseCase,
        super(IngredientState());
+
+  void onAction(IngredientAction action) {
+    switch (action) {
+      case ClickIngredientBackButton():
+        break;
+      case ChangeIngredientTapSelectedIndex():
+        changeTab(action.index);
+    }
+  }
 
   Future<void> fetchCurrentSelectedRecipe(int id) async {
     final Result<Recipe?, String> result = await _getSavedRecipeFindByIdUseCase

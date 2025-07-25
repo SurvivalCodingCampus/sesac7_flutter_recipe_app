@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_screen.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_view_model.dart';
 
+import 'saved_recipe_action.dart';
+
 class SavedRecipeScreenRoot extends StatefulWidget {
   final SavedRecipeViewModel _savedRecipeViewModel;
   final Function(int recipeId) moveSavedRecipeDetail;
@@ -30,11 +32,12 @@ class _SavedRecipeScreenRootState extends State<SavedRecipeScreenRoot> {
       builder: (context, value, child) {
         return SavedRecipeScreen(
           savedRecipeState: value,
-          onSavedRecipeItemClick: widget.moveSavedRecipeDetail,
-          savedRecipeFavoriteStateChange: (index) {
-            // fixme 현재는 무조건 삭제
-            final id = value.savedRecipes[index].id;
-            widget._savedRecipeViewModel.removeSavedRecipe(id);
+          onAction: (action) {
+            if (action is MoveSavedRecipeIngredientScreen) {
+              widget.moveSavedRecipeDetail(action.id);
+            } else {
+              widget._savedRecipeViewModel.onAction(action);
+            }
           },
         );
       },

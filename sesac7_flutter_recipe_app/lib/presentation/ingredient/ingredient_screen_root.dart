@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/core/routing/routes.dart';
+import 'package:flutter_recipe_app/presentation/ingredient/ingredient_action.dart';
 import 'package:flutter_recipe_app/presentation/ingredient/ingredient_screen.dart';
 import 'package:flutter_recipe_app/presentation/ingredient/ingredient_view_model.dart';
+import 'package:go_router/go_router.dart';
 
 class IngredientScreenRoot extends StatefulWidget {
   final int? _id;
@@ -38,9 +41,12 @@ class _IngredientScreenRootState extends State<IngredientScreenRoot> {
       builder: (context, value, child) {
         return IngredientScreen(
           ingredientState: value,
-          onBackButtonClick: widget.onIngredientScreenBackButtonClick,
-          changeIngredientTapSelectedIndex: (int index) {
-            widget._ingredientViewModel.changeTab(index);
+          onAction: (action) {
+            if (action is ClickIngredientBackButton) {
+              widget.onIngredientScreenBackButtonClick();
+            } else {
+              widget._ingredientViewModel.onAction(action);
+            }
           },
         );
       },

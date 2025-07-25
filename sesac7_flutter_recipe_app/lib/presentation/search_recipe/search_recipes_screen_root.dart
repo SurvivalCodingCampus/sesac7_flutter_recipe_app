@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/bottom_sheet/search_recipe_filter_bottom_sheet.dart';
+import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_action.dart';
 import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_screen.dart';
 import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_view_model.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 
 class SearchRecipesScreenRoot extends StatefulWidget {
-  final SearchRecipesViewModel _searchRecipesViewModel;
+  final SearchRecipesViewModel  _searchRecipesViewModel;
 
   const SearchRecipesScreenRoot(
     SearchRecipesViewModel searchRecipesViewModel, {
@@ -21,6 +22,7 @@ class _SearchRecipesScreenRootState extends State<SearchRecipesScreenRoot> {
   @override
   void initState() {
     super.initState();
+    widget._searchRecipesViewModel.fetchRecentRecipes();
   }
 
   @override
@@ -30,42 +32,41 @@ class _SearchRecipesScreenRootState extends State<SearchRecipesScreenRoot> {
       builder: (context, value, child) {
         return SearchRecipesScreen(
           searchRecipesState: value,
-          changeKeyword: (searchKeyword) {
-            if (searchKeyword.isEmpty) {
-              widget._searchRecipesViewModel
-                  .clearSearchResultRecipesAndSearchKeyword();
-              widget._searchRecipesViewModel.fetchRecentRecipes();
-            } else {
-              widget._searchRecipesViewModel.fetchSearchResultRecipes(
-                keyword: searchKeyword,
-              );
-            }
-          },
-          showFilterBottomSheet: () {
-            showModalBottomSheet<void>(
-              context: context,
-              backgroundColor: AppColors.white,
-              isScrollControlled: true,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(50.0),
-                  topRight: Radius.circular(50.0),
-                ),
-              ),
-              builder: (context) {
-                return SearchRecipeFilterBottomSheet(
-                  onValueChange: (timeType, ratingType, categoryType) {
-                    widget._searchRecipesViewModel.fetchSearchResultRecipes(
-                      keyword: null,
-                      timeType: timeType,
-                      ratingType: ratingType,
-                      categoryType: categoryType,
+          onAction: (action) {
+            switch (action) {
+              case ChangeKeyword():
+                widget._searchRecipesViewModel.onAction(action);
+              case ShowFilterBottomSheet():
+                showModalBottomSheet<void>(
+                  context: context,
+                  backgroundColor: AppColors.white,
+                  isScrollControlled: true,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(50.0),
+                      topRight: Radius.circular(50.0),
+                    ),
+                  ),
+                  builder: (context) {
+                    return SearchRecipeFilterBottomSheet(
+                      onValueChange: (timeType, ratingType, categoryType) {
+                        // 여기 이상한듯 ViewModel로 가는거까지는 ok 그런데 아래 case SearchFilteredRecipe가 있으니까 이상함.
+                        widget._searchRecipesViewModel.onAction(
+                          SearchRecipesAction.searchFilteredRecipe(
+                            timeType,
+                            ratingType,
+                            categoryType,
+                          ),
+                        );
+                        Navigator.pop(context);
+                      },
                     );
                   },
                 );
-              },
-            );
-          }
+              case SearchFilteredRecipe():
+                break;
+            }
+          },
         );
       },
     );

@@ -4,18 +4,19 @@ import 'package:flutter_recipe_app/presentation/component/button/search_recipe_f
 import 'package:flutter_recipe_app/presentation/component/card/dish_card.dart';
 import 'package:flutter_recipe_app/presentation/component/selector/recipe_category_selector.dart';
 import 'package:flutter_recipe_app/presentation/component/text_field/search_input_field.dart';
+import 'package:flutter_recipe_app/presentation/home/home_action.dart';
 import 'package:flutter_recipe_app/presentation/home/home_state.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class HomeScreen extends StatelessWidget {
   final HomeState _state;
-  final Function(String category) onCategoryChange;
+  final void Function(HomeAction action) onAction;
 
   const HomeScreen({
     super.key,
     required HomeState state,
-    required this.onCategoryChange,
+    required this.onAction,
   }) : _state = state;
 
   @override
@@ -109,7 +110,9 @@ class HomeScreen extends StatelessWidget {
             RecipeCategorySelector(
               categories: _state.categories,
               selectedCategory: _state.category,
-              onValueChange: onCategoryChange,
+              onValueChange: (category) {
+                onAction(HomeAction.selectCategory(category));
+              },
             ),
             SizedBox(
               height: 15.0,

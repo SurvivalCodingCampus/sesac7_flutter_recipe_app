@@ -5,6 +5,7 @@ import 'package:flutter_recipe_app/domain/model/recipe.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_recipes_by_category.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_recipes_category_list_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_recipes_use_case.dart';
+import 'package:flutter_recipe_app/presentation/home/home_action.dart';
 import 'package:flutter_recipe_app/presentation/home/home_state.dart';
 
 class HomeViewModel extends ValueNotifier<HomeState> {
@@ -20,6 +21,17 @@ class HomeViewModel extends ValueNotifier<HomeState> {
        _getRecipesCategoryListUseCase = getRecipesCategoryListUseCase,
        _getRecipesByCategory = getRecipesByCategory,
        super(HomeState());
+
+  void onAction(HomeAction action) {
+    switch (action) {
+      case SelectCategory():
+        if (action.category == 'All') {
+          fetchAllCategoryRecipes();
+        } else {
+          _fetchCategoryRecipes(action.category);
+        }
+    }
+  }
 
   Future<void> loadCategories() async {
     final result = await _getRecipesCategoryListUseCase.execute();
@@ -50,7 +62,7 @@ class HomeViewModel extends ValueNotifier<HomeState> {
     notifyListeners();
   }
 
-  Future<void> fetchCategoryRecipes(String category) async {
+  Future<void> _fetchCategoryRecipes(String category) async {
     final Result<List<Recipe>, NetworkError> result =
         await _getRecipesByCategory.execute(category);
 

@@ -29,10 +29,8 @@ class _HomeScreenRootState extends State<HomeScreenRoot> {
       builder: (context, value, child) {
         return HomeScreen(
           state: value,
-          onCategoryChange: (String category) {
-            category == 'All'
-                ? widget._homeViewModel.fetchAllCategoryRecipes()
-                : widget._homeViewModel.fetchCategoryRecipes(category);
+          onAction: (action) {
+            widget._homeViewModel.onAction(action);
           },
         );
       },

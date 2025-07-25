@@ -7,20 +7,19 @@ import 'package:flutter_recipe_app/presentation/component/card/recipe_thumbnail_
 import 'package:flutter_recipe_app/presentation/component/card/step_card.dart';
 import 'package:flutter_recipe_app/presentation/component/tab/tabs.dart';
 import 'package:flutter_recipe_app/presentation/component/title_bar/screen_title_bar.dart';
+import 'package:flutter_recipe_app/presentation/ingredient/ingredient_action.dart';
 import 'package:flutter_recipe_app/presentation/ingredient/ingredient_state.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class IngredientScreen extends StatelessWidget {
   final IngredientState _ingredientState;
-  final VoidCallback onBackButtonClick;
-  final Function(int index) changeIngredientTapSelectedIndex;
+  final Function(IngredientAction) onAction;
 
   const IngredientScreen({
     super.key,
     required IngredientState ingredientState,
-    required this.onBackButtonClick,
-    required this.changeIngredientTapSelectedIndex,
+    required this.onAction,
   }) : _ingredientState = ingredientState;
 
   @override
@@ -36,7 +35,11 @@ class IngredientScreen extends StatelessWidget {
               height: 44.0,
             ),
             ScreenTitleBar(
-              backButtonClick: onBackButtonClick,
+              backButtonClick: () {
+                onAction(
+                  IngredientAction.clickIngredientBackButton(),
+                );
+              },
               menuButtonClick: () {},
             ),
             currentSelectedRecipe == null
@@ -139,7 +142,13 @@ class IngredientScreen extends StatelessWidget {
                         Tabs(
                           labelTitles: LabelType.values.stringValues,
                           selectedIndex: _ingredientState.selectedLabelIndex,
-                          onValueChange: changeIngredientTapSelectedIndex,
+                          onValueChange: (index) {
+                            onAction(
+                              IngredientAction.changeIngredientTapSelectedIndex(
+                                index,
+                              ),
+                            );
+                          },
                         ),
                         SizedBox(
                           height: 22.0,

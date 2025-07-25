@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/card/recipe_card.dart';
 import 'package:flutter_recipe_app/presentation/component/title_bar/screen_title_bar.dart';
+import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_action.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_state.dart';
 
 class SavedRecipeScreen extends StatelessWidget {
   final SavedRecipeState _savedRecipeState;
-  final Function(int id) onSavedRecipeItemClick;
-  final Function(int id) savedRecipeFavoriteStateChange;
+  final Function(SavedRecipeAction action) onAction;
 
   const SavedRecipeScreen({
     super.key,
     required SavedRecipeState savedRecipeState,
-    required this.onSavedRecipeItemClick,
-    required this.savedRecipeFavoriteStateChange,
+    required this.onAction,
   }) : _savedRecipeState = savedRecipeState;
 
   @override
@@ -38,9 +37,18 @@ class SavedRecipeScreen extends StatelessWidget {
                   return RecipeCard(
                     recipe: _savedRecipeState.savedRecipes[index],
                     isBookmark: true,
-                    onTap: onSavedRecipeItemClick,
+                    onTap: (recipeId) {
+                      onAction(
+                        SavedRecipeAction.moveSavedRecipeIngredientScreen(
+                          recipeId,
+                        ),
+                      );
+                    },
                     onFavoritePressed: () {
-                      savedRecipeFavoriteStateChange(index);
+                      final int id = _savedRecipeState.savedRecipes[index].id;
+                      onAction(
+                        SavedRecipeAction.savedRecipeFavoriteStateChange(id),
+                      );
                     },
                   );
                 },

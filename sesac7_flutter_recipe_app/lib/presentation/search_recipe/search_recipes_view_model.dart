@@ -6,6 +6,7 @@ import 'package:flutter_recipe_app/core/enum/search_recipe_filter_time_type.dart
 import 'package:flutter_recipe_app/core/result.dart';
 import 'package:flutter_recipe_app/domain/model/recipe.dart';
 import 'package:flutter_recipe_app/domain/repository/recipe_repository.dart';
+import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_action.dart';
 import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_state.dart';
 
 class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
@@ -15,6 +16,28 @@ class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
     required RecipeRepository recipeRepository,
   }) : _recipeRepository = recipeRepository,
        super(SearchRecipesState());
+
+  void onAction(SearchRecipesAction action) {
+    switch (action) {
+      case ChangeKeyword():
+        if (action.keyword.isEmpty) {
+          _clearSearchResultRecipesAndSearchKeyword();
+          fetchRecentRecipes();
+        } else {
+          _fetchSearchResultRecipes(
+            keyword: action.keyword,
+          );
+        }
+      case ShowFilterBottomSheet():
+        break;
+      case SearchFilteredRecipe():
+        _fetchSearchResultRecipes(
+          timeType: action.timeType,
+          ratingType: action.ratingType,
+          categoryType: action.categoryType,
+        );
+    }
+  }
 
   Future<void> fetchRecentRecipes() async {
     value = value.copyWith(isLoading: true);
@@ -35,7 +58,7 @@ class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
     notifyListeners();
   }
 
-  Future<void> fetchSearchResultRecipes({
+  Future<void> _fetchSearchResultRecipes({
     String? keyword,
     SearchRecipeFilterTimeType? timeType,
     RatingType? ratingType,
@@ -65,7 +88,7 @@ class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
     notifyListeners();
   }
 
-  void clearSearchResultRecipesAndSearchKeyword() {
+  void _clearSearchResultRecipesAndSearchKeyword() {
     value = value.copyWith(isLoading: true);
     notifyListeners();
     value = value.copyWith(

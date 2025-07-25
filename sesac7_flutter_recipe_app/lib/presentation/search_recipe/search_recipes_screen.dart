@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/core/enum/rating_type.dart';
-import 'package:flutter_recipe_app/core/enum/search_recipe_filter_category_type.dart';
-import 'package:flutter_recipe_app/core/enum/search_recipe_filter_time_type.dart';
 import 'package:flutter_recipe_app/presentation/component/button/search_recipe_filter_button.dart';
 import 'package:flutter_recipe_app/presentation/component/card/search_recipe_card.dart';
 import 'package:flutter_recipe_app/presentation/component/text_field/search_input_field.dart';
 import 'package:flutter_recipe_app/presentation/component/title_bar/screen_title_bar.dart';
+import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_action.dart';
 import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_state.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
@@ -13,14 +11,12 @@ import 'package:go_router/go_router.dart';
 
 class SearchRecipesScreen extends StatelessWidget {
   final SearchRecipesState _searchRecipesState;
-  final Function(String) changeKeyword;
-  final VoidCallback showFilterBottomSheet;
+  final Function(SearchRecipesAction action) onAction;
 
   const SearchRecipesScreen({
     super.key,
     required SearchRecipesState searchRecipesState,
-    required this.showFilterBottomSheet,
-    required this.changeKeyword,
+    required this.onAction,
   }) : _searchRecipesState = searchRecipesState;
 
   @override
@@ -47,13 +43,17 @@ class SearchRecipesScreen extends StatelessWidget {
               children: [
                 SearchInputField(
                   hint: 'Search recipe',
-                  onSearchKeywordChange: changeKeyword,
+                  onSearchKeywordChange: (keyword) {
+                    onAction(SearchRecipesAction.changeKeyword(keyword));
+                  },
                 ),
                 SizedBox(
                   width: 20.0,
                 ),
                 SearchRecipeFilterButton(
-                  onClick: showFilterBottomSheet,
+                  onClick: () {
+                    onAction(SearchRecipesAction.showFilterBottomSheet());
+                  },
                 ),
               ],
             ),
