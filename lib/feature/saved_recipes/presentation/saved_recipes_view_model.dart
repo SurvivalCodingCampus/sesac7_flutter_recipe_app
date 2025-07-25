@@ -50,14 +50,26 @@ class SavedRecipesViewModel with ChangeNotifier {
     }
   }
 
-  void _removeSavedRecipe(String id) {
-    final updatedRecipes = _removeSavedRecipeUseCase.execute(
+  void _removeSavedRecipe(String id) async {
+    _loadingState();
+
+    final result = await _removeSavedRecipeUseCase.execute(
       state.savedRecipes,
       id,
     );
-    _state = state.copyWith(savedRecipes: updatedRecipes);
 
-    notifyListeners();
+    switch (result) {
+      case Success<List<Recipe>, NetworkError>():
+        _state = state.copyWith(
+          savedRecipes: result.data,
+          isLoading: false,
+          errorMessage: '',
+        );
+
+        notifyListeners();
+      case Error<List<Recipe>, NetworkError>():
+        _errorState(result.error.toString());
+    }
   }
 
   void _loadingState() {
