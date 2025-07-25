@@ -4,6 +4,7 @@ import 'package:flutter_recipe_app/core/data/repository/recipe/recipe_repository
 import 'package:flutter_recipe_app/core/domain/repository/recipe/recipe_repository.dart';
 import 'package:flutter_recipe_app/feature/home/domain/use_case/fetch_all_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/home/domain/use_case/filter_home_recipe_category_use_case.dart';
+import 'package:flutter_recipe_app/feature/home/presentation/home_view_model.dart';
 import 'package:flutter_recipe_app/feature/ingredient/data/repository/mocks/mock_ingredient_repository_impl.dart';
 import 'package:flutter_recipe_app/feature/ingredient/data/repository/mocks/mock_procedure_repository_impl.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/repository/ingredient_repository.dart';
@@ -12,9 +13,12 @@ import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_all_
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_procedure_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_recipe_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/format_review_count_use_case.dart';
+import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_view_model.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/data/repository/mock/mock_bookmark_repository_impl.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/repository/bookmark_repository.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/get_saved_recipes_use_case.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/remove_saved_recipe_use_case.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_view_model.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
@@ -40,28 +44,53 @@ void diSetUp() {
   );
 
   // Use Case
-  getIt.registerFactory(
+  getIt.registerLazySingleton(
     () => GetSavedRecipesUseCase(
       recipeRepository: getIt(),
       bookmarkRepository: getIt(),
     ),
   );
-  getIt.registerFactory(
+  getIt.registerLazySingleton(
     () => FetchAllRecipesUseCase(recipeRepository: getIt()),
   );
-  getIt.registerFactory(
+  getIt.registerLazySingleton(
     () => FetchRecipeUseCase(recipeRepository: getIt()),
   );
-  getIt.registerFactory(
+  getIt.registerLazySingleton(
     () => FetchAllIngredientsUseCase(ingredientRepository: getIt()),
   );
-  getIt.registerFactory(
+  getIt.registerLazySingleton(
     () => FetchProcedureUseCase(procedureRepository: getIt()),
   );
-  getIt.registerFactory(
+  getIt.registerLazySingleton(
     () => FormatReviewCountUseCase(),
   );
-  getIt.registerFactory(
+  getIt.registerLazySingleton(
     () => FilterHomeRecipeCategoryUseCase(),
+  );
+  getIt.registerLazySingleton(
+    () => RemoveSavedRecipeUseCase(bookmarkRepository: getIt()),
+  );
+
+  // View Model
+  getIt.registerFactory(
+    () => HomeViewModel(
+      fetchAllRecipesUseCase: getIt(),
+      filterHomeRecipeCategoryUseCase: getIt(),
+    ),
+  );
+  getIt.registerFactory(
+    () => SavedRecipesViewModel(
+      getSavedRecipesUseCase: getIt(),
+      removeSavedRecipeUseCase: getIt(),
+    ),
+  );
+  getIt.registerFactory(
+    () => IngredientViewModel(
+      fetchRecipeUseCase: getIt(),
+      fetchAllIngredientsUseCase: getIt(),
+      fetchProcedureUseCase: getIt(),
+      formatReviewCountUseCase: getIt(),
+    ),
   );
 }

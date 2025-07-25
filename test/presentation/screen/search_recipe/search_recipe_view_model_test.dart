@@ -73,7 +73,7 @@ void main() {
         (_) async => Result<List<Recipe>, NetworkError>.success(mockRecipes),
       );
 
-      viewModel.fetchRecipe();
+      viewModel.init();
 
       expect(viewModel.state.isLoading, false);
       expect(viewModel.state.allRecipes, mockRecipes);
@@ -100,7 +100,7 @@ void main() {
         (_) async => Error<List<Recipe>, NetworkError>(networkError),
       );
 
-      viewModel.fetchRecipe();
+      viewModel.init();
 
       expect(viewModel.state.isLoading, false);
       expect(viewModel.state.allRecipes, isEmpty);
@@ -123,9 +123,9 @@ void main() {
       when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
         (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
       );
-      viewModel.fetchRecipe();
+      viewModel.init();
 
-      viewModel.searchRecipe('');
+      viewModel._searchRecipe('');
 
       expect(viewModel.state.filteredRecipes, mockRecipes);
       expect(viewModel.state.resultCount, mockRecipes.length);
@@ -145,9 +145,9 @@ void main() {
       when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
         (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
       );
-      viewModel.fetchRecipe();
+      viewModel.init();
 
-      viewModel.searchRecipe('john');
+      viewModel._searchRecipe('john');
 
       expect(viewModel.state.filteredRecipes.length, 2);
       expect(viewModel.state.filteredRecipes[0].name, 'Spicy Chicken');
@@ -169,9 +169,9 @@ void main() {
       when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
         (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
       );
-      viewModel.fetchRecipe();
+      viewModel.init();
 
-      viewModel.searchRecipe('nonexistent');
+      viewModel._searchRecipe('nonexistent');
 
       expect(viewModel.state.filteredRecipes, isEmpty);
       expect(viewModel.state.resultCount, 0);
@@ -191,10 +191,10 @@ void main() {
       when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
         (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
       );
-      viewModel.fetchRecipe();
+      viewModel.init();
 
       final filterState = FilterSearchState(filterRate: FilterRate.five);
-      viewModel.selectFilter(filterState);
+      viewModel._selectFilter(filterState);
 
       expect(viewModel.state.filteredRecipes.length, 1);
       expect(viewModel.state.filteredRecipes[0].name, 'Chocolate Cake');
@@ -215,10 +215,10 @@ void main() {
       when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
         (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
       );
-      viewModel.fetchRecipe();
+      viewModel.init();
 
       final filterState = FilterSearchState(filterRate: FilterRate.three);
-      viewModel.selectFilter(filterState);
+      viewModel._selectFilter(filterState);
 
       expect(viewModel.state.filteredRecipes.length, 1);
       expect(viewModel.state.filteredRecipes[0].name, 'Vegetable Soup');
@@ -239,12 +239,12 @@ void main() {
       when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
         (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
       );
-      viewModel.fetchRecipe();
+      viewModel.init();
 
       final filterState = FilterSearchState(
         filterCategory: FilterCategory.dinner,
       );
-      viewModel.selectFilter(filterState);
+      viewModel._selectFilter(filterState);
 
       expect(viewModel.state.filteredRecipes.length, 1);
       expect(viewModel.state.filteredRecipes[0].name, 'Spicy Chicken');
@@ -265,12 +265,12 @@ void main() {
       when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
         (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
       );
-      viewModel.fetchRecipe();
+      viewModel.init();
 
       final filterState = FilterSearchState(
         filterCategory: FilterCategory.fruit,
       );
-      viewModel.selectFilter(filterState);
+      viewModel._selectFilter(filterState);
 
       expect(viewModel.state.filteredRecipes.length, 0);
       expect(viewModel.state.resultCount, 0);
@@ -290,13 +290,13 @@ void main() {
       when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
         (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
       );
-      viewModel.fetchRecipe();
+      viewModel.init();
 
       final filterState = FilterSearchState(
         filterRate: FilterRate.four,
         filterCategory: FilterCategory.dinner,
       );
-      viewModel.selectFilter(filterState);
+      viewModel._selectFilter(filterState);
 
       expect(viewModel.state.filteredRecipes.length, 1);
       expect(viewModel.state.filteredRecipes[0].name, 'Spicy Chicken');

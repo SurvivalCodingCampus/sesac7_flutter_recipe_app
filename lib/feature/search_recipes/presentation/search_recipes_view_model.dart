@@ -6,6 +6,7 @@ import 'package:flutter_recipe_app/feature/search_recipes/domain/model/search_st
 import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/filter_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/get_all_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/filter_search_state.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_action.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_state.dart';
 
 class SearchRecipesViewModel with ChangeNotifier {
@@ -22,8 +23,9 @@ class SearchRecipesViewModel with ChangeNotifier {
 
   SearchRecipesState get state => _state;
 
-  void fetchRecipe() async {
-    _state = _state.copyWith(isLoading: true);
+  void init() async {
+    _loadingState();
+
     final result = await _getAllRecipesUseCase.execute();
 
     switch (result) {
@@ -37,26 +39,31 @@ class SearchRecipesViewModel with ChangeNotifier {
           isLoading: false,
           errorMessage: null,
         );
+
+        notifyListeners();
       case Error<List<Recipe>, NetworkError>():
-        _state = state.copyWith(
-          allRecipes: [],
-          filteredRecipes: [],
-          resultCount: 0,
-          searchState: SearchStateType.recentSearch,
-          isLoading: false,
-          errorMessage:
-              'Fail to load data from server. Error: ${result.error.toString()}',
-        );
+        _errorState(result.error.toString());
+    }
+  }
+
+  void onAction(SearchRecipesAction action) {
+    switch (action) {
+      case ChangeSearchValue():
+        _searchRecipe(action.value);
+      case TapFilterButton():
+        break;
+      case SelectFilter():
+        _selectFilter(action.state);
     }
 
     notifyListeners();
   }
 
-  void searchRecipe(String keyword) {
+  void _searchRecipe(String keyword) {
     _searchWithFilter(keyword, state.filterState);
   }
 
-  void selectFilter(FilterSearchState filterState) {
+  void _selectFilter(FilterSearchState filterState) {
     _searchWithFilter(state.searchFieldValue, filterState);
   }
 
@@ -72,6 +79,25 @@ class SearchRecipesViewModel with ChangeNotifier {
       searchFieldValue: keyword,
       searchState: SearchStateType.searchResult,
       filterState: filterState,
+    );
+
+    notifyListeners();
+  }
+
+  void _loadingState() {
+    _state = state.copyWith(isLoading: true);
+
+    notifyListeners();
+  }
+
+  void _errorState(String message) {
+    _state = state.copyWith(
+      allRecipes: [],
+      filteredRecipes: [],
+      resultCount: 0,
+      searchState: SearchStateType.recentSearch,
+      isLoading: false,
+      errorMessage: message,
     );
 
     notifyListeners();
