@@ -99,9 +99,7 @@ final router = GoRouter(
             GoRoute(
               path: Routes.searchRecipes,
               builder: (context, state) {
-                return SearchRecipesScreenRoot(
-                  viewModel: getIt()..fetchRecipes(),
-                );
+                return SearchRecipesScreenRoot(getIt());
               },
             ),
           ],

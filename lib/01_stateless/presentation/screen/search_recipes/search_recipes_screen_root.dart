@@ -4,26 +4,35 @@ import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recip
 
 import '../../../core/presentation/component/bottom_sheet/filter_search_state.dart';
 
-class SearchRecipesScreenRoot extends StatelessWidget {
+class SearchRecipesScreenRoot extends StatefulWidget {
   final SearchRecipesViewModel viewModel;
 
-  const SearchRecipesScreenRoot({
-    super.key,
-    required this.viewModel,
-  });
+  const SearchRecipesScreenRoot(this.viewModel, {super.key});
+
+  @override
+  State<SearchRecipesScreenRoot> createState() =>
+      _SearchRecipesScreenRootState();
+}
+
+class _SearchRecipesScreenRootState extends State<SearchRecipesScreenRoot> {
+  @override
+  void initState() {
+    super.initState();
+    widget.viewModel.fetchRecipes();
+  }
 
   @override
   Widget build(BuildContext context) {
     return ValueListenableBuilder(
-      valueListenable: viewModel,
+      valueListenable: widget.viewModel,
       builder: (context, state, child) {
         return SearchRecipesScreen(
-          state: viewModel.state,
+          state: widget.viewModel.state,
           onSearch: (String query) {
-            viewModel.search(query);
+            widget.viewModel.search(query);
           },
           onFilter: (FilterSearchState state) {
-            viewModel.filter(state);
+            widget.viewModel.filter(state);
           },
         );
       },
