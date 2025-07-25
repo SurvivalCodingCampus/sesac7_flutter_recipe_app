@@ -33,16 +33,16 @@ class RecipeCategorySelector extends StatelessWidget {
               );
             }
             return CategoryButton(
-              title: categories.elementAt(index),
-              isSelected: categories.elementAt(index) == selectedCategory,
+              title: categories.elementAt(index - 1),
+              isSelected: categories.elementAt(index - 1) == selectedCategory,
               onTap: () {
-                if (categories.elementAt(index) != selectedCategory) {
-                  onValueChange(categories.elementAt(index));
+                if (categories.elementAt(index - 1) != selectedCategory) {
+                  onValueChange(categories.elementAt(index - 1));
                 }
               },
             );
           },
-          itemCount: categories.length,
+          itemCount: categories.length + 1, // 'All' 카테고리 때문에 + 1 처리
           scrollDirection: Axis.horizontal,
           padding: const EdgeInsets.only(left: 30, top: 0),
         ),
