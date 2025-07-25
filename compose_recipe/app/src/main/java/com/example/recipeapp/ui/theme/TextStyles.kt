@@ -80,3 +80,14 @@ val unSelectedRatingTitle = TextStyle(
     lineHeight = 17.sp
 )
 /* RatingButton END */
+
+/* RatingDialog START */
+val ratingDialogButtonTitle = TextStyle(
+    fontFamily = poppins,
+    fontWeight = FontWeight.Normal,
+    fontSize = 8.sp,
+    fontStyle = FontStyle.Normal,
+    color = White,
+    lineHeight = 12.sp
+)
+/* RatingDialog END */
