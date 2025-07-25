@@ -1,3 +1,5 @@
+import 'package:flutter_recipe_app/data/dto/recipe_dto.dart';
+
 class MockRecipesDataSourceImpl{
 
   final Map<String,dynamic> mockRecipesJson = {
@@ -273,4 +275,8 @@ class MockRecipesDataSourceImpl{
       }
     ]
   };
+
+  RecipeDto getRecipeDto() {
+    return RecipeDto.fromJson(mockRecipesJson);
+  }
 }

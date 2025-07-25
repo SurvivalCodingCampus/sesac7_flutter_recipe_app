@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/data/model/recipes.dart';
 import 'package:flutter_recipe_app/presentation/component/button/big_button.dart';
+import 'package:flutter_recipe_app/presentation/component/button/filter_button.dart';
 import 'package:flutter_recipe_app/presentation/component/button/medium_button.dart';
+import 'package:flutter_recipe_app/presentation/component/button/rating_button.dart';
 import 'package:flutter_recipe_app/presentation/component/card/ingredient_item.dart';
 import 'package:flutter_recipe_app/presentation/component/inputfield/input_field.dart';
 import 'package:flutter_recipe_app/presentation/component/tab/tab.dart';
@@ -9,7 +12,6 @@ import '../../data/model/ingredient.dart';
 import '../../data/model/ingredients.dart';
 import '../component/button/small_button.dart';
 import '../component/card/recipe_card.dart';
-import '../component/card/ingredient_item.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -55,7 +57,23 @@ class MainScreen extends StatelessWidget {
                 },
               ),
               SizedBox(height: 16),
-              RecipeCard(),
+              RecipeCard(
+                onBookmarkPressed: () {
+                  print('Bookmark pressed');
+                },
+                recipe: Recipes(
+                  category: 'category',
+                  id: 1,
+                  name: 'Traditional spare ribs baked',
+                  image:
+                      'https://cdn.pixabay.com/photo/2019/10/22/10/11/beef-wellington-4568239_1280.jpg',
+                  chef: 'By Chef John',
+                  time: '30min',
+                  rating: 4.5,
+                  ingredients: [],
+                  isBookmarked: false,
+                ),
+              ),
               SizedBox(height: 16),
               IngredientItem(
                 ingredients: Ingredients(
@@ -67,6 +85,26 @@ class MainScreen extends StatelessWidget {
                         'https://cdn.pixabay.com/photo/2017/10/06/17/17/tomato-2823826_1280.jpg',
                   ),
                 ),
+              ),
+              SizedBox(height: 16),
+              Row(
+                children: [
+                  RatingButton(
+                    text: '5',
+                    isSelected: true,
+                    onTap: () {
+                      print('Rating button');
+                    },
+                  ),
+                  SizedBox(width: 16),
+                  FilterButton(
+                    text: 'Text',
+                    isSelected: true,
+                    onTap: () {
+                      print('Text button');
+                    },
+                  ),
+                ],
               ),
             ],
           ),
