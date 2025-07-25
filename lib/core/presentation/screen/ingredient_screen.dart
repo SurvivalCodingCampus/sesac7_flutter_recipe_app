@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/core/domain/repository/ingredient_repository.dart';
+import 'package:flutter_recipe_app/recipe_ingredients/domain/repository/ingredient_repository.dart';
 
 import 'package:flutter_recipe_app/core/presentation/component/ingredient/ingredient_item.dart';
 import '../../domain/model/ingredient.dart';
@@ -26,10 +26,10 @@ class _IngredientScreenState extends State<IngredientScreen> {
   }
 
   void fetchIngredients() async {
-    final fetched = await IngredientRepository().fetchIngredients();
-    setState(() {
-      ingredients = fetched;
-    });
+    // final fetched = await IngredientRepository.fetchIngredients();
+    // setState(() {
+    //   ingredients = fetched;
+    // });
   }
 
   @override

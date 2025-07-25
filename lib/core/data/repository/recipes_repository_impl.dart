@@ -5,6 +5,7 @@ import 'package:flutter_recipe_app/core/result.dart';
 import 'package:flutter_recipe_app/core/data/data_source/remote/recipe_data_source.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe.dart';
 import 'package:flutter_recipe_app/core/domain/repository/recipes_repository.dart';
+import 'package:http/http.dart' as http;
 import '../mapper/recipe_mapper.dart';
 
 class RecipeRepositoryImpl implements RecipeRepository {
@@ -37,5 +38,19 @@ class RecipeRepositoryImpl implements RecipeRepository {
     } catch (e) {
       return Result.failure(NetworkError.unknown);
     }
+  }
+
+  @override
+  Future<Result<Recipe, NetworkError>> fetchRecipeById(int id) async {
+    final result = await fetchRecipes();
+    return result.when(
+      success: (List<Recipe> value) {
+        final recipe = value.firstWhere((recipe) => recipe.id == id);
+        return Result.success(recipe);
+      },
+      failure: (NetworkError error) {
+        return Result.failure(error);
+      }
+    );
   }
 }
