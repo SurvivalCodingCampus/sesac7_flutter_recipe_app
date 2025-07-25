@@ -8,28 +8,25 @@ import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recip
 
 import '../../../domain/model/recipe.dart';
 
-class SearchRecipesViewModel with ChangeNotifier {
+class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
   final GetRecipesUseCase _getRecipesUseCase;
   final SearchRecipesUseCase _searchRecipesUseCase;
-
-  SearchRecipesState _state = SearchRecipesState();
-
-  SearchRecipesState get state => _state;
 
   SearchRecipesViewModel({
     required GetRecipesUseCase getRecipesUseCase,
     required SearchRecipesUseCase searchRecipesUseCase,
   }) : _getRecipesUseCase = getRecipesUseCase,
-       _searchRecipesUseCase = searchRecipesUseCase;
+       _searchRecipesUseCase = searchRecipesUseCase,
+       super(SearchRecipesState());
 
   void fetchRecipes() async {
-    _state = state.copyWith(isLoading: true);
+    value = value.copyWith(isLoading: true);
     notifyListeners();
 
     final result = await _getRecipesUseCase.execute();
     switch (result) {
       case Success<List<Recipe>>():
-        _state = state.copyWith(
+        value = value.copyWith(
           originalRecipes: result.data,
           filteredRecipes: result.data,
           isLoading: false,
@@ -40,19 +37,19 @@ class SearchRecipesViewModel with ChangeNotifier {
         throw UnimplementedError();
     }
 
-    filter(state.filterSearchState);
+    filter(value.filterSearchState);
   }
 
   void _searchWithFilter(String query, FilterSearchState filterSearchState) {
     final searchedRecipes = _searchRecipesUseCase.execute(
-      state.originalRecipes,
+      value.originalRecipes,
       query,
       filterSearchState,
     );
 
-    _state = state.copyWith(
+    value = value.copyWith(
       query: query,
-      searchLabel: state.originalRecipes.length == searchedRecipes.length
+      searchLabel: value.originalRecipes.length == searchedRecipes.length
           ? 'Recent Search'
           : 'Search Result',
       filteredRecipes: searchedRecipes,
@@ -64,11 +61,11 @@ class SearchRecipesViewModel with ChangeNotifier {
   }
 
   void search(String query) {
-    _searchWithFilter(query, state.filterSearchState);
+    _searchWithFilter(query, value.filterSearchState);
   }
 
   void filter(FilterSearchState filterSearchState) {
-    _searchWithFilter(state.query, filterSearchState);
+    _searchWithFilter(value.query, filterSearchState);
   }
 }
 

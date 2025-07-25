@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/data/data_source/recipe_data_source_impl.dart';
 import 'package:flutter_recipe_app/01_stateless/data/repository/person_repository_impl.dart';
 import 'package:flutter_recipe_app/01_stateless/data/repository/recipe_repository_impl.dart';
+import 'package:flutter_recipe_app/01_stateless/domain/model/recipe.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/main/main_screen.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/main/main_view_model.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/saved_recipes/saved_recipes_screen.dart';
@@ -25,7 +26,7 @@ void main() {
       _recipeRepository: RecipeRepositoryImpl(
         recipeDataSource: RecipeDataSourceImpl(
           baseUrl:
-          'https://raw.githubusercontent.com/junsuk5/mock_json/refs/heads/main',
+              'https://raw.githubusercontent.com/junsuk5/mock_json/refs/heads/main',
         ),
       ),
     );
@@ -38,6 +39,7 @@ void main() {
           builder: (context, child) {
             return SavedRecipesScreen(
               viewModel: savedRecipesViewModel,
+              onTapRecipe: (Recipe recipe) {},
             );
           },
         ),
@@ -57,7 +59,6 @@ void main() {
     await tester.pumpAndSettle();
 
     expect(recipeItem10Finder, findsOneWidget);
-
   });
 
   testWidgets('dialog test', (tester) async {

@@ -98,16 +98,8 @@ final router = GoRouter(
             GoRoute(
               path: Routes.searchRecipes,
               builder: (context, state) {
-                final searchRecipesViewModel = getIt<SearchRecipesViewModel>();
-
-                searchRecipesViewModel.fetchRecipes();
-                return ListenableBuilder(
-                  listenable: searchRecipesViewModel,
-                  builder: (context, child) {
-                    return SearchRecipesScreen(
-                      viewModel: searchRecipesViewModel,
-                    );
-                  },
+                return SearchRecipesScreen(
+                  viewModel: getIt()..fetchRecipes(),
                 );
               },
             ),
@@ -118,17 +110,8 @@ final router = GoRouter(
             GoRoute(
               path: Routes.main,
               builder: (context, state) {
-                final mainViewModel = MainViewModel(
-                  personRepository: PersonRepositoryImpl(),
-                );
-                mainViewModel.fetchPersonData();
-                return ListenableBuilder(
-                  listenable: mainViewModel,
-                  builder: (context, child) {
-                    return MainScreen(
-                      viewModel: mainViewModel,
-                    );
-                  },
+                return MainScreen(
+                  viewModel: getIt()..fetchPersonData(),
                 );
               },
             ),
