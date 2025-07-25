@@ -132,6 +132,7 @@ class RecipeExCard extends StatelessWidget {
         ),
         SizedBox(height: 10),
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
               flex: 2,
@@ -170,6 +171,7 @@ class RecipeExCard extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
+            SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

@@ -1,21 +1,25 @@
 class StepInfoDto {
+  num? recipeId;
   num? stepNumber;
   String? description;
 
   StepInfoDto({
+    this.recipeId,
     this.stepNumber,
     this.description,
   });
 
   StepInfoDto.fromJson(dynamic json) {
-    stepNumber = json['stepNumber'];
-    description = json['description'];
+    recipeId = json['recipeId'];
+    stepNumber = json['step'];
+    description = json['content'];
   }
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    map['stepNumber'] = stepNumber;
-    map['description'] = description;
+    map['recipeId'] = recipeId;
+    map['step'] = stepNumber;
+    map['content'] = description;
     return map;
   }
 }
@@ -42,6 +46,7 @@ class RecipeDto {
     this.rating,
     this.isSaved,
     this.ingredients,
+    this.steps,
   });
 
   RecipeDto.fromJson(dynamic json) {
@@ -59,6 +64,12 @@ class RecipeDto {
         ingredients?.add(RecipeIngredientDto.fromJson(v));
       });
     }
+    if (json['procedures'] != null) {
+      steps = [];
+      json['procedures'].forEach((v) {
+        steps?.add(StepInfoDto.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -72,6 +83,9 @@ class RecipeDto {
     map['rating'] = rating;
     if (ingredients != null) {
       map['ingredients'] = ingredients?.map((v) => v.toJson()).toList();
+    }
+    if (steps != null) {
+      map['procedures'] = steps?.map((v) => v.toJson()).toList();
     }
     return map;
   }

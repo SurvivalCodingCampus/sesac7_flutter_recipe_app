@@ -25,7 +25,7 @@ class Tabs extends StatelessWidget {
       alignment: Alignment.center,
       color: AppColors.white,
       height: 58,
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+
 
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
