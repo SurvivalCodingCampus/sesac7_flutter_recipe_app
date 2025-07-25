@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/routes.dart';
-import 'package:flutter_recipe_app/data/data_source/mock_bookmark_data_source_impl.dart';
-import 'package:flutter_recipe_app/data/data_source/mock_procedure_data_source_impl.dart';
-import 'package:flutter_recipe_app/data/repository/mock_bookmark_repository_impl.dart';
-import 'package:flutter_recipe_app/data/repository/mock_procedure_repository_impl.dart';
 import 'package:flutter_recipe_app/presentation/screen/ingredient_screen.dart';
 import 'package:go_router/go_router.dart';
 
-import '../data/data_source/recipe_data_source_impl.dart';
-import '../data/repository/recipe_repository_impl.dart';
+import '../di/di_setup.dart';
 import '../presentation/component/custom_bottom_app_bar.dart';
 import '../presentation/screen/home_screen.dart';
+import '../presentation/screen/home_screen_view_model.dart';
 import '../presentation/screen/ingredient_screen_view_model.dart';
 import '../presentation/screen/main_screen.dart';
 import '../presentation/screen/saved_recipes_screen.dart';
@@ -20,31 +16,6 @@ import '../presentation/screen/search_recipes_screen_view_model.dart';
 import '../presentation/screen/sign_in_screen.dart';
 import '../presentation/screen/sign_up_screen.dart';
 import '../presentation/screen/splash_screen.dart';
-
-// ViewModel
-final SavedRecipesViewModel savedRecipesViewModel = SavedRecipesViewModel(
-  recipeRepository: RecipeRepositoryImpl(dataSource: RecipeDataSourceImpl()),
-  bookmarkRepository: MockBookmarkRepositoryImpl(
-    dataSource: MockBookmarkDataSourceImpl(),
-  ),
-);
-
-final IngredientScreenViewModel ingredientScreenViewModel =
-    IngredientScreenViewModel(
-      recipeRepository: RecipeRepositoryImpl(
-        dataSource: RecipeDataSourceImpl(),
-      ),
-      procedureRepository: MockProcedureRepositoryImpl(
-        procedureDataSource: MockProcedureDataSourceImpl(),
-      ),
-    );
-
-final SearchRecipesScreenViewModel searchRecipesViewModel =
-    SearchRecipesScreenViewModel(
-      recipeRepository: RecipeRepositoryImpl(
-        dataSource: RecipeDataSourceImpl(),
-      ),
-    );
 
 final router = GoRouter(
   initialLocation: Routes.bookmark,
@@ -88,12 +59,14 @@ final router = GoRouter(
     GoRoute(
       path: Routes.search,
       builder: (context, state) {
-        searchRecipesViewModel.fetchRecipes();
+        final viewModel = getIt<SearchRecipesScreenViewModel>();
+        viewModel.fetchRecipes();
+
         return ListenableBuilder(
-          listenable: searchRecipesViewModel,
+          listenable: getIt(),
           builder: (BuildContext context, Widget? child) {
             return SearchRecipesScreen(
-              viewModel: searchRecipesViewModel,
+              viewModel: viewModel,
             );
           },
         );
@@ -103,13 +76,15 @@ final router = GoRouter(
       path: '${Routes.ingredient}/:id',
       builder: (context, state) {
         final id = int.parse(state.pathParameters['id']!);
-        ingredientScreenViewModel.fetchRecipeById(id);
+
+        final viewModel = getIt<IngredientScreenViewModel>();
+        viewModel.fetchRecipeById(id);
 
         return ListenableBuilder(
-          listenable: ingredientScreenViewModel,
+          listenable: viewModel,
           builder: (BuildContext context, Widget? child) {
             return IngredientScreen(
-              viewModel: ingredientScreenViewModel,
+              viewModel: viewModel,
             );
           },
         );
@@ -127,11 +102,16 @@ final router = GoRouter(
             GoRoute(
               path: Routes.main,
               builder: (context, state) {
+                final viewModel = getIt<HomeScreenViewModel>();
+                viewModel.fetchRecipes();
+                
                 return MainScreen(
                   body: ListenableBuilder(
-                    listenable: savedRecipesViewModel,
+                    listenable: viewModel,
                     builder: (BuildContext context, Widget? child) {
-                      return HomeScreen();
+                      return HomeScreen(
+                        viewModel: viewModel,
+                      );
                     },
                   ),
                 );
@@ -144,12 +124,14 @@ final router = GoRouter(
             GoRoute(
               path: Routes.bookmark,
               builder: (context, state) {
+                final viewModel = getIt<SavedRecipesViewModel>();
+
                 return MainScreen(
                   body: ListenableBuilder(
-                    listenable: savedRecipesViewModel,
+                    listenable: viewModel,
                     builder: (BuildContext context, Widget? child) {
                       return SavedRecipesScreen(
-                        viewModel: savedRecipesViewModel,
+                        viewModel: viewModel,
                         onClickCard: (id) {
                           context.push('${Routes.ingredient}/$id');
                         },
@@ -166,11 +148,16 @@ final router = GoRouter(
             GoRoute(
               path: Routes.notification,
               builder: (context, state) {
+                final viewModel = getIt<SearchRecipesScreenViewModel>();
+                viewModel.fetchRecipes();
+
                 return MainScreen(
                   body: ListenableBuilder(
-                    listenable: savedRecipesViewModel,
+                    listenable: viewModel,
                     builder: (BuildContext context, Widget? child) {
-                      return HomeScreen();
+                      return SearchRecipesScreen(
+                        viewModel: viewModel,
+                      );
                     },
                   ),
                 );
@@ -183,12 +170,14 @@ final router = GoRouter(
             GoRoute(
               path: Routes.myPage,
               builder: (context, state) {
+                final viewModel = getIt<SavedRecipesViewModel>();
+
                 return MainScreen(
                   body: ListenableBuilder(
-                    listenable: savedRecipesViewModel,
+                    listenable: viewModel,
                     builder: (BuildContext context, Widget? child) {
                       return SavedRecipesScreen(
-                        viewModel: savedRecipesViewModel,
+                        viewModel: viewModel,
                         onClickCard: (id) {},
                       );
                     },

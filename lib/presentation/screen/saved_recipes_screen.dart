@@ -49,9 +49,10 @@ class SavedRecipesScreen extends StatelessWidget {
                           recipe: Recipe(
                             category: viewModel.recipes[index].category,
                             id: viewModel.recipes[index].id,
-                            name: NameOptimizer.getRecipeName(
-                              viewModel.recipes[index].name,
-                            ),
+                            name:
+                                '\n${getRecipeName(
+                                  viewModel.recipes[index].name,
+                                )}',
                             image: viewModel.recipes[index].image,
                             chef: 'By ${viewModel.recipes[index].chef}',
                             cookingTime: viewModel.recipes[index].cookingTime,

@@ -1,23 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/di/di_setup.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 
 import 'core/router.dart';
 
 void main() {
+  diSetup();
+
   runApp(
     MyApp(),
   );
 }
 
 class MyApp extends StatelessWidget {
-  // final SearchRecipesScreenViewModel viewModel;
-
   const MyApp({
     super.key,
-    // required this.viewModel,
   });
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(

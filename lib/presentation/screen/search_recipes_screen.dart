@@ -132,7 +132,7 @@ class SearchRecipesScreen extends StatelessWidget {
                       margin: EdgeInsets.only(bottom: 15),
                       child: RecipeCardOnlyWithName(
                         recipe: state.filteredResult[index].copyWith(
-                          name: NameOptimizer.getRecipeName(
+                          name: getRecipeName(
                             state.filteredResult[index].name,
                           ),
                         ),

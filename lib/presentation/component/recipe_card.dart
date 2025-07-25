@@ -53,10 +53,11 @@ class RecipeCard extends StatelessWidget {
             Container(
               margin: EdgeInsets.all(10.0),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Expanded(child: SizedBox()),
                       Container(
                         width: 37,
                         height: 16,
@@ -83,15 +84,13 @@ class RecipeCard extends StatelessWidget {
                     ],
                   ),
                   Expanded(
-                    child: SizedBox(
-                      height: 60,
-                    ),
+                    child: SizedBox(),
                   ),
                   Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
                       Expanded(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.end,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
@@ -113,10 +112,6 @@ class RecipeCard extends StatelessWidget {
                       ),
                       Column(
                         children: [
-                          SizedBox(
-                            width: 94,
-                            height: 30,
-                          ),
                           Row(
                             children: [
                               Row(
@@ -139,7 +134,7 @@ class RecipeCard extends StatelessWidget {
                                   ),
                                 ],
                               ),
-                              SizedBox(width: 10, height: 24),
+                              SizedBox(width: 10),
                               GestureDetector(
                                 onTap: () {
                                   onClick(recipe.id);
