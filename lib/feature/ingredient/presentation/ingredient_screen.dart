@@ -4,27 +4,24 @@ import 'package:flutter_recipe_app/core/presentation/component/button/small_butt
 import 'package:flutter_recipe_app/core/presentation/component/list_item/ingredient_item.dart';
 import 'package:flutter_recipe_app/core/presentation/component/tab/two_tabs.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/model/ingredient_tab_type.dart';
-import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_recipe_card.dart';
-import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_view_model.dart';
+import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_action.dart';
+import 'package:flutter_recipe_app/feature/ingredient/presentation/component/ingredient_recipe_card.dart';
+import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_state.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class IngredientScreen extends StatelessWidget {
-  final IngredientViewModel viewModel;
-  final VoidCallback onBackTap;
-  final VoidCallback onMenuTap;
+  final IngredientState state;
+  final void Function(IngredientAction action) onAction;
 
   const IngredientScreen({
     super.key,
-    required this.viewModel,
-    required this.onBackTap,
-    required this.onMenuTap,
+    required this.state,
+    required this.onAction,
   });
 
   @override
   Widget build(BuildContext context) {
-    final state = viewModel.state;
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.fromLTRB(30, 54, 30, 0),
@@ -34,7 +31,9 @@ class IngredientScreen extends StatelessWidget {
             Row(
               children: [
                 GestureDetector(
-                  onTap: onBackTap,
+                  onTap: () {
+                    onAction(IngredientAction.tapBack());
+                  },
                   child: Icon(
                     Icons.arrow_back,
                     size: 20,
@@ -42,7 +41,9 @@ class IngredientScreen extends StatelessWidget {
                 ),
                 const Spacer(),
                 GestureDetector(
-                  onTap: onMenuTap,
+                  onTap: () {
+                    onAction(IngredientAction.tapMenu());
+                  },
                   child: Icon(
                     Icons.more_horiz,
                     size: 24,
@@ -70,7 +71,9 @@ class IngredientScreen extends StatelessWidget {
                         children: [
                           IngredientRecipeCard(
                             recipe: state.recipe,
-                            onBookmarkTap: () {},
+                            onBookmarkTap: () {
+                              onAction(IngredientAction.tapRecipeBookmark());
+                            },
                           ),
                           Row(
                             spacing: 18,
@@ -128,7 +131,9 @@ class IngredientScreen extends StatelessWidget {
                               const Spacer(),
                               SmallButton(
                                 text: 'Follow',
-                                onClick: () {},
+                                onClick: () {
+                                  onAction(IngredientAction.tapFollow());
+                                },
                                 width: 85,
                               ),
                             ],
@@ -141,7 +146,9 @@ class IngredientScreen extends StatelessWidget {
                       TwoTabs(
                         labels: ['Ingredient', 'Procedure'],
                         selectedIndex: state.tabType.index,
-                        onValueChange: viewModel.tabChange,
+                        onValueChange: (index) {
+                          onAction(IngredientAction.changeTab(index));
+                        },
                       ),
                       const SizedBox(
                         height: 22,

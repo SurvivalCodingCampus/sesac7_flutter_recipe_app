@@ -5,8 +5,7 @@ import 'package:flutter_recipe_app/di/di.dart';
 import 'package:flutter_recipe_app/feature/authentication/presentation/sign_in_screen.dart';
 import 'package:flutter_recipe_app/feature/authentication/presentation/sign_up_screen.dart';
 import 'package:flutter_recipe_app/feature/home/presentation/home_screen_root.dart';
-import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_screen.dart';
-import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_view_model.dart';
+import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_screen_root.dart';
 import 'package:flutter_recipe_app/feature/main_navigation/presentation/main_navigation_screen.dart';
 import 'package:flutter_recipe_app/feature/notifications/presentation/notifications_screen.dart';
 import 'package:flutter_recipe_app/feature/profile/presentation/profile_screen.dart';
@@ -127,24 +126,9 @@ GoRouter createRouter() => GoRouter(
       builder: (context, state) {
         final id = state.uri.queryParameters[QueryParameters.id]!;
         // TODO: id null 기본 화면
-        final viewModel = IngredientViewModel(
-          fetchRecipeUseCase: getIt(),
-          fetchAllIngredientsUseCase: getIt(),
-          fetchProcedureUseCase: getIt(),
-          formatReviewCountUseCase: getIt(),
-        );
-
-        viewModel.init(id);
-
-        return ListenableBuilder(
-          listenable: viewModel,
-          builder: (context, child) {
-            return IngredientScreen(
-              viewModel: viewModel,
-              onBackTap: () => context.pop(),
-              onMenuTap: () {},
-            );
-          },
+        return IngredientScreenRoot(
+          recipeId: id,
+          viewModel: getIt(),
         );
       },
     ),

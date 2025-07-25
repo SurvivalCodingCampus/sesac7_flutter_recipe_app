@@ -8,6 +8,7 @@ import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_all_
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_procedure_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_recipe_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/format_review_count_use_case.dart';
+import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_action.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_state.dart';
 
 class IngredientViewModel with ChangeNotifier {
@@ -30,7 +31,7 @@ class IngredientViewModel with ChangeNotifier {
 
   IngredientState get state => _state;
 
-  void init(String recipeId) async {
+  void init({required String recipeId}) async {
     _state = state.copyWith(isLoading: true);
 
     notifyListeners();
@@ -83,7 +84,26 @@ class IngredientViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void tabChange(int index) {
+  void onAction(IngredientAction action) async {
+    switch (action) {
+      case TapBack():
+        break;
+      case TapMenu():
+        break;
+      case TapRecipeBookmark():
+        // TODO: tap recipe bookmark.
+        print(action);
+      case TapFollow():
+        // TODO: tap follow.
+        print(action);
+      case ChangeTab():
+        _tabChange(action.index);
+    }
+
+    notifyListeners();
+  }
+
+  void _tabChange(int index) {
     _state = state.copyWith(tabType: IngredientTabType.values[index]);
 
     notifyListeners();
