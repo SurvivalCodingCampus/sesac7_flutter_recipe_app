@@ -1,21 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/presentation/component/bottom_sheet/search_recipe_filter_bottom_sheet.dart';
+import 'package:flutter_recipe_app/core/enum/rating_type.dart';
+import 'package:flutter_recipe_app/core/enum/search_recipe_filter_category_type.dart';
+import 'package:flutter_recipe_app/core/enum/search_recipe_filter_time_type.dart';
 import 'package:flutter_recipe_app/presentation/component/button/search_recipe_filter_button.dart';
 import 'package:flutter_recipe_app/presentation/component/card/search_recipe_card.dart';
 import 'package:flutter_recipe_app/presentation/component/text_field/search_input_field.dart';
 import 'package:flutter_recipe_app/presentation/component/title_bar/screen_title_bar.dart';
-import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_view_model.dart';
+import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_state.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 import 'package:go_router/go_router.dart';
 
 class SearchRecipesScreen extends StatelessWidget {
-  final SearchRecipesViewModel _searchRecipesViewModel;
+  final SearchRecipesState _searchRecipesState;
+  final Function(String) changeKeyword;
+  final VoidCallback showFilterBottomSheet;
 
   const SearchRecipesScreen({
     super.key,
-    required SearchRecipesViewModel searchRecipesViewModel,
-  }) : _searchRecipesViewModel = searchRecipesViewModel;
+    required SearchRecipesState searchRecipesState,
+    required this.showFilterBottomSheet,
+    required this.changeKeyword,
+  }) : _searchRecipesState = searchRecipesState;
 
   @override
   Widget build(BuildContext context) {
@@ -41,48 +47,13 @@ class SearchRecipesScreen extends StatelessWidget {
               children: [
                 SearchInputField(
                   hint: 'Search recipe',
-                  onSearchKeywordChange: (searchKeyword) {
-                    if (searchKeyword.isEmpty) {
-                      _searchRecipesViewModel
-                          .clearSearchResultRecipesAndSearchKeyword();
-                      _searchRecipesViewModel.fetchRecentRecipes();
-                    } else {
-                      _searchRecipesViewModel.fetchSearchResultRecipes(
-                        keyword: searchKeyword,
-                      );
-                    }
-                  },
+                  onSearchKeywordChange: changeKeyword,
                 ),
                 SizedBox(
                   width: 20.0,
                 ),
                 SearchRecipeFilterButton(
-                  onClick: () {
-                    showModalBottomSheet<void>(
-                      context: context,
-                      backgroundColor: AppColors.white,
-                      isScrollControlled: true,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(50.0),
-                          topRight: Radius.circular(50.0),
-                        ),
-                      ),
-                      builder: (context) {
-                        return SearchRecipeFilterBottomSheet(
-                          onValueChange: (timeType, ratingType, categoryType) {
-                            _searchRecipesViewModel
-                                .fetchSearchResultRecipes(
-                                  keyword: null,
-                                  timeType: timeType,
-                                  ratingType: ratingType,
-                                  categoryType: categoryType,
-                                );
-                          },
-                        );
-                      },
-                    );
-                  },
+                  onClick: showFilterBottomSheet,
                 ),
               ],
             ),
@@ -92,13 +63,8 @@ class SearchRecipesScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    _searchRecipesViewModel
-                            .searchRecipesState
-                            .searchKeyword
-                            .isEmpty
-                        ? _searchRecipesViewModel
-                                  .searchRecipesState
-                                  .isCategorySearch
+                    _searchRecipesState.searchKeyword.isEmpty
+                        ? _searchRecipesState.isCategorySearch
                               ? 'Search Result'
                               : 'Recent Search'
                         : 'Search Result',
@@ -106,12 +72,9 @@ class SearchRecipesScreen extends StatelessWidget {
                   ),
                   Spacer(),
                   Text(
-                    _searchRecipesViewModel
-                            .searchRecipesState
-                            .searchKeyword
-                            .isEmpty
+                    _searchRecipesState.searchKeyword.isEmpty
                         ? ''
-                        : '${_searchRecipesViewModel.searchRecipesState.searchResultRecipes.length} result',
+                        : '${_searchRecipesState.searchResultRecipes.length} result',
                     style: TextStyles.searchScreenSearchResult,
                   ),
                 ],
@@ -126,39 +89,17 @@ class SearchRecipesScreen extends StatelessWidget {
                   mainAxisSpacing: 15.0,
                   childAspectRatio: 1,
                 ),
-                itemCount:
-                    _searchRecipesViewModel
-                        .searchRecipesState
-                        .searchKeyword
-                        .isEmpty
-                    ? _searchRecipesViewModel
-                              .searchRecipesState
-                              .isCategorySearch
-                          ? _searchRecipesViewModel
-                                .searchRecipesState
-                                .searchResultRecipes
-                                .length
-                          : _searchRecipesViewModel
-                                .searchRecipesState
-                                .recentRecipes
-                                .length
-                    : _searchRecipesViewModel
-                          .searchRecipesState
-                          .searchResultRecipes
-                          .length,
+                itemCount: _searchRecipesState.searchKeyword.isEmpty
+                    ? _searchRecipesState.isCategorySearch
+                          ? _searchRecipesState.searchResultRecipes.length
+                          : _searchRecipesState.recentRecipes.length
+                    : _searchRecipesState.searchResultRecipes.length,
                 itemBuilder: (context, index) {
-                  final searchKeyword = _searchRecipesViewModel
-                      .searchRecipesState
-                      .searchKeyword;
-                  final isCategorySearch = _searchRecipesViewModel
-                      .searchRecipesState
-                      .isCategorySearch;
-                  final recentList = _searchRecipesViewModel
-                      .searchRecipesState
-                      .recentRecipes;
-                  final searchResultList = _searchRecipesViewModel
-                      .searchRecipesState
-                      .searchResultRecipes;
+                  final searchKeyword = _searchRecipesState.searchKeyword;
+                  final isCategorySearch = _searchRecipesState.isCategorySearch;
+                  final recentList = _searchRecipesState.recentRecipes;
+                  final searchResultList =
+                      _searchRecipesState.searchResultRecipes;
                   return SearchRecipeCard(
                     recipe: searchKeyword.isEmpty
                         ? isCategorySearch

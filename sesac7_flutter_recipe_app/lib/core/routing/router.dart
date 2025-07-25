@@ -1,9 +1,12 @@
 import 'package:flutter_recipe_app/core/routing/routes.dart';
 import 'package:flutter_recipe_app/di/di_setup.dart';
 import 'package:flutter_recipe_app/presentation/home/home_screen.dart';
+import 'package:flutter_recipe_app/presentation/home/home_screen_root.dart';
 import 'package:flutter_recipe_app/presentation/ingredient/ingredient_screen.dart';
+import 'package:flutter_recipe_app/presentation/ingredient/ingredient_screen_root.dart';
 import 'package:flutter_recipe_app/presentation/main/main_screen.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_screen.dart';
+import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_screen_root.dart';
 import 'package:flutter_recipe_app/presentation/sigin/sign_in_screen.dart';
 import 'package:flutter_recipe_app/presentation/sigin/sign_up_screen.dart';
 import 'package:flutter_recipe_app/presentation/splash/splash_screen.dart';
@@ -28,11 +31,7 @@ final router = GoRouter(
             GoRoute(
               path: Routes.home,
               builder: (context, state) {
-                return HomeScreen(
-                  homeViewModel: getIt()
-                    ..loadCategories()
-                    ..fetchAllCategoryRecipes(),
-                );
+                return HomeScreenRoot(getIt());
               },
             ),
           ],
@@ -42,10 +41,10 @@ final router = GoRouter(
             GoRoute(
               path: Routes.savedRecipes,
               builder: (context, state) {
-                return SavedRecipeScreen(
-                  savedRecipeViewModel: getIt()..fetchSavedRecipes(),
-                  onSavedRecipeItemClick: (int id) {
-                    context.push(Routes.ingredientWithId(id));
+                return SavedRecipeScreenRoot(
+                  getIt(),
+                  moveSavedRecipeDetail: (int recipeId) {
+                    context.push(Routes.ingredientWithId(recipeId));
                   },
                 );
               },
@@ -93,9 +92,9 @@ final router = GoRouter(
     GoRoute(
       path: Routes.ingredientRelative,
       builder: (context, state) {
-        return IngredientScreen(
-          ingredientViewModel: getIt(),
-          onBackButtonClick: () {
+        return IngredientScreenRoot(
+          getIt(),
+          onIngredientScreenBackButtonClick: () {
             context.pop();
           },
         );
@@ -105,11 +104,10 @@ final router = GoRouter(
           path: ':id',
           builder: (context, state) {
             final int id = int.parse(state.pathParameters['id']!);
-            return IngredientScreen(
-              ingredientViewModel: getIt()
-                ..fetchCurrentSelectedRecipe(id)
-                ..fetchCurrentSelectedRecipeProcedures(id),
-              onBackButtonClick: () {
+            return IngredientScreenRoot(
+              getIt(),
+              id: id,
+              onIngredientScreenBackButtonClick: () {
                 context.pop();
               },
             );

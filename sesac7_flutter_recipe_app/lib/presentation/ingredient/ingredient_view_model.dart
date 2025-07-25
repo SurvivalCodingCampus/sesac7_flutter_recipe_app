@@ -7,30 +7,27 @@ import 'package:flutter_recipe_app/domain/usecase/get_procedures_by_recipe_id_us
 import 'package:flutter_recipe_app/domain/usecase/get_saved_recipe_find_by_id_use_case.dart';
 import 'package:flutter_recipe_app/presentation/ingredient/ingredient_state.dart';
 
-class IngredientViewModel extends ChangeNotifier {
+class IngredientViewModel extends ValueNotifier<IngredientState> {
   final GetSavedRecipeFindByIdUseCase _getSavedRecipeFindByIdUseCase;
   final GetProceduresByRecipeIdUseCase _getProceduresByRecipeIdUseCase;
-
-  IngredientState _ingredientState = IngredientState();
-
-  IngredientState get ingredientState => _ingredientState;
 
   IngredientViewModel({
     required GetSavedRecipeFindByIdUseCase getSavedRecipeFindByIdUseCase,
     required GetProceduresByRecipeIdUseCase getProceduresByRecipeIdUseCase,
   }) : _getSavedRecipeFindByIdUseCase = getSavedRecipeFindByIdUseCase,
-       _getProceduresByRecipeIdUseCase = getProceduresByRecipeIdUseCase;
+       _getProceduresByRecipeIdUseCase = getProceduresByRecipeIdUseCase,
+       super(IngredientState());
 
   Future<void> fetchCurrentSelectedRecipe(int id) async {
     final Result<Recipe?, String> result = await _getSavedRecipeFindByIdUseCase
         .execute(id);
     switch (result) {
       case Success<Recipe?, String>():
-        _ingredientState = _ingredientState.copyWith(
+        value = value.copyWith(
           currentSelectedRecipe: result.data,
         );
       case Error<Recipe?, String>():
-        _ingredientState = _ingredientState.copyWith(
+        value = value.copyWith(
           currentSelectedRecipe: null,
         );
     }
@@ -42,11 +39,11 @@ class IngredientViewModel extends ChangeNotifier {
         await _getProceduresByRecipeIdUseCase.execute(id);
     switch (result) {
       case Success<List<Procedure>, NetworkError>():
-        _ingredientState = _ingredientState.copyWith(
+        value = value.copyWith(
           currentSelectedRecipeProcedures: result.data,
         );
       case Error<List<Procedure>, NetworkError>():
-        _ingredientState = _ingredientState.copyWith(
+        value = value.copyWith(
           currentSelectedRecipeProcedures: [],
         );
     }
@@ -54,7 +51,7 @@ class IngredientViewModel extends ChangeNotifier {
   }
 
   void changeTab(int index) {
-    _ingredientState = _ingredientState.copyWith(selectedLabelIndex: index);
+    value = value.copyWith(selectedLabelIndex: index);
     notifyListeners();
   }
 }

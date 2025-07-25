@@ -8,31 +8,30 @@ import 'package:flutter_recipe_app/domain/model/recipe.dart';
 import 'package:flutter_recipe_app/domain/repository/recipe_repository.dart';
 import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_state.dart';
 
-class SearchRecipesViewModel with ChangeNotifier {
+class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
   final RecipeRepository _recipeRepository;
-  SearchRecipesState _searchRecipesState = SearchRecipesState();
 
-  SearchRecipesState get searchRecipesState => _searchRecipesState;
-
-  SearchRecipesViewModel({required RecipeRepository recipeRepository})
-    : _recipeRepository = recipeRepository;
+  SearchRecipesViewModel({
+    required RecipeRepository recipeRepository,
+  }) : _recipeRepository = recipeRepository,
+       super(SearchRecipesState());
 
   Future<void> fetchRecentRecipes() async {
-    _searchRecipesState = searchRecipesState.copyWith(isLoading: true);
+    value = value.copyWith(isLoading: true);
     notifyListeners();
     final Result<List<Recipe>, NetworkError> result = await _recipeRepository
         .getRecentRecipes();
     switch (result) {
       case Success():
-        _searchRecipesState = _searchRecipesState.copyWith(
+        value = value.copyWith(
           recentRecipes: result.data,
         );
         break;
       case Error():
-        _searchRecipesState = _searchRecipesState.copyWith(recentRecipes: []);
+        value = value.copyWith(recentRecipes: []);
         break;
     }
-    _searchRecipesState = searchRecipesState.copyWith(isLoading: false);
+    value = value.copyWith(isLoading: false);
     notifyListeners();
   }
 
@@ -42,7 +41,7 @@ class SearchRecipesViewModel with ChangeNotifier {
     RatingType? ratingType,
     SearchRecipeFilterCategoryType? categoryType,
   }) async {
-    _searchRecipesState = searchRecipesState.copyWith(
+    value = value.copyWith(
       isLoading: true,
       isCategorySearch: keyword == null,
       searchKeyword: keyword ?? '',
@@ -52,30 +51,29 @@ class SearchRecipesViewModel with ChangeNotifier {
         .searchRecipes(keyword, timeType, ratingType, categoryType);
     switch (result) {
       case Success():
-        _searchRecipesState = _searchRecipesState.copyWith(
+        value = value.copyWith(
           searchResultRecipes: result.data.isEmpty ? [] : result.data,
         );
         break;
       case Error():
-        _searchRecipesState = _searchRecipesState.copyWith(
+        value = value.copyWith(
           searchResultRecipes: [],
         );
         break;
     }
-    _searchRecipesState = searchRecipesState.copyWith(isLoading: false);
+    value = value.copyWith(isLoading: false);
     notifyListeners();
   }
 
   void clearSearchResultRecipesAndSearchKeyword() {
-    _searchRecipesState = searchRecipesState.copyWith(isLoading: true);
+    value = value.copyWith(isLoading: true);
     notifyListeners();
-    _searchRecipesState = searchRecipesState.copyWith(
+    value = value.copyWith(
       searchKeyword: '',
       searchResultRecipes: [],
       isCategorySearch: false,
     );
-    _searchRecipesState = searchRecipesState.copyWith(isLoading: false);
+    value = value.copyWith(isLoading: false);
     notifyListeners();
   }
-
 }

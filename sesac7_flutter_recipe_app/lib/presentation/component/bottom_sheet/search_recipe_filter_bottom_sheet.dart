@@ -170,7 +170,6 @@ class _SearchRecipeFilterBottomSheetState
                   _searchRecipeFilterBottomSheetState.ratingType,
                   _searchRecipeFilterBottomSheetState.categoryType,
                 );
-                Navigator.pop(context);
               },
             ),
           ),

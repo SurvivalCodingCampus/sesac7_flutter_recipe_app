@@ -5,32 +5,29 @@ import 'package:flutter_recipe_app/domain/usecase/get_saved_recipes_use_case.dar
 import 'package:flutter_recipe_app/domain/usecase/remove_saved_recipe_use_case.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_state.dart';
 
-class SavedRecipeViewModel with ChangeNotifier {
+class SavedRecipeViewModel extends ValueNotifier<SavedRecipeState> {
   final GetSavedRecipesUseCase _getSavedRecipesUseCase;
   final RemoveSavedRecipeUseCase _removeSavedRecipeUseCase;
-
-  SavedRecipeState _savedRecipeState = SavedRecipeState();
-
-  SavedRecipeState get savedRecipeState => _savedRecipeState;
 
   SavedRecipeViewModel({
     required GetSavedRecipesUseCase getSavedRecipesUseCase,
     required RemoveSavedRecipeUseCase removeSavedRecipeUseCase,
   }) : _getSavedRecipesUseCase = getSavedRecipesUseCase,
-       _removeSavedRecipeUseCase = removeSavedRecipeUseCase;
+       _removeSavedRecipeUseCase = removeSavedRecipeUseCase,
+       super(SavedRecipeState());
 
   Future<void> fetchSavedRecipes() async {
     final Result<List<Recipe>, String> result = await _getSavedRecipesUseCase
         .execute();
     switch (result) {
       case Success():
-        _savedRecipeState = _savedRecipeState.copyWith(
+        value = value.copyWith(
           savedRecipes: result.data,
         );
         notifyListeners();
         break;
       case Error():
-        _savedRecipeState = _savedRecipeState.copyWith(savedRecipes: []);
+        value = value.copyWith(savedRecipes: []);
         break;
     }
     notifyListeners();
@@ -43,8 +40,8 @@ class SavedRecipeViewModel with ChangeNotifier {
     switch (result) {
       case Success():
         // fetchSavedRecipes();
-        _savedRecipeState = _savedRecipeState.copyWith(
-          savedRecipes: _savedRecipeState.savedRecipes
+        value = value.copyWith(
+          savedRecipes: value.savedRecipes
               .where((recipe) => recipe.id != id)
               .toList(),
         );
