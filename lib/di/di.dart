@@ -40,28 +40,28 @@ void diSetUp() {
   );
 
   // Use Case
-  getIt.registerFactory(
+  getIt.registerLazySingleton(
     () => GetSavedRecipesUseCase(
       recipeRepository: getIt(),
       bookmarkRepository: getIt(),
     ),
   );
-  getIt.registerFactory(
+  getIt.registerLazySingleton(
     () => FetchAllRecipesUseCase(recipeRepository: getIt()),
   );
-  getIt.registerFactory(
+  getIt.registerLazySingleton(
     () => FetchRecipeUseCase(recipeRepository: getIt()),
   );
-  getIt.registerFactory(
+  getIt.registerLazySingleton(
     () => FetchAllIngredientsUseCase(ingredientRepository: getIt()),
   );
-  getIt.registerFactory(
+  getIt.registerLazySingleton(
     () => FetchProcedureUseCase(procedureRepository: getIt()),
   );
-  getIt.registerFactory(
+  getIt.registerLazySingleton(
     () => FormatReviewCountUseCase(),
   );
-  getIt.registerFactory(
+  getIt.registerLazySingleton(
     () => FilterHomeRecipeCategoryUseCase(),
   );
 }
