@@ -110,7 +110,8 @@ class MainScreen extends StatelessWidget {
                     ),
 
                   // 선택된 카테고리에 따른 요리 카드 목록
-                  Expanded(
+                  Container(
+                    height: 240,
                     child: homeRecipeViewModel.state.filteredRecipes.isEmpty && !homeRecipeViewModel.state.isLoading
                         ? const Center(child: Text('해당 카테고리의 레시피가 없습니다.'))
                         : ListView.builder(
