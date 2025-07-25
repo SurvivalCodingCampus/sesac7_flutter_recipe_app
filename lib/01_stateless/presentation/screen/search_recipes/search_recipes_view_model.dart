@@ -12,6 +12,8 @@ class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
   final GetRecipesUseCase _getRecipesUseCase;
   final SearchRecipesUseCase _searchRecipesUseCase;
 
+  SearchRecipesState get state => value;
+
   SearchRecipesViewModel({
     required GetRecipesUseCase getRecipesUseCase,
     required SearchRecipesUseCase searchRecipesUseCase,
