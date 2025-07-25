@@ -38,8 +38,10 @@ fun MediumButton(modifier: Modifier = Modifier, title: String, onClick: () -> Un
         modifier = modifier
             .width(243.dp)
             .height(54.dp)
-            .clip(RoundedCornerShape(10.dp))
-            .background(if (isTapDown) Gray4 else Primary100)
+            .background(
+                if (isTapDown) Gray4 else Primary100,
+                shape = RoundedCornerShape(10.dp)
+            )
             .pointerInput(Unit) {
                 detectTapGestures(onPress = {
                     isTapDown = true

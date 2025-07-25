@@ -5,9 +5,10 @@ import 'package:flutter_recipe_app/domain/model/recipe.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_recipes_by_category.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_recipes_category_list_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_recipes_use_case.dart';
+import 'package:flutter_recipe_app/presentation/home/home_action.dart';
 import 'package:flutter_recipe_app/presentation/home/home_state.dart';
 
-class HomeViewModel with ChangeNotifier {
+class HomeViewModel extends ValueNotifier<HomeState> {
   final GetRecipesUseCase _getRecipesUseCase;
   final GetRecipesCategoryListUseCase _getRecipesCategoryListUseCase;
   final GetRecipesByCategory _getRecipesByCategory;
@@ -18,19 +19,27 @@ class HomeViewModel with ChangeNotifier {
     required GetRecipesByCategory getRecipesByCategory,
   }) : _getRecipesUseCase = getRecipesUseCase,
        _getRecipesCategoryListUseCase = getRecipesCategoryListUseCase,
-       _getRecipesByCategory = getRecipesByCategory;
+       _getRecipesByCategory = getRecipesByCategory,
+       super(HomeState());
 
-  HomeState _homeState = HomeState();
-
-  HomeState get homeState => _homeState;
+  void onAction(HomeAction action) {
+    switch (action) {
+      case SelectCategory():
+        if (action.category == 'All') {
+          fetchAllCategoryRecipes();
+        } else {
+          _fetchCategoryRecipes(action.category);
+        }
+    }
+  }
 
   Future<void> loadCategories() async {
     final result = await _getRecipesCategoryListUseCase.execute();
     switch (result) {
       case Success<Set<String>, NetworkError>():
-        _homeState = _homeState.copyWith(categories: result.data);
+        value = value.copyWith(categories: result.data);
       case Error<Set<String>, NetworkError>():
-        _homeState = _homeState.copyWith(categories: {});
+        value = value.copyWith(categories: {});
     }
     notifyListeners();
   }
@@ -40,12 +49,12 @@ class HomeViewModel with ChangeNotifier {
         .execute();
     switch (result) {
       case Success<List<Recipe>, NetworkError>():
-        _homeState = _homeState.copyWith(
+        value = value.copyWith(
           category: 'All',
           categoryRecipes: result.data,
         );
       case Error<List<Recipe>, NetworkError>():
-        _homeState = _homeState.copyWith(
+        value = value.copyWith(
           category: 'All',
           categoryRecipes: [],
         );
@@ -53,21 +62,18 @@ class HomeViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> fetchCategoryRecipes(String category) async {
+  Future<void> _fetchCategoryRecipes(String category) async {
     final Result<List<Recipe>, NetworkError> result =
         await _getRecipesByCategory.execute(category);
 
     switch (result) {
       case Success<List<Recipe>, NetworkError>():
-        _homeState = _homeState.copyWith(
+        value = value.copyWith(
           category: category,
           categoryRecipes: result.data,
         );
       case Error<List<Recipe>, NetworkError>():
-        _homeState = _homeState.copyWith(
-            category: category,
-            categoryRecipes: []
-        );
+        value = value.copyWith(category: category, categoryRecipes: []);
     }
     notifyListeners();
   }

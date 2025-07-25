@@ -49,13 +49,12 @@ fun RatingButton(
                 color = if (isSelected) Primary100 else White,
                 shape = RoundedCornerShape(size = 10.dp)
             )
+            .padding(horizontal = 10.dp, vertical = 5.dp)
             .clickable {
                 onValueChange(!isSelected)
             }
     ) {
         Row(
-            modifier = Modifier
-                .padding(horizontal = 10.dp, vertical = 5.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {

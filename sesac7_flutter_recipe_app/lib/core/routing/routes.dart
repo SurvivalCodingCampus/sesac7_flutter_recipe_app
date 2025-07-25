@@ -10,6 +10,8 @@ abstract class Routes {
   static const String notifications = '/notifications';
   static const String profile = '/profile';
 
+  static const String searchRecipe = '$home/$searchRecipeRelative';
+  static const String searchRecipeRelative = '/search-recipe';
   static const String ingredientRelative = '/ingredient';
   static String ingredientWithId(int id) => '$ingredientRelative/$id';
 }
