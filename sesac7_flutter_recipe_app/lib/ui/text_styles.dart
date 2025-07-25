@@ -110,6 +110,27 @@ abstract class TextStyles {
 
   /* RatingButton End */
 
+  /* CategoryButton Start */
+  static final TextStyle selectedCategoryTitle = TextStyle(
+    color: AppColors.white,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle unSelectedCategoryTitle = TextStyle(
+    color: AppColors.primary80,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  /* CategoryButton End */
+
   /* RatingDialog Start */
   static final TextStyle ratingDialogTitle = TextStyle(
     color: AppColors.labelColor,
@@ -218,6 +239,45 @@ abstract class TextStyles {
     overflow: TextOverflow.ellipsis,
     height: 21 / 14,
   );
+
+  /* DishCard Start */
+  static final TextStyle dishCardTitle = TextStyle(
+    color: AppColors.gray1,
+    fontSize: 14.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 21 / 14,
+  );
+
+  static final TextStyle dishCardTimeTitle = TextStyle(
+    color: AppColors.gray3,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle dishCardTime = TextStyle(
+    color: AppColors.gray1,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w600,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle dishCardRatingValue = TextStyle(
+    color: AppColors.black,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  /* DishCard End */
 
   /* IngredientCard End */
 

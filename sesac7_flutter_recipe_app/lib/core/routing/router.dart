@@ -1,39 +1,13 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/routing/routes.dart';
-import 'package:flutter_recipe_app/data/data_source/recipe_data_source/recipe_data_source.dart';
-import 'package:flutter_recipe_app/data/data_source/recipe_data_source/recipe_data_source_impl.dart';
-import 'package:flutter_recipe_app/data/repository/mock_bookmark_recipe_impl.dart';
-import 'package:flutter_recipe_app/domain/repository/bookmark_repository.dart';
-import 'package:flutter_recipe_app/domain/repository/recipe_repository.dart';
-import 'package:flutter_recipe_app/data/repository/recipe_repository_impl.dart';
-import 'package:flutter_recipe_app/domain/usecase/get_saved_recipe_find_by_id_use_case.dart';
-import 'package:flutter_recipe_app/domain/usecase/get_saved_recipes_use_case.dart';
-import 'package:flutter_recipe_app/domain/usecase/remove_saved_recipe_use_case.dart';
+import 'package:flutter_recipe_app/di/di_setup.dart';
 import 'package:flutter_recipe_app/presentation/home/home_screen.dart';
 import 'package:flutter_recipe_app/presentation/ingredient/ingredient_screen.dart';
-import 'package:flutter_recipe_app/presentation/ingredient/ingredient_view_model.dart';
 import 'package:flutter_recipe_app/presentation/main/main_screen.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_screen.dart';
-import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_view_model.dart';
 import 'package:flutter_recipe_app/presentation/sigin/sign_in_screen.dart';
 import 'package:flutter_recipe_app/presentation/sigin/sign_up_screen.dart';
 import 'package:flutter_recipe_app/presentation/splash/splash_screen.dart';
 import 'package:go_router/go_router.dart';
-
-final RecipeDataSource recipeDataSource = RecipeDataSourceImpl();
-final RecipeRepository recipeRepository = RecipeRepositoryImpl(
-  recipeDataSource: recipeDataSource,
-);
-final BookmarkRepository bookmarkRepository = MockBookMarkRepositoryImpl();
-
-final GetSavedRecipesUseCase getSavedRecipeUseCase = GetSavedRecipesUseCase(
-  bookmarkRepository: bookmarkRepository,
-);
-final GetSavedRecipeFindByIdUseCase getSavedRecipeFindByIdUseCase =
-    GetSavedRecipeFindByIdUseCase(
-      getSavedRecipesUseCase: getSavedRecipeUseCase,
-    );
 
 final router = GoRouter(
   initialLocation: Routes.splash,
@@ -54,7 +28,11 @@ final router = GoRouter(
             GoRoute(
               path: Routes.home,
               builder: (context, state) {
-                return HomeScreen();
+                return HomeScreen(
+                  homeViewModel: getIt()
+                    ..loadCategories()
+                    ..fetchAllCategoryRecipes(),
+                );
               },
             ),
           ],
@@ -64,20 +42,10 @@ final router = GoRouter(
             GoRoute(
               path: Routes.savedRecipes,
               builder: (context, state) {
-                final SavedRecipeViewModel savedRecipeViewModel =
-                    SavedRecipeViewModel(
-                      getSavedRecipesUseCase: getSavedRecipeUseCase,
-                      removeSavedRecipeUseCase: RemoveSavedRecipeUseCase(
-                        bookmarkRepository: bookmarkRepository,
-                      ),
-                    );
-                savedRecipeViewModel.fetchSavedRecipes();
-                return ListenableBuilder(
-                  listenable: savedRecipeViewModel,
-                  builder: (context, build) {
-                    return SavedRecipeScreen(
-                      savedRecipeViewModel: savedRecipeViewModel,
-                    );
+                return SavedRecipeScreen(
+                  savedRecipeViewModel: getIt()..fetchSavedRecipes(),
+                  onSavedRecipeItemClick: (int id) {
+                    context.push(Routes.ingredientWithId(id));
                   },
                 );
               },
@@ -89,33 +57,46 @@ final router = GoRouter(
     GoRoute(
       path: Routes.splash,
       builder: (context, state) {
-        return SplashScreen();
+        return SplashScreen(
+          onStartButtonClick: () {
+            context.go(Routes.signIn);
+          },
+        );
       },
     ),
     GoRoute(
       path: Routes.signIn,
       builder: (context, state) {
-        return SignInScreen();
+        return SignInScreen(
+          onSignInButtonClick: () {
+            context.go(Routes.home);
+          },
+          onSignUpButtonClick: () {
+            context.go(Routes.signUp);
+          },
+        );
       },
     ),
     GoRoute(
       path: Routes.signUp,
       builder: (context, state) {
-        return SignUpScreen();
+        return SignUpScreen(
+          onSignUpButtonClick: () {
+            context.go(Routes.home);
+          },
+          onSignInButtonClick: () {
+            context.go(Routes.signIn);
+          },
+        );
       },
     ),
     GoRoute(
       path: Routes.ingredientRelative,
       builder: (context, state) {
-        final IngredientViewModel ingredientViewModel = IngredientViewModel(
-          getSavedRecipeFindByIdUseCase: getSavedRecipeFindByIdUseCase,
-        );
-        return ListenableBuilder(
-          listenable: ingredientViewModel,
-          builder: (context, build) {
-            return IngredientScreen(
-              ingredientViewModel: ingredientViewModel,
-            );
+        return IngredientScreen(
+          ingredientViewModel: getIt(),
+          onBackButtonClick: () {
+            context.pop();
           },
         );
       },
@@ -124,16 +105,12 @@ final router = GoRouter(
           path: ':id',
           builder: (context, state) {
             final int id = int.parse(state.pathParameters['id']!);
-            final IngredientViewModel ingredientViewModel = IngredientViewModel(
-              getSavedRecipeFindByIdUseCase: getSavedRecipeFindByIdUseCase,
-            );
-            ingredientViewModel.fetchCurrentSelectedRecipe(id);
-            return ListenableBuilder(
-              listenable: ingredientViewModel,
-              builder: (context, builder) {
-                return IngredientScreen(
-                  ingredientViewModel: ingredientViewModel,
-                );
+            return IngredientScreen(
+              ingredientViewModel: getIt()
+                ..fetchCurrentSelectedRecipe(id)
+                ..fetchCurrentSelectedRecipeProcedures(id),
+              onBackButtonClick: () {
+                context.pop();
               },
             );
           },
