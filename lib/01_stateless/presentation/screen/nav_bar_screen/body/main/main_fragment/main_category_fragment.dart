@@ -9,6 +9,7 @@ class MainCategoryFragment extends StatefulWidget {
   final List<String> tabs;
   final void Function(int i) onTabTap;
   final void Function(int i) onBookmarkTap;
+  final void Function(int i) onRecipeTap;
 
   final List<Recipe> filteredRecipe;
 
@@ -18,6 +19,7 @@ class MainCategoryFragment extends StatefulWidget {
     required this.onTabTap,
     required this.onBookmarkTap,
     required this.filteredRecipe,
+    required this.onRecipeTap,
   });
 
   @override
@@ -73,9 +75,14 @@ class _MainCategoryFragmentState extends State<MainCategoryFragment> {
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.only(right: 15),
-                child: DishCard(
-                  recipe: widget.filteredRecipe[index],
-                  onBookmark: widget.onBookmarkTap,
+                child: GestureDetector(
+                  onTap: () {
+                    widget.onRecipeTap(index);
+                  },
+                  child: DishCard(
+                    recipe: widget.filteredRecipe[index],
+                    onBookmark: widget.onBookmarkTap,
+                  ),
                 ),
               );
             },

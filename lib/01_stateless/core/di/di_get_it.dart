@@ -6,7 +6,7 @@ import 'package:flutter_recipe_app/01_stateless/data/repository/mock_user_reposi
 import 'package:flutter_recipe_app/01_stateless/data/repository/recipe_detail_fragment_repository.dart';
 import 'package:flutter_recipe_app/01_stateless/data/repository/recipe_repository.dart';
 import 'package:flutter_recipe_app/01_stateless/data/repository/user_repository.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/home/main_view_model.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/main/main_view_model.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/saved_recipes/saved_recipes_view_model.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/recipe_detail/recipe_detail_view_model.dart';
 import 'package:flutter_recipe_app/01_stateless/usecase/get_recipe_detail_by_id_use_case.dart';
