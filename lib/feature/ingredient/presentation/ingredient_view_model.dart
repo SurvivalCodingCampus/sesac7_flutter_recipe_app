@@ -85,59 +85,6 @@ class IngredientViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void fetchRecipe() async {
-    _state = state.copyWith(isLoading: true);
-    final result = await _fetchRecipeUseCase.execute(recipeId);
-
-    switch (result) {
-      case Success<Recipe, NetworkError>():
-        final recipe = result.data;
-        final reviewCount = _formatReviewCountUseCase.execute(
-          recipe.reviewCount,
-        );
-        _state = state.copyWith(
-          recipe: recipe,
-          reviewCount: reviewCount,
-          isLoading: false,
-        );
-      case Error<Recipe, NetworkError>():
-        _errorState(result.error.toString());
-    }
-
-    notifyListeners();
-  }
-
-  void fetchIngredients() async {
-    _state = state.copyWith(isLoading: true);
-    final result = await _fetchAllIngredientsUseCase.execute(recipeId);
-
-    switch (result) {
-      case Success<List<Ingredient>, NetworkError>():
-        _state = state.copyWith(ingredients: result.data, isLoading: false);
-      case Error<List<Ingredient>, NetworkError>():
-        _errorState(result.error.toString());
-    }
-
-    notifyListeners();
-  }
-
-  void fetchProcedure() async {
-    _state = state.copyWith(isLoading: true);
-
-    notifyListeners();
-
-    final result = await _fetchProcedureUseCase.execute(recipeId);
-
-    switch (result) {
-      case Success<List<String>, NetworkError>():
-        _state = state.copyWith(procedure: result.data, isLoading: false);
-      case Error<List<String>, NetworkError>():
-        _errorState(result.error.toString());
-    }
-
-    notifyListeners();
-  }
-
   void tabChange(int index) {
     _state = state.copyWith(tabType: IngredientTabType.values[index]);
 

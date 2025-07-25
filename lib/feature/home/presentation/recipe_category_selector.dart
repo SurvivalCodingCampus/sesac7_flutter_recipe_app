@@ -18,6 +18,7 @@ class RecipeCategorySelector extends StatefulWidget {
 }
 
 class _RecipeCategorySelectorState extends State<RecipeCategorySelector> {
+  // TODO: HomeState로 이동 후 stl로 수정
   late String selectedCategory;
 
   @override

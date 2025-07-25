@@ -148,9 +148,6 @@ GoRouter createRouter() => GoRouter(
           formatReviewCountUseCase: getIt(),
         );
 
-        // viewModel.fetchRecipe();
-        // viewModel.fetchIngredients();
-        // viewModel.fetchProcedure();
         viewModel.init();
 
         return ListenableBuilder(
