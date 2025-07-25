@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_screen.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_view_model.dart';
 
+import '../../../core/presentation/component/bottom_sheet/filter_search_bottom_sheet.dart';
 import '../../../core/presentation/component/bottom_sheet/filter_search_state.dart';
 
 class SearchRecipesScreenRoot extends StatefulWidget {
@@ -31,8 +32,20 @@ class _SearchRecipesScreenRootState extends State<SearchRecipesScreenRoot> {
           onSearch: (String query) {
             widget.viewModel.search(query);
           },
-          onFilter: (FilterSearchState state) {
-            widget.viewModel.filter(state);
+          onOpenDialog: () {
+            showModalBottomSheet<FilterSearchState>(
+              context: context,
+              isScrollControlled: true,
+              builder: (context) {
+                return FilterSearchBottomSheet(
+                  filterSearchState: state.filterSearchState,
+                  onFilter: (state) {
+                    widget.viewModel.filter(state);
+                    Navigator.pop(context);
+                  },
+                );
+              },
+            );
           },
         );
       },

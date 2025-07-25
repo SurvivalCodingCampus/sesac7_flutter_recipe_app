@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/01_stateless/core/presentation/component/bottom_sheet/filter_search_bottom_sheet.dart';
-import 'package:flutter_recipe_app/01_stateless/core/presentation/component/bottom_sheet/filter_search_state.dart';
 import 'package:flutter_recipe_app/01_stateless/core/presentation/component/card/recipe_card.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_state.dart';
 
 class SearchRecipesScreen extends StatelessWidget {
   final SearchRecipesState state;
   final void Function(String query) onSearch;
-  final void Function(FilterSearchState state) onFilter;
+  final void Function() onOpenDialog;
 
   const SearchRecipesScreen({
     super.key,
     required this.state,
     required this.onSearch,
-    required this.onFilter,
+    required this.onOpenDialog,
   });
 
   @override
@@ -45,19 +43,8 @@ class SearchRecipesScreen extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 ElevatedButton(
-                  onPressed: () async {
-                    showModalBottomSheet<FilterSearchState>(
-                      context: context,
-                      isScrollControlled: true,
-                      builder: (context) {
-                        return FilterSearchBottomSheet(
-                          filterSearchState: state.filterSearchState,
-                          onFilter: (state) {
-                            onFilter(state);
-                          },
-                        );
-                      },
-                    );
+                  onPressed: () {
+                    onOpenDialog();
                   },
                   child: const Text('필터'),
                 ),
