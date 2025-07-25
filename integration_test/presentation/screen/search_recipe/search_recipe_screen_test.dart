@@ -115,7 +115,7 @@ void main() {
     ) async {
       // Given: A successful result with mock data.
       mockRecipeRepository.setResult(Result.success(mockRecipes));
-      viewModel.fetchRecipe();
+      viewModel.init();
 
       // When: The screen is rendered.
       await pumpTheScreen(tester);
@@ -135,7 +135,7 @@ void main() {
     ) async {
       // Given: The screen is loaded with mock data.
       mockRecipeRepository.setResult(Result.success(mockRecipes));
-      viewModel.fetchRecipe();
+      viewModel.init();
       await pumpTheScreen(tester);
       const keyword = 'soup';
 
@@ -155,7 +155,7 @@ void main() {
     ) async {
       // Given: The screen is loaded with mock data.
       mockRecipeRepository.setResult(Result.success(mockRecipes));
-      viewModel.fetchRecipe();
+      viewModel.init();
       await pumpTheScreen(tester);
       const keyword = 'nonexistentkeyword12345';
 
@@ -174,7 +174,7 @@ void main() {
     ) async {
       // Given: The screen is loaded with mock data.
       mockRecipeRepository.setResult(Result.success(mockRecipes));
-      viewModel.fetchRecipe();
+      viewModel.init();
       await pumpTheScreen(tester);
 
       // When: The user opens the filter sheet, selects a category, and applies it.
@@ -210,7 +210,7 @@ void main() {
       mockRecipeRepository.setResult(
         const Result.error(NetworkError.serverError),
       );
-      viewModel.fetchRecipe();
+      viewModel.init();
 
       // When: The screen is rendered.
       await pumpTheScreen(tester);
