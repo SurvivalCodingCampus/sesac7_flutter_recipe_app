@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/home/main_fragment/main_category_fragment.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/home/main_view_model.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/main/main_action.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/main/main_fragment/main_category_fragment.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/main/main_state.dart';
 import 'package:flutter_recipe_app/01_stateless/ui/app_colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../../ui/text_styles.dart';
 
 class MainBody extends StatelessWidget {
-  final MainViewModel viewModel;
+  final MainState state;
+  final void Function(MainAction action) onAction;
 
-  const MainBody({super.key, required this.viewModel});
+  const MainBody({
+    super.key,
+    required this.state,
+    required this.onAction,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +33,7 @@ class MainBody extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Hello ${viewModel.userId}',
+                    'Hello ${state.userId}',
                     style: GoogleFonts.poppins(
                       textStyle: TextStyles.largeTextBold,
                       color: Colors.black,
@@ -63,14 +69,18 @@ class MainBody extends StatelessWidget {
           ), // search bar placeholder
           const SizedBox(height: 15),
           MainCategoryFragment(
-            tabs: viewModel.tabs,
-            onTabTap: (int i) {
-              viewModel.index = i;
-              viewModel.fetchRecipeData();
+            tabs: state.tabs,
+            onTabTap: (int index) {
+              onAction(MainAction.clickCategoryTab(index));
             },
-            onBookmarkTap: (int i) {},
-            filteredRecipe: viewModel.currentRecipes,
-          ),
+            onBookmarkTap: (int recipeId) {
+              onAction(MainAction.clickOnBookmark(recipeId));
+            },
+            onRecipeTap: (int recipeId) {
+              onAction(MainAction.clickOnRecipe(recipeId));
+            },
+            filteredRecipe: state.currentRecipes,
+            ),
           const Spacer(),
         ],
       ),

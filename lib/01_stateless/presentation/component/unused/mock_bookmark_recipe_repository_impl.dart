@@ -1,8 +1,9 @@
 import 'package:flutter_recipe_app/01_stateless/data/model/recipe.dart';
-import 'package:flutter_recipe_app/01_stateless/data/repository/bookmark_recipe_repository.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/component/unused/bookmark_recipe_repository.dart';
 
 class MockBookmarkRecipeRepositoryImpl implements BookmarkRecipeRepository {
-  final List<Recipe> _bookmarked = [
+
+  final List<Recipe> _bookmarked = []; /*[
     Recipe(
       id: 0,
       name: "Traditional spare ribs baked",
@@ -40,7 +41,7 @@ class MockBookmarkRecipeRepositoryImpl implements BookmarkRecipeRepository {
       rating: 5.0,
       categories: {"Japanese"},
     ),
-  ];
+  ];*/
 
   @override
   Future<List<Recipe>> getBookmarkedRecipes() async {
@@ -48,9 +49,14 @@ class MockBookmarkRecipeRepositoryImpl implements BookmarkRecipeRepository {
   }
 
   @override
-  Future<bool> addBookmarkRecipe(int index) async {
-    // TO DO
-    return true;
+  Future<bool> addBookmarkRecipe(Recipe recipe) async {
+    if (await isBookmarked(recipe.id)) {
+      return false;
+    }
+    else {
+      _bookmarked.add(recipe);
+      return true;
+    }
   }
 
   @override
@@ -59,6 +65,16 @@ class MockBookmarkRecipeRepositoryImpl implements BookmarkRecipeRepository {
       _bookmarked.removeAt(index);
       return true;
     } catch (e) {
+      return false;
+    }
+  }
+
+  @override
+  Future<bool> isBookmarked(int index) async {
+    if(_bookmarked.any((e) => e.id == index)) {
+      return true;
+    }
+    else {
       return false;
     }
   }

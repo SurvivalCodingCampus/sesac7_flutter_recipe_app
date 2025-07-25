@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/component/buttons/bookmark_button.dart';
 import 'package:flutter_recipe_app/01_stateless/ui/app_colors.dart';
 import 'package:flutter_recipe_app/01_stateless/ui/text_styles.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -28,6 +29,7 @@ void main() {
 */
 class RecipeCard extends StatelessWidget {
   final Recipe recipe;
+  final bool isBookmarked;
   final void Function() onBookmarkTap;
   final void Function() onDetailTap;
 
@@ -36,6 +38,7 @@ class RecipeCard extends StatelessWidget {
     required this.recipe,
     required this.onBookmarkTap,
     required this.onDetailTap,
+    required this.isBookmarked,
   });
 
   @override
@@ -158,23 +161,11 @@ class RecipeCard extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(width: 10),
-                  GestureDetector(
-                    onTap: onBookmarkTap,
-                    child: Container(
-                      width: 24,
-                      height: 24,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Center(
-                        child: Icon(
-                          Icons.bookmark_border_outlined,
-                          size: 16,
-                          color: AppColors.primary80,
-                        ),
-                      ),
-                    ),
+                  BookmarkButton(
+                    size: 24,
+                    innerSize: 16,
+                    onClick: onBookmarkTap,
+                    isAdded: isBookmarked,
                   ),
                 ],
               ),

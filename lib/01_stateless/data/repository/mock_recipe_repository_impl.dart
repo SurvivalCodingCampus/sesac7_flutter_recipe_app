@@ -44,11 +44,43 @@ class MockRecipeRepositoryImpl implements RecipeRepository {
 
   @override
   Future<List<Recipe>> getRecipes() async {
-    return _recipes;
+    return List.unmodifiable(_recipes);
   }
 
   @override
   Future<Recipe> getRecipeById(int id) async {
     return _recipes[id];
+  }
+
+  @override
+  Future<bool> addBookmarkRecipe(int id) async {
+    if(await isBookmarked(id)) {
+      return false;
+    }
+    else {
+      _recipes[id] = _recipes[id].copyWith(isBookmarked: true);
+      return true;
+    }
+  }
+
+  @override
+  Future<List<Recipe>> getBookmarkedRecipes() async {
+    return _recipes.where((e) => e.isBookmarked).toList();
+  }
+
+  @override
+  Future<bool> isBookmarked(int id) async {
+    return _recipes[id].isBookmarked;
+  }
+
+  @override
+  Future<bool> removeBookmarkRecipe(int id) async {
+    if(await isBookmarked(id)) {
+      _recipes[id] = _recipes[id].copyWith(isBookmarked: false);
+      return true;
+    }
+    else {
+      return false;
+    }
   }
 }

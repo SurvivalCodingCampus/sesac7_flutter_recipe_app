@@ -1,51 +1,60 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/01_stateless/data/model/recipe.dart';
-import 'package:flutter_recipe_app/01_stateless/data/repository/bookmark_recipe_repository.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/saved_recipes/saved_recipes_action.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/saved_recipes/saved_recipes_state.dart';
+import 'package:flutter_recipe_app/01_stateless/usecase/bookmark_recipe_by_id_use_case.dart';
+import 'package:flutter_recipe_app/01_stateless/usecase/get_bookmarked_recipes_use_case.dart';
+import 'package:flutter_recipe_app/01_stateless/usecase/unbookmark_recipe_by_id_use_case.dart';
 
 class SavedRecipesViewModel with ChangeNotifier {
-  BookmarkRecipeRepository _repo;
+  final GetBookmarkedRecipesUseCase _getBookmarkedRecipesUseCase;
+  final BookmarkRecipeByIdUseCase _bookmarkRecipeByIdUseCase;
+  final UnbookmarkRecipeByIdUseCase _unbookmarkRecipeByIdUseCase;
 
   SavedRecipesViewModel({
-    required BookmarkRecipeRepository repo,
-  }) : _repo = repo;
+    required GetBookmarkedRecipesUseCase getBookmarkedRecipesUseCase,
+    required BookmarkRecipeByIdUseCase bookmarkRecipeByIdUseCase,
+    required UnbookmarkRecipeByIdUseCase unbookmarkRecipeByIdUseCase,
+  }) : _getBookmarkedRecipesUseCase = getBookmarkedRecipesUseCase,
+       _bookmarkRecipeByIdUseCase = bookmarkRecipeByIdUseCase,
+       _unbookmarkRecipeByIdUseCase = unbookmarkRecipeByIdUseCase;
 
+  SavedRecipesState _state = const SavedRecipesState();
 
-  set repo(BookmarkRecipeRepository s) {
-    _repo = s;
-  }
+  SavedRecipesState get state => _state;
 
-  List<Recipe> _recipes = [];
-  bool _isLoading = false;
-
-  UnmodifiableListView<Recipe> get recipes => UnmodifiableListView(_recipes);
-  bool get isLoading => _isLoading;
 
   Future<void> fetchBookmarkedRecipeData() async {
-    _isLoading = true;
+    _state = state.copyWith(isLoading: true);
     notifyListeners();
 
-    _recipes = await _repo.getBookmarkedRecipes();
-    _isLoading = false;
+    _state = state.copyWith(
+      recipes: await _getBookmarkedRecipesUseCase.execute(),
+      isLoading: false,
+    );
     notifyListeners();
   }
 
-  Future<void> addBookmarkedRecipe() async {
-    //TODO
+  //TODO but not really functional
+  Future<void> _addBookmarkedRecipe(int id) async {
     return;
   }
 
-  Future<void> removeBookmarkedRecipe(int index) async {
-    final result = await _repo.removeBookmarkRecipe(index);
+  Future<void> _removeBookmarkedRecipe(int id) async {
+    final result = await _unbookmarkRecipeByIdUseCase.execute(id);
     if (result) {
       fetchBookmarkedRecipeData();
-    }
-    else {
+    } else {
       print('Failed to remove bookmark?');
     }
   }
 
-
-
+  void onAction(SavedRecipesAction action) {
+    switch (action) {
+      case ClickOnRecipe():
+        break;
+      case ClickOnBookmark():
+        _removeBookmarkedRecipe(action.recipeId);
+        break;
+    }
+  }
 }

@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_recipe_app/01_stateless/core/di/di_get_it.dart';
 import 'package:flutter_recipe_app/01_stateless/core/routing/routes.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/home/main_body.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/home/main_view_model.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/saved_recipes/saved_recipes_body.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/main/main_root.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/main/main_view_model.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/saved_recipes/saved_recipes_root.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/saved_recipes/saved_recipes_view_model.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/recipe_detail/recipe_detail_screen.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/recipe_detail/recipe_detail_view_model.dart';
@@ -35,14 +35,7 @@ final router = GoRouter(
             GoRoute(
               path: Routes.main,
               builder: (context, state) {
-                final mainViewModel = getIt<MainViewModel>();
-                mainViewModel.fetchRecipeData();
-                return ListenableBuilder(
-                  listenable: mainViewModel,
-                  builder: (context, child) {
-                    return MainBody(viewModel: mainViewModel);
-                  },
-                );
+                return MainRoot(viewModel: getIt<MainViewModel>());
               },
             ),
           ],
@@ -52,19 +45,7 @@ final router = GoRouter(
             GoRoute(
               path: Routes.savedRecipes,
               builder: (context, state) {
-                final savedRecipesViewModel = getIt<SavedRecipesViewModel>();
-                savedRecipesViewModel.fetchBookmarkedRecipeData();
-                return ListenableBuilder(
-                  listenable: savedRecipesViewModel,
-                  builder: (context, child) {
-                    return SavedRecipesBody(
-                      viewModel: savedRecipesViewModel,
-                      toDetailScreen: (int id) =>
-                          context.push('${Routes.recipeDetail}/$id')
-                      ,
-                    );
-                  },
-                );
+                return SavedRecipesRoot(viewModel: getIt<SavedRecipesViewModel>());
               },
             ),
           ],
