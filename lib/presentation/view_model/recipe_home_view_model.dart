@@ -3,6 +3,7 @@ import 'package:flutter_recipe_app/presentation/state_holder/recipe_home_state_h
 
 import '../../domain/model/recipe.dart';
 import '../../domain/use_case/get_home_recipe_use_case.dart';
+import '../screen/action/main_screen_action.dart';
 
 class RecipeHomeViewModel with ChangeNotifier {
   final GetHomeRecipeUseCase _getHomeRecipeUseCase;
@@ -20,7 +21,18 @@ class RecipeHomeViewModel with ChangeNotifier {
   // UI에서 접근할 상태 Getter들
   RecipeHomeStateHolder get state => _state; // 모든 상태를 한 번에 노출
 
-// 레시피 데이터 로드
+  void onAction(MainScreenAction action) {
+    switch (action) {
+      case SelectCategory():
+        _selectCategory(action.category);
+        break;
+      case ToggleFavorite():
+        _toggleFavorite(action.recipe);
+        break;
+    }
+  }
+
+  // 레시피 데이터 로드
   Future<void> _loadRecipes() async {
     _updateState(isLoading: true, errorMessage: null); // 로딩 시작
     try {
@@ -49,7 +61,7 @@ class RecipeHomeViewModel with ChangeNotifier {
   }
 
   // 카테고리 변경 시 레시피 필터링
-  void selectCategory(String category) {
+  void _selectCategory(String category) {
     if (_state.selectedCategory == category) return; // 동일 카테고리 선택 시 무시
 
     List<Recipe> newFilteredRecipes;
@@ -66,7 +78,7 @@ class RecipeHomeViewModel with ChangeNotifier {
   }
 
   // 즐겨찾기 상태 토글
-  Future<void> toggleFavorite(Recipe recipe) async {
+  Future<void> _toggleFavorite(Recipe recipe) async {
     final int index = _state.allRecipes.indexWhere((r) => r.id == recipe.id);
     if (index != -1) {
       // Optimistic Update: UI를 즉시 업데이트

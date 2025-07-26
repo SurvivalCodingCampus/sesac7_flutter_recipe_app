@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/presentation/view_model/recipe_home_view_model.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 
-import '../../di/di_setup.dart';
-import '../../domain/model/recipe.dart';
 import '../../ui/text_styles.dart';
 import '../component/card/dish_card.dart';
 import '../component/control/recipe_category_selector.dart';

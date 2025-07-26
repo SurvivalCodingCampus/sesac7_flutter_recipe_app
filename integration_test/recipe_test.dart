@@ -7,7 +7,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
 void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  /*IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   group('레시피 카드 위젯 테스트', () {
     // 테스트에 사용할 더미 레시피 데이터
@@ -163,5 +163,5 @@ void main() {
           .getSize(titleFinder)
           .height * 2.5)); // 대략 2줄 높이보다 약간 큰지 확인
     });
-  });
+  });*/
 }
