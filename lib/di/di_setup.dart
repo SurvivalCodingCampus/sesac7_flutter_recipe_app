@@ -11,13 +11,16 @@ import '../../domain/use_case/get_recipes_remove_by_recipe_id.dart';
 import '../../domain/use_case/get_saved_recipes_use_case.dart';
 import '../../presentation/view_model/recipe_view_model.dart';
 import '../data/data_source/mock_recipe_data_source_impl.dart';
+import '../data/data_source/recipe_data_source_impl.dart';
 import '../data/repository/procedure_repository_impl.dart';
 import '../domain/repository/procedure_repository.dart';
 import '../domain/use_case/get_home_recipe_use_case.dart';
 import '../domain/use_case/get_ingrident_use_case.dart';
 import '../domain/use_case/get_procedure_use_case.dart';
+import '../presentation/view_model/filter_search_bottom_sheet_view_model.dart';
 import '../presentation/view_model/recipe_detail_view_model.dart';
 import '../presentation/view_model/recipe_home_view_model.dart';
+import '../presentation/view_model/search_recipe_view_model.dart';
 
 final getIt = GetIt.instance;
 
@@ -81,5 +84,13 @@ void diSetup() {
       () => RecipeHomeViewModel(
         getHomeRecipeUseCase: getIt(),
       )
+  );
+
+  getIt.registerFactory<SearchRecipeViewModel>(
+      () => SearchRecipeViewModel(recipeRepository: getIt())
+  );
+
+  getIt.registerFactory<FilterSearchBottomSheetViewModel>(
+          () => FilterSearchBottomSheetViewModel()
   );
 }

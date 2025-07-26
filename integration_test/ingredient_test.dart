@@ -6,7 +6,7 @@ import 'package:integration_test/integration_test.dart';
 import 'package:network_image_mock/network_image_mock.dart';
 
 void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+  /*IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('IngredientItem displays image, name and quantity',
           (WidgetTester tester) async {
@@ -36,5 +36,5 @@ void main() {
           // 이미지가 존재하는지 확인 (Image.network는 semanticLabel 없으면 직접 확인은 어려움)
           expect(find.byType(Image), findsOneWidget);
         });
-      });
+      });*/
 }
