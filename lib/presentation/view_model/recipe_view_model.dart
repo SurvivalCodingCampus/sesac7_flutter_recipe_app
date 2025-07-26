@@ -6,6 +6,7 @@ import 'package:flutter_recipe_app/presentation/state_holder/recipe_view_state.d
 import '../../core/result.dart';
 import '../../domain/model/recipe.dart';
 import '../../domain/use_case/get_recipe_by_recipe_id.dart';
+import '../screen/action/saved_recipes_action.dart';
 
 class RecipeViewModel with ChangeNotifier {
   final GetSavedRecipesUseCase _getSavedRecipesUseCase;
@@ -30,7 +31,18 @@ class RecipeViewModel with ChangeNotifier {
     return _getRecipeByRecipeId.getRecipeByRecipeId(recipeId, _recipeViewState.recipes);
   }
 
-  void saveRecipe(String recipeId) async {
+  void onAction(SavedRecipesAction savedRecipesAction) {
+    switch (savedRecipesAction) {
+      case callRecipeDetailScreen():
+
+        break;
+      case savedRecipe():
+        _saveRecipe(savedRecipesAction.recipeId);
+        break;
+    }
+  }
+
+  void _saveRecipe(String recipeId) async {
     final response = _getRecipesRemoveByRecipeId.getRecipesRemoveByRecipeId(
       recipeId,
       _recipeViewState.recipes,
