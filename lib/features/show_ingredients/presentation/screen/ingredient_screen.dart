@@ -1,25 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/presentation/component/ingredient_item.dart';
-import 'package:flutter_recipe_app/presentation/component/left_selected_tabs.dart';
-import 'package:flutter_recipe_app/presentation/component/recipe_card.dart';
-import 'package:flutter_recipe_app/presentation/component/small_button.dart';
-import 'package:flutter_recipe_app/presentation/screen/ingredient_screen_view_model.dart';
+import 'package:flutter_recipe_app/core/presentation/component/small_button.dart';
+import 'package:flutter_recipe_app/features/show_ingredients/presentation/component/ingredient_item.dart';
+import 'package:flutter_recipe_app/features/show_ingredients/presentation/component/recipe_card.dart';
 
-import '../../ui/app_colors.dart';
-import '../../ui/text_styles.dart';
+import '../../../../core/presentation/component/left_selected_tabs.dart';
+import '../../../../ui/app_colors.dart';
+import '../../../../ui/text_styles.dart';
+import 'ingredient_action.dart';
+import 'ingredient_screen_state.dart';
 
 class IngredientScreen extends StatelessWidget {
-  final IngredientScreenViewModel viewModel;
+  final IngredientScreenState state;
+  final void Function(IngredientAction action) onAction;
 
   const IngredientScreen({
     super.key,
-    required this.viewModel,
+    required this.state,
+    required this.onAction,
   });
 
   @override
   Widget build(BuildContext context) {
-    final state = viewModel.state;
-
     return Scaffold(
       backgroundColor: AppColors.white,
       body: Container(
@@ -33,7 +34,12 @@ class IngredientScreen extends StatelessWidget {
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Icon(Icons.arrow_back, size: 20),
+                GestureDetector(
+                  onTap: () {
+                    onAction(IngredientAction.clickBackButton());
+                  },
+                  child: Icon(Icons.arrow_back, size: 20),
+                ),
                 Expanded(child: SizedBox()),
                 Icon(Icons.more_horiz, size: 24),
               ],
@@ -130,9 +136,8 @@ class IngredientScreen extends StatelessWidget {
             LeftSelectedTabs(
               listOfLables: ['Ingredient', 'Procedure'],
               selectedIndex: state.indexOfTab,
-              onValueChange: (value) {
-                viewModel.changeIndexOfTab(value);
-                print('now value is $value');
+              onValueChange: (index) {
+                onAction(IngredientAction.switchTab(index));
               },
             ),
             SizedBox(height: 22),
@@ -167,7 +172,6 @@ class IngredientScreen extends StatelessWidget {
                 alignment: Alignment.topCenter,
                 children: [
                   ListView.builder(
-                    // shrinkWrap: true,
                     padding: EdgeInsets.zero,
                     itemCount: state.selectedRecipe.ingredients.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -180,7 +184,6 @@ class IngredientScreen extends StatelessWidget {
                     },
                   ),
                   ListView.builder(
-                    // shrinkWrap: true,
                     padding: EdgeInsets.zero,
                     itemCount: state.steps.length,
                     itemBuilder: (BuildContext context, int index) {
