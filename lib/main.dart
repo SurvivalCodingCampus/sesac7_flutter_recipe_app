@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/di/di_setup.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 
-import 'core/router.dart';
+import 'core/routing/router.dart';
 
 void main() {
   diSetup();
