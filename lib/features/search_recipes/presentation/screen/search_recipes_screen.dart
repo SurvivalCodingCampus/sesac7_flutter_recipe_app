@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/make_name_clean.dart';
-import 'package:flutter_recipe_app/presentation/screen/search_recipes_screen_view_model.dart';
+import 'package:flutter_recipe_app/features/search_recipes/presentation/screen/search_recipes_action.dart';
+import 'package:flutter_recipe_app/features/search_recipes/presentation/screen/search_recipes_screen_state.dart';
 
-import '../../ui/app_colors.dart';
-import '../../ui/text_styles.dart';
+import '../../../../ui/app_colors.dart';
+import '../../../../ui/text_styles.dart';
 import '../component/filter_button.dart';
 import '../component/recipe_card_only_with_name.dart';
 import '../component/search_input_field.dart';
 import 'filter_search_bottom_sheet.dart';
-import 'filter_search_bottom_sheet_state.dart';
 
 class SearchRecipesScreen extends StatelessWidget {
-  final SearchRecipesScreenViewModel viewModel;
+  // final SearchRecipesScreenViewModel viewModel;
+  final SearchRecipesScreenState state;
+  final void Function(SearchRecipesAction action) onAction;
 
   const SearchRecipesScreen({
     super.key,
-    required this.viewModel,
+    required this.state,
+    required this.onAction,
   });
 
   @override
   Widget build(BuildContext context) {
-    final state = viewModel.state;
-
     return Scaffold(
       body: Center(
         child: Column(
@@ -55,14 +56,14 @@ class SearchRecipesScreen extends StatelessWidget {
                   Expanded(
                     child: SearchInputField(
                       placeHolder: 'Search recipe',
-                      onValueChange: (value) async {
-                        viewModel.search(value);
+                      onValueChange: (query) {
+                        onAction(SearchRecipesAction.changeQuery(query));
                       },
                     ),
                   ),
                   SizedBox(width: 20),
                   FilterButton(
-                    onClick: () {
+                    onFilterButtonClick: () {
                       showModalBottomSheet(
                         isScrollControlled: true,
                         constraints: BoxConstraints(
@@ -74,16 +75,9 @@ class SearchRecipesScreen extends StatelessWidget {
                         builder: (BuildContext context) {
                           return FilterSearchBottomSheet(
                             filterSearchState: state.filterSearchState,
-                            onClosing:
-                                (
-                                  FilterSearchBottomSheetState
-                                  filterSearchState,
-                                ) {
-                                  Navigator.pop(context);
-                                  viewModel.filterRecipes(
-                                    filterSearchState,
-                                  );
-                                },
+                            onClosing: (state) {
+                              onAction(SearchRecipesAction.applyFilter(state));
+                            },
                           );
                         },
                       );
