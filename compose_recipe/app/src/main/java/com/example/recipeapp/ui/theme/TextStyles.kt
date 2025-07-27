@@ -135,3 +135,23 @@ val recipeCadRecipeTime = TextStyle(
     color = Gray4,
     lineHeight = 17.sp
 )
+/* RecipeCard END */
+
+/* Ingredients START */
+val ingredientCardTitle = TextStyle(
+    fontFamily = poppins,
+    fontWeight = FontWeight.SemiBold,
+    fontSize = 16.sp,
+    fontStyle = FontStyle.Normal,
+    color = LabelColor,
+    lineHeight = 24.sp
+)
+val ingredientCardAmount = TextStyle(
+    fontFamily = poppins,
+    fontWeight = FontWeight.Normal,
+    fontSize = 14.sp,
+    fontStyle = FontStyle.Normal,
+    color = Gray3,
+    lineHeight = 21.sp
+)
+/* Ingredients END */
