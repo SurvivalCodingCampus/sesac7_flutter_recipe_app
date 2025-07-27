@@ -90,4 +90,13 @@ val ratingDialogButtonTitle = TextStyle(
     color = White,
     lineHeight = 12.sp
 )
+
+val ratingDialogTitle = TextStyle(
+    fontFamily = poppins,
+    fontWeight = FontWeight.Normal,
+    fontSize = 11.sp,
+    fontStyle = FontStyle.Normal,
+    color = LabelColor,
+    lineHeight = 17.sp
+)
 /* RatingDialog END */
