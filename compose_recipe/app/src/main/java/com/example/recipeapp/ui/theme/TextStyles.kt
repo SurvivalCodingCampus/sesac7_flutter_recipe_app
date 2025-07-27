@@ -100,3 +100,38 @@ val ratingDialogTitle = TextStyle(
     lineHeight = 17.sp
 )
 /* RatingDialog END */
+
+/* RecipeCard START */
+val recipeCardRatingButtonTitle = TextStyle(
+    fontFamily = poppins,
+    fontWeight = FontWeight.Normal,
+    fontSize = 8.sp,
+    fontStyle = FontStyle.Normal,
+    color = Black,
+    lineHeight = 12.sp
+)
+
+val recipeCadRecipeName = TextStyle(
+    fontFamily = poppins,
+    fontWeight = FontWeight.SemiBold,
+    fontSize = 14.sp,
+    fontStyle = FontStyle.Normal,
+    color = White,
+    lineHeight = 21.sp
+)
+val recipeCadRecipeChefName = TextStyle(
+    fontFamily = poppins,
+    fontWeight = FontWeight.Normal,
+    fontSize = 8.sp,
+    fontStyle = FontStyle.Normal,
+    color = Gray4,
+    lineHeight = 12.sp
+)
+val recipeCadRecipeTime = TextStyle(
+    fontFamily = poppins,
+    fontWeight = FontWeight.Normal,
+    fontSize = 11.sp,
+    fontStyle = FontStyle.Normal,
+    color = Gray4,
+    lineHeight = 17.sp
+)
