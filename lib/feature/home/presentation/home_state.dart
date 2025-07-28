@@ -11,6 +11,5 @@ abstract class HomeState with _$HomeState {
     @Default([]) List<Recipe> filteredRecipes,
     @Default(HomeRecipeCategory.all) HomeRecipeCategory selectedCategory,
     @Default(false) bool isLoading,
-    @Default('') String errorMessage,
   }) = _HomeState;
 }

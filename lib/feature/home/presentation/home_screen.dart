@@ -110,12 +110,6 @@ class HomeScreen extends StatelessWidget {
                     );
                   }
 
-                  if (state.errorMessage.isNotEmpty) {
-                    return Center(
-                      child: Text(state.errorMessage),
-                    );
-                  }
-
                   return ListView.separated(
                     scrollDirection: Axis.horizontal,
                     padding: EdgeInsets.only(left: 30),

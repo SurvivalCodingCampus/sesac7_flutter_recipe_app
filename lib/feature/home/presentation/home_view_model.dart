@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/core/utils/network_error.dart';
@@ -6,11 +8,13 @@ import 'package:flutter_recipe_app/feature/home/domain/model/home_recipe_categor
 import 'package:flutter_recipe_app/feature/home/domain/use_case/fetch_all_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/home/domain/use_case/filter_home_recipe_category_use_case.dart';
 import 'package:flutter_recipe_app/feature/home/presentation/home_action.dart';
+import 'package:flutter_recipe_app/feature/home/presentation/home_event.dart';
 import 'package:flutter_recipe_app/feature/home/presentation/home_state.dart';
 
 class HomeViewModel with ChangeNotifier {
   final FetchAllRecipesUseCase _fetchAllRecipesUseCase;
   final FilterHomeRecipeCategoryUseCase _filterHomeRecipeCategoryUseCase;
+  final StreamController<HomeEvent> _streamController = StreamController();
 
   HomeState _state = HomeState();
 
@@ -21,6 +25,7 @@ class HomeViewModel with ChangeNotifier {
        _filterHomeRecipeCategoryUseCase = filterHomeRecipeCategoryUseCase;
 
   HomeState get state => _state;
+  Stream<HomeEvent> get eventStream => _streamController.stream;
 
   void init() async {
     _loadingState();
@@ -33,7 +38,6 @@ class HomeViewModel with ChangeNotifier {
           allRecipes: result.data,
           filteredRecipes: result.data,
           isLoading: false,
-          errorMessage: '',
         );
 
         notifyListeners();
@@ -79,9 +83,9 @@ class HomeViewModel with ChangeNotifier {
 
   void _errorState(String message) {
     _state = state.copyWith(
-      errorMessage: message,
       isLoading: false,
     );
+    _streamController.add(HomeEvent.openErrorDialog(message));
 
     notifyListeners();
   }
