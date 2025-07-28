@@ -34,6 +34,7 @@ class SplashScreenViewModel with ChangeNotifier {
     _state = state.copyWith(
       isLoading: true,
     );
+    notifyListeners();
 
     final isFlightMode = _fetchSystemSettingsUseCase.execute();
 
@@ -41,5 +42,6 @@ class SplashScreenViewModel with ChangeNotifier {
       isFlightMode: isFlightMode,
       isLoading: false,
     );
+    notifyListeners();
   }
 }
