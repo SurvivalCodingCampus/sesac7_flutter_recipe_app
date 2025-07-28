@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/data/model/recipe.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/component/buttons/bookmark_button.dart';
 import 'package:flutter_recipe_app/01_stateless/ui/app_colors.dart';
 import 'package:flutter_recipe_app/01_stateless/ui/text_styles.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -32,9 +33,10 @@ void main() {
 
 class DishCard extends StatelessWidget {
   final Recipe recipe;
+  final bool isBookmarked;
   final void Function(int id) onBookmark;
 
-  const DishCard({super.key, required this.recipe, required this.onBookmark});
+  const DishCard({super.key, required this.recipe, required this.onBookmark, required this.isBookmarked});
 
   @override
   Widget build(BuildContext context) {
@@ -83,24 +85,9 @@ class DishCard extends StatelessWidget {
           Positioned(
             bottom: 10,
             right: 10,
-            child: GestureDetector(
-              onTap: () => onBookmark(recipe.id),
-              child: Container(
-                width: 24,
-                height: 24,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: const Center(
-                  child: Icon(
-                    Icons.bookmark_border_outlined,
-                    size: 16,
-                    color: AppColors.primary80,
-                  ),
-                ),
-              ),
-            ),
+            child: BookmarkButton(size: 24, innerSize: 16, onClick: () {
+              onBookmark(recipe.id);
+            }, isAdded: isBookmarked,),
           ),
           Positioned(
             bottom: 68,

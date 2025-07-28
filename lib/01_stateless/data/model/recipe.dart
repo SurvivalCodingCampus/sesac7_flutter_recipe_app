@@ -12,5 +12,6 @@ abstract class Recipe with _$Recipe {
     required double rating,
     required int id,
     required Set<String> categories,
+    @Default(false) bool isBookmarked,
   }) = _Recipe;
 }
