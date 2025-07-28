@@ -7,6 +7,7 @@ abstract class FilterSearchState with _$FilterSearchState {
   const factory FilterSearchState({
     @Default('Newest') String time,
     @Default(4) int rate,
-    @Default('Local Dish') String category,
+    @Default('All') String category,
+    @Default(false) bool filterApplied,
   }) = _FilterSearchState;
 }

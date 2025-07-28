@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_recipe_app/core/presentation/component/nav_bar/bottom_nav_bar.dart';
 import 'package:flutter_recipe_app/home/presentation/screen/home_screen.dart';
 import 'package:flutter_recipe_app/saved_recipes/presentation/saved_recipes_view_model.dart';
+import 'package:flutter_recipe_app/search_recipes/presentation/search_recipe_screen_root.dart';
 import 'package:go_router/go_router.dart';
 import '../../di/di_setup.dart';
 import '../../recipe_ingredients/data/repository/ingredient_repository_impl.dart';
@@ -142,14 +143,15 @@ final router = GoRouter(
             GoRoute(
               path: Routes.searchRecipes,
               builder: (context, state) {
-                final searchRecipesViewModel = SearchRecipesViewModel(
-                  repository: recipeRepository,
-                );
-                searchRecipesViewModel.loadRecipes();
+                // final searchRecipesViewModel = SearchRecipesViewModel(
+                //   repository: recipeRepository,
+                // );
+                // searchRecipesViewModel.loadRecipes();
                 // 그림은 먼저 그리고 데이터는 받아온 상태에서 notifyListeners(); 로 상태를 업데이트 함
 
-                return SearchRecipeScreen(
-                  viewModel: searchRecipesViewModel,
+                return SearchRecipeScreenRoot(
+                  // viewModel: searchRecipesViewModel,
+                  viewModel: getIt(),
                 );
               },
             ),

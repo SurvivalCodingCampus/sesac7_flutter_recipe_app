@@ -1,39 +1,67 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/result.dart';
+import 'package:flutter_recipe_app/search_recipes/presentation/search_recipes_action.dart';
 import 'package:flutter_recipe_app/search_recipes/presentation/search_recipes_state.dart';
 import 'package:flutter_recipe_app/core/domain/repository/recipes_repository.dart';
 
 import '../../core/presentation/component/bottom_sheet/filter_search_state.dart';
+import '../../saved_recipes/domain/use_case/fetch_recipes_use_case.dart';
+import '../domain/use_case/filter_recipes_use_case.dart';
+import '../domain/use_case/search_recipes_use_case.dart';
 
 class SearchRecipesViewModel with ChangeNotifier {
   final RecipeRepository _repository;
+  final FetchRecipesUseCase _fetchRecipesUseCase;
+  final SearchRecipesUseCase _searchRecipesUseCase;
+  final FilterRecipesUseCase _filterRecipesUseCase;
 
   SearchRecipesState _state = SearchRecipesState.initial();
+
   SearchRecipesState get state => _state;
+
   // search_recipes_state 파일에서 initial 초기화
   // 외부에서 캡슐화된 _state를 사용할 수 있게 getter 함수 생성
 
-  SearchRecipesViewModel({required RecipeRepository repository})
-    : _repository = repository;
-  // 생성자 생성
+  SearchRecipesViewModel({
+    required FetchRecipesUseCase fetchRecipesUseCase,
+    required RecipeRepository repository,
+    required SearchRecipesUseCase searchRecipesUseCase,
+    required FilterRecipesUseCase filterRecipesUseCase,
+  }) : _repository = repository,
+       _fetchRecipesUseCase = fetchRecipesUseCase,
+       _searchRecipesUseCase = searchRecipesUseCase,
+       _filterRecipesUseCase = filterRecipesUseCase;
 
   // get 말고 fetch 로
-  // return 하지말고
+  // return 하지말고 notifyListeners
+
+  void onAction(SearchRecipesAction action) {
+    switch (action) {
+      case SearchRecipes():
+        _searchWithText(action.query);
+        break;
+      case ShowFilterBottomSheet():
+        break;
+      case ApplyFilter():
+        _applyFilter(action.filterSearchState);
+        break;
+    }
+  }
+
   Future<void> loadRecipes() async {
     _state = state.copyWith(isLoading: true);
     notifyListeners();
 
     try {
-      await Future.delayed(const Duration(seconds: 2));
-      final result = await _repository.fetchRecipes();
+      final result = await _fetchRecipesUseCase.execute();
 
       result.when(
         success: (fetchedRecipes) {
           _state = state.copyWith(
-            originalRecipes: fetchedRecipes,
-            filteredRecipes: fetchedRecipes,
-            resultLabel: '${fetchedRecipes.length} results',
+            originalRecipes: fetchedRecipes.recipes,
+            filteredRecipes: fetchedRecipes.recipes,
+            resultLabel: '${fetchedRecipes.recipes.length} results',
           );
         },
         failure: (error) {
@@ -51,61 +79,57 @@ class SearchRecipesViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void search(String query) {
-    final filteredRecipes = state.originalRecipes
-      .where(
-        (e) =>
-          e.name.toLowerCase().contains(query.toLowerCase()) ||
-          e.chef.toLowerCase().contains(query.toLowerCase()),
-      )
-      .toList();
-
-    _state = state.copyWith(
+  Future<void> _search(String query) async {
+    final result = await _searchRecipesUseCase.execute(
       query: query,
-      searchLabel: state.originalRecipes.length == filteredRecipes.length
-        ? 'Recent Search'
-        : 'Search Result',
-      filteredRecipes: filteredRecipes,
-      resultLabel: '${filteredRecipes.length} results',
+      searchRecipesState: state,
+    );
+
+    result.when(
+      success: (newState) {
+        _state = newState;
+      },
+      failure: (error) {
+        print('Error searching recipes: $error');
+      },
     );
     notifyListeners();
   }
 
-  void filter(FilterSearchState filterSearchState){
-    // 인자 : 사용자가 선택한 filter 값 전달 받음
+  Future<void> _filter(FilterSearchState filterSearchState) async {
 
-    // print('[DEBUG] 필터 적용: $filterSearchState');
+    if (!filterSearchState.filterApplied) {
+      // 필터가 적용되지 않은 경우, 원본 리스트 유지
+      return;
+    }
 
-    _state = state.copyWith(
+    final result = await _filterRecipesUseCase.execute(
       filterSearchState: filterSearchState,
-      // 인자로 전달받은 값을 filterSearchState 변수에 저장
-      filteredRecipes: state.originalRecipes
-        .where((e) => e.rating.toInt() == filterSearchState.rate).toList(),
+      currentState: state,
     );
 
-    // 순차적으로 필터를 누적하는 방식
-    switch (filterSearchState.time){
-      case 'All' :
-        break;
-      case 'Newest' :
-        _state = state.copyWith(
-          filteredRecipes: state.filteredRecipes.sorted(
-            // originalRecipes 을 쓰면 리스트가 originalRecipes 기준으로 다시 필터링 되기 때문에
-            // filteredRecipes를 사용해서 필터링을 누적하는 방식
-            (a, b) => b.time.compareTo(a.time),
-          ),
-        );
-        break;
-      case 'Oldest' :
-        _state = state.copyWith(
-          filteredRecipes: state.filteredRecipes.sorted(
-            (a, b) => a.time.compareTo(b.time),
-          ),
-        );
-        break;
-      case 'Populariry' :
-        break;
-    }
+    result.when(
+      success: (newState) {
+        _state = newState;
+      },
+      failure: (error) {
+        print('Error filtering recipes: $error');
+      },
+    );
+
     notifyListeners();
+  }
+
+  void _applyFilter(FilterSearchState newFilter) {
+    final applied = newFilter.copyWith(filterApplied: true);
+    _filter(applied);  // 기존 필터 호출
+  }
+
+  void _searchWithText(String query) {
+    _search(query);
+  }
+
+  void _searchWithFilter() {
+    _filter(state.filterSearchState);
   }
 }
