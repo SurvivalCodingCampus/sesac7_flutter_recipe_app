@@ -122,7 +122,12 @@ final router = GoRouter(
     GoRoute(
       path: Routes.searchRecipe,
       builder: (context, state) {
-        return SearchRecipesScreenRoot(getIt());
+        return SearchRecipesScreenRoot(
+          getIt(),
+          networkErrorPop: () {
+            context.pop();
+          },
+        );
       },
     ),
   ],
