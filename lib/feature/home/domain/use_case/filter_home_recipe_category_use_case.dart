@@ -4,12 +4,12 @@ import 'package:flutter_recipe_app/feature/home/domain/model/home_recipe_categor
 class FilterHomeRecipeCategoryUseCase {
   List<Recipe> execute({
     required List<Recipe> recipes,
-    required String category,
+    required HomeRecipeCategory category,
   }) {
-    if (category == HomeRecipeCategory.all.toString()) {
+    if (category == HomeRecipeCategory.all) {
       return recipes;
     }
 
-    return recipes.where((e) => e.category == category).toList();
+    return recipes.where((e) => e.category == category.toString()).toList();
   }
 }

@@ -1,22 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/presentation/component/list_item/recipe_card.dart';
-import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_view_model.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_action.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_state.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class SavedRecipesScreen extends StatelessWidget {
-  final SavedRecipesViewModel viewModel;
-  final void Function(String id) onRecipeCardTap;
+  final SavedRecipesState state;
+  final void Function(SavedRecipesAction action) onAction;
 
   const SavedRecipesScreen({
     super.key,
-    required this.viewModel,
-    required this.onRecipeCardTap,
+    required this.state,
+    required this.onAction,
   });
 
   @override
   Widget build(BuildContext context) {
-    final state = viewModel.state;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -26,10 +25,16 @@ class SavedRecipesScreen extends StatelessWidget {
       ),
       body: Builder(
         builder: (context) {
-          if (state.errorMessage != null) {
+          if (state.isLoading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+
+          if (state.errorMessage.isNotEmpty) {
             return Center(
               child: Text(
-                state.errorMessage!,
+                state.errorMessage,
                 style: TextStyles.mediumTextRegular,
               ),
             );
@@ -52,9 +57,13 @@ class SavedRecipesScreen extends StatelessWidget {
               final recipe = state.savedRecipes[index];
 
               return RecipeCard(
-                onTap: () => onRecipeCardTap(recipe.id),
                 recipe: recipe,
-                onBookmarkTap: () => viewModel.removeSavedRecipe(recipe.id),
+                onTap: () {
+                  onAction(SavedRecipesAction.tapRecipeCard(recipe.id));
+                },
+                onBookmarkTap: () {
+                  onAction(SavedRecipesAction.tapRecipeBookmark(recipe.id));
+                },
               );
             },
           );

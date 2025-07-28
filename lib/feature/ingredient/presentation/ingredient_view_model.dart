@@ -8,10 +8,10 @@ import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_all_
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_procedure_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_recipe_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/format_review_count_use_case.dart';
+import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_action.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_state.dart';
 
 class IngredientViewModel with ChangeNotifier {
-  final String recipeId;
   final FetchRecipeUseCase _fetchRecipeUseCase;
   final FetchAllIngredientsUseCase _fetchAllIngredientsUseCase;
   final FetchProcedureUseCase _fetchProcedureUseCase;
@@ -20,7 +20,6 @@ class IngredientViewModel with ChangeNotifier {
   IngredientState _state = IngredientState();
 
   IngredientViewModel({
-    required this.recipeId,
     required FetchRecipeUseCase fetchRecipeUseCase,
     required FetchAllIngredientsUseCase fetchAllIngredientsUseCase,
     required FetchProcedureUseCase fetchProcedureUseCase,
@@ -32,12 +31,20 @@ class IngredientViewModel with ChangeNotifier {
 
   IngredientState get state => _state;
 
-  void init() async {
+  void init({required String recipeId}) async {
     _state = state.copyWith(isLoading: true);
 
     notifyListeners();
 
-    final recipeResult = await _fetchRecipeUseCase.execute(recipeId);
+    final results = await Future.wait([
+      _fetchRecipeUseCase.execute(recipeId),
+      _fetchAllIngredientsUseCase.execute(recipeId),
+      _fetchProcedureUseCase.execute(recipeId),
+    ]);
+    final recipeResult = results[0] as Result<Recipe, NetworkError>;
+    final ingredientsResult =
+        results[1] as Result<List<Ingredient>, NetworkError>;
+    final procedureResult = results[2] as Result<List<String>, NetworkError>;
 
     switch (recipeResult) {
       case Success<Recipe, NetworkError>():
@@ -54,10 +61,6 @@ class IngredientViewModel with ChangeNotifier {
         return;
     }
 
-    final ingredientsResult = await _fetchAllIngredientsUseCase.execute(
-      recipeId,
-    );
-
     switch (ingredientsResult) {
       case Success<List<Ingredient>, NetworkError>():
         _state = state.copyWith(
@@ -67,8 +70,6 @@ class IngredientViewModel with ChangeNotifier {
         _errorState(ingredientsResult.error.toString());
         return;
     }
-
-    final procedureResult = await _fetchProcedureUseCase.execute(recipeId);
 
     switch (procedureResult) {
       case Success<List<String>, NetworkError>():
@@ -85,60 +86,26 @@ class IngredientViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void fetchRecipe() async {
-    _state = state.copyWith(isLoading: true);
-    final result = await _fetchRecipeUseCase.execute(recipeId);
-
-    switch (result) {
-      case Success<Recipe, NetworkError>():
-        final recipe = result.data;
-        final reviewCount = _formatReviewCountUseCase.execute(
-          recipe.reviewCount,
-        );
-        _state = state.copyWith(
-          recipe: recipe,
-          reviewCount: reviewCount,
-          isLoading: false,
-        );
-      case Error<Recipe, NetworkError>():
-        _errorState(result.error.toString());
+  void onAction(IngredientAction action) async {
+    switch (action) {
+      case TapBack():
+        break;
+      case TapMenu():
+        break;
+      case TapRecipeBookmark():
+        // TODO: tap recipe bookmark.
+        print(action);
+      case TapFollow():
+        // TODO: tap follow.
+        print(action);
+      case ChangeTab():
+        _tabChange(action.index);
     }
 
     notifyListeners();
   }
 
-  void fetchIngredients() async {
-    _state = state.copyWith(isLoading: true);
-    final result = await _fetchAllIngredientsUseCase.execute(recipeId);
-
-    switch (result) {
-      case Success<List<Ingredient>, NetworkError>():
-        _state = state.copyWith(ingredients: result.data, isLoading: false);
-      case Error<List<Ingredient>, NetworkError>():
-        _errorState(result.error.toString());
-    }
-
-    notifyListeners();
-  }
-
-  void fetchProcedure() async {
-    _state = state.copyWith(isLoading: true);
-
-    notifyListeners();
-
-    final result = await _fetchProcedureUseCase.execute(recipeId);
-
-    switch (result) {
-      case Success<List<String>, NetworkError>():
-        _state = state.copyWith(procedure: result.data, isLoading: false);
-      case Error<List<String>, NetworkError>():
-        _errorState(result.error.toString());
-    }
-
-    notifyListeners();
-  }
-
-  void tabChange(int index) {
+  void _tabChange(int index) {
     _state = state.copyWith(tabType: IngredientTabType.values[index]);
 
     notifyListeners();

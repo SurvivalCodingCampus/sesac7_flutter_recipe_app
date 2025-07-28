@@ -1,18 +1,14 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/routing/query_parameters.dart';
 import 'package:flutter_recipe_app/core/routing/routes.dart';
 import 'package:flutter_recipe_app/di/di.dart';
 import 'package:flutter_recipe_app/feature/authentication/presentation/sign_in_screen.dart';
 import 'package:flutter_recipe_app/feature/authentication/presentation/sign_up_screen.dart';
-import 'package:flutter_recipe_app/feature/home/presentation/home_screen.dart';
-import 'package:flutter_recipe_app/feature/home/presentation/home_view_model.dart';
-import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_screen.dart';
-import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_view_model.dart';
+import 'package:flutter_recipe_app/feature/home/presentation/home_screen_root.dart';
+import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_screen_root.dart';
 import 'package:flutter_recipe_app/feature/main_navigation/presentation/main_navigation_screen.dart';
 import 'package:flutter_recipe_app/feature/notifications/presentation/notifications_screen.dart';
 import 'package:flutter_recipe_app/feature/profile/presentation/profile_screen.dart';
-import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_screen.dart';
-import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_view_model.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_screen_root.dart';
 import 'package:flutter_recipe_app/feature/splash/presentation/splash_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -60,19 +56,7 @@ GoRouter createRouter() => GoRouter(
             GoRoute(
               path: Routes.home,
               builder: (context, state) {
-                final viewModel = HomeViewModel(
-                  fetchAllRecipesUseCase: getIt(),
-                  filterHomeRecipeCategoryUseCase: getIt(),
-                );
-
-                viewModel.fetchAllRecipes();
-
-                return ListenableBuilder(
-                  listenable: viewModel,
-                  builder: (context, child) {
-                    return HomeScreen(viewModel: viewModel);
-                  },
-                );
+                return HomeScreenRoot(viewModel: getIt());
               },
             ),
           ],
@@ -83,26 +67,14 @@ GoRouter createRouter() => GoRouter(
             GoRoute(
               path: Routes.savedRecipes,
               builder: (context, state) {
-                final viewModel = SavedRecipesViewModel(
-                  getSavedRecipesUseCase: getIt(),
-                  bookmarkRepository: getIt(),
-                );
-
-                viewModel.fetchSavedRecipes();
-
-                return ListenableBuilder(
-                  listenable: viewModel,
-                  builder: (context, child) {
-                    return SavedRecipesScreen(
-                      viewModel: viewModel,
-                      onRecipeCardTap: (String id) {
-                        context.push(
-                          Uri(
-                            path: Routes.ingredient,
-                            queryParameters: {QueryParameters.id: id},
-                          ).toString(),
-                        );
-                      },
+                return SavedRecipesScreenRoot(
+                  viewModel: getIt(),
+                  onTapRecipeCard: (String recipeId) {
+                    context.push(
+                      Uri(
+                        path: Routes.ingredient,
+                        queryParameters: {QueryParameters.id: recipeId},
+                      ).toString(),
                     );
                   },
                 );
@@ -140,28 +112,10 @@ GoRouter createRouter() => GoRouter(
       builder: (context, state) {
         final id = state.uri.queryParameters[QueryParameters.id]!;
         // TODO: id null 기본 화면
-        final viewModel = IngredientViewModel(
+        return IngredientScreenRoot(
           recipeId: id,
-          fetchRecipeUseCase: getIt(),
-          fetchAllIngredientsUseCase: getIt(),
-          fetchProcedureUseCase: getIt(),
-          formatReviewCountUseCase: getIt(),
-        );
-
-        // viewModel.fetchRecipe();
-        // viewModel.fetchIngredients();
-        // viewModel.fetchProcedure();
-        viewModel.init();
-
-        return ListenableBuilder(
-          listenable: viewModel,
-          builder: (context, child) {
-            return IngredientScreen(
-              viewModel: viewModel,
-              onBackTap: () => context.pop(),
-              onMenuTap: () {},
-            );
-          },
+          viewModel: getIt(),
+          onTapBack: () => context.pop(),
         );
       },
     ),

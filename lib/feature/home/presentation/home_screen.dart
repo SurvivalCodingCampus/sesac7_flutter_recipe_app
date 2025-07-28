@@ -3,24 +3,25 @@ import 'package:flutter_recipe_app/core/presentation/component/button/search_fil
 import 'package:flutter_recipe_app/core/presentation/component/constants/component_constant.dart';
 import 'package:flutter_recipe_app/core/presentation/component/input/search_field.dart';
 import 'package:flutter_recipe_app/feature/home/domain/model/home_recipe_category.dart';
-import 'package:flutter_recipe_app/feature/home/presentation/dish_card.dart';
-import 'package:flutter_recipe_app/feature/home/presentation/home_view_model.dart';
-import 'package:flutter_recipe_app/feature/home/presentation/recipe_category_selector.dart';
+import 'package:flutter_recipe_app/feature/home/presentation/component/dish_card.dart';
+import 'package:flutter_recipe_app/feature/home/presentation/home_action.dart';
+import 'package:flutter_recipe_app/feature/home/presentation/home_state.dart';
+import 'package:flutter_recipe_app/feature/home/presentation/component/recipe_category_selector.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 import 'package:flutter_recipe_app/ui/text_styles.dart';
 
 class HomeScreen extends StatelessWidget {
-  final HomeViewModel viewModel;
+  final HomeState state;
+  final void Function(HomeAction action) onAction;
 
   const HomeScreen({
     super.key,
-    required this.viewModel,
+    required this.state,
+    required this.onAction,
   });
 
   @override
   Widget build(BuildContext context) {
-    final state = viewModel.state;
-
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(
@@ -71,11 +72,15 @@ class HomeScreen extends StatelessWidget {
                       Expanded(
                         child: SearchField(
                           placeholder: 'Search recipe',
-                          onValueChange: (value) {},
+                          onValueChange: (value) {
+                            onAction(HomeAction.searchValueChange(value));
+                          },
                         ),
                       ),
                       SearchFilterButton(
-                        onTap: () {},
+                        onTap: () {
+                          onAction(HomeAction.tapFilterButton());
+                        },
                       ),
                     ],
                   ),
@@ -86,11 +91,10 @@ class HomeScreen extends StatelessWidget {
               height: 15,
             ),
             RecipeCategorySelector(
-              categories: HomeRecipeCategory.values
-                  .map((e) => e.toString())
-                  .toList(),
+              categories: HomeRecipeCategory.values,
+              selectedCategory: state.selectedCategory,
               onSelectCategory: (category) {
-                viewModel.filterHomeRecipeCategory(category);
+                onAction(HomeAction.selectCategory(category));
               },
             ),
             const SizedBox(
@@ -119,7 +123,7 @@ class HomeScreen extends StatelessWidget {
                       return DishCard(
                         recipe: state.filteredRecipes[index],
                         onTapFavorite: (recipe) {
-                          // TODO: User
+                          onAction(HomeAction.tapFavorite(recipe));
                         },
                       );
                     },
