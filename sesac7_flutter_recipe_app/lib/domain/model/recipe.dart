@@ -6,21 +6,21 @@ part 'recipe.freezed.dart';
 @freezed
 class Recipe with _$Recipe {
   @override
-  String category;
+  final String category;
   @override
-  int id;
+  final int id;
   @override
-  String name;
+  final String name;
   @override
-  String image;
+  final String image;
   @override
-  String chef;
+  final String chef;
   @override
-  String time;
+  final String time;
   @override
-  num rating;
+  final num rating;
   @override
-  List<Ingredients> ingredients;
+  final List<Ingredients> ingredients;
 
   Recipe({
     required this.category,

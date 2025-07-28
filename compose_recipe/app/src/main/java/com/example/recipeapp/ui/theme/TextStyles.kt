@@ -80,3 +80,78 @@ val unSelectedRatingTitle = TextStyle(
     lineHeight = 17.sp
 )
 /* RatingButton END */
+
+/* RatingDialog START */
+val ratingDialogButtonTitle = TextStyle(
+    fontFamily = poppins,
+    fontWeight = FontWeight.Normal,
+    fontSize = 8.sp,
+    fontStyle = FontStyle.Normal,
+    color = White,
+    lineHeight = 12.sp
+)
+
+val ratingDialogTitle = TextStyle(
+    fontFamily = poppins,
+    fontWeight = FontWeight.Normal,
+    fontSize = 11.sp,
+    fontStyle = FontStyle.Normal,
+    color = LabelColor,
+    lineHeight = 17.sp
+)
+/* RatingDialog END */
+
+/* RecipeCard START */
+val recipeCardRatingButtonTitle = TextStyle(
+    fontFamily = poppins,
+    fontWeight = FontWeight.Normal,
+    fontSize = 8.sp,
+    fontStyle = FontStyle.Normal,
+    color = Black,
+    lineHeight = 12.sp
+)
+
+val recipeCadRecipeName = TextStyle(
+    fontFamily = poppins,
+    fontWeight = FontWeight.SemiBold,
+    fontSize = 14.sp,
+    fontStyle = FontStyle.Normal,
+    color = White,
+    lineHeight = 21.sp
+)
+val recipeCadRecipeChefName = TextStyle(
+    fontFamily = poppins,
+    fontWeight = FontWeight.Normal,
+    fontSize = 8.sp,
+    fontStyle = FontStyle.Normal,
+    color = Gray4,
+    lineHeight = 12.sp
+)
+val recipeCadRecipeTime = TextStyle(
+    fontFamily = poppins,
+    fontWeight = FontWeight.Normal,
+    fontSize = 11.sp,
+    fontStyle = FontStyle.Normal,
+    color = Gray4,
+    lineHeight = 17.sp
+)
+/* RecipeCard END */
+
+/* Ingredients START */
+val ingredientCardTitle = TextStyle(
+    fontFamily = poppins,
+    fontWeight = FontWeight.SemiBold,
+    fontSize = 16.sp,
+    fontStyle = FontStyle.Normal,
+    color = LabelColor,
+    lineHeight = 24.sp
+)
+val ingredientCardAmount = TextStyle(
+    fontFamily = poppins,
+    fontWeight = FontWeight.Normal,
+    fontSize = 14.sp,
+    fontStyle = FontStyle.Normal,
+    color = Gray3,
+    lineHeight = 21.sp
+)
+/* Ingredients END */
