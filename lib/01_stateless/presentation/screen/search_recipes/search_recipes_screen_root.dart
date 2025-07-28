@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_action.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_event.dart';
@@ -20,12 +22,14 @@ class SearchRecipesScreenRoot extends StatefulWidget {
 }
 
 class _SearchRecipesScreenRootState extends State<SearchRecipesScreenRoot> {
+  StreamSubscription? _streamSubscription;
+
   @override
   void initState() {
     super.initState();
     widget.viewModel.fetchRecipes();
 
-    widget.viewModel.eventStream.listen((event) {
+    _streamSubscription = widget.viewModel.eventStream.listen((event) {
       if (context.mounted) {
         switch (event) {
           case OpenDialog():
@@ -72,5 +76,11 @@ class _SearchRecipesScreenRootState extends State<SearchRecipesScreenRoot> {
         );
       },
     );
+  }
+
+  @override
+  void dispose() {
+    _streamSubscription?.cancel();
+    super.dispose();
   }
 }
