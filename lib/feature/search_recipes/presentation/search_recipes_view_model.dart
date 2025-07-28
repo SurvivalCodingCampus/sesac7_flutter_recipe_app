@@ -124,7 +124,9 @@ class SearchRecipesViewModel with ChangeNotifier {
       _streamController.add(SearchRecipesEvent.showNoSearchResultSnackBar());
     }
 
-    _saveSearchKeywordUseCase.execute(keyword);
+    if (keyword.trim().isNotEmpty) {
+      _saveSearchKeywordUseCase.execute(keyword);
+    }
     notifyListeners();
   }
 
