@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_recipe_app/core/enum/network_error.dart';
 import 'package:flutter_recipe_app/core/enum/rating_type.dart';
@@ -6,11 +8,15 @@ import 'package:flutter_recipe_app/core/enum/search_recipe_filter_time_type.dart
 import 'package:flutter_recipe_app/core/result.dart';
 import 'package:flutter_recipe_app/domain/model/recipe.dart';
 import 'package:flutter_recipe_app/domain/repository/recipe_repository.dart';
+import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_event.dart';
 import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_action.dart';
 import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_state.dart';
 
 class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
   final RecipeRepository _recipeRepository;
+  final StreamController<SearchRecipesEvent> _eventController = StreamController<SearchRecipesEvent>();
+
+  Stream<SearchRecipesEvent> get eventStream => _eventController.stream;
 
   SearchRecipesViewModel({
     required RecipeRepository recipeRepository,
@@ -74,10 +80,17 @@ class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
         .searchRecipes(keyword, timeType, ratingType, categoryType);
     switch (result) {
       case Success():
-        value = value.copyWith(
-          searchResultRecipes: result.data.isEmpty ? [] : result.data,
-        );
-        break;
+        final List<Recipe> searchRecipes = result.data;
+        if (searchRecipes.isEmpty) {
+          value = value.copyWith(
+            searchResultRecipes: [],
+          );
+          _eventController.add(SearchRecipesEvent.showEmptyResultError());
+        } else {
+          value = value.copyWith(
+            searchResultRecipes: result.data,
+          );
+        }
       case Error():
         value = value.copyWith(
           searchResultRecipes: [],

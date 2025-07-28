@@ -29,7 +29,7 @@ class SearchRecipesScreen extends StatelessWidget {
           children: [
             Padding(
               padding: EdgeInsets.only(
-                top: 10.0,
+                top: 40.0,
                 bottom: 17.0,
               ),
               child: ScreenTitleBar(
