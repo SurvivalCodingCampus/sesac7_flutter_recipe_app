@@ -8,6 +8,7 @@ import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_scr
 import 'package:flutter_recipe_app/presentation/sigin/sign_in_screen.dart';
 import 'package:flutter_recipe_app/presentation/sigin/sign_up_screen.dart';
 import 'package:flutter_recipe_app/presentation/splash/splash_screen.dart';
+import 'package:flutter_recipe_app/presentation/splash/splash_screen_root.dart';
 import 'package:go_router/go_router.dart';
 
 final router = GoRouter(
@@ -54,8 +55,9 @@ final router = GoRouter(
     GoRoute(
       path: Routes.splash,
       builder: (context, state) {
-        return SplashScreen(
-          onStartButtonClick: () {
+        return SplashScreenRoot(
+          splashViewModel: getIt(),
+          moveSignInScreen: () {
             context.go(Routes.signIn);
           },
         );
