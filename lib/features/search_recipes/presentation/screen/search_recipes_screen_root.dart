@@ -27,7 +27,7 @@ class _SearchRecipesScreenRootState extends State<SearchRecipesScreenRoot> {
   @override
   void initState() {
     super.initState();
-    _streamSubscription = widget.viewModel.eventStream.stream.listen(
+    _streamSubscription = widget.viewModel.eventStream.listen(
       (event) {
         if (!context.mounted) {
           return;

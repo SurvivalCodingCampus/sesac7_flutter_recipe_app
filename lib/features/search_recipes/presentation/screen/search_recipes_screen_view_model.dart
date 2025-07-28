@@ -19,7 +19,7 @@ class SearchRecipesScreenViewModel with ChangeNotifier {
   final FetchRecipesUseCase _fetchRecipesUseCase;
   final _eventController = StreamController<SearchRecipesEvent>();
 
-  StreamController<SearchRecipesEvent> get eventStream => _eventController;
+  Stream<SearchRecipesEvent> get eventStream => _eventController.stream;
 
   SearchRecipesScreenState _state = const SearchRecipesScreenState();
 
