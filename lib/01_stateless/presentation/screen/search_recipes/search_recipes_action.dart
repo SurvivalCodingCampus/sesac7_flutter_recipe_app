@@ -9,11 +9,13 @@ part 'search_recipes_action.freezed.dart';
 sealed class SearchRecipesAction with _$SearchRecipesAction {
   const factory SearchRecipesAction.changeQuery(String query) = ChangeQuery;
 
-  const factory SearchRecipesAction.openDialog() = OpenDialog;
+  const factory SearchRecipesAction.clickFilterButton() = ClickFilterButton;
 
   const factory SearchRecipesAction.applyFilter(FilterSearchState state) =
       ApplyFilter;
 
   const factory SearchRecipesAction.clickRecipeItem(Recipe recipe) =
       ClickRecipeItem;
+
+  const factory SearchRecipesAction.clickTitle() = ClickTitle;
 }

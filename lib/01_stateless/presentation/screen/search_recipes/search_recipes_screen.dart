@@ -17,9 +17,13 @@ class SearchRecipesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Search recipes'),
+        title: GestureDetector(
+          onTap: () => onAction(SearchRecipesAction.clickTitle()),
+          child: Text('Search recipes'),
+        ),
         centerTitle: true,
       ),
+
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30.0),
         child: Column(
@@ -45,7 +49,7 @@ class SearchRecipesScreen extends StatelessWidget {
                 const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: () {
-                    onAction(SearchRecipesAction.openDialog());
+                    onAction(SearchRecipesAction.clickFilterButton());
                   },
                   child: const Text('필터'),
                 ),

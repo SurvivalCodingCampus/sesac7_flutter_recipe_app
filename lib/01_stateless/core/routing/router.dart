@@ -11,9 +11,7 @@ import '../../presentation/screen/main/main_screen.dart';
 import '../../presentation/screen/main/main_view_model.dart';
 import '../../presentation/screen/saved_recipes/saved_recipes_screen.dart';
 import '../../presentation/screen/saved_recipes/saved_recipes_view_model.dart';
-import '../../presentation/screen/search_recipes/search_recipes_screen.dart';
 import '../../presentation/screen/search_recipes/search_recipes_screen_root.dart';
-import '../../presentation/screen/search_recipes/search_recipes_view_model.dart';
 import '../../presentation/screen/tab/tab_screen.dart';
 
 final router = GoRouter(
