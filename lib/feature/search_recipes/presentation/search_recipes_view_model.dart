@@ -44,19 +44,7 @@ class SearchRecipesViewModel with ChangeNotifier {
   void init() async {
     _loadingState();
     await _fetchAllRecipes();
-
-    final result = await _fetchRecentSearchKeywordUseCase.execute();
-
-    switch (result) {
-      case Success<String, String>():
-        if (result.data.isEmpty) {
-          return;
-        }
-
-        _searchRecipe(result.data);
-      case Error<String, String>():
-        _errorState(result.error);
-    }
+    await _fetchRecentSearchKeyword();
   }
 
   Future<void> _fetchAllRecipes() async {
@@ -76,6 +64,21 @@ class SearchRecipesViewModel with ChangeNotifier {
         notifyListeners();
       case Error<List<Recipe>, NetworkError>():
         _errorState(result.error.toString());
+    }
+  }
+
+  Future<void> _fetchRecentSearchKeyword() async {
+    final result = await _fetchRecentSearchKeywordUseCase.execute();
+
+    switch (result) {
+      case Success<String, String>():
+        if (result.data.isEmpty) {
+          return;
+        }
+
+        _searchRecipe(result.data);
+      case Error<String, String>():
+        _errorState(result.error);
     }
   }
 
@@ -121,19 +124,8 @@ class SearchRecipesViewModel with ChangeNotifier {
       _streamController.add(SearchRecipesEvent.showNoSearchResultSnackBar());
     }
 
-    _saveSearchKeyword(keyword);
+    _saveSearchKeywordUseCase.execute(keyword);
     notifyListeners();
-  }
-
-  void _saveSearchKeyword(String value) async {
-    final result = await _saveSearchKeywordUseCase.execute(value);
-
-    switch (result) {
-      case Success<void, String>():
-        return;
-      case Error<void, String>():
-        _errorState(result.error);
-    }
   }
 
   void _loadingState() {
