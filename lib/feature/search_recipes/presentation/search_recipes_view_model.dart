@@ -1,30 +1,34 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/core/utils/debouncer.dart';
 import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
+import 'package:flutter_recipe_app/core/domain/use_case/fetch_all_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/model/search_state_type.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/filter_recipes_use_case.dart';
-import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/get_all_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/filter_search_state.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_action.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_event.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_state.dart';
 
 class SearchRecipesViewModel with ChangeNotifier {
-  final GetAllRecipesUseCase _getAllRecipesUseCase;
+  final FetchAllRecipesUseCase _fetchAllRecipesUseCase;
   final FilterRecipesUseCase _filterRecipesUseCase;
   final StreamController<SearchRecipesEvent> _streamController =
       StreamController();
+  final Debouncer _debouncer;
 
   SearchRecipesState _state = SearchRecipesState();
 
   SearchRecipesViewModel({
-    required GetAllRecipesUseCase getAllRecipesUseCase,
+    required FetchAllRecipesUseCase fetchAllRecipesUseCase,
     required FilterRecipesUseCase filterRecipesUseCase,
-  }) : _getAllRecipesUseCase = getAllRecipesUseCase,
-       _filterRecipesUseCase = filterRecipesUseCase;
+    required Debouncer debouncer,
+  }) : _fetchAllRecipesUseCase = fetchAllRecipesUseCase,
+       _filterRecipesUseCase = filterRecipesUseCase,
+       _debouncer = debouncer;
 
   SearchRecipesState get state => _state;
   Stream<SearchRecipesEvent> get eventStream => _streamController.stream;
@@ -32,7 +36,7 @@ class SearchRecipesViewModel with ChangeNotifier {
   void init() async {
     _loadingState();
 
-    final result = await _getAllRecipesUseCase.execute();
+    final result = await _fetchAllRecipesUseCase.execute();
 
     switch (result) {
       case Success<List<Recipe>, NetworkError>():
@@ -65,7 +69,9 @@ class SearchRecipesViewModel with ChangeNotifier {
   }
 
   void _searchRecipe(String keyword) {
-    _searchWithFilter(keyword, state.filterState);
+    _debouncer.run(
+      () => _searchWithFilter(keyword, state.filterState),
+    );
   }
 
   void _selectFilter(FilterSearchState filterState) {
@@ -85,6 +91,10 @@ class SearchRecipesViewModel with ChangeNotifier {
       searchState: SearchStateType.searchResult,
       filterState: filterState,
     );
+
+    if (filteredRecipes.isEmpty) {
+      _streamController.add(SearchRecipesEvent.showNoSearchResultSnackBar());
+    }
 
     notifyListeners();
   }

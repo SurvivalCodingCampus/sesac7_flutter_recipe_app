@@ -2,7 +2,8 @@ import 'package:flutter_recipe_app/core/data/data_source/recipe/recipe_data_sour
 import 'package:flutter_recipe_app/core/data/data_source/recipe/recipe_data_source_impl.dart';
 import 'package:flutter_recipe_app/core/data/repository/recipe/recipe_repository_impl.dart';
 import 'package:flutter_recipe_app/core/domain/repository/recipe/recipe_repository.dart';
-import 'package:flutter_recipe_app/feature/home/domain/use_case/fetch_all_recipes_use_case.dart';
+import 'package:flutter_recipe_app/core/domain/use_case/fetch_all_recipes_use_case.dart';
+import 'package:flutter_recipe_app/core/utils/debouncer.dart';
 import 'package:flutter_recipe_app/feature/home/domain/use_case/filter_home_recipe_category_use_case.dart';
 import 'package:flutter_recipe_app/feature/home/presentation/home_view_model.dart';
 import 'package:flutter_recipe_app/feature/ingredient/data/repository/mocks/mock_ingredient_repository_impl.dart';
@@ -19,6 +20,8 @@ import 'package:flutter_recipe_app/feature/saved_recipes/domain/repository/bookm
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/get_saved_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/remove_saved_recipe_use_case.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_view_model.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/filter_recipes_use_case.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_view_model.dart';
 import 'package:flutter_recipe_app/feature/splash/data/repository/mock_system_controls_repository_impl.dart';
 import 'package:flutter_recipe_app/feature/splash/domain/repository/system_controls_repository.dart';
 import 'package:flutter_recipe_app/feature/splash/domain/use_case/is_airplane_mode_use_case.dart';
@@ -79,6 +82,9 @@ void diSetUp() {
     () => RemoveSavedRecipeUseCase(bookmarkRepository: getIt()),
   );
   getIt.registerLazySingleton(
+    () => FilterRecipesUseCase(),
+  );
+  getIt.registerLazySingleton(
     () => IsAirplaneModeUseCase(systemControlsRepository: getIt()),
   );
 
@@ -105,5 +111,12 @@ void diSetUp() {
   );
   getIt.registerFactory(
     () => SplashViewModel(isAirplaneModeUseCase: getIt()),
+  );
+  getIt.registerFactory(
+    () => SearchRecipesViewModel(
+      fetchAllRecipesUseCase: getIt(),
+      filterRecipesUseCase: getIt(),
+      debouncer: Debouncer(delay: Duration(milliseconds: 500)),
+    ),
   );
 }

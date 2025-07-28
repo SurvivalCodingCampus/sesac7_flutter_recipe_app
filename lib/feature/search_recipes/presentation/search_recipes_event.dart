@@ -6,4 +6,6 @@ part "search_recipes_event.freezed.dart";
 sealed class SearchRecipesEvent with _$SearchRecipesEvent {
   const factory SearchRecipesEvent.showErrorDialog(String message) =
       ShowErrorDialog;
+  const factory SearchRecipesEvent.showNoSearchResultSnackBar() =
+      ShowNoSearchResultSnackBar;
 }

@@ -34,6 +34,10 @@ class _SearchRecipesScreenRootState extends State<SearchRecipesScreenRoot> {
         switch (event) {
           case ShowErrorDialog():
             showErrorDialog(context, event.message);
+          case ShowNoSearchResultSnackBar():
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('검색 결과가 없습니다.')));
         }
       }
     });

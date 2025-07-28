@@ -15,4 +15,6 @@ abstract class Routes {
   static const String notifications = '/notifications';
 
   static const String profile = '/profile';
+
+  static const String search = '/search';
 }

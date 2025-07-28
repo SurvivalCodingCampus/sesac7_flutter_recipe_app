@@ -1,11 +1,10 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
 import 'package:flutter_recipe_app/feature/splash/domain/use_case/is_airplane_mode_use_case.dart';
 import 'package:flutter_recipe_app/feature/splash/presentation/splash_event.dart';
 
-class SplashViewModel with ChangeNotifier {
+class SplashViewModel {
   final IsAirplaneModeUseCase _isAirplaneModeUseCase;
   final StreamController<SplashEvent> _streamController = StreamController();
 
