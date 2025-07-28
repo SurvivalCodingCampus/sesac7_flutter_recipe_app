@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/routing/routes.dart';
+import 'package:flutter_recipe_app/features/splash/presentation/screen/splash_screen_root.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../di/di_setup.dart';
@@ -13,19 +14,17 @@ import '../../features/show_saved_recipes/presentation/screen/saved_recipes_scre
 import '../../features/show_saved_recipes/presentation/screen/saved_recipes_view_model.dart';
 import '../../features/sign_in/presentation/screen/sign_in_screen.dart';
 import '../../features/sign_up/presentation/screen/sign_up_screen.dart';
-import '../../features/splash/presentation/screen/splash_screen.dart';
+import '../../features/splash/presentation/screen/splash_screen_view_model.dart';
 import 'presentation/component/custom_bottom_app_bar.dart';
 
 final router = GoRouter(
-  initialLocation: Routes.splash,
+  initialLocation: Routes.main,
   routes: [
     GoRoute(
       path: Routes.splash,
       builder: (context, state) {
-        return SplashScreen(
-          onStart: () {
-            context.go(Routes.signIn);
-          },
+        return SplashScreenRoot(
+          viewModel: getIt<SplashScreenViewModel>()..fetchSystemSettings(),
         );
       },
     ),
