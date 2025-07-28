@@ -1,21 +1,26 @@
-import 'package:flutter_recipe_app/data/repository/mock_bookmark_repository_impl.dart';
-import 'package:flutter_recipe_app/presentation/screen/home_screen_view_model.dart';
+import 'package:flutter_recipe_app/features/home/presentation/screen/home_screen_view_model.dart';
 import 'package:get_it/get_it.dart';
 
-import '../data/data_source/bookmark_data_source.dart';
-import '../data/data_source/mock_bookmark_data_source_impl.dart';
-import '../data/data_source/mock_procedure_data_source_impl.dart';
-import '../data/data_source/mock_recipe_data_source_impl.dart';
-import '../data/data_source/procedure_data_source.dart';
-import '../data/data_source/recipe_data_source.dart';
-import '../data/repository/bookmark_repository.dart';
-import '../data/repository/mock_procedure_repository_impl.dart';
-import '../data/repository/mock_recipe_repository_impl.dart';
-import '../data/repository/procedure_repository.dart';
-import '../data/repository/recipe_repository.dart';
-import '../presentation/screen/ingredient_screen_view_model.dart';
-import '../presentation/screen/saved_recipes_view_model.dart';
-import '../presentation/screen/search_recipes_screen_view_model.dart';
+import '../core/data/recipe/data_source/mock_recipe_data_source_impl.dart';
+import '../core/data/recipe/data_source/recipe_data_source.dart';
+import '../core/data/recipe/domain/repository/recipe_repository.dart';
+import '../core/data/recipe/repository_impl/mock_recipe_repository_impl.dart';
+import '../data/bookmark/data_source/bookmark_data_source.dart';
+import '../data/bookmark/data_source/mock_bookmark_data_source_impl.dart';
+import '../data/bookmark/domain/repository/bookmark_repository.dart';
+import '../data/bookmark/repository_impl/mock_bookmark_repository_impl.dart';
+import '../data/procedure/data_source/mock_procedure_data_source_impl.dart';
+import '../data/procedure/data_source/procedure_data_source.dart';
+import '../data/procedure/domain/repository/procedure_repository.dart';
+import '../data/procedure/repository_impl/mock_procedure_repository_impl.dart';
+import '../features/search_recipes/data/domain/use_case/fetch_recipes_use_case.dart';
+import '../features/search_recipes/data/domain/use_case/filter_recipes_use_case.dart';
+import '../features/search_recipes/data/domain/use_case/search_recipes_use_case.dart';
+import '../features/search_recipes/presentation/screen/search_recipes_screen_view_model.dart';
+import '../features/show_ingredients/data/domain/use_case/fetch_procedure_by_id_use_case.dart';
+import '../features/show_ingredients/data/domain/use_case/fetch_recipe_by_id_use_case.dart';
+import '../features/show_ingredients/presentation/screen/ingredient_screen_view_model.dart';
+import '../features/show_saved_recipes/presentation/screen/saved_recipes_view_model.dart';
 
 final getIt = GetIt.instance;
 
@@ -29,6 +34,23 @@ void diSetup() {
   );
   getIt.registerLazySingleton<ProcedureDataSource>(
     () => MockProcedureDataSourceImpl(),
+  );
+
+  // UseCase
+  getIt.registerLazySingleton<FetchRecipesUseCase>(
+    () => FetchRecipesUseCase(recipeRepository: getIt()),
+  );
+  getIt.registerLazySingleton<SearchRecipesUseCase>(
+    () => SearchRecipesUseCase(),
+  );
+  getIt.registerLazySingleton<FilterRecipesUseCase>(
+    () => FilterRecipesUseCase(),
+  );
+  getIt.registerLazySingleton<FetchRecipeByIdUseCase>(
+    () => FetchRecipeByIdUseCase(recipeRepository: getIt()),
+  );
+  getIt.registerLazySingleton<FetchProcedureByIdUseCase>(
+    () => FetchProcedureByIdUseCase(procedureRepository: getIt()),
   );
 
   // Repository
@@ -51,12 +73,16 @@ void diSetup() {
   );
   getIt.registerFactory<IngredientScreenViewModel>(
     () => IngredientScreenViewModel(
-      recipeRepository: getIt(),
-      procedureRepository: getIt(),
+      fetchProcedureByIdUseCase: getIt(),
+      fetchRecipeByIdUseCase: getIt(),
     ),
   );
   getIt.registerFactory<SearchRecipesScreenViewModel>(
-    () => SearchRecipesScreenViewModel(recipeRepository: getIt()),
+    () => SearchRecipesScreenViewModel(
+      fetchRecipesUseCase: getIt(),
+      filterRecipesUseCase: getIt(),
+      searchRecipesUseCase: getIt(),
+    ),
   );
   getIt.registerFactory<HomeScreenViewModel>(
     () => HomeScreenViewModel(recipeRepository: getIt()),

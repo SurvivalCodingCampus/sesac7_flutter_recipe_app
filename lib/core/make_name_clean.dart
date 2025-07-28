@@ -1,10 +1,5 @@
-
-
+// 이름이 3단어 이상일 경우 분리한다.
 String getRecipeName(String name) {
-  return _formatRecipeName(name);
-}
-
-String _formatRecipeName(String name) {
   final List<String> listOfName = name.split(' ');
 
   if (listOfName.length > 3) {

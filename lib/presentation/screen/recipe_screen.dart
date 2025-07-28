@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
-import '../../data/model/ingredient.dart';
-import '../../data/model/recipe.dart';
-import '../component/big_button.dart';
-import '../component/clicked_filter_button.dart';
-import '../component/clicked_rating_button.dart';
-import '../component/ingredient_item.dart';
-import '../component/medium_button.dart';
+import '../../core/data/ingredient/domain/model/ingredient.dart';
+import '../../core/data/recipe/domain/model/recipe.dart';
+import '../../core/presentation/component/big_button.dart';
+import '../../core/presentation/component/clicked_filter_button.dart';
+import '../../core/presentation/component/clicked_rating_button.dart';
+import '../../core/presentation/component/medium_button.dart';
+import '../../core/presentation/component/small_button.dart';
+import '../../core/presentation/component/unclicked_filter_button.dart';
+import '../../core/presentation/component/unclicked_rating_button.dart';
+import '../../features/show_ingredients/presentation/component/ingredient_item.dart';
+import '../../features/show_ingredients/presentation/component/recipe_card.dart';
 import '../component/rating_dialog.dart';
-import '../component/recipe_card.dart';
-import '../component/small_button.dart';
-import '../component/unclicked_filter_button.dart';
-import '../component/unclicked_rating_button.dart';
 
 class RecipeScreen extends StatefulWidget {
   const RecipeScreen({super.key});

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../component/big_button.dart';
-import '../component/default_input_field.dart';
-import '../component/filled_input_field.dart';
-import '../component/focused_input_field.dart';
-import '../component/left_selected_tabs.dart';
-import '../component/left_selected_triple_tabs.dart';
-import '../component/medium_button.dart';
-import '../component/middle_selected_triple_tabs.dart';
-import '../component/right_selected_tabs.dart';
-import '../component/right_selected_triple_tabs.dart';
-import '../component/small_button.dart';
+import '../../core/presentation/component/big_button.dart';
+import '../../core/presentation/component/default_input_field.dart';
+import '../../core/presentation/component/filled_input_field.dart';
+import '../../core/presentation/component/focused_input_field.dart';
+import '../../core/presentation/component/left_selected_tabs.dart';
+import '../../core/presentation/component/left_selected_triple_tabs.dart';
+import '../../core/presentation/component/medium_button.dart';
+import '../../core/presentation/component/middle_selected_triple_tabs.dart';
+import '../../core/presentation/component/right_selected_tabs.dart';
+import '../../core/presentation/component/right_selected_triple_tabs.dart';
+import '../../core/presentation/component/small_button.dart';
 
 class StatelessWidgetStudyScreen extends StatelessWidget {
   const StatelessWidgetStudyScreen({super.key});
