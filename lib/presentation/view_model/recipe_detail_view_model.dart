@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/domain/use_case/get_recipe_detail_use_case.dart';
 
 import '../../domain/model/recipe.dart';
-import '../../domain/use_case/get_ingrident_use_case.dart';
-import '../../domain/use_case/get_procedure_use_case.dart';
 
 class RecipeDetailViewModel with ChangeNotifier {
   Recipe? _recipe;

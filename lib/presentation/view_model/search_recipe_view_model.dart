@@ -3,14 +3,16 @@ import 'package:flutter_recipe_app/core/result.dart';
 
 import '../../domain/model/recipe.dart';
 import '../../domain/repository/recipe_repository.dart';
+import '../screen/action/search_recipes_action.dart';
 import '../state_holder/filter_search_state.dart';
 import '../state_holder/search_recipes_state.dart';
 
 class SearchRecipeViewModel with ChangeNotifier {
   final RecipeRepository _recipeRepository;
 
-  SearchRecipesState _searchRecipesState = const SearchRecipesState();
+  //SearchRecipesState _searchRecipesState = const SearchRecipesState();
 
+  SearchRecipesState _searchRecipesState;
   SearchRecipesState get searchRecipesState => _searchRecipesState;
 
   SearchRecipeViewModel({
@@ -19,7 +21,23 @@ class SearchRecipeViewModel with ChangeNotifier {
   }) : _recipeRepository = recipeRepository,
        _searchRecipesState = initialState ?? const SearchRecipesState();
 
-  Future<void> fetchRecipes() async {
+  void onAction(SearchRecipesAction action) {
+    switch (action) {
+      case close():
+        break;
+      case textValueChange():
+        _searchRecipes(action.value);
+        break;
+      case callFilterBottomSheet():
+        break;
+      case savedFilterStatue():
+        _updateSearchFilterOptions(action.state);
+      case fetchRecipes():
+        _fetchRecipes();
+    }
+  }
+
+  Future<void> _fetchRecipes() async {
     _searchRecipesState = searchRecipesState.copyWith(isLoading: true);
     notifyListeners();
     try {
@@ -47,7 +65,7 @@ class SearchRecipeViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> searchRecipes(String keyword) async {
+  Future<void> _searchRecipes(String keyword) async {
     try {
       _searchRecipesState = searchRecipesState.copyWith(keyword: keyword);
 
@@ -92,7 +110,7 @@ class SearchRecipeViewModel with ChangeNotifier {
     }
   }
 
-  void updateSearchFilterOptions(FilterSearchState filterSearchState) {
+  void _updateSearchFilterOptions(FilterSearchState filterSearchState) {
 
     try {
       _searchRecipesState = _searchRecipesState.copyWith(
