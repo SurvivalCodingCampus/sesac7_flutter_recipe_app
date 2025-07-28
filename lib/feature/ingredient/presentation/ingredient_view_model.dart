@@ -126,7 +126,7 @@ class IngredientViewModel with ChangeNotifier {
       isLoading: false,
     );
 
-    _streamController.add(IngredientEvent.openErrorDialog(message));
+    _streamController.add(IngredientEvent.showErrorDialog(message));
 
     notifyListeners();
   }

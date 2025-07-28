@@ -30,7 +30,7 @@ class _HomeScreenRootState extends State<HomeScreenRoot> {
     _subscription = widget.viewModel.eventStream.listen((event) {
       if (mounted) {
         switch (event) {
-          case HomeEvent.openErrorDialog:
+          case ShowErrorDialog():
             showErrorDialog(context, event.message);
         }
       }

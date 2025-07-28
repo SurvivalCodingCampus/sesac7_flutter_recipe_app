@@ -32,7 +32,7 @@ class _SearchRecipesScreenRootState extends State<SearchRecipesScreenRoot> {
     _subscription = widget.viewModel.eventStream.listen((event) {
       if (mounted) {
         switch (event) {
-          case SearchRecipesEvent.showErrorDialog:
+          case ShowErrorDialog():
             showErrorDialog(context, event.message);
         }
       }

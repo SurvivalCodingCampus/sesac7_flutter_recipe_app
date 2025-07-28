@@ -34,7 +34,7 @@ class _IngredientScreenRootState extends State<IngredientScreenRoot> {
     _subscription = widget.viewModel.eventStream.listen((event) {
       if (mounted) {
         switch (event) {
-          case IngredientEvent.openErrorDialog:
+          case ShowErrorDialog():
             showErrorDialog(context, event.message);
         }
       }

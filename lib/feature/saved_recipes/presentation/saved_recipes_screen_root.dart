@@ -32,7 +32,7 @@ class _SavedRecipesScreenRootState extends State<SavedRecipesScreenRoot> {
     _subscription = widget.viewModel.eventStream.listen((event) {
       if (mounted) {
         switch (event) {
-          case SavedRecipesEvent.showErrorDialog:
+          case ShowErrorDialog():
             showErrorDialog(context, event.message);
         }
       }

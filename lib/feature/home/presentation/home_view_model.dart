@@ -85,7 +85,7 @@ class HomeViewModel with ChangeNotifier {
     _state = state.copyWith(
       isLoading: false,
     );
-    _streamController.add(HomeEvent.openErrorDialog(message));
+    _streamController.add(HomeEvent.showErrorDialog(message));
 
     notifyListeners();
   }
