@@ -7,7 +7,6 @@ import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_screen
 import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_screen_root.dart';
 import 'package:flutter_recipe_app/presentation/sigin/sign_in_screen.dart';
 import 'package:flutter_recipe_app/presentation/sigin/sign_up_screen.dart';
-import 'package:flutter_recipe_app/presentation/splash/splash_screen.dart';
 import 'package:flutter_recipe_app/presentation/splash/splash_screen_root.dart';
 import 'package:go_router/go_router.dart';
 
@@ -30,7 +29,12 @@ final router = GoRouter(
             GoRoute(
               path: Routes.home,
               builder: (context, state) {
-                return HomeScreenRoot(getIt());
+                return HomeScreenRoot(
+                  getIt(),
+                  moveSearchRecipeScreen: () {
+                    context.push(Routes.searchRecipe);
+                  },
+                );
               },
             ),
           ],
@@ -116,7 +120,7 @@ final router = GoRouter(
       ],
     ),
     GoRoute(
-      path: Routes.searchRecipeRelative,
+      path: Routes.searchRecipe,
       builder: (context, state) {
         return SearchRecipesScreenRoot(getIt());
       },

@@ -74,6 +74,9 @@ class HomeScreen extends StatelessWidget {
                       SearchInputField(
                         hint: 'Search recipe',
                         onSearchKeywordChange: (searchKeyword) {},
+                        onSearchIconClick: () {
+                          onAction(HomeAction.moveSearchRecipeScreen());
+                        },
                       ),
                       SizedBox(
                         width: 20.0,

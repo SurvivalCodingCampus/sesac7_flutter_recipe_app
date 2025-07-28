@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/presentation/home/home_action.dart';
 import 'package:flutter_recipe_app/presentation/home/home_screen.dart';
 import 'package:flutter_recipe_app/presentation/home/home_view_model.dart';
 
 class HomeScreenRoot extends StatefulWidget {
   final HomeViewModel _homeViewModel;
+  final VoidCallback moveSearchRecipeScreen;
 
   const HomeScreenRoot(
     HomeViewModel homeViewModel, {
     super.key,
+    required this.moveSearchRecipeScreen,
   }) : _homeViewModel = homeViewModel;
 
   @override
@@ -30,7 +33,11 @@ class _HomeScreenRootState extends State<HomeScreenRoot> {
         return HomeScreen(
           state: value,
           onAction: (action) {
-            widget._homeViewModel.onAction(action);
+            if (action is MoveSearchRecipeScreen) {
+              widget.moveSearchRecipeScreen();
+            } else {
+              widget._homeViewModel.onAction(action);
+            }
           },
         );
       },
