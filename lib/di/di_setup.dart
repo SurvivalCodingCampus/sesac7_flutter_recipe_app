@@ -1,7 +1,11 @@
 import 'package:flutter_recipe_app/core/domain/repository/mock_recipe_repository.dart';
 import 'package:get_it/get_it.dart';
 
+import '../core/data/mock/mock_network_repository.dart';
+import '../core/domain/repository/network_repository.dart';
 import '../core/domain/repository/recipes_repository.dart';
+import '../core/domain/use_case/check_network_status_use_case.dart';
+import '../core/presentation/screen/splash_screen/splash_screen_view_model.dart';
 import '../saved_recipes/domain/use_case/fetch_recipes_use_case.dart';
 import '../saved_recipes/domain/use_case/unsaved_recipe_use_case.dart';
 import '../saved_recipes/presentation/saved_recipes_state.dart';
@@ -17,6 +21,11 @@ void diSetup() {
   // 싱글톤으로 한번만 생성
   getIt.registerLazySingleton<RecipeRepository>(
       () => MockRecipeRepository(),
+  );
+
+  // 네트워크 비행기모드 확인
+  getIt.registerLazySingleton<NetworkRepository>(
+    () => MockNetworkRepository(),
   );
 
   // UseCase
@@ -37,6 +46,12 @@ void diSetup() {
     () => FilterRecipesUseCase(),
   );
 
+  getIt.registerLazySingleton<CheckNetworkStatusUseCase>(
+    () => CheckNetworkStatusUseCase(
+      networkRepository: getIt<NetworkRepository>(),
+    ),
+  );
+
   // viewModel
   getIt.registerFactory<SavedRecipesViewModel>(
     () => SavedRecipesViewModel(
@@ -52,5 +67,11 @@ void diSetup() {
         searchRecipesUseCase: getIt<SearchRecipesUseCase>(),
         filterRecipesUseCase: getIt<FilterRecipesUseCase>(),
       ),
+  );
+
+  getIt.registerFactory<SplashScreenViewModel>(
+    () => SplashScreenViewModel(
+        checkNetworkStatusUseCase: getIt<CheckNetworkStatusUseCase>(),
+    ),
   );
 }

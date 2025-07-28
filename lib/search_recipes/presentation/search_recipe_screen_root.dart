@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/search_recipes/presentation/search_recipe_event.dart';
 import 'package:flutter_recipe_app/search_recipes/presentation/search_recipe_screen.dart';
 import 'package:flutter_recipe_app/search_recipes/presentation/search_recipes_action.dart';
 import 'package:flutter_recipe_app/search_recipes/presentation/search_recipes_view_model.dart';
@@ -8,6 +11,7 @@ import '../../core/presentation/component/bottom_sheet/filter_search_bottom_shee
 class SearchRecipeScreenRoot extends StatefulWidget {
   final SearchRecipesViewModel viewModel;
 
+
   const SearchRecipeScreenRoot({super.key, required this.viewModel});
 
   @override
@@ -16,10 +20,39 @@ class SearchRecipeScreenRoot extends StatefulWidget {
 
 class _SearchRecipeScreenRootState extends State<SearchRecipeScreenRoot> {
 
+  StreamSubscription? _eventSubscription;
+
   @override
   void initState() {
     super.initState();
     widget.viewModel.loadRecipes();
+    _eventSubscription = widget.viewModel.eventStream.listen((event) {
+      if (mounted) {
+        switch (event) {
+          case ShowEmptyResultSnackBar():
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(event.message),
+                duration: const Duration(seconds: 3),
+              ),
+            );
+            break;
+          case ShowNetworkErrorSnackBar():
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(event.message),
+                duration: const Duration(seconds: 3),
+              ),
+            );
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _eventSubscription?.cancel();
+    super.dispose();
   }
 
   @override

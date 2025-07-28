@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/presentation/component/button/big_button.dart';
-import 'package:flutter_recipe_app/core/presentation/screen/splash_screen/splash_screen_view_model.dart';
+import 'package:flutter_recipe_app/core/presentation/screen/splash_screen/splash_screen_action.dart';
+import 'package:flutter_recipe_app/core/presentation/screen/splash_screen/splash_screen_state.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../routing/routes.dart';
@@ -8,9 +9,10 @@ import '../../../../ui/app_colors.dart';
 import '../../../../ui/text_styles.dart';
 
 class SplashScreen extends StatelessWidget {
-  // final SplashScreenViewModel viewModel;
+  final SplashScreenState state;
+  final void Function(SplashScreenAction action) onAction;
 
-  const SplashScreen({super.key});
+  const SplashScreen({super.key, required this.state, required this.onAction});
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,7 @@ class SplashScreen extends StatelessWidget {
                   BigButton(
                     text: 'Start Cooking',
                     onTap: () {
-                      context.go(Routes.signIn);
+                      onAction(SplashScreenAction.startButtonClicked());
                     },
                     isDisabled: false,
                   ),

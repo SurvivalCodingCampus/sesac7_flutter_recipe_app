@@ -87,7 +87,7 @@ class SearchRecipeScreen extends StatelessWidget {
                         ),
                         child: Center(
                           child: SvgPicture.asset(
-                            'lib/asset/ic_setting.svg',
+                            'asset/ic_setting.svg',
                             width: 24,
                             height: 24,
                             colorFilter: const ColorFilter.mode(
