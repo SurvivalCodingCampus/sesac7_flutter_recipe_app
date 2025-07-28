@@ -1,10 +1,14 @@
 enum NetworkError {
-  requestTimeout, // 408
-  unauthorized, // 401
-  notFound, // 404
-  serverError, // 500~600
-  unKnown, //
-  jsonParsingError,
+  requestTimeout('Request Timeout'), // 408
+  unauthorized('Unauthorized'), // 401
+  notFound('Not Found'), // 404
+  serverError('Server Error'), // 500~600
+  unKnown('UnKnown Error'), //
+  jsonParsingError('Json Parsing Error');
+
+  final String message;
+
+  const NetworkError(this.message);
 }
 
 extension StatusCodeToNetworkErrorType on int {
