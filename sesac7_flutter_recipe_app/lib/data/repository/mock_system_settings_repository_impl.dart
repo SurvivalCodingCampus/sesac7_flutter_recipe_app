@@ -4,6 +4,6 @@ import 'package:flutter_recipe_app/domain/repository/system_settings_repoisitory
 class MockSystemSettingsRepositoryImpl implements SystemSettingsRepository {
   @override
   Result<bool, String> getAirplaneModeActivate() {
-    return Success(true);
+    return Success(false);
   }
 }
