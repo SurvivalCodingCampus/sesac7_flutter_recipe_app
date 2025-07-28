@@ -15,10 +15,9 @@ import '../../features/sign_in/presentation/screen/sign_in_screen.dart';
 import '../../features/sign_up/presentation/screen/sign_up_screen.dart';
 import '../../features/splash/presentation/screen/splash_screen.dart';
 import 'presentation/component/custom_bottom_app_bar.dart';
-import 'presentation/screen/main_screen.dart';
 
 final router = GoRouter(
-  initialLocation: Routes.bookmark,
+  initialLocation: Routes.splash,
   routes: [
     GoRoute(
       path: Routes.splash,
@@ -90,15 +89,13 @@ final router = GoRouter(
                 final viewModel = getIt<HomeScreenViewModel>();
                 viewModel.fetchRecipes();
 
-                return MainScreen(
-                  body: ListenableBuilder(
-                    listenable: viewModel,
-                    builder: (BuildContext context, Widget? child) {
-                      return HomeScreen(
-                        viewModel: viewModel,
-                      );
-                    },
-                  ),
+                return ListenableBuilder(
+                  listenable: viewModel,
+                  builder: (BuildContext context, Widget? child) {
+                    return HomeScreen(
+                      viewModel: viewModel,
+                    );
+                  },
                 );
               },
             ),
@@ -111,18 +108,16 @@ final router = GoRouter(
               builder: (context, state) {
                 final viewModel = getIt<SavedRecipesViewModel>();
 
-                return MainScreen(
-                  body: ListenableBuilder(
-                    listenable: viewModel,
-                    builder: (BuildContext context, Widget? child) {
-                      return SavedRecipesScreen(
-                        viewModel: viewModel,
-                        onClickCard: (id) {
-                          context.push('${Routes.ingredient}/$id');
-                        },
-                      );
-                    },
-                  ),
+                return ListenableBuilder(
+                  listenable: viewModel,
+                  builder: (BuildContext context, Widget? child) {
+                    return SavedRecipesScreen(
+                      viewModel: viewModel,
+                      onClickCard: (id) {
+                        context.push('${Routes.ingredient}/$id');
+                      },
+                    );
+                  },
                 );
               },
             ),
@@ -133,11 +128,9 @@ final router = GoRouter(
             GoRoute(
               path: Routes.notification,
               builder: (context, state) {
-                return MainScreen(
-                  body: SearchRecipesScreenRoot(
-                    searchRecipesScreenViewModel:
-                        getIt<SearchRecipesScreenViewModel>()..fetchRecipes(),
-                  ),
+                return SearchRecipesScreenRoot(
+                  searchRecipesScreenViewModel:
+                      getIt<SearchRecipesScreenViewModel>()..fetchRecipes(),
                 );
               },
             ),
@@ -150,16 +143,14 @@ final router = GoRouter(
               builder: (context, state) {
                 final viewModel = getIt<SavedRecipesViewModel>();
 
-                return MainScreen(
-                  body: ListenableBuilder(
-                    listenable: viewModel,
-                    builder: (BuildContext context, Widget? child) {
-                      return SavedRecipesScreen(
-                        viewModel: viewModel,
-                        onClickCard: (id) {},
-                      );
-                    },
-                  ),
+                return ListenableBuilder(
+                  listenable: viewModel,
+                  builder: (BuildContext context, Widget? child) {
+                    return SavedRecipesScreen(
+                      viewModel: viewModel,
+                      onClickCard: (id) {},
+                    );
+                  },
                 );
               },
             ),
