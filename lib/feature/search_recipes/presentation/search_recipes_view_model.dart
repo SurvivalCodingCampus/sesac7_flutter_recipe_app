@@ -7,7 +7,9 @@ import 'package:flutter_recipe_app/core/utils/result.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/core/domain/use_case/fetch_all_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/model/search_state_type.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/fetch_recent_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/filter_recipes_use_case.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/save_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/filter_search_state.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_action.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_event.dart';
@@ -16,6 +18,8 @@ import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_re
 class SearchRecipesViewModel with ChangeNotifier {
   final FetchAllRecipesUseCase _fetchAllRecipesUseCase;
   final FilterRecipesUseCase _filterRecipesUseCase;
+  final FetchRecentSearchKeywordUseCase _fetchRecentSearchKeywordUseCase;
+  final SaveSearchKeywordUseCase _saveSearchKeywordUseCase;
   final StreamController<SearchRecipesEvent> _streamController =
       StreamController();
   final Debouncer _debouncer;
@@ -25,9 +29,13 @@ class SearchRecipesViewModel with ChangeNotifier {
   SearchRecipesViewModel({
     required FetchAllRecipesUseCase fetchAllRecipesUseCase,
     required FilterRecipesUseCase filterRecipesUseCase,
+    required FetchRecentSearchKeywordUseCase fetchRecentSearchKeywordUseCase,
+    required SaveSearchKeywordUseCase saveSearchKeywordUseCase,
     required Debouncer debouncer,
   }) : _fetchAllRecipesUseCase = fetchAllRecipesUseCase,
        _filterRecipesUseCase = filterRecipesUseCase,
+       _fetchRecentSearchKeywordUseCase = fetchRecentSearchKeywordUseCase,
+       _saveSearchKeywordUseCase = saveSearchKeywordUseCase,
        _debouncer = debouncer;
 
   SearchRecipesState get state => _state;
@@ -35,7 +43,23 @@ class SearchRecipesViewModel with ChangeNotifier {
 
   void init() async {
     _loadingState();
+    await _fetchAllRecipes();
 
+    final result = await _fetchRecentSearchKeywordUseCase.execute();
+
+    switch (result) {
+      case Success<String, String>():
+        if (result.data.isEmpty) {
+          return;
+        }
+
+        _searchRecipe(result.data);
+      case Error<String, String>():
+        _errorState(result.error);
+    }
+  }
+
+  Future<void> _fetchAllRecipes() async {
     final result = await _fetchAllRecipesUseCase.execute();
 
     switch (result) {
@@ -90,13 +114,26 @@ class SearchRecipesViewModel with ChangeNotifier {
       searchFieldValue: keyword,
       searchState: SearchStateType.searchResult,
       filterState: filterState,
+      isLoading: false,
     );
 
     if (filteredRecipes.isEmpty) {
       _streamController.add(SearchRecipesEvent.showNoSearchResultSnackBar());
     }
 
+    _saveSearchKeyword(keyword);
     notifyListeners();
+  }
+
+  void _saveSearchKeyword(String value) async {
+    final result = await _saveSearchKeywordUseCase.execute(value);
+
+    switch (result) {
+      case Success<void, String>():
+        return;
+      case Error<void, String>():
+        _errorState(result.error);
+    }
   }
 
   void _loadingState() {

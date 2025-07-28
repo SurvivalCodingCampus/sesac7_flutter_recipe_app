@@ -20,7 +20,11 @@ import 'package:flutter_recipe_app/feature/saved_recipes/domain/repository/bookm
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/get_saved_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/remove_saved_recipe_use_case.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_view_model.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/data/repository/mock_search_history_repository_impl.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/repository/search_history_repository.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/fetch_recent_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/filter_recipes_use_case.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/save_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_view_model.dart';
 import 'package:flutter_recipe_app/feature/splash/data/repository/mock_system_controls_repository_impl.dart';
 import 'package:flutter_recipe_app/feature/splash/domain/repository/system_controls_repository.dart';
@@ -51,6 +55,9 @@ void diSetUp() {
   );
   getIt.registerLazySingleton<SystemControlsRepository>(
     () => MockSystemControlsRepositoryImpl(),
+  );
+  getIt.registerLazySingleton<SearchHistoryRepository>(
+    () => MockSearchHistoryRepositoryImpl(),
   );
 
   // Use Case
@@ -87,6 +94,12 @@ void diSetUp() {
   getIt.registerLazySingleton(
     () => IsAirplaneModeUseCase(systemControlsRepository: getIt()),
   );
+  getIt.registerLazySingleton(
+    () => FetchRecentSearchKeywordUseCase(searchHistoryRepository: getIt()),
+  );
+  getIt.registerLazySingleton(
+    () => SaveSearchKeywordUseCase(searchHistoryRepository: getIt()),
+  );
 
   // View Model
   getIt.registerFactory(
@@ -116,6 +129,8 @@ void diSetUp() {
     () => SearchRecipesViewModel(
       fetchAllRecipesUseCase: getIt(),
       filterRecipesUseCase: getIt(),
+      fetchRecentSearchKeywordUseCase: getIt(),
+      saveSearchKeywordUseCase: getIt(),
       debouncer: Debouncer(delay: Duration(milliseconds: 500)),
     ),
   );

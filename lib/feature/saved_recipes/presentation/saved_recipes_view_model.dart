@@ -14,20 +14,20 @@ class SavedRecipesViewModel with ChangeNotifier {
   final GetSavedRecipesUseCase _getSavedRecipesUseCase;
   final RemoveSavedRecipeUseCase _removeSavedRecipeUseCase;
   final StreamController<SavedRecipesEvent> _streamController =
-      StreamController();
+      StreamController.broadcast();
 
   SavedRecipesState _state = SavedRecipesState();
 
   SavedRecipesViewModel({
     required GetSavedRecipesUseCase getSavedRecipesUseCase,
     required RemoveSavedRecipeUseCase removeSavedRecipeUseCase,
-  }) : _getSavedRecipesUseCase = getSavedRecipesUseCase,
-       _removeSavedRecipeUseCase = removeSavedRecipeUseCase;
+  })  : _getSavedRecipesUseCase = getSavedRecipesUseCase,
+        _removeSavedRecipeUseCase = removeSavedRecipeUseCase;
 
   SavedRecipesState get state => _state;
   Stream<SavedRecipesEvent> get eventStream => _streamController.stream;
 
-  void init() async {
+  Future<void> init() async {
     _loadingState();
 
     final result = await _getSavedRecipesUseCase.execute();
@@ -39,23 +39,27 @@ class SavedRecipesViewModel with ChangeNotifier {
           isLoading: false,
         );
       case Error<List<Recipe>, NetworkError>():
-        _errorState(result.error.toString());
+        _state = state.copyWith(
+          savedRecipes: [],
+          isLoading: false,
+        );
+        _streamController.add(SavedRecipesEvent.showErrorDialog(result.error.toString()));
     }
 
     notifyListeners();
   }
 
-  void onAction(SavedRecipesAction action) async {
+  Future<void> onAction(SavedRecipesAction action) async {
     switch (action) {
       case TapRecipeCard():
         // TODO: Handle this case.
         throw UnimplementedError();
       case TapRecipeBookmark():
-        _removeSavedRecipe(action.recipeId);
+        await _removeSavedRecipe(action.recipeId);
     }
   }
 
-  void _removeSavedRecipe(String id) async {
+  Future<void> _removeSavedRecipe(String id) async {
     _loadingState();
 
     final result = await _removeSavedRecipeUseCase.execute(
@@ -70,26 +74,24 @@ class SavedRecipesViewModel with ChangeNotifier {
           isLoading: false,
         );
 
-        notifyListeners();
       case Error<List<Recipe>, NetworkError>():
-        _errorState(result.error.toString());
+        _state = state.copyWith(
+          isLoading: false,
+        );
+        _streamController.add(SavedRecipesEvent.showErrorDialog(result.error.toString()));
     }
+    notifyListeners();
   }
 
   void _loadingState() {
     _state = state.copyWith(isLoading: true);
-
     notifyListeners();
   }
 
-  void _errorState(String message) {
-    _state = state.copyWith(
-      savedRecipes: [],
-      isLoading: false,
-    );
-
-    _streamController.add(SavedRecipesEvent.showErrorDialog(message));
-
-    notifyListeners();
+  @override
+  void dispose() {
+    _streamController.close();
+    super.dispose();
   }
 }
+

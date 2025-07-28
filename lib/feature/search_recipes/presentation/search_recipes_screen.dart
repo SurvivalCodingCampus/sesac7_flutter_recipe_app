@@ -39,6 +39,7 @@ class SearchRecipesScreen extends StatelessWidget {
                   Expanded(
                     child: SearchField(
                       placeholder: 'Search recipe',
+                      value: state.searchFieldValue,
                       onValueChange: (value) {
                         onAction(SearchRecipesAction.changeSearchValue(value));
                       },
