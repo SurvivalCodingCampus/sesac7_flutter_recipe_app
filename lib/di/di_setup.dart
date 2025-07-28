@@ -1,3 +1,4 @@
+import 'package:flutter_recipe_app/core/system_settings/domain/repository/mock_system_settings_repository.dart';
 import 'package:flutter_recipe_app/features/home/presentation/screen/home_screen_view_model.dart';
 import 'package:get_it/get_it.dart';
 
@@ -5,6 +6,7 @@ import '../core/data/recipe/data_source/mock_recipe_data_source_impl.dart';
 import '../core/data/recipe/data_source/recipe_data_source.dart';
 import '../core/data/recipe/domain/repository/recipe_repository.dart';
 import '../core/data/recipe/repository_impl/mock_recipe_repository_impl.dart';
+import '../core/system_settings/repository_impl/mock_system_settings_repository_impl.dart';
 import '../data/bookmark/data_source/bookmark_data_source.dart';
 import '../data/bookmark/data_source/mock_bookmark_data_source_impl.dart';
 import '../data/bookmark/domain/repository/bookmark_repository.dart';
@@ -21,6 +23,8 @@ import '../features/show_ingredients/data/domain/use_case/fetch_procedure_by_id_
 import '../features/show_ingredients/data/domain/use_case/fetch_recipe_by_id_use_case.dart';
 import '../features/show_ingredients/presentation/screen/ingredient_screen_view_model.dart';
 import '../features/show_saved_recipes/presentation/screen/saved_recipes_view_model.dart';
+import '../features/splash/data/domain/use_case/fetch_system_settings_use_case.dart';
+import '../features/splash/presentation/screen/splash_screen_view_model.dart';
 
 final getIt = GetIt.instance;
 
@@ -52,6 +56,9 @@ void diSetup() {
   getIt.registerLazySingleton<FetchProcedureByIdUseCase>(
     () => FetchProcedureByIdUseCase(procedureRepository: getIt()),
   );
+  getIt.registerLazySingleton<FetchSystemSettingsUseCase>(
+    () => FetchSystemSettingsUseCase(systemSettingsRepository: getIt()),
+  );
 
   // Repository
   getIt.registerLazySingleton<RecipeRepository>(
@@ -62,6 +69,9 @@ void diSetup() {
   );
   getIt.registerLazySingleton<ProcedureRepository>(
     () => MockProcedureRepositoryImpl(procedureDataSource: getIt()),
+  );
+  getIt.registerLazySingleton<MockSystemSettingsRepository>(
+    () => MockSystemSettingsRepositoryImpl(),
   );
 
   // ViewModel
@@ -86,5 +96,8 @@ void diSetup() {
   );
   getIt.registerFactory<HomeScreenViewModel>(
     () => HomeScreenViewModel(recipeRepository: getIt()),
+  );
+  getIt.registerFactory<SplashScreenViewModel>(
+    () => SplashScreenViewModel(fetchSystemSettingsUseCase: getIt()),
   );
 }
