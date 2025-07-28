@@ -8,7 +8,6 @@ import '../../../../ui/text_styles.dart';
 import '../component/filter_button.dart';
 import '../component/recipe_card_only_with_name.dart';
 import '../component/search_input_field.dart';
-import 'filter_search_bottom_sheet.dart';
 
 class SearchRecipesScreen extends StatelessWidget {
   // final SearchRecipesScreenViewModel viewModel;
@@ -64,23 +63,7 @@ class SearchRecipesScreen extends StatelessWidget {
                   SizedBox(width: 20),
                   FilterButton(
                     onFilterButtonClick: () {
-                      showModalBottomSheet(
-                        isScrollControlled: true,
-                        constraints: BoxConstraints(
-                          minWidth: double.infinity,
-                          minHeight: 484,
-                        ),
-                        context: context,
-                        backgroundColor: Colors.transparent,
-                        builder: (BuildContext context) {
-                          return FilterSearchBottomSheet(
-                            filterSearchState: state.filterSearchState,
-                            onClosing: (state) {
-                              onAction(SearchRecipesAction.applyFilter(state));
-                            },
-                          );
-                        },
-                      );
+                      onAction(SearchRecipesAction.showFilter());
                     },
                   ),
                 ],
