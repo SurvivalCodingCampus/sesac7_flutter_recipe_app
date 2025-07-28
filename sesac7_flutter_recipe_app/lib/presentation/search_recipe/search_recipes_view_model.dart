@@ -15,6 +15,8 @@ import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_sta
 class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
   final RecipeRepository _recipeRepository;
   final StreamController<SearchRecipesEvent> _eventController = StreamController<SearchRecipesEvent>();
+  final Duration _debounceDuration = const Duration(milliseconds: 500);
+  Timer? _debounceTimer;
 
   Stream<SearchRecipesEvent> get eventStream => _eventController.stream;
 
@@ -23,16 +25,28 @@ class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
   }) : _recipeRepository = recipeRepository,
        super(SearchRecipesState());
 
+  @override
+  void dispose() {
+    _eventController.close();
+    _debounceTimer?.cancel();
+    super.dispose();
+    }
+
   void onAction(SearchRecipesAction action) {
     switch (action) {
       case ChangeKeyword():
+        if (_debounceTimer?.isActive ?? false) {
+          _debounceTimer?.cancel();
+        }
         if (action.keyword.isEmpty) {
           _clearSearchResultRecipesAndSearchKeyword();
           fetchRecentRecipes();
         } else {
-          _fetchSearchResultRecipes(
-            keyword: action.keyword,
-          );
+          _debounceTimer = Timer(_debounceDuration, () {
+            _fetchSearchResultRecipes(
+              keyword: action.keyword,
+            );
+          });
         }
       case ShowFilterBottomSheet():
         break;
