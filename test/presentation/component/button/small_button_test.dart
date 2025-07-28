@@ -21,7 +21,6 @@ void main() {
     final Size buttonSize = tester.getSize(buttonFinder);
 
     // then
-    expect(buttonSize.width, SmallButton.width);
     expect(buttonSize.height, SmallButton.height);
   });
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/core/domain/model/recipe/ingredient.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/core/presentation/component/list_item/recipe_card.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -15,9 +14,9 @@ void main() {
       creator: 'Chef Mario',
       cookingTime: '30 min',
       rating: 4.7,
-      ingredients: [
-        Ingredient(id: '1', name: 'Pasta', imageUrl: '', weight: 200),
-      ],
+      imageWithoutBackground: '',
+      reviewCount: 0,
+      serve: 0,
     );
 
     testWidgets('renders all recipe details correctly', (tester) async {

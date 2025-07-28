@@ -14,7 +14,9 @@ void main() {
     creator: 'Chef John Doe',
     cookingTime: '45 min',
     rating: 4.5,
-    ingredients: [],
+    imageWithoutBackground: '',
+    reviewCount: 0,
+    serve: 0,
   );
 
   group('RecipeSearchCard Widget Test', () {

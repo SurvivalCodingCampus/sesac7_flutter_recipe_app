@@ -1,7 +1,10 @@
+import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
-import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
-import 'package:flutter_recipe_app/core/domain/repository/recipe/recipe_repository.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/get_saved_recipes_use_case.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/remove_saved_recipe_use_case.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_action.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_event.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -9,104 +12,133 @@ import 'package:mockito/mockito.dart';
 
 import 'saved_recipes_view_model_test.mocks.dart';
 
-// Mock listener to verify notifyListeners is called
-class MockListener extends Mock {
-  void call();
-}
-
-@GenerateMocks([RecipeRepository])
+@GenerateMocks([GetSavedRecipesUseCase, RemoveSavedRecipeUseCase])
 void main() {
   late SavedRecipesViewModel viewModel;
-  late MockRecipeRepository mockRecipeRepository;
-  late MockListener listener;
+  late MockGetSavedRecipesUseCase mockGetSavedRecipesUseCase;
+  late MockRemoveSavedRecipeUseCase mockRemoveSavedRecipeUseCase;
 
   setUpAll(() {
     provideDummy<Result<List<Recipe>, NetworkError>>(
-      Result.success([]),
+      const Result.success([]),
     );
   });
 
   setUp(() {
-    mockRecipeRepository = MockRecipeRepository();
-    viewModel = SavedRecipesViewModel(recipeRepository: mockRecipeRepository);
-    listener = MockListener();
-    viewModel.addListener(listener.call);
+    mockGetSavedRecipesUseCase = MockGetSavedRecipesUseCase();
+    mockRemoveSavedRecipeUseCase = MockRemoveSavedRecipeUseCase();
+    viewModel = SavedRecipesViewModel(
+      getSavedRecipesUseCase: mockGetSavedRecipesUseCase,
+      removeSavedRecipeUseCase: mockRemoveSavedRecipeUseCase,
+    );
   });
 
-  tearDown(() {
-    viewModel.removeListener(listener.call);
-  });
+  final mockRecipes = [
+    Recipe.empty.copyWith(id: '1', name: 'Test Recipe 1'),
+    Recipe.empty.copyWith(id: '2', name: 'Test Recipe 2'),
+  ];
 
-  group('fetchSavedRecipes', () {
-    final mockRecipes = [
-      Recipe(
-        id: '1',
-        name: 'Test Recipe 1',
-        category: 'Test',
-        creator: 'Chef',
-        imageUrl: '',
-        cookingTime: '10 min',
-        rating: 5.0,
-        ingredients: [],
-      ),
-      Recipe(
-        id: '2',
-        name: 'Test Recipe 2',
-        category: 'Test',
-        creator: 'Chef',
-        imageUrl: '',
-        cookingTime: '20 min',
-        rating: 4.5,
-        ingredients: [],
-      ),
-    ];
-
+  group('init', () {
     test(
-      'Success case: When recipes are fetched successfully, savedRecipes is updated and errorMessage is null',
+      'should load recipes successfully and update state',
       () async {
-        // Arrange
-        final successResult = Result<List<Recipe>, NetworkError>.success(
-          mockRecipes,
-        );
-        when(
-          mockRecipeRepository.fetchAllRecipes(),
-        ).thenAnswer((_) async => successResult);
+        // Given
+        when(mockGetSavedRecipesUseCase.execute())
+            .thenAnswer((_) async => Result.success(mockRecipes));
 
-        // Act
-        viewModel.init();
+        // When
+        await viewModel.init();
 
-        // Assert
+        // Then
         expect(viewModel.state.savedRecipes, mockRecipes);
-        expect(viewModel.state.errorMessage, isNull);
-        verify(mockRecipeRepository.fetchAllRecipes()).called(1);
-        verify(listener.call()).called(1);
+        expect(viewModel.state.isLoading, false);
+        verify(mockGetSavedRecipesUseCase.execute()).called(1);
       },
     );
 
+    test('should handle error when fetching recipes', () async {
+      // Given
+      const networkError = NetworkError.unknown;
+      when(mockGetSavedRecipesUseCase.execute())
+          .thenAnswer((_) async => const Result.error(networkError));
+
+      // Expect
+      final future = expectLater(
+        viewModel.eventStream,
+        emits(SavedRecipesEvent.showErrorDialog(networkError.toString())),
+      );
+
+      // When
+      await viewModel.init();
+
+      // Then
+      await future; // Wait for the event
+      expect(viewModel.state.savedRecipes, isEmpty);
+      expect(viewModel.state.isLoading, false);
+      verify(mockGetSavedRecipesUseCase.execute()).called(1);
+    });
+  });
+
+  group('onAction', () {
     test(
-      'Failure case: When fetching recipes fails, errorMessage is updated and savedRecipes is empty',
-      () async {
-        // Arrange
-        final errorResult = Result<List<Recipe>, NetworkError>.error(
-          NetworkError.unknown,
-        );
-        when(
-          mockRecipeRepository.fetchAllRecipes(),
-        ).thenAnswer((_) async => errorResult);
+        'should remove recipe successfully when TapRecipeBookmark is called',
+        () async {
+      // Given
+      when(mockGetSavedRecipesUseCase.execute())
+          .thenAnswer((_) async => Result.success(mockRecipes));
+      await viewModel.init();
 
-        // Act
-        viewModel.init();
+      final recipeToRemove = mockRecipes.first;
+      final updatedRecipes = mockRecipes.sublist(1);
 
-        // Assert
-        expect(viewModel.state.savedRecipes, isEmpty);
-        expect(viewModel.state.errorMessage, isNotNull);
-        expect(
-          viewModel.state.errorMessage,
-          'Failed to fetch saved recipes with error: ${NetworkError.unknown}',
-        );
-        verify(mockRecipeRepository.fetchAllRecipes()).called(1);
-        verify(listener.call()).called(1);
-      },
-    );
+      when(mockRemoveSavedRecipeUseCase.execute(
+        any,
+        recipeToRemove.id,
+      )).thenAnswer((_) async => Result.success(updatedRecipes));
+
+      // When
+      await viewModel.onAction(TapRecipeBookmark(recipeToRemove.id));
+
+      // Then
+      expect(viewModel.state.savedRecipes, updatedRecipes);
+      expect(viewModel.state.isLoading, false);
+      verify(mockRemoveSavedRecipeUseCase.execute(
+        any,
+        recipeToRemove.id,
+      )).called(1);
+    });
+
+    test('should handle error when removing recipe fails', () async {
+      // Given
+      when(mockGetSavedRecipesUseCase.execute())
+          .thenAnswer((_) async => Result.success(mockRecipes));
+      await viewModel.init();
+
+      final recipeToRemove = mockRecipes.first;
+      const networkError = NetworkError.unknown;
+
+      when(mockRemoveSavedRecipeUseCase.execute(
+        any,
+        recipeToRemove.id,
+      )).thenAnswer((_) async => const Result.error(networkError));
+
+      // Expect
+      final future = expectLater(
+        viewModel.eventStream,
+        emits(SavedRecipesEvent.showErrorDialog(networkError.toString())),
+      );
+
+      // When
+      await viewModel.onAction(TapRecipeBookmark(recipeToRemove.id));
+
+      // Then
+      await future; // Wait for the event
+      expect(viewModel.state.savedRecipes, mockRecipes);
+      expect(viewModel.state.isLoading, false);
+      verify(mockRemoveSavedRecipeUseCase.execute(
+        any,
+        recipeToRemove.id,
+      )).called(1);
+    });
   });
 }
