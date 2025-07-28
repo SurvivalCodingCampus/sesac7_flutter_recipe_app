@@ -7,22 +7,36 @@ import 'package:flutter_recipe_app/core/enum/search_recipe_filter_category_type.
 import 'package:flutter_recipe_app/core/enum/search_recipe_filter_time_type.dart';
 import 'package:flutter_recipe_app/core/result.dart';
 import 'package:flutter_recipe_app/domain/model/recipe.dart';
-import 'package:flutter_recipe_app/domain/repository/recipe_repository.dart';
+import 'package:flutter_recipe_app/domain/usecase/add_recent_recipes_use_case.dart';
+import 'package:flutter_recipe_app/domain/usecase/get_recent_recipes_use_case.dart';
+import 'package:flutter_recipe_app/domain/usecase/search_recipe_by_filter_use_case.dart';
+import 'package:flutter_recipe_app/domain/usecase/search_recipe_by_keyword_use_case.dart';
 import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_event.dart';
 import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_action.dart';
 import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_state.dart';
 
 class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
-  final RecipeRepository _recipeRepository;
-  final StreamController<SearchRecipesEvent> _eventController = StreamController<SearchRecipesEvent>();
+  final SearchRecipeByKeywordUseCase _searchRecipeByKeywordUseCase;
+  final SearchRecipeByFilterUseCase _searchRecipeByFilterUseCase;
+  final GetRecentRecipesUseCase _getRecentRecipesUseCase;
+  final AddRecentRecipesUseCase _addRecentRecipesUseCase;
+
+  final StreamController<SearchRecipesEvent> _eventController =
+      StreamController<SearchRecipesEvent>();
   final Duration _debounceDuration = const Duration(milliseconds: 500);
   Timer? _debounceTimer;
 
   Stream<SearchRecipesEvent> get eventStream => _eventController.stream;
 
   SearchRecipesViewModel({
-    required RecipeRepository recipeRepository,
-  }) : _recipeRepository = recipeRepository,
+    required SearchRecipeByKeywordUseCase searchRecipeByKeywordUseCase,
+    required SearchRecipeByFilterUseCase searchRecipeByFilterUseCase,
+    required GetRecentRecipesUseCase getRecentRecipesUseCase,
+    required AddRecentRecipesUseCase addRecentRecipesUseCase,
+  }) : _searchRecipeByKeywordUseCase = searchRecipeByKeywordUseCase,
+       _searchRecipeByFilterUseCase = searchRecipeByFilterUseCase,
+       _getRecentRecipesUseCase = getRecentRecipesUseCase,
+       _addRecentRecipesUseCase = addRecentRecipesUseCase,
        super(SearchRecipesState());
 
   @override
@@ -30,7 +44,7 @@ class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
     _eventController.close();
     _debounceTimer?.cancel();
     super.dispose();
-    }
+  }
 
   void onAction(SearchRecipesAction action) {
     switch (action) {
@@ -62,8 +76,8 @@ class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
   Future<void> fetchRecentRecipes() async {
     value = value.copyWith(isLoading: true);
     notifyListeners();
-    final Result<List<Recipe>, NetworkError> result = await _recipeRepository
-        .getRecentRecipes();
+    final Result<List<Recipe>, NetworkError> result =
+        await _getRecentRecipesUseCase.execute();
     switch (result) {
       case Success():
         value = value.copyWith(
@@ -90,8 +104,13 @@ class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
       searchKeyword: keyword ?? '',
     );
     notifyListeners();
-    final Result<List<Recipe>, NetworkError> result = await _recipeRepository
-        .searchRecipes(keyword, timeType, ratingType, categoryType);
+    final Result<List<Recipe>, NetworkError> result = keyword != null
+        ? await _searchRecipeByKeywordUseCase.execute(keyword)
+        : await _searchRecipeByFilterUseCase.execute(
+            timeType,
+            ratingType,
+            categoryType,
+          );
     switch (result) {
       case Success():
         final List<Recipe> searchRecipes = result.data;
@@ -104,12 +123,15 @@ class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
           value = value.copyWith(
             searchResultRecipes: result.data,
           );
+          _addRecentRecipesUseCase.execute(result.data);
         }
       case Error():
         value = value.copyWith(
           searchResultRecipes: [],
         );
-        _eventController.add(SearchRecipesEvent.showNetworkErrorDialog(result.error));
+        _eventController.add(
+          SearchRecipesEvent.showNetworkErrorDialog(result.error),
+        );
         break;
     }
     value = value.copyWith(isLoading: false);
