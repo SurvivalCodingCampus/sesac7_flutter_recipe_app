@@ -32,7 +32,7 @@ class _SplashScreenRootState extends State<SplashScreenRoot> {
       return;
     }
 
-    _eventSubscription = widget.viewModel.eventStream.stream.listen((event) {
+    _eventSubscription = widget.viewModel.eventStream.listen((event) {
       switch (event) {
         case ShowFlightModeError():
           final snackBar = SnackBar(

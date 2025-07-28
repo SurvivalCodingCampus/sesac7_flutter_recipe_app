@@ -15,7 +15,7 @@ class SplashScreenViewModel with ChangeNotifier {
 
   final _eventController = StreamController<SplashScreenEvent>();
 
-  StreamController<SplashScreenEvent> get eventStream => _eventController;
+  Stream<SplashScreenEvent> get eventStream => _eventController.stream;
 
   SplashScreenViewModel({
     required FetchSystemSettingsUseCase fetchSystemSettingsUseCase,
