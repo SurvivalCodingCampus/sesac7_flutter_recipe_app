@@ -30,7 +30,7 @@ class _SearchRecipesScreenRootState extends State<SearchRecipesScreenRoot> {
     widget.viewModel.fetchRecipes();
 
     _streamSubscription = widget.viewModel.eventStream.listen((event) {
-      if (context.mounted) {
+      if (mounted) {
         switch (event) {
           case OpenDialog():
             showModalBottomSheet<FilterSearchState>(
