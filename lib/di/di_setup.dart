@@ -6,6 +6,9 @@ import '../saved_recipes/domain/use_case/fetch_recipes_use_case.dart';
 import '../saved_recipes/domain/use_case/unsaved_recipe_use_case.dart';
 import '../saved_recipes/presentation/saved_recipes_state.dart';
 import '../saved_recipes/presentation/saved_recipes_view_model.dart';
+import '../search_recipes/domain/use_case/filter_recipes_use_case.dart';
+import '../search_recipes/domain/use_case/search_recipes_use_case.dart';
+import '../search_recipes/presentation/search_recipes_view_model.dart';
 
 final getIt = GetIt.instance;
 
@@ -24,11 +27,30 @@ void diSetup() {
       ),
   );
 
+  getIt.registerLazySingleton<SearchRecipesUseCase>(
+    () => SearchRecipesUseCase(
+      recipeRepository: getIt<RecipeRepository>(),
+    ),
+  );
+
+  getIt.registerLazySingleton<FilterRecipesUseCase>(
+    () => FilterRecipesUseCase(),
+  );
+
   // viewModel
   getIt.registerFactory<SavedRecipesViewModel>(
-      () => SavedRecipesViewModel(
+    () => SavedRecipesViewModel(
+      fetchRecipesUseCase: getIt<FetchRecipesUseCase>(),
+      unsaveRecipeUseCase: getIt<UnsavedRecipeUseCase>(),
+    ),
+  );
+
+  getIt.registerFactory<SearchRecipesViewModel>(
+      () => SearchRecipesViewModel(
         fetchRecipesUseCase: getIt<FetchRecipesUseCase>(),
-        unsaveRecipeUseCase: getIt<UnsavedRecipeUseCase>(),
+        repository: getIt<RecipeRepository>(),
+        searchRecipesUseCase: getIt<SearchRecipesUseCase>(),
+        filterRecipesUseCase: getIt<FilterRecipesUseCase>(),
       ),
   );
 }
