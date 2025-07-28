@@ -31,15 +31,6 @@ class SavedRecipesScreen extends StatelessWidget {
             );
           }
 
-          if (state.errorMessage.isNotEmpty) {
-            return Center(
-              child: Text(
-                state.errorMessage,
-                style: TextStyles.mediumTextRegular,
-              ),
-            );
-          }
-
           if (state.savedRecipes.isEmpty) {
             return Center(
               child: Text(

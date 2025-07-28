@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
@@ -5,11 +7,14 @@ import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/get_saved_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/remove_saved_recipe_use_case.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_action.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_event.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_state.dart';
 
 class SavedRecipesViewModel with ChangeNotifier {
   final GetSavedRecipesUseCase _getSavedRecipesUseCase;
   final RemoveSavedRecipeUseCase _removeSavedRecipeUseCase;
+  final StreamController<SavedRecipesEvent> _streamController =
+      StreamController();
 
   SavedRecipesState _state = SavedRecipesState();
 
@@ -20,6 +25,7 @@ class SavedRecipesViewModel with ChangeNotifier {
        _removeSavedRecipeUseCase = removeSavedRecipeUseCase;
 
   SavedRecipesState get state => _state;
+  Stream<SavedRecipesEvent> get eventStream => _streamController.stream;
 
   void init() async {
     _loadingState();
@@ -31,7 +37,6 @@ class SavedRecipesViewModel with ChangeNotifier {
         _state = state.copyWith(
           savedRecipes: result.data,
           isLoading: false,
-          errorMessage: '',
         );
       case Error<List<Recipe>, NetworkError>():
         _errorState(result.error.toString());
@@ -63,7 +68,6 @@ class SavedRecipesViewModel with ChangeNotifier {
         _state = state.copyWith(
           savedRecipes: result.data,
           isLoading: false,
-          errorMessage: '',
         );
 
         notifyListeners();
@@ -81,9 +85,10 @@ class SavedRecipesViewModel with ChangeNotifier {
   void _errorState(String message) {
     _state = state.copyWith(
       savedRecipes: [],
-      errorMessage: message,
       isLoading: false,
     );
+
+    _streamController.add(SavedRecipesEvent.showErrorDialog(message));
 
     notifyListeners();
   }
