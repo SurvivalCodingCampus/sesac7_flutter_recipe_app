@@ -95,6 +95,7 @@ class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
         value = value.copyWith(
           searchResultRecipes: [],
         );
+        _eventController.add(SearchRecipesEvent.showNetworkErrorDialog(result.error));
         break;
     }
     value = value.copyWith(isLoading: false);
