@@ -1,6 +1,5 @@
 import 'dart:async';
-
-import 'package:flutter/material.dart';
+import 'dart:ui';
 
 class Debouncer {
   final Duration delay;
