@@ -9,17 +9,18 @@ import 'package:flutter_recipe_app/feature/main_navigation/presentation/main_nav
 import 'package:flutter_recipe_app/feature/notifications/presentation/notifications_screen.dart';
 import 'package:flutter_recipe_app/feature/profile/presentation/profile_screen.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_screen_root.dart';
-import 'package:flutter_recipe_app/feature/splash/presentation/splash_screen.dart';
+import 'package:flutter_recipe_app/feature/splash/presentation/splash_screen_root.dart';
 import 'package:go_router/go_router.dart';
 
 GoRouter createRouter() => GoRouter(
-  // initialLocation: Routes.splash,
-  initialLocation: Routes.home,
+  initialLocation: Routes.splash,
+  // initialLocation: Routes.home,
   routes: [
     GoRoute(
       path: Routes.splash,
       builder: (context, state) {
-        return SplashScreen(
+        return SplashScreenRoot(
+          viewModel: getIt(),
           onStartCookingTap: () => context.go(Routes.signIn),
         );
       },

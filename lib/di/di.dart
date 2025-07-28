@@ -19,6 +19,10 @@ import 'package:flutter_recipe_app/feature/saved_recipes/domain/repository/bookm
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/get_saved_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/remove_saved_recipe_use_case.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_view_model.dart';
+import 'package:flutter_recipe_app/feature/splash/data/repository/mock_system_controls_repository_impl.dart';
+import 'package:flutter_recipe_app/feature/splash/domain/repository/system_controls_repository.dart';
+import 'package:flutter_recipe_app/feature/splash/domain/use_case/is_airplane_mode_use_case.dart';
+import 'package:flutter_recipe_app/feature/splash/presentation/splash_view_model.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.instance;
@@ -41,6 +45,9 @@ void diSetUp() {
   );
   getIt.registerLazySingleton<ProcedureRepository>(
     () => MockProcedureRepositoryImpl(),
+  );
+  getIt.registerLazySingleton<SystemControlsRepository>(
+    () => MockSystemControlsRepositoryImpl(),
   );
 
   // Use Case
@@ -71,6 +78,9 @@ void diSetUp() {
   getIt.registerLazySingleton(
     () => RemoveSavedRecipeUseCase(bookmarkRepository: getIt()),
   );
+  getIt.registerLazySingleton(
+    () => IsAirplaneModeUseCase(systemControlsRepository: getIt()),
+  );
 
   // View Model
   getIt.registerFactory(
@@ -92,5 +102,8 @@ void diSetUp() {
       fetchProcedureUseCase: getIt(),
       formatReviewCountUseCase: getIt(),
     ),
+  );
+  getIt.registerFactory(
+    () => SplashViewModel(isAirplaneModeUseCase: getIt()),
   );
 }
