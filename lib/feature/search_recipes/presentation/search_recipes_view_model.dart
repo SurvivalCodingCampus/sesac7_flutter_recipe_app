@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
@@ -7,11 +9,14 @@ import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/filter
 import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/get_all_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/filter_search_state.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_action.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_event.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_state.dart';
 
 class SearchRecipesViewModel with ChangeNotifier {
   final GetAllRecipesUseCase _getAllRecipesUseCase;
   final FilterRecipesUseCase _filterRecipesUseCase;
+  final StreamController<SearchRecipesEvent> _streamController =
+      StreamController();
 
   SearchRecipesState _state = SearchRecipesState();
 
@@ -22,6 +27,7 @@ class SearchRecipesViewModel with ChangeNotifier {
        _filterRecipesUseCase = filterRecipesUseCase;
 
   SearchRecipesState get state => _state;
+  Stream<SearchRecipesEvent> get eventStream => _streamController.stream;
 
   void init() async {
     _loadingState();
@@ -37,7 +43,6 @@ class SearchRecipesViewModel with ChangeNotifier {
           searchState: SearchStateType.recentSearch,
           filterState: FilterSearchState(),
           isLoading: false,
-          errorMessage: null,
         );
 
         notifyListeners();
@@ -97,8 +102,9 @@ class SearchRecipesViewModel with ChangeNotifier {
       resultCount: 0,
       searchState: SearchStateType.recentSearch,
       isLoading: false,
-      errorMessage: message,
     );
+
+    _streamController.add(SearchRecipesEvent.showErrorDialog(message));
 
     notifyListeners();
   }
