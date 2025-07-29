@@ -569,4 +569,15 @@ abstract class TextStyles {
   );
 
   /* IngredientScreen End */
+
+  /* PopupMenu Start */
+  static final TextStyle popupMenuTitle = TextStyle(
+    color: AppColors.labelColor,
+    fontSize: 14.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 21 / 14,
+  );
+  /* PopupMenu End */
 }
