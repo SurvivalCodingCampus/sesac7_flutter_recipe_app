@@ -21,7 +21,7 @@ void main() {
             body: RatingDialog(
               title: dialogTitle,
               actionName: actionText,
-              onChange: (rating) {},
+              onTapActionButton: (rating) {},
             ),
           ),
         ),
@@ -59,7 +59,7 @@ void main() {
               child: RatingDialog(
                 title: dialogTitle,
                 actionName: actionText,
-                onChange: (rating) {},
+                onTapActionButton: (rating) {},
               ),
             ),
           ),
@@ -106,7 +106,7 @@ void main() {
                 child: RatingDialog(
                   title: dialogTitle,
                   actionName: actionText,
-                  onChange: (rating) {
+                  onTapActionButton: (rating) {
                     returnedRating = rating;
                   },
                 ),

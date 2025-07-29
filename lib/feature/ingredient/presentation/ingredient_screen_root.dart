@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/presentation/component/dialog/error_dialog.dart';
+import 'package:flutter_recipe_app/core/presentation/component/dialog/rating_dialog.dart';
+import 'package:flutter_recipe_app/feature/ingredient/domain/model/menu_item.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_action.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_event.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_screen.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_view_model.dart';
+import 'package:go_router/go_router.dart';
 
 class IngredientScreenRoot extends StatefulWidget {
   final String recipeId;
@@ -61,11 +64,38 @@ class _IngredientScreenRootState extends State<IngredientScreenRoot> {
               case TapBack():
                 widget.onTapBack();
               case TapMenu():
-                // TODO: tap menu.
-                print(action);
+                _handleMenuAction(action.item);
               default:
                 viewModel.onAction(action);
             }
+          },
+        );
+      },
+    );
+  }
+
+  void _handleMenuAction(MenuItem item) {
+    switch (item) {
+      case MenuItem.share:
+        break;
+      case MenuItem.rateRecipe:
+        _showRatingDialog();
+      case MenuItem.review:
+        break;
+      case MenuItem.unsave:
+        break;
+    }
+  }
+
+  void _showRatingDialog() {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return RatingDialog(
+          title: 'Rate recipe',
+          actionName: 'Send',
+          onTapActionButton: (int rating) {
+            context.pop();
           },
         );
       },
