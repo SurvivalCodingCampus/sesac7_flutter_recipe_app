@@ -6,6 +6,7 @@ import 'package:flutter_recipe_app/features/show_ingredients/presentation/compon
 import '../../../../core/presentation/component/left_selected_tabs.dart';
 import '../../../../ui/app_colors.dart';
 import '../../../../ui/text_styles.dart';
+import '../component/custom_menu_tab.dart';
 import 'ingredient_action.dart';
 import 'ingredient_screen_state.dart';
 
@@ -41,7 +42,14 @@ class IngredientScreen extends StatelessWidget {
                   child: Icon(Icons.arrow_back, size: 20),
                 ),
                 Expanded(child: SizedBox()),
-                Icon(Icons.more_horiz, size: 24),
+                CustomMenuTab(
+                  onButtonSelected: () {
+                    onAction(IngredientAction.clickMenuButton());
+                  },
+                  onSelectMenuItem: (index) {
+                    onAction(IngredientAction.clickMenuItem(index));
+                  },
+                ),
               ],
             ),
             SizedBox(height: 10),
