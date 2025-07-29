@@ -1,11 +1,16 @@
+import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
+import 'package:flutter_recipe_app/core/domain/use_case/fetch_all_recipes_use_case.dart';
+import 'package:flutter_recipe_app/core/utils/debouncer.dart';
 import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/model/filter_category.dart';
-import 'package:flutter_recipe_app/feature/search_recipes/domain/model/filter_rate.dart';
-import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/model/search_state_type.dart';
-import 'package:flutter_recipe_app/core/domain/repository/recipe/recipe_repository.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/fetch_recent_search_keyword_use_case.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/filter_recipes_use_case.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/save_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/filter_search_state.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_action.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_event.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_state.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_view_model.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -14,295 +19,288 @@ import 'package:mockito/mockito.dart';
 
 import 'search_recipe_view_model_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<RecipeRepository>()])
+@GenerateNiceMocks([
+  MockSpec<FetchAllRecipesUseCase>(),
+  MockSpec<FilterRecipesUseCase>(),
+  MockSpec<FetchRecentSearchKeywordUseCase>(),
+  MockSpec<SaveSearchKeywordUseCase>(),
+  MockSpec<Debouncer>(),
+])
 void main() {
+  late MockFetchAllRecipesUseCase mockFetchAllRecipesUseCase;
+  late MockFilterRecipesUseCase mockFilterRecipesUseCase;
+  late MockFetchRecentSearchKeywordUseCase mockFetchRecentSearchKeywordUseCase;
+  late MockSaveSearchKeywordUseCase mockSaveSearchKeywordUseCase;
+  late MockDebouncer mockDebouncer;
+  late SearchRecipesViewModel viewModel;
+
   final List<Recipe> mockRecipes = [
-    Recipe(
+    const Recipe(
       id: '1',
       name: 'Spicy Chicken',
       creator: 'John Doe',
       rating: 4.5,
       category: 'Dinner',
       imageUrl: '',
+      imageWithoutBackground: '',
       cookingTime: '30 min',
-      ingredients: [],
+      reviewCount: 10,
+      serve: 2,
     ),
-    Recipe(
+    const Recipe(
       id: '2',
       name: 'Vegetable Soup',
       creator: 'Jane Smith',
       rating: 3.0,
       category: 'Soup',
       imageUrl: '',
+      imageWithoutBackground: '',
       cookingTime: '20 min',
-      ingredients: [],
+      reviewCount: 5,
+      serve: 4,
     ),
-    Recipe(
+    const Recipe(
       id: '3',
       name: 'Chocolate Cake',
       creator: 'John Doe',
       rating: 5.0,
       category: 'Dessert',
       imageUrl: '',
+      imageWithoutBackground: '',
       cookingTime: '60 min',
-      ingredients: [],
+      reviewCount: 20,
+      serve: 8,
     ),
   ];
 
-  setUpAll(() {
-    provideDummy(Result<List<Recipe>, NetworkError>.success([]));
-  });
+  final Result<List<Recipe>, NetworkError> dummyValue1 = Result.success([]);
+  final Result<String, String> dummyValue2 = Result.success('');
 
-  test('SearchRecipeViewModel initial state is correct', () {
-    final mockRecipeRepository = MockRecipeRepository();
-    final viewModel = SearchRecipesViewModel(
-      recipeRepository: mockRecipeRepository,
+  provideDummy(dummyValue1);
+  provideDummy(dummyValue2);
+
+  setUp(() {
+    mockFetchAllRecipesUseCase = MockFetchAllRecipesUseCase();
+    mockFilterRecipesUseCase = MockFilterRecipesUseCase();
+    mockFetchRecentSearchKeywordUseCase = MockFetchRecentSearchKeywordUseCase();
+    mockSaveSearchKeywordUseCase = MockSaveSearchKeywordUseCase();
+    mockDebouncer = MockDebouncer();
+
+    viewModel = SearchRecipesViewModel(
+      fetchAllRecipesUseCase: mockFetchAllRecipesUseCase,
+      filterRecipesUseCase: mockFilterRecipesUseCase,
+      fetchRecentSearchKeywordUseCase: mockFetchRecentSearchKeywordUseCase,
+      saveSearchKeywordUseCase: mockSaveSearchKeywordUseCase,
+      debouncer: mockDebouncer,
     );
-    expect(viewModel.state, SearchRecipesState());
+
+    // Debouncer will execute the function immediately
+    when(mockDebouncer.run(any)).thenAnswer((invocation) {
+      final function = invocation.positionalArguments[0] as Function;
+      function();
+    });
   });
 
-  test(
-    'SearchRecipeViewModel fetchRecipe updates state with recipes on success',
-    () async {
-      final mockRecipeRepository = MockRecipeRepository();
-      final viewModel = SearchRecipesViewModel(
-        recipeRepository: mockRecipeRepository,
+  group('SearchRecipesViewModel', () {
+    test('initial state is correct', () {
+      expect(viewModel.state, const SearchRecipesState());
+    });
+
+    group('init', () {
+      test('updates state with recipes on success', () async {
+        // Given
+        when(mockFetchAllRecipesUseCase.execute()).thenAnswer(
+          (_) async => Success(mockRecipes),
+        );
+        when(mockFetchRecentSearchKeywordUseCase.execute()).thenAnswer(
+          (_) async => const Success(''),
+        );
+
+        // When
+        viewModel.init();
+
+        // Then
+        expect(viewModel.state.isLoading, isTrue);
+
+        await untilCalled(mockFetchRecentSearchKeywordUseCase.execute());
+
+        expect(viewModel.state.isLoading, isFalse);
+        expect(viewModel.state.allRecipes, mockRecipes);
+        expect(viewModel.state.filteredRecipes, mockRecipes);
+        expect(viewModel.state.resultCount, mockRecipes.length);
+        expect(viewModel.state.searchState, SearchStateType.recentSearch);
+        verify(mockFetchAllRecipesUseCase.execute()).called(1);
+        verify(mockFetchRecentSearchKeywordUseCase.execute()).called(1);
+      });
+
+      test('updates state with error on fetchAllRecipes failure', () async {
+        // Given
+        final networkError = NetworkError.unknown;
+        when(mockFetchAllRecipesUseCase.execute()).thenAnswer(
+          (_) async => Error(networkError),
+        );
+
+        // When
+        viewModel.init();
+
+        // Then
+        expect(viewModel.state.isLoading, isTrue);
+        expectLater(
+          viewModel.eventStream,
+          emits(SearchRecipesEvent.showErrorDialog(networkError.toString())),
+        );
+
+        await untilCalled(mockFetchAllRecipesUseCase.execute());
+
+        expect(viewModel.state.isLoading, isFalse);
+        expect(viewModel.state.allRecipes, isEmpty);
+        expect(viewModel.state.filteredRecipes, isEmpty);
+        verify(mockFetchAllRecipesUseCase.execute()).called(1);
+        verifyNever(mockFetchRecentSearchKeywordUseCase.execute());
+      });
+
+      test('searches with recent keyword if it exists', () async {
+        // Given
+        const recentKeyword = 'chicken';
+        final filteredList = [mockRecipes.first];
+        when(mockFetchAllRecipesUseCase.execute()).thenAnswer(
+          (_) async => Success(mockRecipes),
+        );
+        when(mockFetchRecentSearchKeywordUseCase.execute()).thenAnswer(
+          (_) async => const Success(recentKeyword),
+        );
+        when(
+          mockFilterRecipesUseCase.execute(
+            mockRecipes,
+            recentKeyword,
+            const FilterSearchState(),
+          ),
+        ).thenReturn(filteredList);
+
+        // When
+        viewModel.init();
+        await untilCalled(mockSaveSearchKeywordUseCase.execute(recentKeyword));
+
+        // Then
+        expect(viewModel.state.searchFieldValue, recentKeyword);
+        expect(viewModel.state.filteredRecipes, filteredList);
+        expect(viewModel.state.searchState, SearchStateType.searchResult);
+        verify(mockSaveSearchKeywordUseCase.execute(recentKeyword)).called(1);
+      });
+    });
+
+    group('onAction', () {
+      setUp(() async {
+        when(mockFetchAllRecipesUseCase.execute()).thenAnswer(
+          (_) async => Success(mockRecipes),
+        );
+        when(mockFetchRecentSearchKeywordUseCase.execute()).thenAnswer(
+          (_) async => const Success(''),
+        );
+        viewModel.init();
+        await untilCalled(mockFetchRecentSearchKeywordUseCase.execute());
+      });
+
+      test('ChangeSearchValue filters recipes', () {
+        // Given
+        const keyword = 'soup';
+        final filteredList = [mockRecipes[1]];
+        when(
+          mockFilterRecipesUseCase.execute(
+            mockRecipes,
+            keyword,
+            viewModel.state.filterState,
+          ),
+        ).thenReturn(filteredList);
+
+        // When
+        viewModel.onAction(
+          const SearchRecipesAction.changeSearchValue(keyword),
+        );
+
+        // Then
+        expect(viewModel.state.filteredRecipes, filteredList);
+        expect(viewModel.state.resultCount, filteredList.length);
+        expect(viewModel.state.searchFieldValue, keyword);
+        expect(viewModel.state.searchState, SearchStateType.searchResult);
+        verify(mockSaveSearchKeywordUseCase.execute(keyword)).called(1);
+      });
+
+      test(
+        'ChangeSearchValue with empty keyword shows all recipes and does not save keyword',
+        () {
+          // Given
+          const keyword = '';
+          when(
+            mockFilterRecipesUseCase.execute(
+              mockRecipes,
+              keyword,
+              viewModel.state.filterState,
+            ),
+          ).thenReturn(mockRecipes);
+
+          // When
+          viewModel.onAction(
+            const SearchRecipesAction.changeSearchValue(keyword),
+          );
+
+          // Then
+          expect(viewModel.state.filteredRecipes, mockRecipes);
+          expect(viewModel.state.resultCount, mockRecipes.length);
+          expect(viewModel.state.searchFieldValue, keyword);
+          expect(viewModel.state.searchState, SearchStateType.searchResult);
+          verifyNever(mockSaveSearchKeywordUseCase.execute(keyword));
+        },
       );
 
-      when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
-        (_) async => Result<List<Recipe>, NetworkError>.success(mockRecipes),
-      );
+      test('ChangeSearchValue shows snackbar when no results found', () {
+        // Given
+        const keyword = 'nonexistent';
+        when(
+          mockFilterRecipesUseCase.execute(
+            mockRecipes,
+            keyword,
+            viewModel.state.filterState,
+          ),
+        ).thenReturn([]);
 
-      viewModel.init();
+        // When
+        viewModel.onAction(
+          const SearchRecipesAction.changeSearchValue(keyword),
+        );
 
-      expect(viewModel.state.isLoading, false);
-      expect(viewModel.state.allRecipes, mockRecipes);
-      expect(viewModel.state.filteredRecipes, mockRecipes);
-      expect(viewModel.state.resultCount, mockRecipes.length);
-      expect(viewModel.state.searchState, SearchStateType.recentSearch);
-      expect(viewModel.state.errorMessage, isNull);
-      verify(mockRecipeRepository.fetchAllRecipes()).called(1);
-    },
-  );
+        // Then
+        expect(viewModel.state.filteredRecipes, isEmpty);
+        expect(
+          viewModel.eventStream,
+          emits(const SearchRecipesEvent.showNoSearchResultSnackBar()),
+        );
+        verify(mockSaveSearchKeywordUseCase.execute(keyword)).called(1);
+      });
 
-  test(
-    'SearchRecipeViewModel fetchRecipe updates state with error message on failure',
-    () async {
-      final mockRecipeRepository = MockRecipeRepository();
-      final viewModel = SearchRecipesViewModel(
-        recipeRepository: mockRecipeRepository,
-      );
+      test('SelectFilter filters recipes with new filter state', () {
+        // Given
+        const filterState = FilterSearchState(
+          filterCategory: FilterCategory.localDish,
+        );
+        final filteredList = [mockRecipes[2]]; // Chocolate Cake
+        when(
+          mockFilterRecipesUseCase.execute(
+            mockRecipes,
+            viewModel.state.searchFieldValue,
+            filterState,
+          ),
+        ).thenReturn(filteredList);
 
-      final networkError = NetworkError.unknown;
-      when(
-        mockRecipeRepository.fetchAllRecipes(),
-      ).thenAnswer(
-        (_) async => Error<List<Recipe>, NetworkError>(networkError),
-      );
+        // When
+        viewModel.onAction(SearchRecipesAction.selectFilter(filterState));
 
-      viewModel.init();
-
-      expect(viewModel.state.isLoading, false);
-      expect(viewModel.state.allRecipes, isEmpty);
-      expect(viewModel.state.filteredRecipes, isEmpty);
-      expect(viewModel.state.resultCount, 0);
-      expect(viewModel.state.searchState, SearchStateType.recentSearch);
-      expect(viewModel.state.errorMessage, contains('NetworkError.unknown'));
-      verify(mockRecipeRepository.fetchAllRecipes()).called(1);
-    },
-  );
-
-  test(
-    'SearchRecipeViewModel searchRecipe returns all recipes when keyword is empty',
-    () async {
-      final mockRecipeRepository = MockRecipeRepository();
-      final viewModel = SearchRecipesViewModel(
-        recipeRepository: mockRecipeRepository,
-      );
-
-      when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
-        (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
-      );
-      viewModel.init();
-
-      viewModel._searchRecipe('');
-
-      expect(viewModel.state.filteredRecipes, mockRecipes);
-      expect(viewModel.state.resultCount, mockRecipes.length);
-      expect(viewModel.state.searchFieldValue, '');
-      expect(viewModel.state.searchState, SearchStateType.recentSearch);
-    },
-  );
-
-  test(
-    'SearchRecipeViewModel searchRecipe filters recipes by name or creator',
-    () async {
-      final mockRecipeRepository = MockRecipeRepository();
-      final viewModel = SearchRecipesViewModel(
-        recipeRepository: mockRecipeRepository,
-      );
-
-      when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
-        (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
-      );
-      viewModel.init();
-
-      viewModel._searchRecipe('john');
-
-      expect(viewModel.state.filteredRecipes.length, 2);
-      expect(viewModel.state.filteredRecipes[0].name, 'Spicy Chicken');
-      expect(viewModel.state.filteredRecipes[1].name, 'Chocolate Cake');
-      expect(viewModel.state.resultCount, 2);
-      expect(viewModel.state.searchFieldValue, 'john');
-      expect(viewModel.state.searchState, SearchStateType.searchResult);
-    },
-  );
-
-  test(
-    'SearchRecipeViewModel searchRecipe returns empty list if no match found',
-    () async {
-      final mockRecipeRepository = MockRecipeRepository();
-      final viewModel = SearchRecipesViewModel(
-        recipeRepository: mockRecipeRepository,
-      );
-
-      when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
-        (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
-      );
-      viewModel.init();
-
-      viewModel._searchRecipe('nonexistent');
-
-      expect(viewModel.state.filteredRecipes, isEmpty);
-      expect(viewModel.state.resultCount, 0);
-      expect(viewModel.state.searchFieldValue, 'nonexistent');
-      expect(viewModel.state.searchState, SearchStateType.searchResult);
-    },
-  );
-
-  test(
-    'SearchRecipeViewModel selectFilter filters by rate (e.g., 5 stars)',
-    () async {
-      final mockRecipeRepository = MockRecipeRepository();
-      final viewModel = SearchRecipesViewModel(
-        recipeRepository: mockRecipeRepository,
-      );
-
-      when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
-        (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
-      );
-      viewModel.init();
-
-      final filterState = FilterSearchState(filterRate: FilterRate.five);
-      viewModel._selectFilter(filterState);
-
-      expect(viewModel.state.filteredRecipes.length, 1);
-      expect(viewModel.state.filteredRecipes[0].name, 'Chocolate Cake');
-      expect(viewModel.state.resultCount, 1);
-      expect(viewModel.state.searchState, SearchStateType.searchResult);
-      expect(viewModel.state.filterState, filterState);
-    },
-  );
-
-  test(
-    'SearchRecipeViewModel selectFilter filters by rate (e.g., 3 stars)',
-    () async {
-      final mockRecipeRepository = MockRecipeRepository();
-      final viewModel = SearchRecipesViewModel(
-        recipeRepository: mockRecipeRepository,
-      );
-
-      when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
-        (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
-      );
-      viewModel.init();
-
-      final filterState = FilterSearchState(filterRate: FilterRate.three);
-      viewModel._selectFilter(filterState);
-
-      expect(viewModel.state.filteredRecipes.length, 1);
-      expect(viewModel.state.filteredRecipes[0].name, 'Vegetable Soup');
-      expect(viewModel.state.resultCount, 1);
-      expect(viewModel.state.searchState, SearchStateType.searchResult);
-      expect(viewModel.state.filterState, filterState);
-    },
-  );
-
-  test(
-    'SearchRecipeViewModel selectFilter filters by category (e.g., Dinner)',
-    () async {
-      final mockRecipeRepository = MockRecipeRepository();
-      final viewModel = SearchRecipesViewModel(
-        recipeRepository: mockRecipeRepository,
-      );
-
-      when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
-        (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
-      );
-      viewModel.init();
-
-      final filterState = FilterSearchState(
-        filterCategory: FilterCategory.dinner,
-      );
-      viewModel._selectFilter(filterState);
-
-      expect(viewModel.state.filteredRecipes.length, 1);
-      expect(viewModel.state.filteredRecipes[0].name, 'Spicy Chicken');
-      expect(viewModel.state.resultCount, 1);
-      expect(viewModel.state.searchState, SearchStateType.searchResult);
-      expect(viewModel.state.filterState, filterState);
-    },
-  );
-
-  test(
-    'SearchRecipeViewModel selectFilter filters by category and result count 0 (e.g., Fruit)',
-    () async {
-      final mockRecipeRepository = MockRecipeRepository();
-      final viewModel = SearchRecipesViewModel(
-        recipeRepository: mockRecipeRepository,
-      );
-
-      when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
-        (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
-      );
-      viewModel.init();
-
-      final filterState = FilterSearchState(
-        filterCategory: FilterCategory.fruit,
-      );
-      viewModel._selectFilter(filterState);
-
-      expect(viewModel.state.filteredRecipes.length, 0);
-      expect(viewModel.state.resultCount, 0);
-      expect(viewModel.state.searchState, SearchStateType.searchResult);
-      expect(viewModel.state.filterState, filterState);
-    },
-  );
-
-  test(
-    'SearchRecipeViewModel selectFilter filters by multiple criteria (rate and category)',
-    () async {
-      final mockRecipeRepository = MockRecipeRepository();
-      final viewModel = SearchRecipesViewModel(
-        recipeRepository: mockRecipeRepository,
-      );
-
-      when(mockRecipeRepository.fetchAllRecipes()).thenAnswer(
-        (_) async => Success<List<Recipe>, NetworkError>(mockRecipes),
-      );
-      viewModel.init();
-
-      final filterState = FilterSearchState(
-        filterRate: FilterRate.four,
-        filterCategory: FilterCategory.dinner,
-      );
-      viewModel._selectFilter(filterState);
-
-      expect(viewModel.state.filteredRecipes.length, 1);
-      expect(viewModel.state.filteredRecipes[0].name, 'Spicy Chicken');
-      expect(viewModel.state.resultCount, 1);
-      expect(viewModel.state.searchState, SearchStateType.searchResult);
-      expect(viewModel.state.filterState, filterState);
-    },
-  );
+        // Then
+        expect(viewModel.state.filterState, filterState);
+        expect(viewModel.state.filteredRecipes, filteredList);
+        expect(viewModel.state.resultCount, filteredList.length);
+        expect(viewModel.state.searchState, SearchStateType.searchResult);
+      });
+    });
+  });
 }
