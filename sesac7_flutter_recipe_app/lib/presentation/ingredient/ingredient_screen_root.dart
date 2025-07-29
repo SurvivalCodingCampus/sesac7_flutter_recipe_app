@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/core/enum/popup_menu_type.dart';
+import 'package:flutter_recipe_app/core/enum/rating_type.dart';
+import 'package:flutter_recipe_app/presentation/component/dialog/rating_dialog.dart';
 import 'package:flutter_recipe_app/presentation/ingredient/ingredient_action.dart';
 import 'package:flutter_recipe_app/presentation/ingredient/ingredient_screen.dart';
 import 'package:flutter_recipe_app/presentation/ingredient/ingredient_view_model.dart';
@@ -42,6 +45,30 @@ class _IngredientScreenRootState extends State<IngredientScreenRoot> {
           onAction: (action) {
             if (action is ClickIngredientBackButton) {
               widget.onIngredientScreenBackButtonClick();
+            } else if (action is ClickPopupMenuItem) {
+              switch (action.menuType) {
+                case PopupMenuType.share:
+                  break;
+                case PopupMenuType.rateRecipe:
+                  showDialog(
+                    context: context,
+                    builder: (dialogContext) {
+                      return RatingDialog(
+                        dialogTitle: 'Rate recipe',
+                        dialogButtonTitle: 'Send',
+                        currentRatingType: RatingType.gradeZero,
+                        onClickDissmissButton: (selectedRatingType) {
+                          // fixme Rating 전송 API 필요
+                          Navigator.pop(dialogContext);
+                        },
+                      );
+                    },
+                  );
+                case PopupMenuType.review:
+                  break;
+                case PopupMenuType.unSave:
+                  break;
+              }
             } else {
               widget._ingredientViewModel.onAction(action);
             }

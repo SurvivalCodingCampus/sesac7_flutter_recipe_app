@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/enum/label_type.dart';
+import 'package:flutter_recipe_app/core/enum/popup_menu_type.dart';
 import 'package:flutter_recipe_app/domain/model/recipe.dart';
 import 'package:flutter_recipe_app/presentation/component/button/small_button.dart';
 import 'package:flutter_recipe_app/presentation/component/card/ingredient_card.dart';
@@ -40,7 +41,9 @@ class IngredientScreen extends StatelessWidget {
                   IngredientAction.clickIngredientBackButton(),
                 );
               },
-              menuButtonClick: () {},
+              popupMenuItemClick: (menuType) {
+                onAction(IngredientAction.clickPopupMenuItem(menuType));
+              },
             ),
             currentSelectedRecipe == null
                 ? Expanded(child: Center(child: Text('저장된 ID가 없습니다!')))

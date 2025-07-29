@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/core/enum/popup_menu_type.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'ingredient_action.freezed.dart';
@@ -9,4 +11,7 @@ sealed class IngredientAction with _$IngredientAction {
 
   const factory IngredientAction.changeIngredientTapSelectedIndex(int index) =
       ChangeIngredientTapSelectedIndex;
+
+  const factory IngredientAction.clickPopupMenuItem(PopupMenuType menuType) =
+      ClickPopupMenuItem;
 }
