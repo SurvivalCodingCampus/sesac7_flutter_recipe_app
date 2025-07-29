@@ -58,7 +58,6 @@ class HomeViewModel {
         _notify();
       case Error<List<Recipe>, NetworkError>():
         _errorState(result.error.toString());
-        return;
     }
 
     _savedRecipesSubscription = _getSavedRecipesUseCase.execute().listen((
@@ -67,12 +66,16 @@ class HomeViewModel {
       switch (result) {
         case Success<List<Recipe>, NetworkError>():
           final allRecipes = _state.allRecipes.map((recipe) {
-            final isSaved = result.data.any((savedRecipe) => savedRecipe.id == recipe.id);
+            final isSaved = result.data.any(
+              (savedRecipe) => savedRecipe.id == recipe.id,
+            );
             return recipe.copyWith(isSaved: isSaved);
           }).toList();
 
           final filteredRecipes = _state.filteredRecipes.map((recipe) {
-            final isSaved = result.data.any((savedRecipe) => savedRecipe.id == recipe.id);
+            final isSaved = result.data.any(
+              (savedRecipe) => savedRecipe.id == recipe.id,
+            );
             return recipe.copyWith(isSaved: isSaved);
           }).toList();
 
