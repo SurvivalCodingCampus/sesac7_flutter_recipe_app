@@ -73,7 +73,17 @@ class HomeViewModel {
             return recipe;
           }).toList();
 
-          _state = _state.copyWith(allRecipes: allRecipes);
+          final filteredRecipes = _state.filteredRecipes.map((recipe) {
+            if (result.data.contains(recipe)) {
+              return recipe.copyWith(isSaved: true);
+            }
+            return recipe;
+          }).toList();
+
+          _state = _state.copyWith(
+            allRecipes: allRecipes,
+            filteredRecipes: filteredRecipes,
+          );
 
           _notify();
         case Error<List<Recipe>, NetworkError>():
