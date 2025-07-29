@@ -6,15 +6,14 @@ import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recip
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_screen.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_view_model.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../../../core/presentation/component/bottom_sheet/filter_search_bottom_sheet.dart';
 import '../../../core/presentation/component/bottom_sheet/filter_search_state.dart';
 import '../../../core/routing/routes.dart';
 
 class SearchRecipesScreenRoot extends StatefulWidget {
-  final SearchRecipesViewModel viewModel;
-
-  const SearchRecipesScreenRoot(this.viewModel, {super.key});
+  const SearchRecipesScreenRoot({super.key});
 
   @override
   State<SearchRecipesScreenRoot> createState() =>
@@ -27,53 +26,57 @@ class _SearchRecipesScreenRootState extends State<SearchRecipesScreenRoot> {
   @override
   void initState() {
     super.initState();
-    widget.viewModel.fetchRecipes();
 
-    _streamSubscription = widget.viewModel.eventStream.listen((event) {
+    // 약간 딜레이
+    Future.microtask(() {
       if (mounted) {
-        switch (event) {
-          case OpenDialog():
-            showModalBottomSheet<FilterSearchState>(
-              context: context,
-              isScrollControlled: true,
-              builder: (context) {
-                return FilterSearchBottomSheet(
-                  filterSearchState: widget.viewModel.state.filterSearchState,
-                  onFilter: (state) {
-                    widget.viewModel.onAction(
-                      SearchRecipesAction.applyFilter(state),
+        final viewModel = context.read<SearchRecipesViewModel>();
+        viewModel.fetchRecipes();
+
+        _streamSubscription = viewModel.eventStream.listen((event) {
+          if (mounted) {
+            switch (event) {
+              case OpenDialog():
+                showModalBottomSheet<FilterSearchState>(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (context) {
+                    return FilterSearchBottomSheet(
+                      filterSearchState: viewModel.state.filterSearchState,
+                      onFilter: (state) {
+                        viewModel.onAction(
+                          SearchRecipesAction.applyFilter(state),
+                        );
+                        Navigator.pop(context);
+                      },
                     );
-                    Navigator.pop(context);
                   },
                 );
-              },
-            );
-          case NaviagteHome():
-            context.go(Routes.main);
-          case NavigatePreviousScreen():
-            context.go(Routes.ingredient);
-          case ShowErrorMessage():
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
-                content: Text(event.message),
-              ),
-            );
-        }
+              case NaviagteHome():
+                context.go(Routes.main);
+              case NavigatePreviousScreen():
+                context.go(Routes.ingredient);
+              case ShowErrorMessage():
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(event.message),
+                  ),
+                );
+            }
+          }
+        });
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: widget.viewModel,
-      builder: (context, state, child) {
-        return SearchRecipesScreen(
-          state: widget.viewModel.state,
-          onAction: (SearchRecipesAction action) {
-            widget.viewModel.onAction(action);
-          },
-        );
+    final viewModel = context.watch<SearchRecipesViewModel>();
+
+    return SearchRecipesScreen(
+      state: viewModel.state,
+      onAction: (SearchRecipesAction action) {
+        viewModel.onAction(action);
       },
     );
   }

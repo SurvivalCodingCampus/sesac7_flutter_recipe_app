@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/core/routing/routes.dart';
+import 'package:flutter_recipe_app/01_stateless/domain/use_case/fetch_recipes_use_case.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/tab/tab_view_model.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 import '../../data/repository/person_repository_impl.dart';
 import '../../di/di_setup.dart';
 import '../../domain/model/recipe.dart';
+import '../../domain/use_case/search_recipes_use_case.dart';
 import '../../presentation/screen/ingredient/ingredient_screen.dart';
 import '../../presentation/screen/main/main_screen.dart';
 import '../../presentation/screen/main/main_view_model.dart';
 import '../../presentation/screen/saved_recipes/saved_recipes_screen.dart';
 import '../../presentation/screen/saved_recipes/saved_recipes_view_model.dart';
 import '../../presentation/screen/search_recipes/search_recipes_screen_root.dart';
+import '../../presentation/screen/search_recipes/search_recipes_view_model.dart';
 import '../../presentation/screen/tab/tab_screen.dart';
 
 final router = GoRouter(
@@ -97,7 +101,13 @@ final router = GoRouter(
             GoRoute(
               path: Routes.searchRecipes,
               builder: (context, state) {
-                return SearchRecipesScreenRoot(getIt());
+                return ChangeNotifierProvider(
+                  create: (context) => SearchRecipesViewModel(
+                    getRecipesUseCase: context.read(),
+                    searchRecipesUseCase: context.read(),
+                  ),
+                  child: SearchRecipesScreenRoot(),
+                );
               },
             ),
           ],

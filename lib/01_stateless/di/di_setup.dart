@@ -25,9 +25,9 @@ void diSetup() {
   );
 
   // UseCase
-  getIt.registerLazySingleton<GetRecipesUseCase>(
-    () => GetRecipesUseCase(recipeRepository: getIt()),
-  );
+  // getIt.registerLazySingleton<GetRecipesUseCase>(
+  //   () => GetRecipesUseCase(recipeRepository: getIt()),
+  // );
   getIt.registerLazySingleton<GetRecipeUseCase>(
     () => GetRecipeUseCase(recipeRepository: getIt()),
   );
@@ -35,9 +35,9 @@ void diSetup() {
   getIt.registerLazySingleton<FilterRecipesUseCase>(
     () => FilterRecipesUseCase(),
   );
-  getIt.registerLazySingleton<SearchRecipesUseCase>(
-    () => SearchRecipesUseCase(filterRecipesUseCase: getIt()),
-  );
+  // getIt.registerLazySingleton<SearchRecipesUseCase>(
+  //   () => SearchRecipesUseCase(filterRecipesUseCase: getIt()),
+  // );
 
   // ViewModel : Factory
   getIt.registerFactory(
@@ -49,10 +49,10 @@ void diSetup() {
   getIt.registerFactory(
     () => SavedRecipesViewModel(fetchRecipesUseCase: getIt()),
   );
-  getIt.registerFactory(
-    () => SearchRecipesViewModel(
-      getRecipesUseCase: getIt(),
-      searchRecipesUseCase: getIt(),
-    ),
-  );
+  // getIt.registerFactory(
+  //   () => SearchRecipesViewModel(
+  //     getRecipesUseCase: getIt(),
+  //     searchRecipesUseCase: getIt(),
+  //   ),
+  // );
 }
