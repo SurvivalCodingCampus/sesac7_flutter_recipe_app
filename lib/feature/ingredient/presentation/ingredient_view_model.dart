@@ -19,8 +19,7 @@ class IngredientViewModel with ChangeNotifier {
   final FetchAllIngredientsUseCase _fetchAllIngredientsUseCase;
   final FetchProcedureUseCase _fetchProcedureUseCase;
   final FormatReviewCountUseCase _formatReviewCountUseCase;
-  final StreamController<IngredientEvent> _streamController =
-      StreamController();
+  final StreamController<IngredientEvent> _eventController = StreamController();
 
   IngredientState _state = IngredientState();
 
@@ -35,7 +34,7 @@ class IngredientViewModel with ChangeNotifier {
        _formatReviewCountUseCase = formatReviewCountUseCase;
 
   IngredientState get state => _state;
-  Stream<IngredientEvent> get eventStream => _streamController.stream;
+  Stream<IngredientEvent> get eventStream => _eventController.stream;
 
   void init({required String recipeId}) async {
     _loadingState();
@@ -126,7 +125,7 @@ class IngredientViewModel with ChangeNotifier {
       isLoading: false,
     );
 
-    _streamController.add(IngredientEvent.showErrorDialog(message));
+    _eventController.add(IngredientEvent.showErrorDialog(message));
 
     notifyListeners();
   }

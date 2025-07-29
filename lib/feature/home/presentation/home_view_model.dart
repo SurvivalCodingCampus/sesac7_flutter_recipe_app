@@ -14,7 +14,7 @@ import 'package:flutter_recipe_app/feature/home/presentation/home_state.dart';
 class HomeViewModel with ChangeNotifier {
   final FetchAllRecipesUseCase _fetchAllRecipesUseCase;
   final FilterHomeRecipeCategoryUseCase _filterHomeRecipeCategoryUseCase;
-  final StreamController<HomeEvent> _streamController = StreamController();
+  final StreamController<HomeEvent> _eventController = StreamController();
 
   HomeState _state = HomeState();
 
@@ -25,7 +25,7 @@ class HomeViewModel with ChangeNotifier {
        _filterHomeRecipeCategoryUseCase = filterHomeRecipeCategoryUseCase;
 
   HomeState get state => _state;
-  Stream<HomeEvent> get eventStream => _streamController.stream;
+  Stream<HomeEvent> get eventStream => _eventController.stream;
 
   void init() async {
     _loadingState();
@@ -85,7 +85,7 @@ class HomeViewModel with ChangeNotifier {
     _state = state.copyWith(
       isLoading: false,
     );
-    _streamController.add(HomeEvent.showErrorDialog(message));
+    _eventController.add(HomeEvent.showErrorDialog(message));
 
     notifyListeners();
   }

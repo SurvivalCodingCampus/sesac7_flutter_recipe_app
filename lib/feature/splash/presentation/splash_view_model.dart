@@ -6,12 +6,12 @@ import 'package:flutter_recipe_app/feature/splash/presentation/splash_event.dart
 
 class SplashViewModel {
   final IsAirplaneModeUseCase _isAirplaneModeUseCase;
-  final StreamController<SplashEvent> _streamController = StreamController();
+  final StreamController<SplashEvent> _eventController = StreamController();
 
   SplashViewModel({required IsAirplaneModeUseCase isAirplaneModeUseCase})
     : _isAirplaneModeUseCase = isAirplaneModeUseCase;
 
-  Stream<SplashEvent> get eventStream => _streamController.stream;
+  Stream<SplashEvent> get eventStream => _eventController.stream;
 
   void init() async {
     final result = await _isAirplaneModeUseCase.execute();
@@ -19,10 +19,10 @@ class SplashViewModel {
     switch (result) {
       case Success<bool, String>():
         if (result.data) {
-          _streamController.add(SplashEvent.showAirplaneModeError());
+          _eventController.add(SplashEvent.showAirplaneModeError());
         }
       case Error<bool, String>():
-        _streamController.add(SplashEvent.showErrorDialog(result.error));
+        _eventController.add(SplashEvent.showErrorDialog(result.error));
     }
   }
 }

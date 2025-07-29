@@ -13,7 +13,7 @@ import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_reci
 class SavedRecipesViewModel with ChangeNotifier {
   final GetSavedRecipesUseCase _getSavedRecipesUseCase;
   final RemoveSavedRecipeUseCase _removeSavedRecipeUseCase;
-  final StreamController<SavedRecipesEvent> _streamController =
+  final StreamController<SavedRecipesEvent> _eventController =
       StreamController.broadcast();
 
   SavedRecipesState _state = SavedRecipesState();
@@ -21,11 +21,11 @@ class SavedRecipesViewModel with ChangeNotifier {
   SavedRecipesViewModel({
     required GetSavedRecipesUseCase getSavedRecipesUseCase,
     required RemoveSavedRecipeUseCase removeSavedRecipeUseCase,
-  })  : _getSavedRecipesUseCase = getSavedRecipesUseCase,
-        _removeSavedRecipeUseCase = removeSavedRecipeUseCase;
+  }) : _getSavedRecipesUseCase = getSavedRecipesUseCase,
+       _removeSavedRecipeUseCase = removeSavedRecipeUseCase;
 
   SavedRecipesState get state => _state;
-  Stream<SavedRecipesEvent> get eventStream => _streamController.stream;
+  Stream<SavedRecipesEvent> get eventStream => _eventController.stream;
 
   Future<void> init() async {
     _loadingState();
@@ -43,7 +43,9 @@ class SavedRecipesViewModel with ChangeNotifier {
           savedRecipes: [],
           isLoading: false,
         );
-        _streamController.add(SavedRecipesEvent.showErrorDialog(result.error.toString()));
+        _eventController.add(
+          SavedRecipesEvent.showErrorDialog(result.error.toString()),
+        );
     }
 
     notifyListeners();
@@ -78,7 +80,9 @@ class SavedRecipesViewModel with ChangeNotifier {
         _state = state.copyWith(
           isLoading: false,
         );
-        _streamController.add(SavedRecipesEvent.showErrorDialog(result.error.toString()));
+        _eventController.add(
+          SavedRecipesEvent.showErrorDialog(result.error.toString()),
+        );
     }
     notifyListeners();
   }
@@ -90,8 +94,7 @@ class SavedRecipesViewModel with ChangeNotifier {
 
   @override
   void dispose() {
-    _streamController.close();
+    _eventController.close();
     super.dispose();
   }
 }
-

@@ -20,7 +20,7 @@ class SearchRecipesViewModel with ChangeNotifier {
   final FilterRecipesUseCase _filterRecipesUseCase;
   final FetchRecentSearchKeywordUseCase _fetchRecentSearchKeywordUseCase;
   final SaveSearchKeywordUseCase _saveSearchKeywordUseCase;
-  final StreamController<SearchRecipesEvent> _streamController =
+  final StreamController<SearchRecipesEvent> _eventController =
       StreamController();
   final Debouncer _debouncer;
 
@@ -39,7 +39,7 @@ class SearchRecipesViewModel with ChangeNotifier {
        _debouncer = debouncer;
 
   SearchRecipesState get state => _state;
-  Stream<SearchRecipesEvent> get eventStream => _streamController.stream;
+  Stream<SearchRecipesEvent> get eventStream => _eventController.stream;
 
   void init() async {
     _loadingState();
@@ -121,12 +121,13 @@ class SearchRecipesViewModel with ChangeNotifier {
     );
 
     if (filteredRecipes.isEmpty) {
-      _streamController.add(SearchRecipesEvent.showNoSearchResultSnackBar());
+      _eventController.add(SearchRecipesEvent.showNoSearchResultSnackBar());
     }
 
     if (keyword.trim().isNotEmpty) {
       _saveSearchKeywordUseCase.execute(keyword);
     }
+
     notifyListeners();
   }
 
@@ -145,7 +146,7 @@ class SearchRecipesViewModel with ChangeNotifier {
       isLoading: false,
     );
 
-    _streamController.add(SearchRecipesEvent.showErrorDialog(message));
+    _eventController.add(SearchRecipesEvent.showErrorDialog(message));
 
     notifyListeners();
   }
