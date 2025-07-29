@@ -43,11 +43,13 @@ class SearchRecipesViewModel with ChangeNotifier {
 
   void init() async {
     _loadingState();
-    await _fetchAllRecipes();
+    final isSuccess = await _fetchAllRecipes();
+    if (!isSuccess) return;
+    // 검색기록레포에서 가져오면 use case 하나에서 레포 교체로 가능
     await _fetchRecentSearchKeyword();
   }
 
-  Future<void> _fetchAllRecipes() async {
+  Future<bool> _fetchAllRecipes() async {
     final result = await _fetchAllRecipesUseCase.execute();
 
     switch (result) {
@@ -57,13 +59,15 @@ class SearchRecipesViewModel with ChangeNotifier {
           filteredRecipes: result.data,
           resultCount: result.data.length,
           searchState: SearchStateType.recentSearch,
-          filterState: FilterSearchState(),
+          filterState: const FilterSearchState(),
           isLoading: false,
         );
 
         notifyListeners();
+        return true;
       case Error<List<Recipe>, NetworkError>():
         _errorState(result.error.toString());
+        return false;
     }
   }
 
@@ -85,7 +89,7 @@ class SearchRecipesViewModel with ChangeNotifier {
   void onAction(SearchRecipesAction action) {
     switch (action) {
       case ChangeSearchValue():
-        _searchRecipe(action.value);
+        _debouncer.run(() => _searchRecipe(action.value));
       case TapFilterButton():
         break;
       case SelectFilter():
@@ -96,9 +100,7 @@ class SearchRecipesViewModel with ChangeNotifier {
   }
 
   void _searchRecipe(String keyword) {
-    _debouncer.run(
-      () => _searchWithFilter(keyword, state.filterState),
-    );
+    _searchWithFilter(keyword, state.filterState);
   }
 
   void _selectFilter(FilterSearchState filterState) {
