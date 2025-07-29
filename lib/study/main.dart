@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:get_it/get_it.dart';
@@ -8,18 +9,84 @@ part 'main.freezed.dart';
 
 part 'main.g.dart';
 
-// --- DI 설정: GetIt 인스턴스 생성 ---
 final getIt = GetIt.instance;
 
-// --- 유틸리티: Result 클래스 ---
+// --- 유틸리티 ---
 @freezed
 sealed class Result<T> with _$Result<T> {
   const factory Result.success(T data) = Success;
 
   const factory Result.error(Exception e) = Error;
 }
+/*
+//--- @freezed가 sealed class Result에 대해 생성하는 코드 예시 ---
+// 아래 코드는 build_runner가 'main.freezed.dart' 파일에 자동으로 생성합니다.
 
-// --- 1. 데이터 계층 ---
+// 1. 각 factory 생성자에 대한 구체적인 클래스들
+// Success 클래스는 데이터를 가짐
+class Success<T> implements Result<T> {
+  const Success(this.data);
+  final T data;
+
+  @override
+  String toString() {
+    return 'Result.success(data: $data)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other is Success<T> &&
+            (identical(other.data, data) || other.data == data));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, data);
+
+  Success<T> copyWith({ T? data }) {
+    return Success<T>(data ?? this.data);
+  }
+}
+
+// Error 클래스는 Exception을 가짐
+class Error<T> implements Result<T> {
+  const Error(this.e);
+  final Exception e;
+
+  @override
+  String toString() {
+    return 'Result.error(e: $e)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other is Error<T> &&
+            (identical(other.e, e) || other.e == e));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, e);
+
+  Error<T> copyWith({ Exception? e }) {
+    return Error<T>(e ?? this.e);
+  }
+}
+*/
+
+// 앱의 모든 경로를 중앙에서 관리하는 클래스
+abstract class Routes {
+  static const String items = '/items';
+  static const String settings = '/settings';
+  static const String detail = '/detail/:id';
+  static const String reviews = 'reviews';
+
+  static String itemDetailPath(int id) => '/detail/$id';
+
+  static String itemReviewsPath(String id) => '/detail/$id/reviews';
+}
+
+// --- 데이터 계층 ---
 @JsonSerializable()
 class ItemDto {
   final int? id;
@@ -32,6 +99,22 @@ class ItemDto {
 
   Map<String, dynamic> toJson() => _$ItemDtoToJson(this);
 }
+/*
+//--- @JsonSerializable()이 생성하는 코드 예시 ---
+// 아래 코드는 build_runner가 'main.g.dart' 파일에 자동으로 생성합니다.
+
+// JSON Map을 ItemDto 객체로 변환
+ItemDto _$ItemDtoFromJson(Map<String, dynamic> json) => ItemDto(
+      id: json['id'] as int?,
+      title: json['title'] as String?,
+    );
+
+// ItemDto 객체를 JSON Map으로 변환
+Map<String, dynamic> _$ItemDtoToJson(ItemDto instance) => <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+    };
+*/
 
 class ItemDataSource {
   Future<List<ItemDto>> getDtos() async {
@@ -43,13 +126,48 @@ class ItemDataSource {
   }
 }
 
-// --- 2. 도메인 계층 ---
-class Item {
+// --- 도메인 계층 ---
+@freezed
+abstract class Item with _$Item {
+  const factory Item({
+    required int id,
+    required String name,
+  }) = _Item;
+}
+/*
+//--- @freezed가 Item 클래스에 대해 생성하는 코드 예시 ---
+// 아래 코드는 build_runner가 'main.freezed.dart' 파일에 자동으로 생성합니다.
+
+// 1. 실제 데이터를 담는 _Item 클래스
+class _Item implements Item {
+  const _Item({required this.id, required this.name});
+
+  @override
   final int id;
+  @override
   final String name;
 
-  Item({required this.id, required this.name});
+  // 2. copyWith 메서드: 일부 필드 값만 변경하여 새로운 객체를 생성
+  @override
+  _Item copyWith({int? id, String? name}) {
+    return _Item(
+      id: id ?? this.id,
+      name: name ?? this.name,
+    );
+  }
+
+  // 3. == 연산자: 모든 필드 값이 같으면 true를 반환
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other is _Item && other.id == id && other.name == name);
+  }
+
+  // 4. hashCode: 모든 필드 값을 기반으로 해시 코드를 생성
+  @override
+  int get hashCode => Object.hash(id, name);
 }
+*/
 
 class ItemMapper {
   static Item fromDto(ItemDto dto) =>
@@ -81,7 +199,25 @@ class GetItemsUseCase {
   Future<Result<List<Item>>> execute() => _repository.getItems();
 }
 
-// --- 3. 프레젠테이션 계층 (ViewModel & UI State) ---
+// --- 프레젠테이션 계층 ---
+
+// 사용자의 상호작용을 정의하는 Action
+@freezed
+sealed class ItemsAction with _$ItemsAction {
+  const factory ItemsAction.clickItem(Item item) = ClickItem;
+
+  const factory ItemsAction.dragItem(Item item) = DragItem;
+
+  const factory ItemsAction.clickTitle() = ClickTitle;
+}
+
+// 일회성 UI 이벤트를 정의하는 Event
+@freezed
+sealed class ItemsEvent with _$ItemsEvent {
+  const factory ItemsEvent.showUpdateSnackbar(String message) =
+      ShowUpdateSnackbar;
+}
+
 @freezed
 abstract class ItemsState with _$ItemsState {
   const factory ItemsState({
@@ -94,6 +230,10 @@ abstract class ItemsState with _$ItemsState {
 class ItemsViewModel with ChangeNotifier {
   final GetItemsUseCase _getItemsUseCase;
 
+  final _eventController = StreamController<ItemsEvent>.broadcast();
+
+  Stream<ItemsEvent> get eventStream => _eventController.stream;
+
   ItemsViewModel(this._getItemsUseCase);
 
   ItemsState _state = const ItemsState();
@@ -101,6 +241,8 @@ class ItemsViewModel with ChangeNotifier {
   ItemsState get state => _state;
 
   Future<void> fetchItems() async {
+    if (state.items.isNotEmpty || state.isLoading) return;
+
     _state = state.copyWith(isLoading: true);
     notifyListeners();
 
@@ -113,9 +255,32 @@ class ItemsViewModel with ChangeNotifier {
     }
     notifyListeners();
   }
+
+  void onAction(ItemsAction action) {
+    switch (action) {
+      case ClickItem(:final item):
+        print('Item clicked in ViewModel: ${item.name}');
+      case DragItem(:final item):
+        final updatedItems = List<Item>.from(state.items)
+          ..removeWhere((i) => i.id == item.id);
+        _state = state.copyWith(items: updatedItems);
+        notifyListeners();
+        print('Item dragged to delete in ViewModel: ${item.name}');
+      case ClickTitle():
+        _eventController.add(
+          const ItemsEvent.showUpdateSnackbar('💡 타이틀이 클릭되었습니다!'),
+        );
+    }
+  }
+
+  @override
+  void dispose() {
+    _eventController.close();
+    super.dispose();
+  }
 }
 
-// --- DI 설정 함수 ---
+// DI 설정 함수
 void setupDependencies() {
   getIt.registerSingleton<ItemDataSource>(ItemDataSource());
   getIt.registerSingleton<ItemRepository>(
@@ -129,10 +294,22 @@ void setupDependencies() {
   );
 }
 
-// --- 4. 라우터 설정 ---
+// 라우터 설정
 final _router = GoRouter(
-  initialLocation: '/items',
+  initialLocation: Routes.items,
   routes: [
+    GoRoute(
+      path: Routes.detail,
+      builder: (context, state) =>
+          ItemDetailScreen(id: state.pathParameters['id']!),
+      routes: [
+        GoRoute(
+          path: Routes.reviews,
+          builder: (context, state) =>
+              ItemReviewScreen(id: state.pathParameters['id']!),
+        ),
+      ],
+    ),
     StatefulShellRoute.indexedStack(
       builder: (context, state, navigationShell) =>
           MainScreen(shell: navigationShell),
@@ -140,27 +317,17 @@ final _router = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: '/items',
+              path: Routes.items,
               builder: (context, state) {
-                // 라우터가 ViewModel을 생성하여 View에 주입
-                final viewModel = getIt<ItemsViewModel>();
-                viewModel.fetchItems(); // 데이터 로드 시작
-                return ItemsScreen(viewModel: viewModel);
+                return ItemsScreenRoot(viewModel: getIt<ItemsViewModel>());
               },
-              routes: [
-                GoRoute(
-                  path: 'detail/:id',
-                  builder: (context, state) =>
-                      ItemDetailScreen(id: state.pathParameters['id']!),
-                ),
-              ],
             ),
           ],
         ),
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: '/settings',
+              path: Routes.settings,
               builder: (context, state) => const SettingsScreen(),
             ),
           ],
@@ -169,9 +336,9 @@ final _router = GoRouter(
     ),
   ],
   errorBuilder: (context, state) => ErrorScreen(error: state.error),
-);
+);  //의이없는 주석
 
-// --- App Entry Point ---
+// App Entry Point
 void main() {
   setupDependencies();
   runApp(const MyApp());
@@ -185,7 +352,7 @@ class MyApp extends StatelessWidget {
       MaterialApp.router(routerConfig: _router);
 }
 
-// --- 5. 뷰 계층 ---
+// --- 뷰 계층 ---
 class MainScreen extends StatelessWidget {
   final StatefulNavigationShell shell;
 
@@ -207,34 +374,121 @@ class MainScreen extends StatelessWidget {
   }
 }
 
-// StatelessWidget으로 변경
-class ItemsScreen extends StatelessWidget {
+class ItemsScreenRoot extends StatefulWidget {
   final ItemsViewModel viewModel;
 
-  const ItemsScreen({super.key, required this.viewModel});
+  const ItemsScreenRoot({super.key, required this.viewModel});
+
+  @override
+  State<ItemsScreenRoot> createState() => _ItemsScreenRootState();
+}
+
+class _ItemsScreenRootState extends State<ItemsScreenRoot> {
+  StreamSubscription<ItemsEvent>? _eventSubscription;
+
+  @override
+  void initState() {
+    super.initState();
+    widget.viewModel.fetchItems();
+
+    _eventSubscription = widget.viewModel.eventStream.listen((event) {
+      if (mounted) {
+        switch (event) {
+          case ShowUpdateSnackbar(:final message):
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(message),
+                duration: const Duration(seconds: 2), // <-- 이 부분을 추가
+              ),
+            );
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _eventSubscription?.cancel();
+    widget.viewModel.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListenableBuilder(
+      listenable: widget.viewModel,
+      builder: (context, child) {
+        return ItemsScreen(
+          state: widget.viewModel.state,
+          onAction: (action) {
+            widget.viewModel.onAction(action);
+
+            switch (action) {
+              case ClickItem(:final item):
+                context.push(Routes.itemDetailPath(item.id));
+              case DragItem():
+              case ClickTitle():
+              // UI 로직 없음
+            }
+          },
+        );
+      },
+    );
+  }
+}
+
+class ItemsScreen extends StatelessWidget {
+  final ItemsState state;
+  final void Function(ItemsAction action) onAction;
+
+  const ItemsScreen({
+    super.key,
+    required this.state,
+    required this.onAction,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('아이템 목록')),
-      body: ListenableBuilder(
-        listenable: viewModel,
-        builder: (context, child) {
-          final state = viewModel.state;
-          if (state.isLoading)
+      appBar: AppBar(
+        title: GestureDetector(
+          onTap: () {
+            onAction(const ItemsAction.clickTitle());
+          },
+          child: const Text('아이템 목록 (클릭해보세요)'),
+        ),
+      ),
+      body: Builder(
+        builder: (context) {
+          if (state.isLoading) {
             return const Center(child: CircularProgressIndicator());
-          if (state.errorMessage != null)
+          }
+          if (state.errorMessage != null) {
             return Center(child: Text(state.errorMessage!));
+          }
 
           return ListView.builder(
             itemCount: state.items.length,
             itemBuilder: (context, index) {
               final item = state.items[index];
-              return ListTile(
-                title: Text(item.name),
-                onTap: () {
-                  context.go('/items/detail/${item.id}');
+              return Dismissible(
+                key: ValueKey(item.id),
+                direction: DismissDirection.endToStart,
+                onDismissed: (direction) {
+                  onAction(ItemsAction.dragItem(item));
                 },
+                background: Container(
+                  color: Colors.red,
+                  alignment: Alignment.centerRight,
+                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                  child: const Icon(Icons.delete, color: Colors.white),
+                ),
+                child: ListTile(
+                  title: Text(item.name),
+                  onTap: () {
+                    onAction(ItemsAction.clickItem(item));
+                  },
+                ),
               );
             },
           );
@@ -253,7 +507,35 @@ class ItemDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('아이템 상세')),
-      body: Center(child: Text('선택된 아이템 ID: $id')),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text('선택된 아이템 ID: $id'),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                context.push(Routes.itemReviewsPath(id));
+              },
+              child: const Text('리뷰 보기'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class ItemReviewScreen extends StatelessWidget {
+  final String id;
+
+  const ItemReviewScreen({super.key, required this.id});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('리뷰 목록')),
+      body: Center(child: Text('ID: $id의 리뷰 화면')),
     );
   }
 }

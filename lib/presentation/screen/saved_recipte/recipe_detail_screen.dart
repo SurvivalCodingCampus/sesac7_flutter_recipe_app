@@ -129,7 +129,7 @@ class _RecipeDetailScreenState extends State<RecipeDetailScreen> {
                     final currentRecipe = widget.recipe;
 
                     final isBookmarked =
-                        currentRecipe?.isBookmarked ??
+                        currentRecipe.isBookmarked ??
                         widget.recipe.isBookmarked;
                     return CircleAvatar(
                       backgroundColor: Colors.white,

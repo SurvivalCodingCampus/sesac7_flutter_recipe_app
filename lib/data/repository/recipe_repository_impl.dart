@@ -1,6 +1,5 @@
 import 'package:flutter_recipe_app/data/model/user.dart';
 import 'package:flutter_recipe_app/data/repository/recipe_repository.dart';
-import '../model/ingredient.dart';
 import '../model/recipe.dart';
 
 class RecipeRepositoryImpl implements RecipeRepository {
