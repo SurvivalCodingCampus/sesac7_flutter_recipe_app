@@ -8,6 +8,5 @@ abstract class SavedRecipesState with _$SavedRecipesState {
   const factory SavedRecipesState({
     @Default([]) List<Recipe> savedRecipes,
     @Default(false) bool isLoading,
-    @Default('') String errorMessage,
   }) = _SavedRecipesState;
 }

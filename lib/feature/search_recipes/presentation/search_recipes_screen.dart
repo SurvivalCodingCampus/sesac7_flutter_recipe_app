@@ -39,6 +39,7 @@ class SearchRecipesScreen extends StatelessWidget {
                   Expanded(
                     child: SearchField(
                       placeholder: 'Search recipe',
+                      value: state.searchFieldValue,
                       onValueChange: (value) {
                         onAction(SearchRecipesAction.changeSearchValue(value));
                       },
@@ -69,12 +70,6 @@ class SearchRecipesScreen extends StatelessWidget {
               ),
               Builder(
                 builder: (context) {
-                  if (state.errorMessage != null) {
-                    return Center(
-                      child: Text(state.errorMessage!),
-                    );
-                  }
-
                   if (state.isLoading) {
                     return Center(
                       child: CircularProgressIndicator(),

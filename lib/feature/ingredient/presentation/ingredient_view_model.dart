@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/ingredient.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
@@ -9,6 +11,7 @@ import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_proc
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_recipe_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/format_review_count_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_action.dart';
+import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_event.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_state.dart';
 
 class IngredientViewModel with ChangeNotifier {
@@ -16,6 +19,8 @@ class IngredientViewModel with ChangeNotifier {
   final FetchAllIngredientsUseCase _fetchAllIngredientsUseCase;
   final FetchProcedureUseCase _fetchProcedureUseCase;
   final FormatReviewCountUseCase _formatReviewCountUseCase;
+  final StreamController<IngredientEvent> _streamController =
+      StreamController();
 
   IngredientState _state = IngredientState();
 
@@ -30,11 +35,10 @@ class IngredientViewModel with ChangeNotifier {
        _formatReviewCountUseCase = formatReviewCountUseCase;
 
   IngredientState get state => _state;
+  Stream<IngredientEvent> get eventStream => _streamController.stream;
 
   void init({required String recipeId}) async {
-    _state = state.copyWith(isLoading: true);
-
-    notifyListeners();
+    _loadingState();
 
     final results = await Future.wait([
       _fetchRecipeUseCase.execute(recipeId),
@@ -111,11 +115,18 @@ class IngredientViewModel with ChangeNotifier {
     notifyListeners();
   }
 
+  void _loadingState() {
+    _state = state.copyWith(isLoading: true);
+
+    notifyListeners();
+  }
+
   void _errorState(String message) {
     _state = state.copyWith(
-      errorMessage: message,
       isLoading: false,
     );
+
+    _streamController.add(IngredientEvent.showErrorDialog(message));
 
     notifyListeners();
   }

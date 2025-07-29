@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/core/presentation/component/dialog/error_dialog.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/filter_search_bottom_sheet.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_action.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_event.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_screen.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_view_model.dart';
 
@@ -18,10 +22,31 @@ class SearchRecipesScreenRoot extends StatefulWidget {
 }
 
 class _SearchRecipesScreenRootState extends State<SearchRecipesScreenRoot> {
+  StreamSubscription<SearchRecipesEvent>? _subscription;
+
   @override
   void initState() {
     super.initState();
     widget.viewModel.init();
+
+    _subscription = widget.viewModel.eventStream.listen((event) {
+      if (mounted) {
+        switch (event) {
+          case ShowErrorDialog():
+            showErrorDialog(context, event.message);
+          case ShowNoSearchResultSnackBar():
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('검색 결과가 없습니다.')));
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
   }
 
   @override

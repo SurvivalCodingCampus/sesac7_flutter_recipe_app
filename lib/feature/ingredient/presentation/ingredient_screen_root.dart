@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/core/presentation/component/dialog/error_dialog.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_action.dart';
+import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_event.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_screen.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_view_model.dart';
 
@@ -20,10 +24,27 @@ class IngredientScreenRoot extends StatefulWidget {
 }
 
 class _IngredientScreenRootState extends State<IngredientScreenRoot> {
+  StreamSubscription<IngredientEvent>? _subscription;
+
   @override
   void initState() {
     super.initState();
     widget.viewModel.init(recipeId: widget.recipeId);
+
+    _subscription = widget.viewModel.eventStream.listen((event) {
+      if (mounted) {
+        switch (event) {
+          case ShowErrorDialog():
+            showErrorDialog(context, event.message);
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
   }
 
   @override

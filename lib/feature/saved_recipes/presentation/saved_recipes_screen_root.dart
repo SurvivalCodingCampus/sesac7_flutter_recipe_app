@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/core/presentation/component/dialog/error_dialog.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_action.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_event.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_screen.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_view_model.dart';
 
@@ -18,10 +22,27 @@ class SavedRecipesScreenRoot extends StatefulWidget {
 }
 
 class _SavedRecipesScreenRootState extends State<SavedRecipesScreenRoot> {
+  StreamSubscription<SavedRecipesEvent>? _subscription;
+
   @override
   void initState() {
     super.initState();
     widget.viewModel.init();
+
+    _subscription = widget.viewModel.eventStream.listen((event) {
+      if (mounted) {
+        switch (event) {
+          case ShowErrorDialog():
+            showErrorDialog(context, event.message);
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
   }
 
   @override

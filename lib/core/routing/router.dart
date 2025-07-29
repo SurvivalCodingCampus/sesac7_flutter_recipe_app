@@ -9,18 +9,21 @@ import 'package:flutter_recipe_app/feature/main_navigation/presentation/main_nav
 import 'package:flutter_recipe_app/feature/notifications/presentation/notifications_screen.dart';
 import 'package:flutter_recipe_app/feature/profile/presentation/profile_screen.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_screen_root.dart';
-import 'package:flutter_recipe_app/feature/splash/presentation/splash_screen.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_screen_root.dart';
+import 'package:flutter_recipe_app/feature/splash/presentation/splash_screen_root.dart';
 import 'package:go_router/go_router.dart';
 
 GoRouter createRouter() => GoRouter(
-  // initialLocation: Routes.splash,
-  initialLocation: Routes.home,
+  initialLocation: Routes.splash,
+  // initialLocation: Routes.search,
   routes: [
     GoRoute(
       path: Routes.splash,
       builder: (context, state) {
-        return SplashScreen(
-          onStartCookingTap: () => context.go(Routes.signIn),
+        return SplashScreenRoot(
+          viewModel: getIt(),
+          // onStartCookingTap: () => context.go(Routes.signIn),
+          onStartCookingTap: () => context.push(Routes.search),
         );
       },
     ),
@@ -117,6 +120,13 @@ GoRouter createRouter() => GoRouter(
           viewModel: getIt(),
           onTapBack: () => context.pop(),
         );
+      },
+    ),
+
+    GoRoute(
+      path: Routes.search,
+      builder: (context, state) {
+        return SearchRecipesScreenRoot(viewModel: getIt());
       },
     ),
   ],

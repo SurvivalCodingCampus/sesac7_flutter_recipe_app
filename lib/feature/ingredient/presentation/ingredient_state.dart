@@ -14,6 +14,5 @@ abstract class IngredientState with _$IngredientState {
     @Default('') String reviewCount,
     @Default(IngredientTabType.ingredient) IngredientTabType tabType,
     @Default(false) bool isLoading,
-    @Default('') String errorMessage,
   }) = _IngredientState;
 }

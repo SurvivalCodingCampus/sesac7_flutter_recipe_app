@@ -14,7 +14,6 @@ abstract class SearchRecipesState with _$SearchRecipesState {
     @Default('') String searchFieldValue,
     @Default(0) int resultCount,
     @Default(FilterSearchState()) FilterSearchState filterState,
-    @Default(null) String? errorMessage,
     @Default(true) bool isLoading,
   }) = _SearchRecipesState;
 }

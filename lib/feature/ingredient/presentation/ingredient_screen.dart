@@ -58,12 +58,6 @@ class IngredientScreen extends StatelessWidget {
                     return const Center(child: CircularProgressIndicator());
                   }
 
-                  if (state.errorMessage.isNotEmpty) {
-                    return Center(
-                      child: Text(state.errorMessage),
-                    );
-                  }
-
                   return Column(
                     children: [
                       Column(
