@@ -30,7 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.DialogProperties
-import com.example.recipeapp.core.RatingType
+import com.example.recipeapp.core.enum.RatingType
 import com.example.recipeapp.presentation.component.button.RatingDialogButton
 import com.example.recipeapp.ui.theme.Rating
 import com.example.recipeapp.ui.theme.White

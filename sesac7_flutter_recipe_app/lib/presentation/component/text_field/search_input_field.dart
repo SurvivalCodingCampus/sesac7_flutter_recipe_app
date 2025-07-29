@@ -5,11 +5,13 @@ import 'package:flutter_recipe_app/ui/text_styles.dart';
 class SearchInputField extends StatelessWidget {
   final String hint;
   final Function(String searchKeyword) onSearchKeywordChange;
+  final VoidCallback? onSearchIconClick;
 
   const SearchInputField({
     super.key,
     required this.hint,
     required this.onSearchKeywordChange,
+    this.onSearchIconClick
   });
 
   @override
@@ -40,10 +42,15 @@ class SearchInputField extends StatelessWidget {
             ),
             filled: true,
             fillColor: AppColors.white,
-            prefixIcon: Icon(
-              Icons.search_outlined,
-              color: AppColors.gray4,
-              size: 18.0,
+            prefixIcon: GestureDetector(
+              onTap: () {
+                onSearchIconClick?.call();
+              },
+              child: Icon(
+                Icons.search_outlined,
+                color: AppColors.gray4,
+                size: 18.0,
+              ),
             ),
             contentPadding: EdgeInsets.symmetric(vertical: 11.5),
           ),

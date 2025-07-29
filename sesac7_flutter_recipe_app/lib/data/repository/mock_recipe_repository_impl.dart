@@ -10,10 +10,11 @@ import 'package:flutter_recipe_app/data/mapper/recipes_mapper.dart';
 import 'package:flutter_recipe_app/domain/model/recipe.dart';
 import 'package:flutter_recipe_app/domain/repository/recipe_repository.dart';
 
-class RecipeRepositoryImpl implements RecipeRepository {
+class MockRecipeRepositoryImpl implements RecipeRepository {
   final RecipeDataSource _recipeDataSource;
+  List<Recipe> _recentRecipes = [];
 
-  RecipeRepositoryImpl({
+  MockRecipeRepositoryImpl({
     required RecipeDataSource recipeDataSource,
   }) : _recipeDataSource = recipeDataSource;
 
@@ -40,22 +41,7 @@ class RecipeRepositoryImpl implements RecipeRepository {
   // fixme 임시로 전체 레시피 갖고 오도록 처리
   @override
   Future<Result<List<Recipe>, NetworkError>> getRecentRecipes() async {
-    try {
-      final Response<RecipesDto> response = await _recipeDataSource
-          .getRecipes();
-      final NetworkError? networkErrorType = response.statusCode
-          .statusCodeToNetworkErrorType();
-
-      if (networkErrorType == null) {
-        return Success(response.body.toModel().recipes);
-      } else {
-        return Error(networkErrorType);
-      }
-    } on FormatException {
-      return Error(NetworkError.jsonParsingError);
-    } catch (e) {
-      return Error(NetworkError.unKnown);
-    }
+    return Success(_recentRecipes);
   }
 
   // fixme 임시로 전체 레시피 갖고 오도록 처리
@@ -115,5 +101,11 @@ class RecipeRepositoryImpl implements RecipeRepository {
     } catch (e) {
       return Error(NetworkError.unKnown);
     }
+  }
+
+  @override
+  Future<Result<List<Recipe>, NetworkError>> addRecentRecipes(List<Recipe> recentRecipes) async {
+    _recentRecipes = recentRecipes;
+    return Success(_recentRecipes);
   }
 }

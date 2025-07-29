@@ -152,6 +152,27 @@ abstract class TextStyles {
 
   /* RatingDialog End */
 
+  /* NetworkErrorDialog Start*/
+  static final TextStyle networkErrorDialogTitle = TextStyle(
+    color: AppColors.labelColor,
+    fontSize: 11.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 17 / 11,
+  );
+
+  static final TextStyle networkErrorDialogButtonTitle = TextStyle(
+    color: AppColors.white,
+    fontSize: 8.0,
+    fontFamily: FontFamilyType.poppins.fontFamilyName,
+    fontWeight: FontWeight.w400,
+    overflow: TextOverflow.ellipsis,
+    height: 12 / 8,
+  );
+
+  /* NetworkErrorDialog End */
+
   /* RecipeCard Start */
   static final TextStyle recipeCardRatingValue = TextStyle(
     color: AppColors.black,

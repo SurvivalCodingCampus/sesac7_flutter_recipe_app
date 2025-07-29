@@ -1,4 +1,4 @@
-package com.example.recipeapp.core
+package com.example.recipeapp.core.enum
 
 enum class RatingType(
     val value: Int

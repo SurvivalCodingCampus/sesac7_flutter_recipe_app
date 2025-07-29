@@ -1,16 +1,22 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/component/bottom_sheet/search_recipe_filter_bottom_sheet.dart';
+import 'package:flutter_recipe_app/presentation/component/dialog/network_error_dialog.dart';
 import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_action.dart';
+import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_event.dart';
 import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_screen.dart';
 import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_view_model.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 
 class SearchRecipesScreenRoot extends StatefulWidget {
-  final SearchRecipesViewModel  _searchRecipesViewModel;
+  final SearchRecipesViewModel _searchRecipesViewModel;
+  final VoidCallback networkErrorPop;
 
   const SearchRecipesScreenRoot(
     SearchRecipesViewModel searchRecipesViewModel, {
     super.key,
+    required this.networkErrorPop,
   }) : _searchRecipesViewModel = searchRecipesViewModel;
 
   @override
@@ -19,10 +25,46 @@ class SearchRecipesScreenRoot extends StatefulWidget {
 }
 
 class _SearchRecipesScreenRootState extends State<SearchRecipesScreenRoot> {
+  StreamSubscription<SearchRecipesEvent>? _subscription;
+
   @override
   void initState() {
     super.initState();
     widget._searchRecipesViewModel.fetchRecentRecipes();
+    _subscription ??= widget._searchRecipesViewModel.eventStream.listen((
+      event,
+    ) {
+      switch (event) {
+        case ShowEmptyResultError():
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('검색 결과가 없습니다.'),
+              ),
+            );
+          }
+        case ShowNetworkErrorDialog():
+          if (mounted) {
+            showDialog(
+              context: context,
+              builder: (dialogContext) => NetworkErrorDialog(
+                dialogTitle: '네트워크 오류',
+                networkError: event.error,
+                dismiss: () {
+                  Navigator.pop(dialogContext);
+                  widget.networkErrorPop();
+                },
+              ),
+            );
+          }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
   }
 
   @override

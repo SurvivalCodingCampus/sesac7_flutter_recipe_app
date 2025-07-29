@@ -30,6 +30,8 @@ class HomeViewModel extends ValueNotifier<HomeState> {
         } else {
           _fetchCategoryRecipes(action.category);
         }
+      case MoveSearchRecipeScreen():
+        break;
     }
   }
 
