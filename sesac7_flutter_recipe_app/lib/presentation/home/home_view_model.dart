@@ -57,11 +57,11 @@ class HomeViewModel extends ValueNotifier<HomeState> {
         }
       case MoveSearchRecipeScreen():
         break;
-      case FavoriteStateChange():
+      case BookmarkStateChange():
         if (await _isSavedRecipe(action.recipeId)) {
-          _removeFavoriteRecipe(action.recipeId);
+          _removeSavedRecipe(action.recipeId);
         } else {
-          _addFavoriteRecipe(action.recipeId);
+          _addSavedRecipe(action.recipeId);
         }
     }
   }
@@ -135,11 +135,11 @@ class HomeViewModel extends ValueNotifier<HomeState> {
     }
   }
 
-  Future<void> _addFavoriteRecipe(int recipeId) async {
+  Future<void> _addSavedRecipe(int recipeId) async {
     await _addSavedRecipeUseCase.execute(recipeId);
   }
 
-  Future<void> _removeFavoriteRecipe(int recipeId) async {
+  Future<void> _removeSavedRecipe(int recipeId) async {
     await _removeSavedRecipeUseCase.execute(recipeId);
   }
 }

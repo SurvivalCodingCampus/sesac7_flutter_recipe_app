@@ -7,13 +7,13 @@ import 'package:flutter_recipe_app/ui/text_styles.dart';
 class RecipeThumbnailCard extends StatelessWidget {
   final Recipe recipe;
   final bool isBookmark;
-  final VoidCallback onFavoritePressed;
+  final VoidCallback onBookmarkClick;
 
   const RecipeThumbnailCard({
     super.key,
     required this.recipe,
     required this.isBookmark,
-    required this.onFavoritePressed,
+    required this.onBookmarkClick,
   });
 
   @override
@@ -115,7 +115,7 @@ class RecipeThumbnailCard extends StatelessWidget {
                   ),
                   BookmarkButton(
                     isSelected: isBookmark,
-                    onFavoritePressed: onFavoritePressed,
+                    onBookmarkPressed: onBookmarkClick,
                   ),
                 ],
               ),

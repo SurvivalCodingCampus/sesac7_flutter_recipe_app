@@ -3,18 +3,18 @@ import 'package:flutter_recipe_app/ui/app_colors.dart';
 
 class BookmarkButton extends StatelessWidget {
   final bool isSelected;
-  final VoidCallback onFavoritePressed;
+  final VoidCallback onBookmarkPressed;
 
   const BookmarkButton({
     super.key,
     required this.isSelected,
-    required this.onFavoritePressed,
+    required this.onBookmarkPressed,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onFavoritePressed,
+      onTap: onBookmarkPressed,
       child: Container(
         width: 24.0,
         height: 24.0,

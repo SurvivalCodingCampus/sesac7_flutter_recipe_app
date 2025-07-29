@@ -8,14 +8,14 @@ class RecipeCard extends StatelessWidget {
   final Recipe recipe;
   final bool isBookmark;
   final Function(int id) onTap;
-  final VoidCallback onFavoritePressed;
+  final VoidCallback onBookmarkClick;
 
   const RecipeCard({
     super.key,
     required this.recipe,
     required this.isBookmark,
     required this.onTap,
-    required this.onFavoritePressed,
+    required this.onBookmarkClick,
   });
 
   @override
@@ -144,7 +144,7 @@ class RecipeCard extends StatelessWidget {
                     ),
                     BookmarkButton(
                       isSelected: isBookmark,
-                      onFavoritePressed: onFavoritePressed,
+                      onBookmarkPressed: onBookmarkClick,
                     ),
                   ],
                 ),

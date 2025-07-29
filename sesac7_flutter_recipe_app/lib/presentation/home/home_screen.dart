@@ -128,8 +128,8 @@ class HomeScreen extends StatelessWidget {
                     return DishCard(
                       recipe: _state.categoryRecipes[index],
                       isBookmark: _state.savedRecipeIds.contains(_state.categoryRecipes[index].id),
-                      onTapFavorite: (recipeId) {
-                        onAction(HomeAction.favoriteStateChange(recipeId));
+                      onTapBookmark: (recipeId) {
+                        onAction(HomeAction.bookmarkStateChange(recipeId));
                       },
                     );
                   },

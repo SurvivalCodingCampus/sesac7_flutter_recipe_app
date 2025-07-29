@@ -4,5 +4,5 @@ part 'home_event.freezed.dart';
 
 @freezed
 sealed class HomeEvent with _$HomeEvent {
-  const factory HomeEvent.changeFavorite() = ChangeFavorite;
+  const factory HomeEvent.changeBookmarkSelectValue() = ChangeBookmarkSelectValue;
 }

@@ -44,7 +44,7 @@ class SavedRecipeScreen extends StatelessWidget {
                         ),
                       );
                     },
-                    onFavoritePressed: () {
+                    onBookmarkClick: () {
                       final int id = _savedRecipeState.savedRecipes[index].id;
                       onAction(
                         SavedRecipeAction.removeSavedRecipe(id),

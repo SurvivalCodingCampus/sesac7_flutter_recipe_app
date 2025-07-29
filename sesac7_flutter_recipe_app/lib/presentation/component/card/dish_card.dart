@@ -7,13 +7,13 @@ import 'package:flutter_recipe_app/ui/text_styles.dart';
 class DishCard extends StatelessWidget {
   final Recipe recipe;
   final bool isBookmark;
-  final Function(int recipeId) onTapFavorite;
+  final Function(int recipeId) onTapBookmark;
 
   const DishCard({
     super.key,
     required this.recipe,
     required this.isBookmark,
-    required this.onTapFavorite,
+    required this.onTapBookmark,
   });
 
   @override
@@ -96,8 +96,8 @@ class DishCard extends StatelessWidget {
                       ),
                       BookmarkButton(
                         isSelected: isBookmark,
-                        onFavoritePressed: () {
-                          onTapFavorite(recipe.id);
+                        onBookmarkPressed: () {
+                          onTapBookmark(recipe.id);
                         },
                       ),
                     ],

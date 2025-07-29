@@ -53,7 +53,7 @@ class IngredientScreen extends StatelessWidget {
                         RecipeThumbnailCard(
                           recipe: currentSelectedRecipe,
                           isBookmark: true,
-                          onFavoritePressed: () {
+                          onBookmarkClick: () {
                             // fixme Bookmark 변경 필요
                           },
                         ),
