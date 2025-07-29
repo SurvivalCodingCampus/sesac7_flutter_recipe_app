@@ -113,10 +113,8 @@ class HomeViewModel {
 
         if (recipe.isSaved) {
           _removeBookmarkUseCase.execute(recipe.id);
-          print('remove');
         } else {
           _saveBookmarkUseCase.execute(recipe.id);
-          print('save');
         }
     }
   }
