@@ -8,7 +8,6 @@ import 'package:flutter_recipe_app/presentation/component/card/ingredient_item.d
 import 'package:flutter_recipe_app/presentation/component/inputfield/input_field.dart';
 import 'package:flutter_recipe_app/presentation/component/tab/tab.dart';
 
-import '../../data/model/ingredient.dart';
 import '../../data/model/ingredients.dart';
 import '../component/button/small_button.dart';
 import '../component/card/recipe_card.dart';
@@ -70,22 +69,13 @@ class MainScreen extends StatelessWidget {
                   chef: 'By Chef John',
                   time: '30min',
                   rating: 4.5,
-                  ingredients: [],
-                  isBookmarked: false,
                 ),
               ),
               SizedBox(height: 16),
               IngredientItem(
-                ingredients: Ingredients(
-                  amount: 500,
-                  ingredient: Ingredient(
-                    id: 1,
-                    name: 'Tomato',
-                    imageUrl:
-                        'https://cdn.pixabay.com/photo/2017/10/06/17/17/tomato-2823826_1280.jpg',
+                ingredients: Ingredients(id: 1, name: 'Tomato', image: 'https://cdn.pixabay.com/photo/2017/10/06/17/17/tomato-2823826_1280.jpg',
                   ),
                 ),
-              ),
               SizedBox(height: 16),
               Row(
                 children: [

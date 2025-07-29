@@ -1,6 +1,6 @@
 /// 서버로부터 받아오는 로직 필요
 
-import '../../model/ingredient.dart';
+import '../../model/recipes_ingredients.dart';
 import '../../model/ingredients.dart';
 
 class MockIngredientDataSource{

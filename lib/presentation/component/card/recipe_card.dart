@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/ui/app_colors.dart';
 
 import '../../../data/model/recipes.dart';
 
@@ -145,7 +144,7 @@ class RecipeCard extends StatelessWidget {
                                       shape: BoxShape.circle,
                                     ),
                                     child: Icon(
-                                      recipe.isBookmarked ? Icons.bookmark : Icons.bookmark_border, // 修正
+                                      Icons.bookmark, // 修正
                                       color: Colors.white,
                                       size: 15,
                                     ),
