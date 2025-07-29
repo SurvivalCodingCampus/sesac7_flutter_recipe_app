@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_recipe_app/core/result.dart';
 import 'package:flutter_recipe_app/recipe_ingredients/presentation/recipe_ingredients_action.dart';
+import 'package:flutter_recipe_app/recipe_ingredients/presentation/recipe_ingredients_event.dart';
 import 'package:flutter_recipe_app/recipe_ingredients/presentation/recipe_ingredients_state.dart';
 
 import '../../core/domain/model/recipe.dart';
@@ -18,6 +19,9 @@ class RecipeIngredientsViewModel with ChangeNotifier{
   RecipeIngredientsState _state = RecipeIngredientsState();
   RecipeIngredientsState get state => _state;
 
+  final _eventController = StreamController<RecipeIngredientsScreenEvent>.broadcast();
+  Stream<RecipeIngredientsScreenEvent> get eventStream => _eventController.stream;
+
   RecipeIngredientsViewModel({
     required this.recipeId,
     required FetchRecipeIngredientsUseCase fetchRecipeUseCase,
@@ -28,6 +32,7 @@ class RecipeIngredientsViewModel with ChangeNotifier{
   void onAction(RecipeIngredientsAction action) {
     switch (action) {
       case MenuItemSelected(item: RecipeMenuItem.rate):
+        // print('rate 선택됨');
         _handleMenuItemSelected(RecipeMenuItem.rate);
         break;
       case MenuItemSelected(item: RecipeMenuItem.review):
@@ -42,7 +47,7 @@ class RecipeIngredientsViewModel with ChangeNotifier{
   void _handleMenuItemSelected(RecipeMenuItem item) {
     switch (item) {
       case RecipeMenuItem.rate:
-
+        _eventController.add(const RecipeIngredientsScreenEvent.showRatingDialog());
         break;
       case RecipeMenuItem.review:
         break;
