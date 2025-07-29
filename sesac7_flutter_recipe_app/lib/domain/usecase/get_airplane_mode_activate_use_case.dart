@@ -1,5 +1,5 @@
 import 'package:flutter_recipe_app/core/result.dart';
-import 'package:flutter_recipe_app/domain/repository/system_settings_repoisitory.dart';
+import 'package:flutter_recipe_app/domain/repository/system_settings_repository.dart';
 
 class GetAirplaneModeActivateUseCase {
   final SystemSettingsRepository _systemSettingsRepository;

@@ -7,7 +7,7 @@ import 'package:flutter_recipe_app/data/repository/mock_recipe_repository_impl.d
 import 'package:flutter_recipe_app/domain/repository/bookmark_repository.dart';
 import 'package:flutter_recipe_app/domain/repository/procedure_repository.dart';
 import 'package:flutter_recipe_app/domain/repository/recipe_repository.dart';
-import 'package:flutter_recipe_app/domain/repository/system_settings_repoisitory.dart';
+import 'package:flutter_recipe_app/domain/repository/system_settings_repository.dart';
 import 'package:flutter_recipe_app/domain/usecase/add_recent_recipes_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_airplane_mode_activate_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_procedures_by_recipe_id_use_case.dart';
