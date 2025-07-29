@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:flutter_recipe_app/core/result.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_airplane_mode_activate_use_case.dart';
-import 'package:flutter_recipe_app/presentation/splash/splash_action.dart';
 import 'package:flutter_recipe_app/presentation/splash/splash_event.dart';
 
 class SplashViewModel {
@@ -16,12 +15,13 @@ class SplashViewModel {
     required GetAirplaneModeActivateUseCase getAirplaneModeActivateUseCase,
   }) : _getAirplaneModeActivateUseCase = getAirplaneModeActivateUseCase;
 
-  void onAction(SplashAction splashAction) {
-    switch (splashAction) {
-      case ClickStartButton():
-        break;
-    }
-  }
+  // fixme PGT:: 필요시 구현
+  // void onAction(SplashAction splashAction) {
+  //   switch (splashAction) {
+  //     case ClickStartButton():
+  //       break;
+  //   }
+  // }
 
   void checkAirplaneModeActivate() {
     final Result<bool, String> result = _getAirplaneModeActivateUseCase
