@@ -7,7 +7,7 @@ import 'package:flutter_recipe_app/ui/text_styles.dart';
 class DishCard extends StatelessWidget {
   final Recipe recipe;
   final bool isBookmark;
-  final Function(Recipe recipe) onTapFavorite;
+  final Function(int recipeId) onTapFavorite;
 
   const DishCard({
     super.key,
@@ -97,7 +97,7 @@ class DishCard extends StatelessWidget {
                       BookmarkButton(
                         isSelected: isBookmark,
                         onFavoritePressed: () {
-                          onTapFavorite(recipe);
+                          onTapFavorite(recipe.id);
                         },
                       ),
                     ],

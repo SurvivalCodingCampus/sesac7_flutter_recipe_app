@@ -36,7 +36,7 @@ void main() {
               dialogTitle: dialogTitle,
               dialogButtonTitle: dialogButtonTitle,
               currentRatingType: RatingType.gradeZero,
-              onClickDismissButton: (int value) {},
+              onClickDismissButton: (RatingType ratingType) {},
             ),
           ),
         ),
