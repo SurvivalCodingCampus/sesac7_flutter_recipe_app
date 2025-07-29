@@ -97,7 +97,7 @@ final router = GoRouter(
             GoRoute(
               path: Routes.searchRecipes,
               builder: (context, state) {
-                return SearchRecipesScreenRoot(getIt());
+                return SearchRecipesScreenRoot();
               },
             ),
           ],

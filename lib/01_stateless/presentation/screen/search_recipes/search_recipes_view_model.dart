@@ -1,7 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/core/presentation/component/bottom_sheet/filter_search_state.dart';
 import 'package:flutter_recipe_app/01_stateless/core/result.dart';
 import 'package:flutter_recipe_app/01_stateless/domain/use_case/fetch_recipes_use_case.dart';
@@ -9,25 +7,23 @@ import 'package:flutter_recipe_app/01_stateless/domain/use_case/search_recipes_u
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_action.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_event.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_state.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../di/di_setup.dart';
 import '../../../domain/model/recipe.dart';
 
-class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
-  final GetRecipesUseCase _getRecipesUseCase;
-  final SearchRecipesUseCase _searchRecipesUseCase;
+part 'search_recipes_view_model.g.dart';
 
-  SearchRecipesState get state => value;
-
+@riverpod
+class SearchRecipesNotifier extends _$SearchRecipesNotifier {
   final _eventController = StreamController<SearchRecipesEvent>();
 
   Stream<SearchRecipesEvent> get eventStream => _eventController.stream;
 
-  SearchRecipesViewModel({
-    required GetRecipesUseCase getRecipesUseCase,
-    required SearchRecipesUseCase searchRecipesUseCase,
-  }) : _getRecipesUseCase = getRecipesUseCase,
-       _searchRecipesUseCase = searchRecipesUseCase,
-       super(SearchRecipesState());
+  @override
+  SearchRecipesState build() {
+    return SearchRecipesState();
+  }
 
   void onAction(SearchRecipesAction action) {
     switch (action) {
@@ -42,68 +38,64 @@ class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
       case ClickTitle():
         _eventController.add(SearchRecipesEvent.showErrorMessage('에러!!!!!!'));
     }
-    notifyListeners();
   }
 
   void fetchRecipes() async {
-    value = value.copyWith(isLoading: true);
-    notifyListeners();
+    state = state.copyWith(isLoading: true);
 
-    final result = await _getRecipesUseCase.execute();
-    switch (result) {
-      case Success<List<Recipe>>():
-        value = value.copyWith(
-          originalRecipes: result.data,
-          filteredRecipes: result.data,
-          isLoading: false,
-        );
-        notifyListeners();
-      case Error<List<Recipe>>():
-        // TODO: Handle this case.
-        throw UnimplementedError();
+    try {
+      final result = await ref.read(getRecipesProvider.future).timeout(
+        Duration(seconds: 10),
+        onTimeout: () {
+          return Result.error('요청 시간이 초과되었습니다. 네트워크 연결을 확인해주세요.');
+        },
+      );
+      
+      switch (result) {
+        case Success<List<Recipe>>():
+          state = state.copyWith(
+            originalRecipes: result.data,
+            filteredRecipes: result.data,
+            isLoading: false,
+          );
+          _filter(state.filterSearchState);
+        case Error<List<Recipe>>():
+          state = state.copyWith(isLoading: false);
+          _eventController.add(
+            SearchRecipesEvent.showErrorMessage(result.message),
+          );
+      }
+    } catch (e) {
+      state = state.copyWith(isLoading: false);
+      _eventController.add(
+        SearchRecipesEvent.showErrorMessage('데이터를 불러오는 중 오류가 발생했습니다.'),
+      );
     }
-
-    _filter(value.filterSearchState);
   }
 
   void _searchWithFilter(String query, FilterSearchState filterSearchState) {
-    final searchedRecipes = _searchRecipesUseCase.execute(
-      value.originalRecipes,
+    final searchedRecipes = getIt<SearchRecipesUseCase>().execute(
+      state.originalRecipes,
       query,
       filterSearchState,
     );
 
-    value = value.copyWith(
+    state = state.copyWith(
       query: query,
-      searchLabel: value.originalRecipes.length == searchedRecipes.length
+      searchLabel: state.originalRecipes.length == searchedRecipes.length
           ? 'Recent Search'
           : 'Search Result',
       filteredRecipes: searchedRecipes,
       filterSearchState: filterSearchState,
       resultLabel: query.isEmpty ? '' : '${searchedRecipes.length} results',
     );
-
-    notifyListeners();
   }
 
   void _search(String query) {
-    _searchWithFilter(query, value.filterSearchState);
+    _searchWithFilter(query, state.filterSearchState);
   }
 
   void _filter(FilterSearchState filterSearchState) {
-    _searchWithFilter(value.query, filterSearchState);
-  }
-}
-
-void main() {
-  final person = Person();
-  print(person(10));
-}
-
-class Person {
-  String name = 'aaa';
-
-  String call(int age) {
-    return '$name $age';
+    _searchWithFilter(state.query, filterSearchState);
   }
 }

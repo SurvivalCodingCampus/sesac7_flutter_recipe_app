@@ -1,12 +1,10 @@
 import 'package:flutter_recipe_app/01_stateless/data/repository/person_repository_impl.dart';
 import 'package:flutter_recipe_app/01_stateless/domain/repository/person_repository.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/saved_recipes/saved_recipes_view_model.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_view_model.dart';
 import 'package:get_it/get_it.dart';
 
 import '../data/repository/mock/mock_recipe_repository_impl.dart';
 import '../domain/repository/recipe_repository.dart';
-import '../domain/use_case/fetch_recipes_use_case.dart';
 import '../domain/use_case/filter_recipes_use_case.dart';
 import '../domain/use_case/get_recipe_use_case.dart';
 import '../domain/use_case/search_recipes_use_case.dart';
@@ -25,9 +23,9 @@ void diSetup() {
   );
 
   // UseCase
-  getIt.registerLazySingleton<GetRecipesUseCase>(
-    () => GetRecipesUseCase(recipeRepository: getIt()),
-  );
+  // getIt.registerLazySingleton<GetRecipesUseCase>(
+  //   () => GetRecipesUseCase(recipeRepository: getIt()),
+  // );
   getIt.registerLazySingleton<GetRecipeUseCase>(
     () => GetRecipeUseCase(recipeRepository: getIt()),
   );
@@ -49,10 +47,10 @@ void diSetup() {
   getIt.registerFactory(
     () => SavedRecipesViewModel(fetchRecipesUseCase: getIt()),
   );
-  getIt.registerFactory(
-    () => SearchRecipesViewModel(
-      getRecipesUseCase: getIt(),
-      searchRecipesUseCase: getIt(),
-    ),
-  );
+  // getIt.registerFactory(
+  //   () => SearchRecipesViewModel(
+  //     getRecipesUseCase: getIt(),
+  //     searchRecipesUseCase: getIt(),
+  //   ),
+  // );
 }
