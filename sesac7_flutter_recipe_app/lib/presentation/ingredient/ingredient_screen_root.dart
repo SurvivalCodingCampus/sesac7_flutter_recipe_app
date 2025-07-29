@@ -57,7 +57,7 @@ class _IngredientScreenRootState extends State<IngredientScreenRoot> {
                         dialogTitle: 'Rate recipe',
                         dialogButtonTitle: 'Send',
                         currentRatingType: RatingType.gradeZero,
-                        onClickDissmissButton: (selectedRatingType) {
+                        onClickDismissButton: (selectedRatingType) {
                           // fixme Rating 전송 API 필요
                           Navigator.pop(dialogContext);
                         },

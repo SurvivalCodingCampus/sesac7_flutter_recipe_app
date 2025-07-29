@@ -8,14 +8,14 @@ class RatingDialog extends StatefulWidget {
   final String dialogTitle;
   final String dialogButtonTitle;
   final RatingType currentRatingType;
-  final Function(RatingType ratingType) onClickDissmissButton;
+  final Function(RatingType ratingType) onClickDismissButton;
 
   const RatingDialog({
     super.key,
     required this.dialogTitle,
     required this.dialogButtonTitle,
     required this.currentRatingType,
-    required this.onClickDissmissButton,
+    required this.onClickDismissButton,
   });
 
   @override
@@ -82,7 +82,7 @@ class _RatingDialogState extends State<RatingDialog> {
             buttonActive: _selectedRatingType.getIntValue() > 0,
             onTap: () {
               if (_selectedRatingType != RatingType.gradeZero) {
-                widget.onClickDissmissButton(_selectedRatingType);
+                widget.onClickDismissButton(_selectedRatingType);
               }
             },
           ),

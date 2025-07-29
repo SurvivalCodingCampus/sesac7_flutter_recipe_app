@@ -18,7 +18,7 @@ void main() {
               dialogTitle: dialogTitle,
               dialogButtonTitle: dialogButtonTitle,
               currentRatingType: RatingType.gradeZero,
-              onClickDissmissButton: (int value) {},
+              onClickDismissButton: (RatingType ratingType) {},
             ),
           ),
         ),
@@ -36,18 +36,22 @@ void main() {
               dialogTitle: dialogTitle,
               dialogButtonTitle: dialogButtonTitle,
               currentRatingType: RatingType.gradeZero,
-              onClickDissmissButton: (int value) {},
+              onClickDismissButton: (int value) {},
             ),
           ),
         ),
       );
 
-      expect(find.byWidgetPredicate((widget) {
-        if (widget is RatingDialogButton) {
-          return widget.buttonTitle == dialogButtonTitle && !widget.buttonActive;
-        }
-        return false;
-      }), findsOneWidget);
+      expect(
+        find.byWidgetPredicate((widget) {
+          if (widget is RatingDialogButton) {
+            return widget.buttonTitle == dialogButtonTitle &&
+                !widget.buttonActive;
+          }
+          return false;
+        }),
+        findsOneWidget,
+      );
     });
 
     // testWidgets('RatingDialog Send Button Active Test', (tester) async {
