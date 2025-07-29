@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_recipe_app/01_stateless/core/di/di_get_it.dart';
 import 'package:flutter_recipe_app/01_stateless/core/routing/routes.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/main/main_root.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/main/main_view_model.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/saved_recipes/saved_recipes_root.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/saved_recipes/saved_recipes_view_model.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/screen/recipe_detail/recipe_detail_screen.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/recipe_detail/recipe_detail_root.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/recipe_detail/recipe_detail_view_model.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/sign_in/sign_in_screen.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/sign_up/sign_up_screen.dart';
@@ -82,14 +81,7 @@ final router = GoRouter(
       path: '${Routes.recipeDetail}/:id',
       builder: (context, state) {
         final id = int.parse(state.pathParameters['id']!);
-        final viewModel = getIt<RecipeDetailViewModel>();
-        viewModel.getRecipeDetailData(id);
-        return ListenableBuilder(
-          listenable: viewModel,
-          builder: (context, child) {
-            return RecipeDetailScreen(viewModel: viewModel, recipeId: id);
-          },
-        );
+        return RecipeDetailRoot(viewModel: getIt<RecipeDetailViewModel>(), recipeId: id);
       },
     ),
   ],

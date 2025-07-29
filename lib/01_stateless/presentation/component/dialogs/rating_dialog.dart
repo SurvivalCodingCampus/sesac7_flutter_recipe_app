@@ -8,6 +8,7 @@ void main() {
   runApp(
     MaterialApp(
       home: Scaffold(
+        backgroundColor: Colors.black,
         body: 
         Column(
           children: [
@@ -19,7 +20,6 @@ void main() {
     )
   );
 }
-
 class RatingDialog extends StatefulWidget {
 
   final String title;
@@ -38,9 +38,13 @@ class _RatingDialogState extends State<RatingDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       width: 170,
       height: 91,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: Colors.white,
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -50,6 +54,7 @@ class _RatingDialogState extends State<RatingDialog> {
             style: GoogleFonts.poppins(
               textStyle: TextStyles.smallerTextRegular,
               color: AppColors.labelColor,
+              decoration: TextDecoration.none,
             ),
           ),
           const SizedBox(height: 5),
