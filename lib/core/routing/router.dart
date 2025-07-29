@@ -23,6 +23,7 @@ import '../../sign_in_up/domain/model/sign_in_view_model.dart';
 import '../../sign_in_up/presentation/screen/sign_up_screen.dart';
 import '../../sign_in_up/domain/model/sign_up_view_model.dart';
 import '../domain/repository/mock_recipe_repository.dart';
+import '../presentation/screen/splash_screen/splash_screen_root.dart';
 import 'routes.dart';
 import '../presentation/screen/splash_screen/splash_screen.dart';
 
@@ -51,7 +52,9 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: Routes.splash,
-      builder: (context, state) => const SplashScreen(),
+      builder: (context, state) => SplashScreenRoot(
+        viewModel: getIt(),
+      ),
     ),
     GoRoute(
       path: Routes.signIn,
@@ -63,9 +66,9 @@ final router = GoRouter(
     GoRoute(
       path: Routes.signUp,
       builder: (context, state) =>
-          SignUpScreen(
-            viewModel: SignUpViewModel(),
-          ),
+        SignUpScreen(
+          viewModel: SignUpViewModel(),
+        ),
     ),
     // recipe ingredients
     GoRoute(

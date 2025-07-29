@@ -15,7 +15,7 @@ class FetchRecipesUseCase {
         _state = state;
 
 
-  // ? use case 에서 result 가 network error 타입까지 가질 필요가 있는지?
+  // ? use case 에서 result 가 network_repository.dart error 타입까지 가질 필요가 있는지?
 
   Future<Result<SavedRecipesState, NetworkError>> execute() async {
 

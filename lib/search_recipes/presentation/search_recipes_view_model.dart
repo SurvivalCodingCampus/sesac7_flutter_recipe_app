@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/result.dart';
+import 'package:flutter_recipe_app/search_recipes/presentation/search_recipe_event.dart';
 import 'package:flutter_recipe_app/search_recipes/presentation/search_recipes_action.dart';
 import 'package:flutter_recipe_app/search_recipes/presentation/search_recipes_state.dart';
 import 'package:flutter_recipe_app/core/domain/repository/recipes_repository.dart';
@@ -17,11 +20,15 @@ class SearchRecipesViewModel with ChangeNotifier {
   final FilterRecipesUseCase _filterRecipesUseCase;
 
   SearchRecipesState _state = SearchRecipesState.initial();
-
   SearchRecipesState get state => _state;
+
+  Timer? _debounceTimer;
 
   // search_recipes_state 파일에서 initial 초기화
   // 외부에서 캡슐화된 _state를 사용할 수 있게 getter 함수 생성
+
+  final _eventController = StreamController<SearchRecipeEvent>();
+  Stream<SearchRecipeEvent> get eventStream => _eventController.stream;
 
   SearchRecipesViewModel({
     required FetchRecipesUseCase fetchRecipesUseCase,
@@ -88,9 +95,15 @@ class SearchRecipesViewModel with ChangeNotifier {
     result.when(
       success: (newState) {
         _state = newState;
+        if (newState.filteredRecipes.isEmpty) {
+          _eventController.add(const SearchRecipeEvent.showEmptyResultSnackBar('검색 결과가 없습니다.'));
+        }
       },
       failure: (error) {
         print('Error searching recipes: $error');
+        _eventController.add(
+          SearchRecipeEvent.showNetworkErrorSnackBar('$error 오류가 발생했습니다.')
+        );
       },
     );
     notifyListeners();
@@ -126,10 +139,25 @@ class SearchRecipesViewModel with ChangeNotifier {
   }
 
   void _searchWithText(String query) {
-    _search(query);
+    if (_debounceTimer != null && _debounceTimer!.isActive) {
+      _debounceTimer!.cancel();
+      print('[DEBUG] Debounce canceled');
+    }
+    _debounceTimer = Timer(Duration(milliseconds: 500), () {
+      print('[DEBUG] Debounce triggered for query: "$query"');
+      _search(query);
+    });
   }
 
   void _searchWithFilter() {
     _filter(state.filterSearchState);
+  }
+
+
+  @override
+  void dispose() {
+    _debounceTimer?.cancel();
+    _eventController.close();
+    super.dispose();
   }
 }
