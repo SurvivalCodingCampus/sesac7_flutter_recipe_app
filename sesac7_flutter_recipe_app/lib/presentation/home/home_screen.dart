@@ -127,8 +127,10 @@ class HomeScreen extends StatelessWidget {
                   itemBuilder: (context, index) {
                     return DishCard(
                       recipe: _state.categoryRecipes[index],
-                      isBookmark: true,
-                      onTapFavorite: (recipe) {},
+                      isBookmark: _state.savedRecipeIds.contains(_state.categoryRecipes[index].id),
+                      onTapFavorite: (recipeId) {
+                        onAction(HomeAction.favoriteStateChange(recipeId));
+                      },
                     );
                   },
                   separatorBuilder: (context, index) => SizedBox(

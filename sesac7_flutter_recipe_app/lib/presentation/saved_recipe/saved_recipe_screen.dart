@@ -47,7 +47,7 @@ class SavedRecipeScreen extends StatelessWidget {
                     onFavoritePressed: () {
                       final int id = _savedRecipeState.savedRecipes[index].id;
                       onAction(
-                        SavedRecipeAction.savedRecipeFavoriteStateChange(id),
+                        SavedRecipeAction.removeSavedRecipe(id),
                       );
                     },
                   );

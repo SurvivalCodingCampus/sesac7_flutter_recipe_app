@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/home/home_action.dart';
 import 'package:flutter_recipe_app/presentation/home/home_screen.dart';
@@ -18,11 +20,24 @@ class HomeScreenRoot extends StatefulWidget {
 }
 
 class _HomeScreenRootState extends State<HomeScreenRoot> {
+  StreamSubscription? _bookmarkChangedSubscription;
+
   @override
   void initState() {
     super.initState();
+    widget._homeViewModel.loadSavedRecipeIds();
     widget._homeViewModel.loadCategories();
     widget._homeViewModel.fetchAllCategoryRecipes();
+    _bookmarkChangedSubscription = widget._homeViewModel.bookmarkChangedStream
+        .listen((event) {
+          widget._homeViewModel.loadSavedRecipeIds();
+        });
+  }
+
+  @override
+  void dispose() {
+    _bookmarkChangedSubscription?.cancel();
+    super.dispose();
   }
 
   @override

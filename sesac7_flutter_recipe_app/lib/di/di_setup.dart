@@ -106,12 +106,18 @@ void diSetUp() {
       getRecipesUseCase: getIt(),
       getRecipesCategoryListUseCase: getIt(),
       getRecipesByCategory: getIt(),
+      getSavedRecipeIdsUseCase: getIt(),
+      getSavedRecipeFindByIdUseCase: getIt(),
+      removeSavedRecipeUseCase: getIt(),
+      addSavedRecipeUseCase: getIt(),
+      bookmarkChangedStreamUseCase: getIt(),
     ),
   );
   getIt.registerFactory<SavedRecipeViewModel>(
     () => SavedRecipeViewModel(
       getSavedRecipesUseCase: getIt(),
       removeSavedRecipeUseCase: getIt(),
+      getBookmarkChangedStreamUseCase: getIt(),
     ),
   );
   getIt.registerFactory<SearchRecipesViewModel>(

@@ -6,4 +6,5 @@ part 'home_action.freezed.dart';
 sealed class HomeAction with _$HomeAction {
   const factory HomeAction.selectCategory(String category) = SelectCategory;
   const factory HomeAction.moveSearchRecipeScreen() = MoveSearchRecipeScreen;
+  const factory HomeAction.favoriteStateChange(int recipeId) = FavoriteStateChange;
 }
