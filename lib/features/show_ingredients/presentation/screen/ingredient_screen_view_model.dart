@@ -27,6 +27,10 @@ class IngredientScreenViewModel with ChangeNotifier {
         break;
       case SwitchTab():
         _changeIndexOfTab(action.index);
+      case ClickMenuButton():
+        break;
+      case ClickMenuItem():
+        break;
     }
   }
 
