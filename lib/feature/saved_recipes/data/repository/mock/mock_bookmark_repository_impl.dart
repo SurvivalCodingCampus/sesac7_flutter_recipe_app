@@ -4,8 +4,8 @@ class MockBookmarkRepositoryImpl implements BookmarkRepository {
   final _bookmarks = ['1', '2', '5'];
 
   @override
-  Future<List<String>> fetchBookmarks() async {
-    return _bookmarks;
+  Stream<List<String>> fetchBookmarks() async* {
+    yield _bookmarks;
   }
 
   @override

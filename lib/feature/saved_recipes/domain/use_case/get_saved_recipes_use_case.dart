@@ -16,23 +16,24 @@ class GetSavedRecipesUseCase {
   }) : _recipeRepository = recipeRepository,
        _bookmarkRepository = bookmarkRepository;
 
-  Future<Result<List<Recipe>, NetworkError>> execute() async {
+  Stream<Result<List<Recipe>, NetworkError>> execute() async* {
     try {
       final recipes = await _recipeRepository.fetchAllRecipes();
-      final bookmarks = await _bookmarkRepository.fetchBookmarks();
-      final savedRecipes = recipes
-          .where((recipe) => bookmarks.contains(recipe.id))
-          .toList();
 
-      return Result.success(savedRecipes);
+      await for (final bookmarks in _bookmarkRepository.fetchBookmarks()) {
+        final savedRecipes = recipes
+            .where((recipe) => bookmarks.contains(recipe.id))
+            .toList();
+        yield Result.success(savedRecipes);
+      }
     } on TimeoutException {
-      return Result.error(NetworkError.requestTimeout);
+      yield Result.error(NetworkError.requestTimeout);
     } on FormatException {
-      return Result.error(NetworkError.parseError);
+      yield Result.error(NetworkError.parseError);
     } on NetworkError catch (e) {
-      return Result.error(e);
+      yield Result.error(e);
     } catch (e) {
-      return Result.error(NetworkError.unknown);
+      yield Result.error(NetworkError.unknown);
     }
   }
 }

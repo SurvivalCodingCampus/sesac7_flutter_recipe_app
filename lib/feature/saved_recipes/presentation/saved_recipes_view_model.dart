@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
@@ -10,11 +9,16 @@ import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_reci
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_event.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_state.dart';
 
-class SavedRecipesViewModel with ChangeNotifier {
+class SavedRecipesViewModel {
   final GetSavedRecipesUseCase _getSavedRecipesUseCase;
   final RemoveSavedRecipeUseCase _removeSavedRecipeUseCase;
+  final StreamController<SavedRecipesState> _stateController =
+      StreamController();
   final StreamController<SavedRecipesEvent> _eventController =
-      StreamController.broadcast();
+      StreamController();
+
+  late final StreamSubscription<Result<List<Recipe>, NetworkError>>
+  _savedRecipesSubscription;
 
   SavedRecipesState _state = SavedRecipesState();
 
@@ -24,31 +28,40 @@ class SavedRecipesViewModel with ChangeNotifier {
   }) : _getSavedRecipesUseCase = getSavedRecipesUseCase,
        _removeSavedRecipeUseCase = removeSavedRecipeUseCase;
 
-  SavedRecipesState get state => _state;
+  Stream<SavedRecipesState> get state => _stateController.stream;
   Stream<SavedRecipesEvent> get eventStream => _eventController.stream;
 
   Future<void> init() async {
     _loadingState();
 
-    final result = await _getSavedRecipesUseCase.execute();
+    _savedRecipesSubscription = _getSavedRecipesUseCase.execute().listen((
+      result,
+    ) {
+      switch (result) {
+        case Success<List<Recipe>, NetworkError>():
+          _state = _state.copyWith(
+            savedRecipes: result.data,
+            isLoading: false,
+          );
+        case Error<List<Recipe>, NetworkError>():
+          _state = _state.copyWith(
+            savedRecipes: [],
+            isLoading: false,
+          );
 
-    switch (result) {
-      case Success<List<Recipe>, NetworkError>():
-        _state = state.copyWith(
-          savedRecipes: result.data,
-          isLoading: false,
-        );
-      case Error<List<Recipe>, NetworkError>():
-        _state = state.copyWith(
-          savedRecipes: [],
-          isLoading: false,
-        );
-        _eventController.add(
-          SavedRecipesEvent.showErrorDialog(result.error.toString()),
-        );
-    }
+          _eventController.add(
+            SavedRecipesEvent.showErrorDialog(result.error.toString()),
+          );
+      }
 
-    notifyListeners();
+      _notify();
+    });
+  }
+
+  void dispose() {
+    _stateController.close();
+    _eventController.close();
+    _savedRecipesSubscription.cancel();
   }
 
   Future<void> onAction(SavedRecipesAction action) async {
@@ -65,36 +78,37 @@ class SavedRecipesViewModel with ChangeNotifier {
     _loadingState();
 
     final result = await _removeSavedRecipeUseCase.execute(
-      state.savedRecipes,
+      _state.savedRecipes,
       id,
     );
 
     switch (result) {
       case Success<List<Recipe>, NetworkError>():
-        _state = state.copyWith(
+        _state = _state.copyWith(
           savedRecipes: result.data,
           isLoading: false,
         );
 
       case Error<List<Recipe>, NetworkError>():
-        _state = state.copyWith(
+        _state = _state.copyWith(
           isLoading: false,
         );
+
         _eventController.add(
           SavedRecipesEvent.showErrorDialog(result.error.toString()),
         );
     }
-    notifyListeners();
+
+    _notify();
   }
 
   void _loadingState() {
-    _state = state.copyWith(isLoading: true);
-    notifyListeners();
+    _state = _state.copyWith(isLoading: true);
+
+    _notify();
   }
 
-  @override
-  void dispose() {
-    _eventController.close();
-    super.dispose();
+  void _notify() {
+    _stateController.add(_state);
   }
 }

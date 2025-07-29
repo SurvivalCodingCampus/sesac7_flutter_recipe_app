@@ -42,6 +42,7 @@ class _SavedRecipesScreenRootState extends State<SavedRecipesScreenRoot> {
   @override
   void dispose() {
     _subscription?.cancel();
+    widget.viewModel.dispose();
     super.dispose();
   }
 
@@ -49,11 +50,17 @@ class _SavedRecipesScreenRootState extends State<SavedRecipesScreenRoot> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
 
-    return ListenableBuilder(
-      listenable: viewModel,
-      builder: (context, child) {
+    return StreamBuilder(
+      stream: viewModel.state,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
         return SavedRecipesScreen(
-          state: viewModel.state,
+          state: snapshot.data!,
           onAction: (action) {
             switch (action) {
               case TapRecipeCard():
