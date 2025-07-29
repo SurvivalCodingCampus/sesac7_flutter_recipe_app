@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/features/splash/presentation/screen/splash_screen_action.dart';
+import 'package:flutter_recipe_app/features/splash/presentation/screen/splash_screen_state.dart';
 
 import '../../../../core/presentation/component/medium_button.dart';
 import '../../../../ui/app_colors.dart';
-import '../../component/logo_with_marketing_comments.dart';
-import '../../component/splash_screen_main_marketing_comments.dart';
+import '../component/logo_with_marketing_comments.dart';
+import '../component/splash_screen_main_marketing_comments.dart';
 
 class SplashScreen extends StatelessWidget {
-  final void Function() onStart;
+  final SplashScreenState state;
+  final void Function(SplashScreenAction action) onAction;
 
   const SplashScreen({
     super.key,
-    required this.onStart,
+    required this.onAction,
+    required this.state,
   });
 
   @override
@@ -80,7 +84,9 @@ class SplashScreen extends StatelessWidget {
                   // SizedBox(height: 64),
                   MediumButton(
                     text: 'Start Cooking',
-                    onClick: onStart,
+                    onClick: () {
+                      onAction(SplashScreenAction.touchStartCooking());
+                    },
                   ),
                   Expanded(flex: 1, child: SizedBox()),
                 ],

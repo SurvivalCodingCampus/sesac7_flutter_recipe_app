@@ -1,17 +1,25 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/features/search_recipes/data/domain/use_case/fetch_recipes_use_case.dart';
 import 'package:flutter_recipe_app/features/search_recipes/data/domain/use_case/filter_recipes_use_case.dart';
 import 'package:flutter_recipe_app/features/search_recipes/presentation/screen/search_recipes_action.dart';
+import 'package:flutter_recipe_app/features/search_recipes/presentation/screen/search_recipes_event.dart';
 import 'package:flutter_recipe_app/features/search_recipes/presentation/screen/search_recipes_screen_state.dart';
 
 import '../../../../core/data/recipe/domain/model/recipe.dart';
+import '../../../../core/debounce.dart';
 import '../../data/domain/use_case/search_recipes_use_case.dart';
 import 'filter_search_bottom_sheet_state.dart';
 
 class SearchRecipesScreenViewModel with ChangeNotifier {
+  final Debounce debounce = Debounce(const Duration(milliseconds: 500));
   final SearchRecipesUseCase _searchRecipesUseCase;
   final FilterRecipesUseCase _filterRecipesUseCase;
   final FetchRecipesUseCase _fetchRecipesUseCase;
+  final _eventController = StreamController<SearchRecipesEvent>();
+
+  Stream<SearchRecipesEvent> get eventStream => _eventController.stream;
 
   SearchRecipesScreenState _state = const SearchRecipesScreenState();
 
@@ -28,9 +36,11 @@ class SearchRecipesScreenViewModel with ChangeNotifier {
   void onAction(SearchRecipesAction action) {
     switch (action) {
       case ChangeQuery():
-        _search(action.query);
+        debounce.run(() {
+          _search(action.query);
+        });
       case ShowFilter():
-        break;
+        _eventController.add(SearchRecipesEvent.showFilterBottomSheet());
       case ApplyFilter():
         _filterRecipes(action.state);
     }
@@ -62,7 +72,7 @@ class SearchRecipesScreenViewModel with ChangeNotifier {
     notifyListeners();
 
     // 검색이 한 번이라도 실행되었으면 Init 스위치를 끈다
-    if (state.searchedResult.isNotEmpty) {
+    if (state.query.isNotEmpty) {
       _state = state.copyWith(
         isInit: false,
       );
@@ -89,17 +99,25 @@ class SearchRecipesScreenViewModel with ChangeNotifier {
           : '${filteredList.length} recipes',
     );
     notifyListeners();
+
+    if (state.filteredResult.isEmpty) {
+      _eventController.add(SearchRecipesEvent.hasNoResult());
+    }
   }
 
-  void _search(String query) async {
-    final searchedResult = _searchRecipesUseCase.execute(state, query);
+  void _search(String query) {
+    try {
+      final searchedResult = _searchRecipesUseCase.execute(state, query);
 
-    _state = state.copyWith(
-      query: query,
-      searchedResult: searchedResult,
-    );
-    notifyListeners();
+      _state = state.copyWith(
+        query: query,
+        searchedResult: searchedResult,
+      );
+      notifyListeners();
 
-    _filterRecipes(state.filterSearchState);
+      _filterRecipes(state.filterSearchState);
+    } catch (e) {
+      _eventController.add(SearchRecipesEvent.showErrorMessage(e.toString()));
+    }
   }
 }
