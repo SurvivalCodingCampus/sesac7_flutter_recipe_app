@@ -1,5 +1,7 @@
+import 'package:flutter_recipe_app/data/dto/recipe_dto.dart';
+
 import '../../core/routing/response.dart';
 
 abstract interface class RecipeDataSource {
-  Future<Response<RecipesResultDto>> getRecipes();
+  Future<Response<RecipeDto>> getRecipes();
 }

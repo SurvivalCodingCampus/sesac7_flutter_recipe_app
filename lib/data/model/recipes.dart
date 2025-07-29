@@ -14,7 +14,5 @@ abstract class Recipes with _$Recipes {
     required String chef,
     required String time,
     required double rating,
-    required List<Ingredients> ingredients,
-    required bool isBookmarked,
   }) = _Recipes;
 }

@@ -1,11 +1,9 @@
 import 'dart:convert';
 
-import 'package:flutter_app/data/data_source/recipe_data_source.dart';
 import 'package:flutter_recipe_app/data/data_source/recipe_data_source.dart';
+import 'package:flutter_recipe_app/data/dto/recipe_dto.dart';
 
 import '../../core/routing/response.dart';
-import 'core/response.dart';
-import 'dto/recipes_dto.dart';
 import 'package:http/http.dart' as http;
 
 class RecipeDataSourceImpl implements RecipeDataSource {
@@ -15,10 +13,10 @@ class RecipeDataSourceImpl implements RecipeDataSource {
   final http.Client _client;
 
   RecipeDataSourceImpl({http.Client? client})
-      : _client = client ?? http.Client();
+    : _client = client ?? http.Client();
 
   @override
-  Future<Response<RecipesResultDto>> getRecipes() async {
+  Future<Response<RecipeDto>> getRecipes() async {
     final response = await _client.get(Uri.parse(_baseUrl));
 
     final jsonMap = jsonDecode(response.body) as Map<String, dynamic>;
@@ -26,7 +24,7 @@ class RecipeDataSourceImpl implements RecipeDataSource {
     return Response(
       statusCode: response.statusCode,
       header: response.headers,
-      body: RecipesResultDto.fromJson(jsonMap), // RecipesResultDto
+      body: RecipeDto.fromJson(jsonMap), // RecipesResultDto
     );
   }
 }
