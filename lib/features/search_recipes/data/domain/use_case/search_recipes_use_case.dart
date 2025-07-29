@@ -6,6 +6,10 @@ class SearchRecipesUseCase {
     SearchRecipesScreenState state,
     String query,
   ) {
+    if (query.isEmpty) {
+      return [];
+    }
+
     final searchedResult = state.recipes
         .where(
           (e) =>
