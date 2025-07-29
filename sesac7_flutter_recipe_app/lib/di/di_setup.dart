@@ -9,13 +9,16 @@ import 'package:flutter_recipe_app/domain/repository/procedure_repository.dart';
 import 'package:flutter_recipe_app/domain/repository/recipe_repository.dart';
 import 'package:flutter_recipe_app/domain/repository/system_settings_repository.dart';
 import 'package:flutter_recipe_app/domain/usecase/add_recent_recipes_use_case.dart';
+import 'package:flutter_recipe_app/domain/usecase/add_saved_recipe_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_airplane_mode_activate_use_case.dart';
+import 'package:flutter_recipe_app/domain/usecase/get_bookmark_changed_stream_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_procedures_by_recipe_id_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_recent_recipes_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_recipes_by_category.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_recipes_category_list_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_recipes_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_saved_recipe_find_by_id_use_case.dart';
+import 'package:flutter_recipe_app/domain/usecase/get_saved_recipe_ids_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_saved_recipes_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/remove_saved_recipe_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/search_recipe_by_filter_use_case.dart';
@@ -58,10 +61,22 @@ void diSetUp() {
     () => GetRecipesByCategory(getRecipesUseCase: getIt()),
   );
   getIt.registerLazySingleton<GetSavedRecipesUseCase>(
-    () => GetSavedRecipesUseCase(bookmarkRepository: getIt()),
+    () => GetSavedRecipesUseCase(
+      bookmarkRepository: getIt(),
+      recipeRepository: getIt(),
+    ),
   );
   getIt.registerLazySingleton<RemoveSavedRecipeUseCase>(
     () => RemoveSavedRecipeUseCase(bookmarkRepository: getIt()),
+  );
+  getIt.registerLazySingleton<AddSavedRecipeUseCase>(
+    () => AddSavedRecipeUseCase(bookmarkRepository: getIt()),
+  );
+  getIt.registerLazySingleton<GetSavedRecipeIdsUseCase>(
+    () => GetSavedRecipeIdsUseCase(bookmarkRepository: getIt()),
+  );
+  getIt.registerLazySingleton<GetBookmarkChangedStreamUseCase>(
+    () => GetBookmarkChangedStreamUseCase(bookmarkRepository: getIt()),
   );
   getIt.registerLazySingleton<GetSavedRecipeFindByIdUseCase>(
     () => GetSavedRecipeFindByIdUseCase(getSavedRecipesUseCase: getIt()),
