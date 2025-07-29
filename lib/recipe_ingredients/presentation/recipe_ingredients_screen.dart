@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/recipe_ingredients/presentation/recipe_ingredients_action.dart';
 import 'package:flutter_recipe_app/recipe_ingredients/presentation/recipe_ingredients_view_model.dart';
 import '../../../ui/app_colors.dart';
 import '../../../ui/text_styles.dart';
 import '../../../core/presentation/component/recipe_card.dart';
 import '../../core/presentation/component/ingredient/ingredient_item.dart';
+import '../domain/model/recipe_menu_item.dart';
 
 class RecipeIngredientsScreen extends StatelessWidget {
-  final int recipeId;
+  // final int recipeId;
   final RecipeIngredientsViewModel viewModel;
+  final void Function(RecipeIngredientsAction action) onAction;
 
   const RecipeIngredientsScreen({
     super.key,
     required this.viewModel,
-    required this.recipeId,
+    required this.onAction,
   });
 
   @override
@@ -41,6 +44,27 @@ class RecipeIngredientsScreen extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  Row(
+                    children: [
+                      IconButton(
+                        onPressed: () => Navigator.pop(context),
+                        icon: const Icon(Icons.arrow_back_ios, color: AppColors.black),
+                      ),
+                      const Spacer(),
+                      PopupMenuButton<RecipeMenuItem>(
+                        icon: const Icon(Icons.more_horiz, color: AppColors.black),
+                        onSelected: (selectedItem) {
+                          onAction(RecipeIngredientsAction.menuItemSelected(selectedItem));
+                        },
+                        itemBuilder: (context) => const [
+                          PopupMenuItem(value: RecipeMenuItem.rate, child: Text('Rate')),
+                          PopupMenuItem(value: RecipeMenuItem.review, child: Text('Review')),
+                          PopupMenuItem(value: RecipeMenuItem.unsave, child: Text('Unsave')),
+                        ],
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
                   // 🥪 레시피 대표 이미지 + 정보 (실제 컴포넌트로 교체!)
                   RecipeCard(
                     recipe: recipe,

@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import '../../di/di_setup.dart';
 import '../../recipe_ingredients/data/repository/ingredient_repository_impl.dart';
 import '../../recipe_ingredients/domain/use_case/fetch_recipe_use_case.dart';
+import '../../recipe_ingredients/presentation/recipe_ingredients_action.dart';
 import '../../recipe_ingredients/presentation/recipe_ingredients_screen.dart';
 import '../../recipe_ingredients/presentation/recipe_ingredients_view_model.dart';
 import '../../saved_recipes/domain/use_case/fetch_recipes_use_case.dart';
@@ -86,8 +87,8 @@ final router = GoRouter(
 
           // 3. 화면 전달
           return RecipeIngredientsScreen(
-            recipeId: id,
             viewModel: viewModel,
+            onAction: viewModel.onAction,
           );
         }
     ),

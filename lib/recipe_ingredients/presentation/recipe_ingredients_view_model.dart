@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_recipe_app/core/result.dart';
+import 'package:flutter_recipe_app/recipe_ingredients/presentation/recipe_ingredients_action.dart';
 import 'package:flutter_recipe_app/recipe_ingredients/presentation/recipe_ingredients_state.dart';
 
 import '../../core/domain/model/recipe.dart';
 import '../../core/domain/repository/recipes_repository.dart';
+import '../domain/model/recipe_menu_item.dart';
 import '../domain/use_case/fetch_recipe_use_case.dart';
 
 class RecipeIngredientsViewModel with ChangeNotifier{
@@ -21,6 +25,31 @@ class RecipeIngredientsViewModel with ChangeNotifier{
   })  : _fetchRecipeUseCase = fetchRecipeUseCase,
         _recipeRepository = recipeRepository;
 
+  void onAction(RecipeIngredientsAction action) {
+    switch (action) {
+      case MenuItemSelected(item: RecipeMenuItem.rate):
+        _handleMenuItemSelected(RecipeMenuItem.rate);
+        break;
+      case MenuItemSelected(item: RecipeMenuItem.review):
+        // TODO: Handle this case.
+        throw UnimplementedError();
+      case MenuItemSelected(item: RecipeMenuItem.unsave):
+        // TODO: Handle this case.
+        throw UnimplementedError();
+    }
+  }
+
+  void _handleMenuItemSelected(RecipeMenuItem item) {
+    switch (item) {
+      case RecipeMenuItem.rate:
+
+        break;
+      case RecipeMenuItem.review:
+        break;
+      case RecipeMenuItem.unsave:
+        break;
+    }
+  }
 
   Future<void> fetchRecipeIngredients() async {
     _state = _state.copyWith(isLoading: true);
