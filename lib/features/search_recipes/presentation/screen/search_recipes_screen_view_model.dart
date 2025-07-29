@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/features/search_recipes/data/domain/use_case/fetch_recipes_use_case.dart';
+import 'package:flutter_recipe_app/features/search_recipes/data/domain/use_case/add_search_history_use_case.dart';
 import 'package:flutter_recipe_app/features/search_recipes/data/domain/use_case/filter_recipes_use_case.dart';
+import 'package:flutter_recipe_app/features/search_recipes/data/domain/use_case/get_recipes_use_case.dart';
+import 'package:flutter_recipe_app/features/search_recipes/data/domain/use_case/get_search_histories_use_case.dart';
 import 'package:flutter_recipe_app/features/search_recipes/presentation/screen/search_recipes_action.dart';
 import 'package:flutter_recipe_app/features/search_recipes/presentation/screen/search_recipes_event.dart';
 import 'package:flutter_recipe_app/features/search_recipes/presentation/screen/search_recipes_screen_state.dart';
@@ -16,7 +18,9 @@ class SearchRecipesScreenViewModel with ChangeNotifier {
   final Debounce debounce = Debounce(const Duration(milliseconds: 500));
   final SearchRecipesUseCase _searchRecipesUseCase;
   final FilterRecipesUseCase _filterRecipesUseCase;
-  final FetchRecipesUseCase _fetchRecipesUseCase;
+  final GetRecipesUseCase _fetchRecipesUseCase;
+  final GetSearchHistoriesUseCase _fetchSearchHistoriesUseCase;
+  final AddSearchHistoryUseCase _addSearchHistoryUseCase;
   final _eventController = StreamController<SearchRecipesEvent>();
 
   Stream<SearchRecipesEvent> get eventStream => _eventController.stream;
@@ -28,10 +32,14 @@ class SearchRecipesScreenViewModel with ChangeNotifier {
   SearchRecipesScreenViewModel({
     required SearchRecipesUseCase searchRecipesUseCase,
     required FilterRecipesUseCase filterRecipesUseCase,
-    required FetchRecipesUseCase fetchRecipesUseCase,
+    required GetRecipesUseCase fetchRecipesUseCase,
+    required GetSearchHistoriesUseCase fetchSearchHistoriesUseCase,
+    required AddSearchHistoryUseCase addSearchHistoryUseCase,
   }) : _searchRecipesUseCase = searchRecipesUseCase,
        _filterRecipesUseCase = filterRecipesUseCase,
-       _fetchRecipesUseCase = fetchRecipesUseCase;
+       _fetchRecipesUseCase = fetchRecipesUseCase,
+       _fetchSearchHistoriesUseCase = fetchSearchHistoriesUseCase,
+       _addSearchHistoryUseCase = addSearchHistoryUseCase;
 
   void onAction(SearchRecipesAction action) {
     switch (action) {
@@ -49,15 +57,16 @@ class SearchRecipesScreenViewModel with ChangeNotifier {
   Future<void> fetchRecipes() async {
     _state = state.copyWith(
       isLoading: true,
-      isInit: true,
     );
     notifyListeners();
 
     final List<Recipe> recipes = await _fetchRecipesUseCase.execute();
+    final List<Recipe> searchedHistories = _fetchSearchHistoriesUseCase
+        .execute();
 
     _state = state.copyWith(
       recipes: recipes,
-      filteredResult: recipes,
+      filteredResult: searchedHistories,
       isLoading: false,
     );
     notifyListeners();
@@ -71,36 +80,33 @@ class SearchRecipesScreenViewModel with ChangeNotifier {
     );
     notifyListeners();
 
-    // 검색이 한 번이라도 실행되었으면 Init 스위치를 끈다
-    if (state.query.isNotEmpty) {
-      _state = state.copyWith(
-        isInit: false,
-      );
-    }
-
-    // 첫 검색 전까지는 전체 목록으로 필터링한다
-    final List<Recipe> baseList = (state.isInit)
+    // 필터의 대상이 되는 리스트를 쿼리 상태에 따라 결정
+    final List<Recipe> baseList = state.query.isEmpty
         ? state.recipes
-        : state.searchedResult;
+        : (state.searchedResult ?? state.recipes);
 
-    // 필터링 로직
     final filteredList = _filterRecipesUseCase.execute(state, baseList);
 
+    // 필터가 실제로 적용된 경우(즉, 필터가 활성화되어 있고 결과가 있을 때)만 검색 이력에 추가
+    final isFilterActive = filterSearchState.selectedRatingFilter != null;
+    if (isFilterActive && filteredList.isNotEmpty) {
+      _addSearchHistoryUseCase.execute(filteredList);
+    }
+
     _state = state.copyWith(
-      filteredResult: filteredList,
-      searchLabel:
-          (state.recipes.length == filteredList.length && state.query.isEmpty)
-          ? 'Recent Search'
-          : 'Search Result',
-      countingLabel:
-          (state.query.isEmpty &&
-              state.filterSearchState.selectedRatingFilter == null)
+      filteredResult: (state.query.isNotEmpty || isFilterActive)
+          ? filteredList
+          : _fetchSearchHistoriesUseCase.execute(),
+      searchLabel: (state.query.isNotEmpty || isFilterActive)
+          ? 'Search Result'
+          : 'Recent Search',
+      countingLabel: (state.query.isEmpty && !isFilterActive)
           ? ''
           : '${filteredList.length} recipes',
     );
     notifyListeners();
 
-    if (state.filteredResult.isEmpty) {
+    if (_state.filteredResult.isEmpty) {
       _eventController.add(SearchRecipesEvent.hasNoResult());
     }
   }
@@ -108,6 +114,11 @@ class SearchRecipesScreenViewModel with ChangeNotifier {
   void _search(String query) {
     try {
       final searchedResult = _searchRecipesUseCase.execute(state, query);
+
+      // 쿼리가 비어있지 않고, 검색 결과가 있으면 이력에 추가
+      if (query.isNotEmpty && searchedResult.isNotEmpty) {
+        _addSearchHistoryUseCase.execute(searchedResult);
+      }
 
       _state = state.copyWith(
         query: query,
