@@ -1,8 +1,9 @@
+import 'package:flutter_recipe_app/data/dto/recipes_dto.dart';
 
-import '../dto/recipe_dto.dart';
+import '../model/recipes.dart';
 
-extension RecipeMapper on RecipeDto{
-  Recipes toModel(){
+extension RecipeMapper on RecipeDto {
+  Recipes toModel() {
     return Recipes(
       id: (id ?? -1).toInt(),
       name: name ?? 'no name',

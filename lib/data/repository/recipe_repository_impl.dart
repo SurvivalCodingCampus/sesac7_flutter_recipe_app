@@ -1,3 +1,4 @@
+import 'package:flutter_recipe_app/data/mapper/recipe_mapper.dart';
 import 'package:flutter_recipe_app/data/model/recipes.dart';
 import 'package:flutter_recipe_app/data/repository/recipe_repository.dart';
 
@@ -17,9 +18,10 @@ class RecipeRepositoryImpl implements RecipeRepository {
 
       return switch (response.statusCode) {
         >= 200 && < 300 => Result.success(
-          // recipesDto 이름 명의 혼돈에 따른 실수 발생함
-          //response.body.recipes?.map((resipeDto) => resipeDto.toModel()).toList() ?? [],
-          response.body.recipes?.map((e) => e.toModel()).toList() ?? [];
+          response.body.recipes
+                  ?.map((recipeDto) => recipeDto.toModel())
+                  .toList() ??
+              [],
         ),
         401 => Result.error(NetworkError.unauthorized),
         404 => Result.error(NetworkError.notFound),

@@ -38,7 +38,7 @@ class IngredientItem extends StatelessWidget {
               color: AppColors.white,
               child: Image.network(
                 // 네트워크(인터넷)에 있는 URL로부터 이미지를 가져와 화면에 보여주는 역할 // 비동기 내부에서 처리
-                ingredients.ingredient.imageUrl,
+                ingredients.image,
                 fit: BoxFit.contain,
                 /*
                  image 로딩실패시 표시 위젯
@@ -57,7 +57,7 @@ class IngredientItem extends StatelessWidget {
           const SizedBox(width: 16.0),
           Expanded(
             child: Text(
-              ingredients.ingredient.name,
+              ingredients.name,
               style: TextStyles.normalTextBold.copyWith(
                 color: AppColors.black,
               ),
