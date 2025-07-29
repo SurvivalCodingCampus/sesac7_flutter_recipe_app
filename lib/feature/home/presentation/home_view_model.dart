@@ -67,17 +67,13 @@ class HomeViewModel {
       switch (result) {
         case Success<List<Recipe>, NetworkError>():
           final allRecipes = _state.allRecipes.map((recipe) {
-            if (result.data.contains(recipe)) {
-              return recipe.copyWith(isSaved: true);
-            }
-            return recipe;
+            final isSaved = result.data.any((savedRecipe) => savedRecipe.id == recipe.id);
+            return recipe.copyWith(isSaved: isSaved);
           }).toList();
 
           final filteredRecipes = _state.filteredRecipes.map((recipe) {
-            if (result.data.contains(recipe)) {
-              return recipe.copyWith(isSaved: true);
-            }
-            return recipe;
+            final isSaved = result.data.any((savedRecipe) => savedRecipe.id == recipe.id);
+            return recipe.copyWith(isSaved: isSaved);
           }).toList();
 
           _state = _state.copyWith(
