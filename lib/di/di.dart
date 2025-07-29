@@ -5,6 +5,8 @@ import 'package:flutter_recipe_app/core/domain/repository/recipe/recipe_reposito
 import 'package:flutter_recipe_app/core/domain/use_case/fetch_all_recipes_use_case.dart';
 import 'package:flutter_recipe_app/core/utils/debouncer.dart';
 import 'package:flutter_recipe_app/feature/home/domain/use_case/filter_home_recipe_category_use_case.dart';
+import 'package:flutter_recipe_app/feature/home/domain/use_case/remove_bookmark_use_case.dart';
+import 'package:flutter_recipe_app/feature/home/domain/use_case/save_bookmark_use_case.dart';
 import 'package:flutter_recipe_app/feature/home/presentation/home_view_model.dart';
 import 'package:flutter_recipe_app/feature/ingredient/data/repository/mocks/mock_ingredient_repository_impl.dart';
 import 'package:flutter_recipe_app/feature/ingredient/data/repository/mocks/mock_procedure_repository_impl.dart';
@@ -100,12 +102,21 @@ void diSetUp() {
   getIt.registerLazySingleton(
     () => SaveSearchKeywordUseCase(searchHistoryRepository: getIt()),
   );
+  getIt.registerLazySingleton(
+    () => SaveBookmarkUseCase(bookmarkRepository: getIt()),
+  );
+  getIt.registerLazySingleton(
+    () => RemoveBookmarkUseCase(bookmarkRepository: getIt()),
+  );
 
   // View Model
   getIt.registerFactory(
     () => HomeViewModel(
       fetchAllRecipesUseCase: getIt(),
       filterHomeRecipeCategoryUseCase: getIt(),
+      getSavedRecipesUseCase: getIt(),
+      removeBookmarkUseCase: getIt(),
+      saveBookmarkUseCase: getIt(),
     ),
   );
   getIt.registerFactory(

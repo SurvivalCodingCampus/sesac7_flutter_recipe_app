@@ -40,6 +40,7 @@ class _HomeScreenRootState extends State<HomeScreenRoot> {
   @override
   void dispose() {
     _subscription?.cancel();
+    widget.viewModel.dispose();
     super.dispose();
   }
 
@@ -47,11 +48,17 @@ class _HomeScreenRootState extends State<HomeScreenRoot> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
 
-    return ListenableBuilder(
-      listenable: viewModel,
-      builder: (context, child) {
+    return StreamBuilder(
+      stream: viewModel.state,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+
         return HomeScreen(
-          state: viewModel.state,
+          state: snapshot.data!,
           onAction: (HomeAction action) {
             viewModel.onAction(action);
           },

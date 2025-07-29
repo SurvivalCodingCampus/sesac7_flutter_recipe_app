@@ -14,6 +14,7 @@ extension RecipeDtoToModel on RecipeDto {
       rating: rating ?? 0,
       reviewCount: 0,
       serve: 0,
+      isSaved: false,
     );
   }
 

@@ -127,7 +127,9 @@ class DishCard extends StatelessWidget {
                     Icons.bookmark_outline,
                     size: 16,
                     // TODO: User
-                    color: AppColors.primary80,
+                    color: recipe.isSaved
+                        ? AppColors.primary80
+                        : AppColors.gray3,
                   ),
                 ),
               ),
