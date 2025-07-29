@@ -3,6 +3,7 @@ import 'package:flutter_recipe_app/presentation/screen/saved_screen/saved_recipe
 
 import '../../../data/data_source/recipe_data_source_impl.dart';
 import '../../../data/repository/recipe_repository_impl.dart';
+import '../../component/card/recipe_card.dart';
 
 class SavedRecipesScreen extends StatelessWidget {
   final SavedRecipesViewModel savedRecipedViewModel;
@@ -19,15 +20,14 @@ class SavedRecipesScreen extends StatelessWidget {
       body: ListenableBuilder(
         listenable: savedRecipedViewModel,
         builder: (context, child) {
-          return Center(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: SingleChildScrollView(
-                child: Text(
-                    'Recipes: ${savedRecipedViewModel.rawResultString}'
-                  ),
-                ),
-            ),
+          return ListView.builder(
+            itemCount: savedRecipedViewModel.savedRecipes.length,
+            itemBuilder: (context, index) {
+              final recipes = savedRecipedViewModel.savedRecipes[index];
+              return Padding(padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+              child: RecipeCard(recipe: recipes,onBookmarkPressed: (){},),
+              );
+            },
           );
         },
       ),

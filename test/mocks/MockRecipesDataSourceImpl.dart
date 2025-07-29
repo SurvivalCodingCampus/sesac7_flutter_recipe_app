@@ -1,4 +1,5 @@
-import 'package:flutter_recipe_app/data/dto/recipe_dto.dart';
+
+import 'package:flutter_recipe_app/data/dto/recipes_dto.dart';
 
 class MockRecipesDataSourceImpl{
 
@@ -276,7 +277,7 @@ class MockRecipesDataSourceImpl{
     ]
   };
 
-  RecipeDto getRecipeDto() {
-    return RecipeDto.fromJson(mockRecipesJson);
+  RecipesDto getRecipeDto() {
+    return RecipesDto.fromJson(mockRecipesJson);
   }
 }

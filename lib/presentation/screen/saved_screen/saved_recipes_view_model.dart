@@ -23,7 +23,7 @@ class SavedRecipesViewModel with ChangeNotifier {
 
     final result = await _recipeRepository.getRecipes();
     print(result);
-    _rawResultString = result.toString();
+    //_rawResultString = result.toString();
     notifyListeners();
   }
 }
