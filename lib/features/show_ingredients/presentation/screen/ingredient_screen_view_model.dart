@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/features/show_ingredients/data/domain/use_case/fetch_procedure_by_id_use_case.dart';
 import 'package:flutter_recipe_app/features/show_ingredients/data/domain/use_case/fetch_recipe_by_id_use_case.dart';
+import 'package:flutter_recipe_app/features/show_ingredients/presentation/screen/ingredient_event.dart';
 
 import '../../../../core/data/recipe/domain/model/recipe.dart';
 import '../../../../data/procedure/domain/model/procedure.dart';
@@ -10,6 +13,9 @@ import 'ingredient_screen_state.dart';
 class IngredientScreenViewModel with ChangeNotifier {
   final FetchRecipeByIdUseCase _fetchRecipeByIdUseCase;
   final FetchProcedureByIdUseCase _fetchProcedureByIdUseCase;
+  final _events = StreamController<IngredientEvent>();
+
+  Stream<IngredientEvent> get events => _events.stream;
 
   IngredientScreenState _state = const IngredientScreenState();
 
@@ -28,9 +34,7 @@ class IngredientScreenViewModel with ChangeNotifier {
       case SwitchTab():
         _changeIndexOfTab(action.index);
       case ClickMenuButton():
-        break;
-      case ClickMenuItem():
-        break;
+        _events.add(IngredientEvent.showMenuTab());
     }
   }
 
