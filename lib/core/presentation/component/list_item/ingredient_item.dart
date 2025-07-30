@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/ingredient.dart';
 import 'package:flutter_recipe_app/core/presentation/component/constants/component_constant.dart';
@@ -43,17 +44,13 @@ class IngredientItem extends StatelessWidget {
                     ComponentConstant.borderRadius,
                   ),
                 ),
-                child: Image.network(
-                  ingredient.imageUrl,
+                child: CachedNetworkImage(
+                  imageUrl: ingredient.imageUrl,
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) =>
-                      const Icon(Icons.image_not_supported),
-                  loadingBuilder: (context, child, loadingProgress) =>
-                      loadingProgress == null
-                      ? child
-                      : const Center(
-                          child: CircularProgressIndicator(),
-                        ),
+                  errorWidget: (context, url, error) =>
+                      Icon(Icons.image_not_supported),
+                  progressIndicatorBuilder: (context, url, progress) =>
+                      CircularProgressIndicator(),
                 ),
               ),
               Text(
