@@ -27,9 +27,9 @@ import 'search_recipe_view_model_test.mocks.dart';
   MockSpec<Debouncer>(),
 ])
 void main() {
-  late MockFetchAllRecipesUseCase mockFetchAllRecipesUseCase;
+  late MockGetAllRecipesUseCase mockFetchAllRecipesUseCase;
   late MockFilterRecipesUseCase mockFilterRecipesUseCase;
-  late MockFetchRecentSearchKeywordUseCase mockFetchRecentSearchKeywordUseCase;
+  late MockGetRecentSearchKeywordUseCase mockFetchRecentSearchKeywordUseCase;
   late MockSaveSearchKeywordUseCase mockSaveSearchKeywordUseCase;
   late MockDebouncer mockDebouncer;
   late SearchRecipesViewModel viewModel;
@@ -83,9 +83,9 @@ void main() {
   provideDummy(dummyValue2);
 
   setUp(() {
-    mockFetchAllRecipesUseCase = MockFetchAllRecipesUseCase();
+    mockFetchAllRecipesUseCase = MockGetAllRecipesUseCase();
     mockFilterRecipesUseCase = MockFilterRecipesUseCase();
-    mockFetchRecentSearchKeywordUseCase = MockFetchRecentSearchKeywordUseCase();
+    mockFetchRecentSearchKeywordUseCase = MockGetRecentSearchKeywordUseCase();
     mockSaveSearchKeywordUseCase = MockSaveSearchKeywordUseCase();
     mockDebouncer = MockDebouncer();
 
