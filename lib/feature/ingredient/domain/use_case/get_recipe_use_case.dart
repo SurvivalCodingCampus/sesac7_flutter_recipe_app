@@ -5,10 +5,10 @@ import 'package:flutter_recipe_app/core/domain/repository/recipe/recipe_reposito
 import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
 
-class FetchRecipeUseCase {
+class GetRecipeUseCase {
   final RecipeRepository _recipeRepository;
 
-  FetchRecipeUseCase({required RecipeRepository recipeRepository})
+  GetRecipeUseCase({required RecipeRepository recipeRepository})
     : _recipeRepository = recipeRepository;
 
   Future<Result<Recipe, NetworkError>> execute(

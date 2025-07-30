@@ -2,7 +2,7 @@ import 'package:flutter_recipe_app/core/data/data_source/recipe/recipe_data_sour
 import 'package:flutter_recipe_app/core/data/data_source/recipe/recipe_data_source_impl.dart';
 import 'package:flutter_recipe_app/core/data/repository/recipe/recipe_repository_impl.dart';
 import 'package:flutter_recipe_app/core/domain/repository/recipe/recipe_repository.dart';
-import 'package:flutter_recipe_app/core/domain/use_case/fetch_all_recipes_use_case.dart';
+import 'package:flutter_recipe_app/core/domain/use_case/get_all_recipes_use_case.dart';
 import 'package:flutter_recipe_app/core/utils/debouncer.dart';
 import 'package:flutter_recipe_app/feature/home/domain/use_case/filter_home_recipe_category_use_case.dart';
 import 'package:flutter_recipe_app/feature/home/domain/use_case/remove_bookmark_use_case.dart';
@@ -12,9 +12,9 @@ import 'package:flutter_recipe_app/feature/ingredient/data/repository/mocks/mock
 import 'package:flutter_recipe_app/feature/ingredient/data/repository/mocks/mock_procedure_repository_impl.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/repository/ingredient_repository.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/repository/procedure_repository.dart';
-import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_all_ingredients_use_case.dart';
-import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_procedure_use_case.dart';
-import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_recipe_use_case.dart';
+import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/get_all_ingredients_use_case.dart';
+import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/get_procedure_use_case.dart';
+import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/format_review_count_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_view_model.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/data/repository/mock/mock_bookmark_repository_impl.dart';
@@ -24,7 +24,7 @@ import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/remove_
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_view_model.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/data/repository/mock_search_history_repository_impl.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/repository/search_history_repository.dart';
-import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/fetch_recent_search_keyword_use_case.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/get_recent_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/filter_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/save_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_view_model.dart';
@@ -70,16 +70,16 @@ void diSetUp() {
     ),
   );
   getIt.registerLazySingleton(
-    () => FetchAllRecipesUseCase(recipeRepository: getIt()),
+    () => GetAllRecipesUseCase(recipeRepository: getIt()),
   );
   getIt.registerLazySingleton(
-    () => FetchRecipeUseCase(recipeRepository: getIt()),
+    () => GetRecipeUseCase(recipeRepository: getIt()),
   );
   getIt.registerLazySingleton(
-    () => FetchAllIngredientsUseCase(ingredientRepository: getIt()),
+    () => GetAllIngredientsUseCase(ingredientRepository: getIt()),
   );
   getIt.registerLazySingleton(
-    () => FetchProcedureUseCase(procedureRepository: getIt()),
+    () => GetProcedureUseCase(procedureRepository: getIt()),
   );
   getIt.registerLazySingleton(
     () => FormatReviewCountUseCase(),
@@ -97,7 +97,7 @@ void diSetUp() {
     () => IsAirplaneModeUseCase(systemControlsRepository: getIt()),
   );
   getIt.registerLazySingleton(
-    () => FetchRecentSearchKeywordUseCase(searchHistoryRepository: getIt()),
+    () => GetRecentSearchKeywordUseCase(searchHistoryRepository: getIt()),
   );
   getIt.registerLazySingleton(
     () => SaveSearchKeywordUseCase(searchHistoryRepository: getIt()),

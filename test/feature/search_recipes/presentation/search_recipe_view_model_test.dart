@@ -1,11 +1,11 @@
 import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
-import 'package:flutter_recipe_app/core/domain/use_case/fetch_all_recipes_use_case.dart';
+import 'package:flutter_recipe_app/core/domain/use_case/get_all_recipes_use_case.dart';
 import 'package:flutter_recipe_app/core/utils/debouncer.dart';
 import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/model/filter_category.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/model/search_state_type.dart';
-import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/fetch_recent_search_keyword_use_case.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/get_recent_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/filter_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/save_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/filter_search_state.dart';
@@ -20,9 +20,9 @@ import 'package:mockito/mockito.dart';
 import 'search_recipe_view_model_test.mocks.dart';
 
 @GenerateNiceMocks([
-  MockSpec<FetchAllRecipesUseCase>(),
+  MockSpec<GetAllRecipesUseCase>(),
   MockSpec<FilterRecipesUseCase>(),
-  MockSpec<FetchRecentSearchKeywordUseCase>(),
+  MockSpec<GetRecentSearchKeywordUseCase>(),
   MockSpec<SaveSearchKeywordUseCase>(),
   MockSpec<Debouncer>(),
 ])
@@ -46,6 +46,7 @@ void main() {
       cookingTime: '30 min',
       reviewCount: 10,
       serve: 2,
+      isSaved: false,
     ),
     const Recipe(
       id: '2',
@@ -58,6 +59,7 @@ void main() {
       cookingTime: '20 min',
       reviewCount: 5,
       serve: 4,
+      isSaved: false,
     ),
     const Recipe(
       id: '3',
@@ -70,6 +72,7 @@ void main() {
       cookingTime: '60 min',
       reviewCount: 20,
       serve: 8,
+      isSaved: false,
     ),
   ];
 

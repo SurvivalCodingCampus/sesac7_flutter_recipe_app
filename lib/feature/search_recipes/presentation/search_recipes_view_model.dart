@@ -5,9 +5,9 @@ import 'package:flutter_recipe_app/core/utils/debouncer.dart';
 import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
-import 'package:flutter_recipe_app/core/domain/use_case/fetch_all_recipes_use_case.dart';
+import 'package:flutter_recipe_app/core/domain/use_case/get_all_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/model/search_state_type.dart';
-import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/fetch_recent_search_keyword_use_case.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/get_recent_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/filter_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/save_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/filter_search_state.dart';
@@ -16,9 +16,9 @@ import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_re
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_state.dart';
 
 class SearchRecipesViewModel with ChangeNotifier {
-  final FetchAllRecipesUseCase _fetchAllRecipesUseCase;
+  final GetAllRecipesUseCase _fetchAllRecipesUseCase;
   final FilterRecipesUseCase _filterRecipesUseCase;
-  final FetchRecentSearchKeywordUseCase _fetchRecentSearchKeywordUseCase;
+  final GetRecentSearchKeywordUseCase _fetchRecentSearchKeywordUseCase;
   final SaveSearchKeywordUseCase _saveSearchKeywordUseCase;
   final StreamController<SearchRecipesEvent> _eventController =
       StreamController();
@@ -27,9 +27,9 @@ class SearchRecipesViewModel with ChangeNotifier {
   SearchRecipesState _state = SearchRecipesState();
 
   SearchRecipesViewModel({
-    required FetchAllRecipesUseCase fetchAllRecipesUseCase,
+    required GetAllRecipesUseCase fetchAllRecipesUseCase,
     required FilterRecipesUseCase filterRecipesUseCase,
-    required FetchRecentSearchKeywordUseCase fetchRecentSearchKeywordUseCase,
+    required GetRecentSearchKeywordUseCase fetchRecentSearchKeywordUseCase,
     required SaveSearchKeywordUseCase saveSearchKeywordUseCase,
     required Debouncer debouncer,
   }) : _fetchAllRecipesUseCase = fetchAllRecipesUseCase,

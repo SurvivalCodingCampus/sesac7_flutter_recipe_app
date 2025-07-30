@@ -4,7 +4,7 @@ import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
 import 'package:flutter_recipe_app/feature/home/domain/model/home_recipe_category.dart';
-import 'package:flutter_recipe_app/core/domain/use_case/fetch_all_recipes_use_case.dart';
+import 'package:flutter_recipe_app/core/domain/use_case/get_all_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/home/domain/use_case/filter_home_recipe_category_use_case.dart';
 import 'package:flutter_recipe_app/feature/home/domain/use_case/remove_bookmark_use_case.dart';
 import 'package:flutter_recipe_app/feature/home/domain/use_case/save_bookmark_use_case.dart';
@@ -14,7 +14,7 @@ import 'package:flutter_recipe_app/feature/home/presentation/home_state.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/get_saved_recipes_use_case.dart';
 
 class HomeViewModel {
-  final FetchAllRecipesUseCase _fetchAllRecipesUseCase;
+  final GetAllRecipesUseCase _fetchAllRecipesUseCase;
   final FilterHomeRecipeCategoryUseCase _filterHomeRecipeCategoryUseCase;
   final GetSavedRecipesUseCase _getSavedRecipesUseCase;
   final RemoveBookmarkUseCase _removeBookmarkUseCase;
@@ -28,7 +28,7 @@ class HomeViewModel {
   HomeState _state = HomeState();
 
   HomeViewModel({
-    required FetchAllRecipesUseCase fetchAllRecipesUseCase,
+    required GetAllRecipesUseCase fetchAllRecipesUseCase,
     required FilterHomeRecipeCategoryUseCase filterHomeRecipeCategoryUseCase,
     required GetSavedRecipesUseCase getSavedRecipesUseCase,
     required RemoveBookmarkUseCase removeBookmarkUseCase,
