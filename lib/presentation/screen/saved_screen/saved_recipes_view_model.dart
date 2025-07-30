@@ -16,14 +16,27 @@ class SavedRecipesViewModel with ChangeNotifier {
   // 저장된 레시피 리스트에 레시피 추가
   List<Recipes> get savedRecipes => List.unmodifiable(_savedRecipes);
 
+  bool _isLoading = false;
+
+  bool get isLoading => _isLoading;
+
+  String? _errorMessage;
+
+  String? get errorMessage => _errorMessage;
+
   void fetchSavedRecipes() async {
+    _isLoading = true;
+    notifyListeners();
+
     final result = await _recipeRepository.getRecipes();
     switch (result) {
-      case Success():
-        _savedRecipes = result.data;
-      case Error():
+      case Success(data: final result):
+        _savedRecipes = result;
+      case Error(error: final error):
         _savedRecipes = [];
+        _errorMessage = error.toString();
     }
+    _isLoading = false;
 
     notifyListeners();
   }

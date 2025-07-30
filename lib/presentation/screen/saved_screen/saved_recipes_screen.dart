@@ -20,8 +20,23 @@ class SavedRecipesScreen extends StatelessWidget {
       body: ListenableBuilder(
         listenable: savedRecipedViewModel,
         builder: (context, child) {
+          if (savedRecipedViewModel.isLoading) {
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          if (savedRecipedViewModel.errorMessage != null) {
+            return Center(
+              child: Text(
+                savedRecipedViewModel.errorMessage!,
+                style: const TextStyle(color: Colors.red, fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
+            );
+          }
           return ListView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            // 상하좌우 패딩 또는 마진 // 동적으로 이미지 변경
             itemCount: savedRecipedViewModel.savedRecipes.length,
             itemBuilder: (context, index) {
               final recipe = savedRecipedViewModel.savedRecipes[index];
