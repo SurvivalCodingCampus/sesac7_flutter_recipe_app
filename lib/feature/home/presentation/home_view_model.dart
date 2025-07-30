@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
@@ -13,19 +14,17 @@ import 'package:flutter_recipe_app/feature/home/presentation/home_event.dart';
 import 'package:flutter_recipe_app/feature/home/presentation/home_state.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/get_saved_recipes_use_case.dart';
 
-class HomeViewModel {
+class HomeViewModel with ChangeNotifier {
   final GetAllRecipesUseCase _fetchAllRecipesUseCase;
   final FilterHomeRecipeCategoryUseCase _filterHomeRecipeCategoryUseCase;
   final GetSavedRecipesUseCase _getSavedRecipesUseCase;
   final RemoveBookmarkUseCase _removeBookmarkUseCase;
   final SaveBookmarkUseCase _saveBookmarkUseCase;
-  final StreamController<HomeState> _stateController = StreamController();
   final StreamController<HomeEvent> _eventController = StreamController();
 
-  late final StreamSubscription<Result<List<Recipe>, NetworkError>>
-  _savedRecipesSubscription;
-
   HomeState _state = HomeState();
+  StreamSubscription<Result<List<Recipe>, NetworkError>>?
+  _savedRecipesSubscription;
 
   HomeViewModel({
     required GetAllRecipesUseCase fetchAllRecipesUseCase,
@@ -39,7 +38,7 @@ class HomeViewModel {
        _removeBookmarkUseCase = removeBookmarkUseCase,
        _saveBookmarkUseCase = saveBookmarkUseCase;
 
-  Stream<HomeState> get state => _stateController.stream;
+  HomeState get state => _state;
   Stream<HomeEvent> get eventStream => _eventController.stream;
 
   void init() async {
@@ -49,13 +48,13 @@ class HomeViewModel {
 
     switch (result) {
       case Success<List<Recipe>, NetworkError>():
-        _state = _state.copyWith(
+        _state = state.copyWith(
           allRecipes: result.data,
           filteredRecipes: result.data,
           isLoading: false,
         );
 
-        _notify();
+        notifyListeners();
       case Error<List<Recipe>, NetworkError>():
         _errorState(result.error.toString());
     }
@@ -65,36 +64,37 @@ class HomeViewModel {
     ) {
       switch (result) {
         case Success<List<Recipe>, NetworkError>():
-          final allRecipes = _state.allRecipes.map((recipe) {
+          final allRecipes = state.allRecipes.map((recipe) {
             final isSaved = result.data.any(
               (savedRecipe) => savedRecipe.id == recipe.id,
             );
             return recipe.copyWith(isSaved: isSaved);
           }).toList();
 
-          final filteredRecipes = _state.filteredRecipes.map((recipe) {
+          final filteredRecipes = state.filteredRecipes.map((recipe) {
             final isSaved = result.data.any(
               (savedRecipe) => savedRecipe.id == recipe.id,
             );
             return recipe.copyWith(isSaved: isSaved);
           }).toList();
 
-          _state = _state.copyWith(
+          _state = state.copyWith(
             allRecipes: allRecipes,
             filteredRecipes: filteredRecipes,
           );
 
-          _notify();
+          notifyListeners();
         case Error<List<Recipe>, NetworkError>():
           _errorState(result.error.toString());
       }
     });
   }
 
+  @override
   void dispose() {
-    _stateController.close();
     _eventController.close();
-    _savedRecipesSubscription.cancel();
+    _savedRecipesSubscription?.cancel();
+    super.dispose();
   }
 
   void onAction(HomeAction action) {
@@ -123,30 +123,26 @@ class HomeViewModel {
       recipes: _state.allRecipes,
       category: category,
     );
-    _state = _state.copyWith(
+    _state = state.copyWith(
       filteredRecipes: filteredRecipes,
       selectedCategory: category,
     );
 
-    _notify();
+    notifyListeners();
   }
 
   void _loadingState() {
-    _state = _state.copyWith(isLoading: true);
+    _state = state.copyWith(isLoading: true);
 
-    _notify();
+    notifyListeners();
   }
 
   void _errorState(String message) {
-    _state = _state.copyWith(
+    _state = state.copyWith(
       isLoading: false,
     );
     _eventController.add(HomeEvent.showErrorDialog(message));
 
-    _notify();
-  }
-
-  void _notify() {
-    _stateController.add(_state);
+    notifyListeners();
   }
 }

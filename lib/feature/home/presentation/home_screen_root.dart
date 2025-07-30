@@ -48,17 +48,11 @@ class _HomeScreenRootState extends State<HomeScreenRoot> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
 
-    return StreamBuilder(
-      stream: viewModel.state,
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-
+    return ListenableBuilder(
+      listenable: viewModel,
+      builder: (context, child) {
         return HomeScreen(
-          state: snapshot.data!,
+          state: viewModel.state,
           onAction: (HomeAction action) {
             viewModel.onAction(action);
           },
