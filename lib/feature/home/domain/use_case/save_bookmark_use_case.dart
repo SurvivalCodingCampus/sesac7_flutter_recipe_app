@@ -7,6 +7,10 @@ class SaveBookmarkUseCase {
     : _bookmarkRepository = bookmarkRepository;
 
   void execute(String recipeId) {
-    _bookmarkRepository.saveBookmark(recipeId);
+    try {
+      _bookmarkRepository.saveBookmark(recipeId);
+    } catch (e) {
+      // TODO: 로깅
+    }
   }
 }

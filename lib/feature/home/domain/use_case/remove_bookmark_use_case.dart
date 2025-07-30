@@ -7,6 +7,10 @@ class RemoveBookmarkUseCase {
     : _bookmarkRepository = bookmarkRepository;
 
   void execute(String recipeId) {
-    _bookmarkRepository.removeBookmarks(recipeId);
+    try {
+      _bookmarkRepository.removeBookmarks(recipeId);
+    } catch (e) {
+      // TODO: 로깅
+    }
   }
 }
