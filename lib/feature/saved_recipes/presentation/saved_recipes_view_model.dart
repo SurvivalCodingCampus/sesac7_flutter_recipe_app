@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
@@ -9,18 +10,15 @@ import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_reci
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_event.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_state.dart';
 
-class SavedRecipesViewModel {
+class SavedRecipesViewModel with ChangeNotifier {
   final GetSavedRecipesUseCase _getSavedRecipesUseCase;
   final RemoveSavedRecipeUseCase _removeSavedRecipeUseCase;
-  final StreamController<SavedRecipesState> _stateController =
-      StreamController();
   final StreamController<SavedRecipesEvent> _eventController =
       StreamController();
 
-  late final StreamSubscription<Result<List<Recipe>, NetworkError>>
-  _savedRecipesSubscription;
-
   SavedRecipesState _state = SavedRecipesState();
+  StreamSubscription<Result<List<Recipe>, NetworkError>>?
+  _savedRecipesSubscription;
 
   SavedRecipesViewModel({
     required GetSavedRecipesUseCase getSavedRecipesUseCase,
@@ -28,7 +26,7 @@ class SavedRecipesViewModel {
   }) : _getSavedRecipesUseCase = getSavedRecipesUseCase,
        _removeSavedRecipeUseCase = removeSavedRecipeUseCase;
 
-  Stream<SavedRecipesState> get state => _stateController.stream;
+  SavedRecipesState get state => _state;
   Stream<SavedRecipesEvent> get eventStream => _eventController.stream;
 
   Future<void> init() async {
@@ -54,14 +52,15 @@ class SavedRecipesViewModel {
           );
       }
 
-      _notify();
+      notifyListeners();
     });
   }
 
+  @override
   void dispose() {
-    _stateController.close();
     _eventController.close();
-    _savedRecipesSubscription.cancel();
+    _savedRecipesSubscription?.cancel();
+    super.dispose();
   }
 
   Future<void> onAction(SavedRecipesAction action) async {
@@ -99,16 +98,12 @@ class SavedRecipesViewModel {
         );
     }
 
-    _notify();
+    notifyListeners();
   }
 
   void _loadingState() {
     _state = _state.copyWith(isLoading: true);
 
-    _notify();
-  }
-
-  void _notify() {
-    _stateController.add(_state);
+    notifyListeners();
   }
 }
