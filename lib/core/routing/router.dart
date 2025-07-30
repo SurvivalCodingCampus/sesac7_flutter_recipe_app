@@ -10,7 +10,7 @@ import '../../features/search_recipes/presentation/screen/search_recipes_screen_
 import '../../features/search_recipes/presentation/screen/search_recipes_screen_view_model.dart';
 import '../../features/show_ingredients/presentation/screen/ingredient_screen_root.dart';
 import '../../features/show_ingredients/presentation/screen/ingredient_screen_view_model.dart';
-import '../../features/show_saved_recipes/presentation/screen/saved_recipes_screen.dart';
+import '../../features/show_saved_recipes/presentation/screen/saved_recipes_screen_root.dart';
 import '../../features/show_saved_recipes/presentation/screen/saved_recipes_view_model.dart';
 import '../../features/sign_in/presentation/screen/sign_in_screen.dart';
 import '../../features/sign_up/presentation/screen/sign_up_screen.dart';
@@ -105,18 +105,8 @@ final router = GoRouter(
             GoRoute(
               path: Routes.bookmark,
               builder: (context, state) {
-                final viewModel = getIt<SavedRecipesViewModel>();
-
-                return ListenableBuilder(
-                  listenable: viewModel,
-                  builder: (BuildContext context, Widget? child) {
-                    return SavedRecipesScreen(
-                      viewModel: viewModel,
-                      onClickCard: (id) {
-                        context.push('${Routes.ingredient}/$id');
-                      },
-                    );
-                  },
+                return SavedRecipesScreenRoot(
+                  viewModel: getIt<SavedRecipesViewModel>()..fetchRecipes(),
                 );
               },
             ),
@@ -140,16 +130,8 @@ final router = GoRouter(
             GoRoute(
               path: Routes.myPage,
               builder: (context, state) {
-                final viewModel = getIt<SavedRecipesViewModel>();
-
-                return ListenableBuilder(
-                  listenable: viewModel,
-                  builder: (BuildContext context, Widget? child) {
-                    return SavedRecipesScreen(
-                      viewModel: viewModel,
-                      onClickCard: (id) {},
-                    );
-                  },
+                return SavedRecipesScreenRoot(
+                  viewModel: getIt<SavedRecipesViewModel>()..fetchRecipes(),
                 );
               },
             ),
