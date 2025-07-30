@@ -15,6 +15,9 @@ class MockBookMarkRepositoryImpl implements BookmarkRepository {
 
   @override
   Future<Result<void, String>> addBookmarkRecipe(int recipeId) async {
+    if (_bookmarkRecipeIds.contains(recipeId)) {
+      return Success(null); // 호출될 일이 없음.
+    }
     _bookmarkRecipeIds.add(recipeId);
     _bookmarkSubject.add(null);
     return Success(null);
