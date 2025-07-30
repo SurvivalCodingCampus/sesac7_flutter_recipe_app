@@ -1,12 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_recipe_app/core/presentation/component/nav_bar/bottom_nav_bar.dart';
 import 'package:flutter_recipe_app/home/presentation/screen/home_screen.dart';
+import 'package:flutter_recipe_app/recipe_ingredients/presentation/recipe_ingredients_root.dart';
 import 'package:flutter_recipe_app/saved_recipes/presentation/saved_recipes_view_model.dart';
 import 'package:flutter_recipe_app/search_recipes/presentation/search_recipe_screen_root.dart';
 import 'package:go_router/go_router.dart';
 import '../../di/di_setup.dart';
 import '../../recipe_ingredients/data/repository/ingredient_repository_impl.dart';
 import '../../recipe_ingredients/domain/use_case/fetch_recipe_use_case.dart';
+import '../../recipe_ingredients/presentation/recipe_ingredients_action.dart';
 import '../../recipe_ingredients/presentation/recipe_ingredients_screen.dart';
 import '../../recipe_ingredients/presentation/recipe_ingredients_view_model.dart';
 import '../../saved_recipes/domain/use_case/fetch_recipes_use_case.dart';
@@ -85,8 +87,7 @@ final router = GoRouter(
           viewModel.fetchRecipeIngredients();
 
           // 3. 화면 전달
-          return RecipeIngredientsScreen(
-            recipeId: id,
+          return RecipeIngredientsRoot(
             viewModel: viewModel,
           );
         }

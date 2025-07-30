@@ -73,7 +73,7 @@ class _SearchRecipeScreenRootState extends State<SearchRecipeScreenRoot> {
                   return FilterSearchBottomSheet(
                     initialFilter: widget.viewModel.state.filterSearchState,
                     onFilterApplied: (appliedFilter) {
-                      print('[DEBUG] 필터 적용: $appliedFilter');
+                      // print('[DEBUG] 필터 적용: $appliedFilter');
                       widget.viewModel.onAction(SearchRecipesAction.applyFilter(appliedFilter));
                       Navigator.pop(context);
                     },
