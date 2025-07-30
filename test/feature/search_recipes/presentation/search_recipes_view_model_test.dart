@@ -17,7 +17,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
-import 'search_recipe_view_model_test.mocks.dart';
+import 'search_recipes_view_model_test.mocks.dart';
 
 @GenerateNiceMocks([
   MockSpec<GetAllRecipesUseCase>(),

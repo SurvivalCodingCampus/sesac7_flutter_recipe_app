@@ -36,7 +36,7 @@ class IngredientViewModel with ChangeNotifier {
   IngredientState get state => _state;
   Stream<IngredientEvent> get eventStream => _eventController.stream;
 
-  void init({required String recipeId}) async {
+  Future<void> init({required String recipeId}) async {
     _loadingState();
 
     final results = await Future.wait([
