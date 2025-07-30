@@ -94,6 +94,9 @@ class _IngredientScreenRootState extends State<IngredientScreenRoot> {
         return RatingDialog(
           title: 'Rate recipe',
           actionName: 'Send',
+          onTapBackground: () {
+            context.pop();
+          },
           onTapActionButton: (int rating) {
             context.pop();
           },

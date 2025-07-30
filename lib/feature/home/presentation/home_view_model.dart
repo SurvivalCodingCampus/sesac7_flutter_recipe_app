@@ -87,7 +87,6 @@ class HomeViewModel {
           _notify();
         case Error<List<Recipe>, NetworkError>():
           _errorState(result.error.toString());
-          return;
       }
     });
   }
