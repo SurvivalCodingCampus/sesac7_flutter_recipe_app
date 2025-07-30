@@ -25,6 +25,8 @@ class IngredientViewModel extends ValueNotifier<IngredientState> {
         break;
       case ChangeIngredientTapSelectedIndex():
         changeTab(action.index);
+      case ClickPopupMenuItem():
+        break;
     }
   }
 

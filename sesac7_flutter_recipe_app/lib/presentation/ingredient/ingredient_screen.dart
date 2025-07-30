@@ -40,7 +40,9 @@ class IngredientScreen extends StatelessWidget {
                   IngredientAction.clickIngredientBackButton(),
                 );
               },
-              menuButtonClick: () {},
+              popupMenuItemClick: (menuType) {
+                onAction(IngredientAction.clickPopupMenuItem(menuType));
+              },
             ),
             currentSelectedRecipe == null
                 ? Expanded(child: Center(child: Text('저장된 ID가 없습니다!')))
@@ -50,7 +52,7 @@ class IngredientScreen extends StatelessWidget {
                         RecipeThumbnailCard(
                           recipe: currentSelectedRecipe,
                           isBookmark: true,
-                          onFavoritePressed: () {
+                          onBookmarkClick: () {
                             // fixme Bookmark 변경 필요
                           },
                         ),

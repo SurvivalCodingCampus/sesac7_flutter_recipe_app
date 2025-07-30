@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_screen.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_view_model.dart';
@@ -19,10 +21,24 @@ class SavedRecipeScreenRoot extends StatefulWidget {
 }
 
 class _SavedRecipeScreenRootState extends State<SavedRecipeScreenRoot> {
+  StreamSubscription? _bookmarkChangedSubscription;
+
   @override
   void initState() {
     super.initState();
+    _bookmarkChangedSubscription = widget
+        ._savedRecipeViewModel
+        .bookmarkChangedStream
+        .listen((event) {
+          widget._savedRecipeViewModel.fetchSavedRecipes();
+        });
     widget._savedRecipeViewModel.fetchSavedRecipes();
+  }
+
+  @override
+  void dispose() {
+    _bookmarkChangedSubscription?.cancel();
+    super.dispose();
   }
 
   @override

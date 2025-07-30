@@ -8,14 +8,14 @@ class RatingDialog extends StatefulWidget {
   final String dialogTitle;
   final String dialogButtonTitle;
   final RatingType currentRatingType;
-  final Function(int) onChange;
+  final Function(RatingType ratingType) onClickDismissButton;
 
   const RatingDialog({
     super.key,
     required this.dialogTitle,
     required this.dialogButtonTitle,
     required this.currentRatingType,
-    required this.onChange,
+    required this.onClickDismissButton,
   });
 
   @override
@@ -24,11 +24,13 @@ class RatingDialog extends StatefulWidget {
 
 class _RatingDialogState extends State<RatingDialog> {
   late RatingType _selectedRatingType;
+
   @override
   void initState() {
     super.initState();
     _selectedRatingType = widget.currentRatingType;
   }
+
   Icon _getRatingIcon(RatingType ratingType) =>
       ratingType.getIntValue() <= _selectedRatingType.getIntValue()
       ? Icon(Icons.star, color: AppColors.rating, size: 20.0)
@@ -37,6 +39,7 @@ class _RatingDialogState extends State<RatingDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
+      insetPadding: const EdgeInsets.symmetric(horizontal: 15.0),
       backgroundColor: AppColors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
       elevation: 3.0,
@@ -57,17 +60,16 @@ class _RatingDialogState extends State<RatingDialog> {
             RatingType.gradeTwo,
             RatingType.gradeThree,
             RatingType.gradeFour,
-            RatingType.gradeFive
+            RatingType.gradeFive,
           ])
-          GestureDetector(
-            onTap: () {
-              widget.onChange(ratingType.getIntValue());
-              setState(() {
-                _selectedRatingType = ratingType;
-              });
-            },
-            child: _getRatingIcon(ratingType),
-          ),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _selectedRatingType = ratingType;
+                });
+              },
+              child: _getRatingIcon(ratingType),
+            ),
         ],
       ),
       contentPadding: const EdgeInsets.symmetric(
@@ -79,7 +81,9 @@ class _RatingDialogState extends State<RatingDialog> {
             buttonTitle: 'Send',
             buttonActive: _selectedRatingType.getIntValue() > 0,
             onTap: () {
-              widget.onChange(0);
+              if (_selectedRatingType != RatingType.gradeZero) {
+                widget.onClickDismissButton(_selectedRatingType);
+              }
             },
           ),
         ),

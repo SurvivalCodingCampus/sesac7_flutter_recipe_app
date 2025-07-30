@@ -7,6 +7,5 @@ sealed class SavedRecipeAction with _$SavedRecipeAction {
   const factory SavedRecipeAction.moveSavedRecipeIngredientScreen(int id) =
       MoveSavedRecipeIngredientScreen;
 
-  const factory SavedRecipeAction.savedRecipeFavoriteStateChange(int id) =
-      SavedRecipeFavoriteStateChange;
+  const factory SavedRecipeAction.removeSavedRecipe(int id) = RemoveSavedRecipe;
 }

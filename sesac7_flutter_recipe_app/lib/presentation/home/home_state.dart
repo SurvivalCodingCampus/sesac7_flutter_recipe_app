@@ -9,5 +9,6 @@ abstract class HomeState with _$HomeState {
     @Default({}) Set<String> categories,
     @Default('All') String category,
     @Default([]) List<Recipe> categoryRecipes,
+    @Default([]) List<int> savedRecipeIds,
   }) = _HomeState;
 }
