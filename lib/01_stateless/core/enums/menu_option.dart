@@ -1,0 +1,1 @@
+enum MenuOption { share, rate, review, favorite }

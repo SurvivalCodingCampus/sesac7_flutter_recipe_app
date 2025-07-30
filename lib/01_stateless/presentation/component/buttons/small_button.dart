@@ -39,6 +39,7 @@ class _SmallButtonState extends State<SmallButton> {
             style: GoogleFonts.poppins(
               textStyle: TextStyles.smallerTextBold,
               color: Colors.white,
+              decoration: TextDecoration.none,
             ),
           ),
         ),

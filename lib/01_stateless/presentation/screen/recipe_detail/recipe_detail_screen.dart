@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/01_stateless/core/enums/menu_option.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/component/buttons/bookmark_button.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/component/buttons/small_button.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/recipe_detail/body_fragment/recipe_detail_ingredient_and_procedure_fragment.dart';
-import 'package:flutter_recipe_app/01_stateless/presentation/screen/recipe_detail/recipe_detail_view_model.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/recipe_detail/recipe_detail_state.dart';
 import 'package:flutter_recipe_app/01_stateless/ui/app_colors.dart';
 import 'package:flutter_recipe_app/01_stateless/ui/text_styles.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+
+import 'recipe_detail_action.dart';
 
 /*
 void main() {
@@ -20,13 +24,13 @@ void main() {
 }
 */
 class RecipeDetailScreen extends StatelessWidget {
-  final RecipeDetailViewModel viewModel;
-  final int recipeId;
+  final RecipeDetailState state;
+  final void Function(RecipeDetailAction action) onAction;
 
   const RecipeDetailScreen({
     super.key,
-    required this.viewModel,
-    required this.recipeId,
+    required this.state,
+    required this.onAction,
   });
 
   @override
@@ -52,7 +56,7 @@ class RecipeDetailScreen extends StatelessWidget {
                         children: [
                           Positioned.fill(
                             child: Image.network(
-                              viewModel.currentRecipe.recipe.image,
+                              state.currentRecipe.recipe.image,
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -91,7 +95,7 @@ class RecipeDetailScreen extends StatelessWidget {
                                     ),
                                     const SizedBox(width: 3),
                                     Text(
-                                      viewModel.currentRecipe.recipe.rating
+                                      state.currentRecipe.recipe.rating
                                           .toStringAsFixed(1),
                                       style: GoogleFonts.poppins(
                                         textStyle:
@@ -132,7 +136,7 @@ class RecipeDetailScreen extends StatelessWidget {
                                       ),
                                       Spacer(),
                                       Text(
-                                        '${viewModel.currentRecipe.recipe.duration} min',
+                                        '${state.currentRecipe.recipe.duration} min',
                                         style: GoogleFonts.poppins(
                                           textStyle:
                                               TextStyles.smallerTextRegular,
@@ -143,24 +147,9 @@ class RecipeDetailScreen extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(width: 10),
-                                GestureDetector(
-                                  onTap: () {},
-                                  child: Container(
-                                    width: 24,
-                                    height: 24,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(12),
-                                    ),
-                                    child: const Center(
-                                      child: Icon(
-                                        Icons.bookmark_border_outlined,
-                                        size: 16,
-                                        color: AppColors.primary80,
-                                      ),
-                                    ),
-                                  ),
-                                ),
+                                BookmarkButton(size: 24, innerSize: 16, onClick: () {
+                                  onAction(RecipeDetailAction.clickOnBookmark(state.currentRecipe.id));
+                                }, isAdded: state.currentRecipe.recipe.isBookmarked),
                               ],
                             ),
                           ),
@@ -175,7 +164,7 @@ class RecipeDetailScreen extends StatelessWidget {
                         children: [
                           Expanded(
                             child: Text(
-                              viewModel.currentRecipe.recipe.name,
+                              state.currentRecipe.recipe.name,
                               style: GoogleFonts.poppins(
                                 textStyle: TextStyles.smallTextBold,
                                 color: Colors.black,
@@ -186,7 +175,7 @@ class RecipeDetailScreen extends StatelessWidget {
                           ),
                           const Spacer(),
                           Text(
-                            '(${viewModel.currentRecipe.reviewCount} Reviews)',
+                            '(${state.currentRecipe.reviewCount} Reviews)',
                             style: GoogleFonts.poppins(
                               textStyle: TextStyles.labelRegular,
                               color: AppColors.gray3,
@@ -209,7 +198,7 @@ class RecipeDetailScreen extends StatelessWidget {
                               borderRadius: BorderRadius.circular(20),
                             ),
                             child: Image.network(
-                              viewModel.currentRecipe.author.image,
+                              state.currentRecipe.author.image,
                               fit: BoxFit.cover,
                             ),
                           ), //Creator's picture
@@ -220,7 +209,7 @@ class RecipeDetailScreen extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  viewModel.currentRecipe.author.name,
+                                  state.currentRecipe.author.name,
                                   style: GoogleFonts.poppins(
                                     textStyle: TextStyles.smallTextBold,
                                     color: AppColors.labelColor,
@@ -231,7 +220,7 @@ class RecipeDetailScreen extends StatelessWidget {
                                   children: [
                                     Icon(Icons.location_on_outlined, size: 17, color: AppColors.primary80),
                                     Text(
-                                      viewModel.currentRecipe.author.address,
+                                      state.currentRecipe.author.address,
                                       style: GoogleFonts.poppins(
                                         textStyle: TextStyles.smallerTextRegular,
                                         color: AppColors.gray3,
@@ -248,7 +237,7 @@ class RecipeDetailScreen extends StatelessWidget {
                       ),
                     ), //Creator's profile
                     const SizedBox(height: 8),
-                    RecipeDetailIngredientAndProcedureFragment(recipe: viewModel.currentRecipe),
+                    RecipeDetailIngredientAndProcedureFragment(recipe: state.currentRecipe),
                   ],
                 ),
               ),
@@ -273,12 +262,109 @@ class RecipeDetailScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: Icon(
-                        Icons.more_horiz_outlined,
-                        size: 24,
+                    GestureDetector(
+                      onTap: () async {
+                        final selected = await showMenu<MenuOption>(
+                          context: context,
+                          position: RelativeRect.fromLTRB(100, 20, 0, 0),
+                          items: [
+                            PopupMenuItem<MenuOption>(
+                              value: MenuOption.share,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Icon(Icons.share, size: 20, color: AppColors.labelColor),
+                                  const SizedBox(width: 16),
+                                  Text(
+                                    'Share',
+                                    style: GoogleFonts.poppins(
+                                      textStyle: TextStyles.smallTextRegular,
+                                      color: AppColors.labelColor,
+                                    )
+                                  )
+                                ],
+                              ),
+                            ),
+                            PopupMenuItem<MenuOption>(
+                              value: MenuOption.rate,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Icon(Icons.star_rate, size: 20, color: AppColors.labelColor),
+                                  const SizedBox(width: 16),
+                                  Text(
+                                      'Rate Recipe',
+                                      style: GoogleFonts.poppins(
+                                        textStyle: TextStyles.smallTextRegular,
+                                        color: AppColors.labelColor,
+                                      )
+                                  )
+                                ],
+                              ),
+                            ),
+                            PopupMenuItem<MenuOption>(
+                              value: MenuOption.review,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Icon(Icons.chat_bubble, size: 20, color: AppColors.labelColor),
+                                  const SizedBox(width: 16),
+                                  Text(
+                                      'Review',
+                                      style: GoogleFonts.poppins(
+                                        textStyle: TextStyles.smallTextRegular,
+                                        color: AppColors.labelColor,
+                                      )
+                                  )
+                                ],
+                              ),
+                            ),
+                            PopupMenuItem<MenuOption>(
+                              value: MenuOption.favorite,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Icon(Icons.bookmark_border_outlined, size: 20, color: AppColors.labelColor),
+                                  const SizedBox(width: 16),
+                                  Text(
+                                      state.currentRecipe.recipe.isBookmarked ? 'Unsave' : 'Save',
+                                      style: GoogleFonts.poppins(
+                                        textStyle: TextStyles.smallTextRegular,
+                                        color: AppColors.labelColor,
+                                      )
+                                  )
+                                ],
+                              ),
+                            ),
+
+                          ]
+                        );
+
+                        if (selected != null) {
+                          switch (selected) {
+                            case MenuOption.share:
+                              break;
+                            case MenuOption.rate:
+                              onAction(RecipeDetailAction.clickOnRate(state.currentRecipe.id));
+                              break;
+                            case MenuOption.review:
+                              break;
+                            case MenuOption.favorite:
+                              onAction(RecipeDetailAction.clickOnBookmark(state.currentRecipe.id));
+                          }
+                        }
+                      },
+                      child: SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: Icon(
+                          Icons.more_horiz_outlined,
+                          size: 24,
+                        ),
                       ),
                     ),
                   ],

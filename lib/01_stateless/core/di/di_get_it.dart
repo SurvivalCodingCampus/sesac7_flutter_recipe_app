@@ -86,6 +86,11 @@ void diSetup() {
   );
 
   getIt.registerFactory<RecipeDetailViewModel>(
-    () => RecipeDetailViewModel(getRecipeDetailByIdUseCase: getIt()),
+    () => RecipeDetailViewModel(
+      getRecipeDetailByIdUseCase: getIt(),
+      bookmarkRecipeByIdUseCase: getIt(),
+      unBookmarkRecipeByIdUseCase: getIt(),
+      isBookmarkedByIdUseCase: getIt(),
+    ),
   );
 }
