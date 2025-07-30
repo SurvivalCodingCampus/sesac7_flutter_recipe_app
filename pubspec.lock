@@ -251,6 +251,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_image_test_utils:
+    dependency: "direct main"
+    description:
+      name: flutter_image_test_utils
+      sha256: "91b9007beb2d7d6e4a9d86775bbe21fa681f0a4b95d9518756edfa58aaad1189"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -479,6 +487,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.4.6"
+  mocktail:
+    dependency: transitive
+    description:
+      name: mocktail
+      sha256: "890df3f9688106f25755f26b1c60589a92b3ab91a22b8b224947ad041bf172d8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.4"
   network_image_mock:
     dependency: "direct dev"
     description:
