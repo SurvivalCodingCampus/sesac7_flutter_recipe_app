@@ -17,6 +17,7 @@ void main() {
       imageWithoutBackground: '',
       reviewCount: 0,
       serve: 0,
+      isSaved: false,
     );
 
     testWidgets('renders all recipe details correctly', (tester) async {
