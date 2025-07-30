@@ -1,10 +1,10 @@
 import '../../../../../core/data/recipe/domain/model/recipe.dart';
 import '../../../../../core/data/recipe/domain/repository/recipe_repository.dart';
 
-class FetchRecipesUseCase {
+class GetRecipesUseCase {
   final RecipeRepository _recipeRepository;
 
-  FetchRecipesUseCase({
+  GetRecipesUseCase({
     required RecipeRepository recipeRepository,
   }) : _recipeRepository = recipeRepository;
 

@@ -7,4 +7,8 @@ sealed class IngredientAction with _$IngredientAction {
   const factory IngredientAction.clickBackButton() = ClickBackButton;
 
   const factory IngredientAction.switchTab(int index) = SwitchTab;
+
+  const factory IngredientAction.clickMenuButton() = ClickMenuButton;
+
+  const factory IngredientAction.clickMenuItem(int index) = ClickMenuItem;
 }

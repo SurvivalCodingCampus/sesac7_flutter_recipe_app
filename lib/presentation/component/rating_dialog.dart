@@ -21,11 +21,6 @@ class RatingDialog extends StatefulWidget {
 
 class _RatingDialogState extends State<RatingDialog> {
   int rating = 0;
-  bool firstStarState = false;
-  bool secondStarState = false;
-  bool thirdStarState = false;
-  bool fourthStarState = false;
-  bool fifthStarState = false;
 
   @override
   Widget build(BuildContext context) {
@@ -42,116 +37,23 @@ class _RatingDialogState extends State<RatingDialog> {
           Text(widget.title),
           SizedBox(height: 5),
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    rating = 1;
-
-                    if (firstStarState == false) {
-                      firstStarState = true;
-                    } else {
-                      secondStarState = false;
-                      thirdStarState = false;
-                      fourthStarState = false;
-                      fifthStarState = false;
-                    }
-                  });
-                },
-                child: Icon(
-                  size: 20,
-                  firstStarState ? Icons.star : Icons.star_border,
-                  color: AppColors.rating,
-                ),
-              ),
-              SizedBox(width: 10),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    rating = 2;
-
-                    if (secondStarState == false) {
-                      firstStarState = true;
-                      secondStarState = true;
-                    } else {
-                      thirdStarState = false;
-                      fourthStarState = false;
-                      fifthStarState = false;
-                    }
-                  });
-                },
-                child: Icon(
-                  size: 20,
-                  secondStarState ? Icons.star : Icons.star_border,
-                  color: AppColors.rating,
-                ),
-              ),
-              SizedBox(width: 10),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    rating = 3;
-
-                    if (thirdStarState == false) {
-                      firstStarState = true;
-                      secondStarState = true;
-                      thirdStarState = true;
-                    } else {
-                      fourthStarState = false;
-                      fifthStarState = false;
-                    }
-                  });
-                },
-                child: Icon(
-                  size: 20,
-                  thirdStarState ? Icons.star : Icons.star_border,
-                  color: AppColors.rating,
-                ),
-              ),
-              SizedBox(width: 10),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    rating = 4;
-
-                    if (fourthStarState == false) {
-                      firstStarState = true;
-                      secondStarState = true;
-                      thirdStarState = true;
-                      fourthStarState = true;
-                    } else {
-                      fifthStarState = false;
-                    }
-                  });
-                },
-                child: Icon(
-                  size: 20,
-                  fourthStarState ? Icons.star : Icons.star_border,
-                  color: AppColors.rating,
-                ),
-              ),
-              SizedBox(width: 10),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    rating = 5;
-
-                    if (fifthStarState == false) {
-                      firstStarState = true;
-                      secondStarState = true;
-                      thirdStarState = true;
-                      fourthStarState = true;
-                      fifthStarState = true;
-                    }
-                  });
-                },
-                child: Icon(
-                  size: 20,
-                  fifthStarState ? Icons.star : Icons.star_border,
-                  color: AppColors.rating,
-                ),
-              ),
+              ...List.generate(5, (index) {
+                return GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      rating = index + 1;
+                    });
+                  },
+                  child: Icon(
+                    size: 20,
+                    (rating >= index + 1) ? Icons.star : Icons.star_border,
+                    color: AppColors.rating,
+                  ),
+                );
+              }),
             ],
           ),
           SizedBox(height: 5),
@@ -163,14 +65,7 @@ class _RatingDialogState extends State<RatingDialog> {
               width: 61,
               height: 20,
               decoration: BoxDecoration(
-                color:
-                    (firstStarState == true ||
-                        secondStarState == true ||
-                        thirdStarState == true ||
-                        fourthStarState == true ||
-                        fifthStarState == true)
-                    ? AppColors.rating
-                    : AppColors.gray4,
+                color: (rating != 0) ? AppColors.rating : AppColors.gray4,
                 borderRadius: BorderRadius.circular(6.0),
               ),
               child: Center(

@@ -1,4 +1,4 @@
-import 'package:flutter_recipe_app/core/system_settings/domain/repository/mock_system_settings_repository.dart';
+import '../../../../../core/data/system_settings/domain/repository/mock_system_settings_repository.dart';
 
 class FetchSystemSettingsUseCase {
   final MockSystemSettingsRepository _systemSettingsRepository;
