@@ -58,13 +58,15 @@ class _BigButtonState extends State<BigButton> {
           spacing: BigButton.spacing,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              widget.text,
-              style: TextStyles.normalTextBold.copyWith(
-                color: AppColors.white,
+            Flexible(
+              child: Text(
+                widget.text,
+                style: TextStyles.normalTextBold.copyWith(
+                  color: AppColors.white,
+                ),
+                maxLines: BigButton.textMaxLines,
+                overflow: TextOverflow.ellipsis,
               ),
-              maxLines: BigButton.textMaxLines,
-              overflow: TextOverflow.ellipsis,
             ),
             Icon(
               Icons.arrow_forward,
