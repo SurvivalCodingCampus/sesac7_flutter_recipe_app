@@ -15,17 +15,22 @@ class SavedRecipesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(''),
+        title: const Text('Saved Recipes'),
       ),
       body: ListenableBuilder(
         listenable: savedRecipedViewModel,
         builder: (context, child) {
           return ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             itemCount: savedRecipedViewModel.savedRecipes.length,
             itemBuilder: (context, index) {
-              final recipes = savedRecipedViewModel.savedRecipes[index];
-              return Padding(padding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
-              child: RecipeCard(recipe: recipes,onBookmarkPressed: (){},),
+              final recipe = savedRecipedViewModel.savedRecipes[index];
+              return Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
+                child: RecipeCard(
+                  recipe: recipe,
+                  onBookmarkPressed: () {},
+                ),
               );
             },
           );
@@ -42,7 +47,7 @@ void main() async {
     ),
   );
 
-  await (savedRecipesViewModel.fetchSavedRecipes() as Future<void>);
+  savedRecipesViewModel.fetchSavedRecipes();
 
   runApp(
     MaterialApp(
