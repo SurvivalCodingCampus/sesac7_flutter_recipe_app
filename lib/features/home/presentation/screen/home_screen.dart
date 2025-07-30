@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/features/home/presentation/component/new_recipe_card.dart';
 
 import '../../../../ui/app_colors.dart';
 import '../../../../ui/text_styles.dart';
@@ -25,14 +26,14 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: Container(
-        margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(height: 64),
-              Row(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 64),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+              child: Row(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -63,8 +64,11 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 30),
-              Row(
+            ),
+            SizedBox(height: 30),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+              child: Row(
                 children: [
                   Expanded(
                     child: Container(
@@ -79,8 +83,11 @@ class HomeScreen extends StatelessWidget {
                   FilterButton(onFilterButtonClick: () {}),
                 ],
               ),
-              SizedBox(height: 15),
-              Center(
+            ),
+            SizedBox(height: 15),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+              child: Center(
                 child: RecipeCategorySelector(
                   category: state.selectedCategory,
                   onSelectCategory: (category) {
@@ -89,15 +96,18 @@ class HomeScreen extends StatelessWidget {
                   },
                 ),
               ),
-              SizedBox(height: 15),
-              SingleChildScrollView(
+            ),
+            SizedBox(height: 15),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+              child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     ...List.generate(state.filteredRecipes.length, (index) {
                       return Container(
-                        margin: EdgeInsets.symmetric(horizontal: 9),
+                        margin: EdgeInsets.only(right: 9),
                         child: DishCard(
                           recipe: state.filteredRecipes[index],
                         ),
@@ -106,8 +116,39 @@ class HomeScreen extends StatelessWidget {
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+            SizedBox(height: 20),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+              child: Text(
+                'New Recipes',
+                style: TextStyles.normalTextBold,
+              ),
+            ),
+            SizedBox(height: 5),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(22.5, 0, 22.5, 0),
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    ...List.generate(state.filteredRecipes.length, (index) {
+                      return Container(
+                        margin: EdgeInsets.fromLTRB(7.5, 0, 7.5, 15),
+                        child: NewRecipeCard(
+                          recipe: state.filteredRecipes[index],
+                        ),
+                      );
+                    }),
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+          ],
         ),
       ),
     );
