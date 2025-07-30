@@ -1,33 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/features/show_saved_recipes/presentation/screen/saved_recipes_action.dart';
 import 'package:flutter_recipe_app/features/show_saved_recipes/presentation/screen/saved_recipes_screen_state.dart';
 
-import '../../../../core/data/recipe/domain/repository/recipe_repository.dart';
-import '../../../../data/bookmark/domain/repository/bookmark_repository.dart';
+import '../../../../data/bookmark/domain/repository/mock_bookmark_repository.dart';
 
 class SavedRecipesViewModel with ChangeNotifier {
-  final RecipeRepository _recipeRepository;
-  final BookmarkRepository _bookmarkRepository;
+  final MockBookmarkRepository _bookmarkRepository;
 
   SavedRecipesScreenState _state = const SavedRecipesScreenState();
 
   SavedRecipesScreenState get state => _state;
 
   SavedRecipesViewModel({
-    required RecipeRepository recipeRepository,
-    required BookmarkRepository bookmarkRepository,
-  }) : _recipeRepository = recipeRepository,
-       _bookmarkRepository = bookmarkRepository {
-    fetchRecipes();
+    required MockBookmarkRepository bookmarkRepository,
+  }) : _bookmarkRepository = bookmarkRepository;
+
+  void onAction(SavedRecipesAction action) {
+    switch (action) {
+      case ClickRecipeCard():
+        break;
+      case ClickBookmarkButton():
+        _deleteRecipe(action.id);
+    }
   }
 
-  void fetchRecipes() async {
+  void fetchRecipes() {
     _state = state.copyWith(
       isLoading: true,
     );
 
     notifyListeners();
 
-    final recipes = await _bookmarkRepository.getSavedRecipes();
+    final recipes = _bookmarkRepository.getAllRecipes();
 
     _state = state.copyWith(
       recipes: recipes,
@@ -36,10 +40,11 @@ class SavedRecipesViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteRecipe(int id) async {
-    final recipes = state.recipes.where((recipe) => recipe.id != id).toList();
+  void _deleteRecipe(int id) async {
+    _bookmarkRepository.deleteRecipe(id);
+
     _state = state.copyWith(
-      recipes: recipes,
+      recipes: _bookmarkRepository.getSavedRecipes(),
     );
     notifyListeners();
   }
