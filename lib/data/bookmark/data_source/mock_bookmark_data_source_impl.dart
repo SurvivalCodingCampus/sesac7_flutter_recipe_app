@@ -1,8 +1,8 @@
-import 'package:flutter_recipe_app/data/bookmark/data_source/bookmark_data_source.dart';
+import 'package:flutter_recipe_app/data/bookmark/data_source/mock_bookmark_data_source.dart';
 
 import '../../../core/data/recipe/dto/recipe_dto.dart';
 
-class MockBookmarkDataSourceImpl implements BookmarkDataSource {
+class MockBookmarkDataSourceImpl implements MockBookmarkDataSource {
   final data = [
     {
       "category": "Indian",
@@ -153,7 +153,7 @@ class MockBookmarkDataSourceImpl implements BookmarkDataSource {
   ];
 
   @override
-  Future<List<RecipeDto>> getSavedRecipes() async {
+  List<RecipeDto> getSavedRecipes() {
     return data.map((e) => RecipeDto.fromJson(e)).toList();
   }
 }
