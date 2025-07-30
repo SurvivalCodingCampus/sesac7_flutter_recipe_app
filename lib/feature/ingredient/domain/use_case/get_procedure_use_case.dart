@@ -4,10 +4,10 @@ import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/repository/procedure_repository.dart';
 
-class FetchProcedureUseCase {
+class GetProcedureUseCase {
   final ProcedureRepository _procedureRepository;
 
-  FetchProcedureUseCase({required ProcedureRepository procedureRepository})
+  GetProcedureUseCase({required ProcedureRepository procedureRepository})
     : _procedureRepository = procedureRepository;
 
   Future<Result<List<String>, NetworkError>> execute(

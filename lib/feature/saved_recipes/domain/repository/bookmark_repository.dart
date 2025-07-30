@@ -1,4 +1,5 @@
 abstract interface class BookmarkRepository {
-  Future<List<String>> fetchBookmarks();
+  Stream<List<String>> fetchBookmarks();
+  Future<void> saveBookmark(String id);
   Future<void> removeBookmarks(String id);
 }

@@ -17,6 +17,7 @@ abstract class Recipe with _$Recipe {
     rating: 0,
     reviewCount: 0,
     serve: 0,
+    isSaved: false,
   );
 
   const factory Recipe({
@@ -30,5 +31,6 @@ abstract class Recipe with _$Recipe {
     required double rating,
     required int reviewCount,
     required int serve,
+    required bool isSaved,
   }) = _Recipe;
 }

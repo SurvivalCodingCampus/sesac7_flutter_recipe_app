@@ -5,10 +5,10 @@ import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/repository/ingredient_repository.dart';
 
-class FetchAllIngredientsUseCase {
+class GetAllIngredientsUseCase {
   final IngredientRepository _ingredientRepository;
 
-  FetchAllIngredientsUseCase({
+  GetAllIngredientsUseCase({
     required IngredientRepository ingredientRepository,
   }) : _ingredientRepository = ingredientRepository;
 

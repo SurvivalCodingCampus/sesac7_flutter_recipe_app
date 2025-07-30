@@ -6,28 +6,27 @@ import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/model/ingredient_tab_type.dart';
-import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_all_ingredients_use_case.dart';
-import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_procedure_use_case.dart';
-import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/fetch_recipe_use_case.dart';
+import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/get_all_ingredients_use_case.dart';
+import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/get_procedure_use_case.dart';
+import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/format_review_count_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_action.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_event.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_state.dart';
 
 class IngredientViewModel with ChangeNotifier {
-  final FetchRecipeUseCase _fetchRecipeUseCase;
-  final FetchAllIngredientsUseCase _fetchAllIngredientsUseCase;
-  final FetchProcedureUseCase _fetchProcedureUseCase;
+  final GetRecipeUseCase _fetchRecipeUseCase;
+  final GetAllIngredientsUseCase _fetchAllIngredientsUseCase;
+  final GetProcedureUseCase _fetchProcedureUseCase;
   final FormatReviewCountUseCase _formatReviewCountUseCase;
-  final StreamController<IngredientEvent> _streamController =
-      StreamController();
+  final StreamController<IngredientEvent> _eventController = StreamController();
 
   IngredientState _state = IngredientState();
 
   IngredientViewModel({
-    required FetchRecipeUseCase fetchRecipeUseCase,
-    required FetchAllIngredientsUseCase fetchAllIngredientsUseCase,
-    required FetchProcedureUseCase fetchProcedureUseCase,
+    required GetRecipeUseCase fetchRecipeUseCase,
+    required GetAllIngredientsUseCase fetchAllIngredientsUseCase,
+    required GetProcedureUseCase fetchProcedureUseCase,
     required FormatReviewCountUseCase formatReviewCountUseCase,
   }) : _fetchRecipeUseCase = fetchRecipeUseCase,
        _fetchAllIngredientsUseCase = fetchAllIngredientsUseCase,
@@ -35,7 +34,7 @@ class IngredientViewModel with ChangeNotifier {
        _formatReviewCountUseCase = formatReviewCountUseCase;
 
   IngredientState get state => _state;
-  Stream<IngredientEvent> get eventStream => _streamController.stream;
+  Stream<IngredientEvent> get eventStream => _eventController.stream;
 
   void init({required String recipeId}) async {
     _loadingState();
@@ -126,7 +125,7 @@ class IngredientViewModel with ChangeNotifier {
       isLoading: false,
     );
 
-    _streamController.add(IngredientEvent.showErrorDialog(message));
+    _eventController.add(IngredientEvent.showErrorDialog(message));
 
     notifyListeners();
   }

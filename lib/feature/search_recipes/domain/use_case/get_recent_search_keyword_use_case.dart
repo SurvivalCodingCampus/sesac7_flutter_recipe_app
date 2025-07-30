@@ -1,10 +1,10 @@
 import 'package:flutter_recipe_app/core/utils/result.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/repository/search_history_repository.dart';
 
-class FetchRecentSearchKeywordUseCase {
+class GetRecentSearchKeywordUseCase {
   final SearchHistoryRepository _searchHistoryRepository;
 
-  FetchRecentSearchKeywordUseCase({
+  GetRecentSearchKeywordUseCase({
     required SearchHistoryRepository searchHistoryRepository,
   }) : _searchHistoryRepository = searchHistoryRepository;
 

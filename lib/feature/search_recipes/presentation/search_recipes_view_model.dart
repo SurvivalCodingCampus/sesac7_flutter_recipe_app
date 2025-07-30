@@ -5,9 +5,9 @@ import 'package:flutter_recipe_app/core/utils/debouncer.dart';
 import 'package:flutter_recipe_app/core/utils/network_error.dart';
 import 'package:flutter_recipe_app/core/utils/result.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
-import 'package:flutter_recipe_app/core/domain/use_case/fetch_all_recipes_use_case.dart';
+import 'package:flutter_recipe_app/core/domain/use_case/get_all_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/model/search_state_type.dart';
-import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/fetch_recent_search_keyword_use_case.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/get_recent_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/filter_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/save_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/filter_search_state.dart';
@@ -16,20 +16,20 @@ import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_re
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_state.dart';
 
 class SearchRecipesViewModel with ChangeNotifier {
-  final FetchAllRecipesUseCase _fetchAllRecipesUseCase;
+  final GetAllRecipesUseCase _fetchAllRecipesUseCase;
   final FilterRecipesUseCase _filterRecipesUseCase;
-  final FetchRecentSearchKeywordUseCase _fetchRecentSearchKeywordUseCase;
+  final GetRecentSearchKeywordUseCase _fetchRecentSearchKeywordUseCase;
   final SaveSearchKeywordUseCase _saveSearchKeywordUseCase;
-  final StreamController<SearchRecipesEvent> _streamController =
+  final StreamController<SearchRecipesEvent> _eventController =
       StreamController();
   final Debouncer _debouncer;
 
   SearchRecipesState _state = SearchRecipesState();
 
   SearchRecipesViewModel({
-    required FetchAllRecipesUseCase fetchAllRecipesUseCase,
+    required GetAllRecipesUseCase fetchAllRecipesUseCase,
     required FilterRecipesUseCase filterRecipesUseCase,
-    required FetchRecentSearchKeywordUseCase fetchRecentSearchKeywordUseCase,
+    required GetRecentSearchKeywordUseCase fetchRecentSearchKeywordUseCase,
     required SaveSearchKeywordUseCase saveSearchKeywordUseCase,
     required Debouncer debouncer,
   }) : _fetchAllRecipesUseCase = fetchAllRecipesUseCase,
@@ -39,15 +39,17 @@ class SearchRecipesViewModel with ChangeNotifier {
        _debouncer = debouncer;
 
   SearchRecipesState get state => _state;
-  Stream<SearchRecipesEvent> get eventStream => _streamController.stream;
+  Stream<SearchRecipesEvent> get eventStream => _eventController.stream;
 
   void init() async {
     _loadingState();
-    await _fetchAllRecipes();
+    final isSuccess = await _fetchAllRecipes();
+    if (!isSuccess) return;
+    // 검색기록레포에서 가져오면 use case 하나에서 레포 교체로 가능
     await _fetchRecentSearchKeyword();
   }
 
-  Future<void> _fetchAllRecipes() async {
+  Future<bool> _fetchAllRecipes() async {
     final result = await _fetchAllRecipesUseCase.execute();
 
     switch (result) {
@@ -57,13 +59,15 @@ class SearchRecipesViewModel with ChangeNotifier {
           filteredRecipes: result.data,
           resultCount: result.data.length,
           searchState: SearchStateType.recentSearch,
-          filterState: FilterSearchState(),
+          filterState: const FilterSearchState(),
           isLoading: false,
         );
 
         notifyListeners();
+        return true;
       case Error<List<Recipe>, NetworkError>():
         _errorState(result.error.toString());
+        return false;
     }
   }
 
@@ -85,7 +89,7 @@ class SearchRecipesViewModel with ChangeNotifier {
   void onAction(SearchRecipesAction action) {
     switch (action) {
       case ChangeSearchValue():
-        _searchRecipe(action.value);
+        _debouncer.run(() => _searchRecipe(action.value));
       case TapFilterButton():
         break;
       case SelectFilter():
@@ -96,9 +100,7 @@ class SearchRecipesViewModel with ChangeNotifier {
   }
 
   void _searchRecipe(String keyword) {
-    _debouncer.run(
-      () => _searchWithFilter(keyword, state.filterState),
-    );
+    _searchWithFilter(keyword, state.filterState);
   }
 
   void _selectFilter(FilterSearchState filterState) {
@@ -121,12 +123,13 @@ class SearchRecipesViewModel with ChangeNotifier {
     );
 
     if (filteredRecipes.isEmpty) {
-      _streamController.add(SearchRecipesEvent.showNoSearchResultSnackBar());
+      _eventController.add(SearchRecipesEvent.showNoSearchResultSnackBar());
     }
 
     if (keyword.trim().isNotEmpty) {
       _saveSearchKeywordUseCase.execute(keyword);
     }
+
     notifyListeners();
   }
 
@@ -145,7 +148,7 @@ class SearchRecipesViewModel with ChangeNotifier {
       isLoading: false,
     );
 
-    _streamController.add(SearchRecipesEvent.showErrorDialog(message));
+    _eventController.add(SearchRecipesEvent.showErrorDialog(message));
 
     notifyListeners();
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/feature/ingredient/domain/model/menu_item.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/ingredient.dart';
 import 'package:flutter_recipe_app/core/presentation/component/button/small_button.dart';
 import 'package:flutter_recipe_app/core/presentation/component/list_item/ingredient_item.dart';
@@ -40,14 +41,40 @@ class IngredientScreen extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                GestureDetector(
-                  onTap: () {
-                    onAction(IngredientAction.tapMenu());
-                  },
-                  child: Icon(
-                    Icons.more_horiz,
-                    size: 24,
-                  ),
+                // GestureDetector(
+                //   onTap: () {
+                //     onAction(IngredientAction.tapMenu());
+                //   },
+                //   child: Icon(
+                //     Icons.more_horiz,
+                //     size: 24,
+                //   ),
+                // ),
+                PopupMenuButton(
+                  itemBuilder: (context) => <PopupMenuEntry<MenuItem>>[
+                    ...MenuItem.values.map((item) {
+                      return PopupMenuItem(
+                        value: item,
+                        onTap: () {
+                          onAction(IngredientAction.tapMenu(item));
+                        },
+                        padding: EdgeInsets.all(10),
+                        child: Row(
+                          spacing: 16,
+                          children: [
+                            Icon(
+                              item.toIcon(),
+                              size: 20,
+                            ),
+                            Text(
+                              item.toString(),
+                              style: TextStyles.smallTextRegular,
+                            ),
+                          ],
+                        ),
+                      );
+                    }),
+                  ],
                 ),
               ],
             ),

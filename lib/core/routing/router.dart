@@ -14,8 +14,8 @@ import 'package:flutter_recipe_app/feature/splash/presentation/splash_screen_roo
 import 'package:go_router/go_router.dart';
 
 GoRouter createRouter() => GoRouter(
-  initialLocation: Routes.splash,
-  // initialLocation: Routes.search,
+  // initialLocation: Routes.splash,
+  initialLocation: Routes.home,
   routes: [
     GoRoute(
       path: Routes.splash,
