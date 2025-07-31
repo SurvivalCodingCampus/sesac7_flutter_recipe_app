@@ -14,6 +14,7 @@ class SavedRecipesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = savedRecipesViewModel.state;
     return Scaffold(
       appBar: AppBar(
         title: const Text('Saved Recipes'),
@@ -37,15 +38,15 @@ class SavedRecipesScreen extends StatelessWidget {
             child: ListenableBuilder(
               listenable: savedRecipesViewModel,
               builder: (context, child) {
-                if (savedRecipesViewModel.isLoading) {
+                if (state.isLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
                 }
-                if (savedRecipesViewModel.errorMessage != null) {
+                if (state.errorMessage != null) {
                   return Center(
                     child: Text(
-                      savedRecipesViewModel.errorMessage!,
+                      state.errorMessage!,
                       style: const TextStyle(color: Colors.red, fontSize: 16),
                       textAlign: TextAlign.center,
                     ),
@@ -54,9 +55,9 @@ class SavedRecipesScreen extends StatelessWidget {
                 return ListView.builder(
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                   // 상하좌우 패딩 또는 마진 // 동적으로 이미지 변경
-                  itemCount: savedRecipesViewModel.savedRecipes.length,
+                  itemCount: state.savedRecipes.length,
                   itemBuilder: (context, index) {
-                    final recipe = savedRecipesViewModel.savedRecipes[index];
+                    final recipe = state.savedRecipes[index];
                     return Padding(
                       padding: EdgeInsets.symmetric(vertical: 10),
                       child: RecipeCard(
