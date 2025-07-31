@@ -5,7 +5,6 @@ import '../../../../ui/text_styles.dart';
 class CustomMenuTabItem extends StatelessWidget {
   final void Function(int index) onSelectMenuItem;
 
-  final BuildContext context;
   final int index;
   final IconData icon;
   final String text;
@@ -15,7 +14,6 @@ class CustomMenuTabItem extends StatelessWidget {
   const CustomMenuTabItem({
     super.key,
     required this.onSelectMenuItem,
-    required this.context,
     required this.index,
     required this.icon,
     required this.text,

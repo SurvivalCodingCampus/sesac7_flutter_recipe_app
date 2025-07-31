@@ -45,7 +45,6 @@ class CustomMenuTab extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   CustomMenuTabItem(
-                    context: context,
                     index: 0,
                     icon: Icons.share,
                     text: MenuTabList.Share.name,
@@ -55,7 +54,6 @@ class CustomMenuTab extends StatelessWidget {
                     },
                   ),
                   CustomMenuTabItem(
-                    context: context,
                     index: 1,
                     icon: Icons.star,
                     text: MenuTabList.RateRecipe.name.replaceAll('te', 'te '),
@@ -64,7 +62,6 @@ class CustomMenuTab extends StatelessWidget {
                     },
                   ),
                   CustomMenuTabItem(
-                    context: context,
                     index: 2,
                     icon: Icons.comment,
                     text: MenuTabList.Review.name,
@@ -73,7 +70,6 @@ class CustomMenuTab extends StatelessWidget {
                     },
                   ),
                   CustomMenuTabItem(
-                    context: context,
                     index: 3,
                     icon: Icons.bookmark_rounded,
                     text: MenuTabList.Unsave.name,
