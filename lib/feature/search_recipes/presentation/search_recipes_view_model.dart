@@ -76,10 +76,6 @@ class SearchRecipesViewModel with ChangeNotifier {
 
     switch (result) {
       case Success<String, String>():
-        if (result.data.isEmpty) {
-          return;
-        }
-
         _searchRecipe(result.data);
       case Error<String, String>():
         _errorState(result.error);
@@ -126,10 +122,7 @@ class SearchRecipesViewModel with ChangeNotifier {
       _eventController.add(SearchRecipesEvent.showNoSearchResultSnackBar());
     }
 
-    if (keyword.trim().isNotEmpty) {
-      _saveSearchKeywordUseCase.execute(keyword);
-    }
-
+    _saveSearchKeywordUseCase.execute(keyword);
     notifyListeners();
   }
 
@@ -149,7 +142,6 @@ class SearchRecipesViewModel with ChangeNotifier {
     );
 
     _eventController.add(SearchRecipesEvent.showErrorDialog(message));
-
     notifyListeners();
   }
 }
