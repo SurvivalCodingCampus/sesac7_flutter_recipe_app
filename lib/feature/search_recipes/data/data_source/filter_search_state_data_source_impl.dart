@@ -3,8 +3,8 @@ import 'package:flutter_recipe_app/feature/search_recipes/data/dto/filter_search
 import 'package:hive/hive.dart';
 
 class FilterSearchStateDataSourceImpl implements FilterSearchStateDataSource {
-  static String databaseName = 'FilterSearchStateDB';
-  static String boxName = 'FilterSearchState';
+  static String boxName = 'FilterSearchStateDataSource';
+  static String objectName = 'FilterSearchState';
 
   final BoxCollection _boxCollection;
 
@@ -14,9 +14,9 @@ class FilterSearchStateDataSourceImpl implements FilterSearchStateDataSource {
   @override
   Future<FilterSearchStateDto?> findFilterSearchState() async {
     final stateBox = await _boxCollection.openBox<Map<String, dynamic>>(
-      databaseName,
+      boxName,
     );
-    final json = await stateBox.get(boxName);
+    final json = await stateBox.get(objectName);
 
     if (json == null) return null;
 
@@ -26,9 +26,9 @@ class FilterSearchStateDataSourceImpl implements FilterSearchStateDataSource {
   @override
   Future<void> saveFilterSeaerchState(FilterSearchStateDto dto) async {
     final stateBox = await _boxCollection.openBox<Map<String, dynamic>>(
-      databaseName,
+      boxName,
     );
 
-    await stateBox.put(boxName, dto.toJson());
+    await stateBox.put(objectName, dto.toJson());
   }
 }
