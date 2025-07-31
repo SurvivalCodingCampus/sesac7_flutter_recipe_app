@@ -1,10 +1,10 @@
 
-import 'package:flutter_recipe_app/data/data_source/recipe_data_source/recipe_data_source_impl.dart';
+import 'package:flutter_recipe_app/data/data_source/remote/remote_recipe_data_source_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('RecipeDataSourceImpl', () {
-    final dataSource = RecipeDataSourceImpl();
+    final dataSource = RemoteRecipeDataSourceImpl();
 
     test('getRecipes should return RecipesDto with correct data', () async {
       final response = await dataSource.getRecipes();

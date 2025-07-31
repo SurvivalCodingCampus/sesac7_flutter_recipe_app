@@ -1,5 +1,7 @@
-import 'package:flutter_recipe_app/data/data_source/recipe_data_source/recipe_data_source.dart';
-import 'package:flutter_recipe_app/data/data_source/recipe_data_source/recipe_data_source_impl.dart';
+import 'package:flutter_recipe_app/data/data_source/local/local_search_data_source.dart';
+import 'package:flutter_recipe_app/data/data_source/local/local_search_data_source_impl.dart';
+import 'package:flutter_recipe_app/data/data_source/remote/remote_recipe_data_source.dart';
+import 'package:flutter_recipe_app/data/data_source/remote/remote_recipe_data_source_impl.dart';
 import 'package:flutter_recipe_app/data/repository/mock_bookmark_recipe_impl.dart';
 import 'package:flutter_recipe_app/data/repository/mock_procedure_repository_impl.dart';
 import 'package:flutter_recipe_app/data/repository/mock_system_settings_repository_impl.dart';
@@ -34,7 +36,8 @@ final getIt = GetIt.instance;
 
 void diSetUp() {
   // DataSource
-  getIt.registerLazySingleton<RecipeDataSource>(() => RecipeDataSourceImpl());
+  getIt.registerLazySingleton<RemoteRecipeDataSource>(() => RemoteRecipeDataSourceImpl());
+  getIt.registerLazySingleton<LocalSearchDataSource>(() => LocalSearchDataSourceImpl());
 
   // Repository
   getIt.registerLazySingleton<RecipeRepository>(
