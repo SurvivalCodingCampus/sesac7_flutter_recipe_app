@@ -1,6 +1,6 @@
 import '../../../../core/data/recipe/domain/model/recipe.dart';
 
-abstract interface class MockBookmarkRepository {
+abstract interface class BookmarkRepository {
   // List<Recipe> getAllRecipes();
 
   List<Recipe>? getSavedRecipes();
