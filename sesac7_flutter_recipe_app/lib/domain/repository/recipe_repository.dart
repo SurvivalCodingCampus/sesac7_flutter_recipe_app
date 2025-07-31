@@ -7,7 +7,5 @@ import 'package:flutter_recipe_app/domain/model/recipe.dart';
 
 abstract interface class RecipeRepository {
   Future<Result<List<Recipe>, NetworkError>> getRecipes();
-  Future<Result<List<Recipe>, NetworkError>> searchRecipes(String? keyword, SearchRecipeFilterTimeType? timeType, RatingType? ratingType, SearchRecipeFilterCategoryType? categoryType);
-  Future<Result<List<Recipe>, NetworkError>> getRecentRecipes();
-  Future<Result<List<Recipe>, NetworkError>> addRecentRecipes(List<Recipe> recentRecipes);
+  Future<Result<List<Recipe>, NetworkError>> searchRecipes([String? keyword, SearchRecipeFilterTimeType? timeType, RatingType? ratingType, SearchRecipeFilterCategoryType? categoryType]);
 }

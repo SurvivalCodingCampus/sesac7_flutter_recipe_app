@@ -46,12 +46,12 @@ class MockRecipeRepositoryImpl implements RecipeRepository {
 
   // fixme 임시로 전체 레시피 갖고 오도록 처리
   @override
-  Future<Result<List<Recipe>, NetworkError>> searchRecipes(
+  Future<Result<List<Recipe>, NetworkError>> searchRecipes([
     String? keyword,
     SearchRecipeFilterTimeType? timeType,
     RatingType? ratingType,
     SearchRecipeFilterCategoryType? categoryType,
-  ) async {
+  ]) async {
     try {
       final Response<RecipesDto> response = await _recipeDataSource
           .getRecipes();
@@ -104,7 +104,9 @@ class MockRecipeRepositoryImpl implements RecipeRepository {
   }
 
   @override
-  Future<Result<List<Recipe>, NetworkError>> addRecentRecipes(List<Recipe> recentRecipes) async {
+  Future<Result<List<Recipe>, NetworkError>> addRecentRecipes(
+    List<Recipe> recentRecipes,
+  ) async {
     _recentRecipes = recentRecipes;
     return Success(_recentRecipes);
   }

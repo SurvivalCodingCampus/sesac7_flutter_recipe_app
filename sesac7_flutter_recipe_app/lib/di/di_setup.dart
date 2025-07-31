@@ -12,7 +12,6 @@ import 'package:flutter_recipe_app/domain/repository/procedure_repository.dart';
 import 'package:flutter_recipe_app/domain/repository/recipe_repository.dart';
 import 'package:flutter_recipe_app/domain/repository/search_repository.dart';
 import 'package:flutter_recipe_app/domain/repository/system_settings_repository.dart';
-import 'package:flutter_recipe_app/domain/usecase/add_recent_recipes_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/add_saved_recipe_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/delete_recent_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_airplane_mode_activate_use_case.dart';
@@ -109,10 +108,10 @@ void diSetUp() {
     () => SearchRecipeByFilterUseCase(recipeRepository: getIt()),
   );
   getIt.registerLazySingleton<GetRecentRecipesUseCase>(
-    () => GetRecentRecipesUseCase(recipeRepository: getIt()),
-  );
-  getIt.registerLazySingleton<AddRecentRecipesUseCase>(
-    () => AddRecentRecipesUseCase(recipeRepository: getIt()),
+    () => GetRecentRecipesUseCase(
+      recipeRepository: getIt(),
+      searchRepository: getIt(),
+    ),
   );
   getIt.registerLazySingleton<DeleteRecentSearchKeywordUseCase>(
     () => DeleteRecentSearchKeywordUseCase(searchRepository: getIt()),
