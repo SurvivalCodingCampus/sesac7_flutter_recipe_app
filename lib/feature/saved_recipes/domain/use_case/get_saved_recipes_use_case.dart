@@ -24,7 +24,7 @@ class GetSavedRecipesUseCase {
         final savedRecipes = recipes
             .where(
               (recipe) =>
-                  bookmarks.every((bookmark) => bookmark.recipeId == recipe.id),
+                  bookmarks.any((bookmark) => bookmark.recipeId == recipe.id),
             )
             .toList();
         yield Result.success(savedRecipes);

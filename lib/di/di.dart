@@ -17,6 +17,7 @@ import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/get_proced
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/format_review_count_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_view_model.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/data/data_source/bookmark_data_source.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/data/data_source/bookmark_db_helper.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/data/data_source/local_bookmark_data_source_impl.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/data/repository/bookmark_repository_impl.dart';
@@ -87,7 +88,7 @@ Future<void> diSetUp() async {
   getIt.registerLazySingleton<FilterSearchStateDataSource>(
     () => FilterSearchStateDataSourceImpl(boxCollection: boxCollection),
   );
-  getIt.registerLazySingleton(
+  getIt.registerLazySingleton<BookmarkDataSource>(
     () => LocalBookmarkDataSourceImpl(db: sqfliteDb),
   );
 
