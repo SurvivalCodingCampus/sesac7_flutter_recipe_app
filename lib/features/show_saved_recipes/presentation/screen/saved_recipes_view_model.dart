@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/features/show_saved_recipes/data/domain/use_case/delete_bookmarked_recipe_use_case.dart';
 import 'package:flutter_recipe_app/features/show_saved_recipes/presentation/screen/saved_recipes_action.dart';
 import 'package:flutter_recipe_app/features/show_saved_recipes/presentation/screen/saved_recipes_screen_state.dart';
 
-import '../../../../data/bookmark/domain/repository/mock_bookmark_repository.dart';
+import '../../data/domain/use_case/get_saved_recipes_use_case.dart';
 
 class SavedRecipesViewModel with ChangeNotifier {
-  final MockBookmarkRepository _bookmarkRepository;
+  final GetSavedRecipesUseCase _getSavedRecipesUseCase;
+  final DeleteBookmarkedRecipeUseCase _deleteBookmarkedRecipeUseCase;
 
   SavedRecipesScreenState _state = const SavedRecipesScreenState();
 
   SavedRecipesScreenState get state => _state;
 
   SavedRecipesViewModel({
-    required MockBookmarkRepository bookmarkRepository,
-  }) : _bookmarkRepository = bookmarkRepository;
+    required GetSavedRecipesUseCase getSavedRecipesUseCase,
+    required DeleteBookmarkedRecipeUseCase deleteBookmarkedRecipeUseCase,
+  }) : _getSavedRecipesUseCase = getSavedRecipesUseCase,
+       _deleteBookmarkedRecipeUseCase = deleteBookmarkedRecipeUseCase;
 
   void onAction(SavedRecipesAction action) {
     switch (action) {
@@ -31,20 +35,20 @@ class SavedRecipesViewModel with ChangeNotifier {
 
     notifyListeners();
 
-    final recipes = _bookmarkRepository.getAllRecipes();
+    final recipes = _getSavedRecipesUseCase.execute();
 
     _state = state.copyWith(
-      recipes: recipes,
+      recipes: recipes ?? [],
       isLoading: false,
     );
     notifyListeners();
   }
 
   void _deleteRecipe(int id) async {
-    _bookmarkRepository.deleteRecipe(id);
+    _deleteBookmarkedRecipeUseCase.execute(id);
 
     _state = state.copyWith(
-      recipes: _bookmarkRepository.getSavedRecipes(),
+      recipes: _getSavedRecipesUseCase.execute() ?? [],
     );
     notifyListeners();
   }
