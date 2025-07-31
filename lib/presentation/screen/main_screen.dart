@@ -7,7 +7,6 @@ import 'package:flutter_recipe_app/presentation/component/button/rating_button.d
 import 'package:flutter_recipe_app/presentation/component/card/ingredient_item.dart';
 import 'package:flutter_recipe_app/presentation/component/inputfield/input_field.dart';
 import 'package:flutter_recipe_app/presentation/component/tab/tab.dart';
-import 'package:flutter_recipe_app/presentation/screen/saved_screen/saved_recipes_screen.dart';
 
 import '../../data/model/ingredients.dart';
 import '../component/button/small_button.dart';
