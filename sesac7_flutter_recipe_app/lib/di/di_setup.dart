@@ -6,16 +6,20 @@ import 'package:flutter_recipe_app/data/repository/mock_bookmark_recipe_impl.dar
 import 'package:flutter_recipe_app/data/repository/mock_procedure_repository_impl.dart';
 import 'package:flutter_recipe_app/data/repository/mock_system_settings_repository_impl.dart';
 import 'package:flutter_recipe_app/data/repository/mock_recipe_repository_impl.dart';
+import 'package:flutter_recipe_app/data/repository/search_repository_impl.dart';
 import 'package:flutter_recipe_app/domain/repository/bookmark_repository.dart';
 import 'package:flutter_recipe_app/domain/repository/procedure_repository.dart';
 import 'package:flutter_recipe_app/domain/repository/recipe_repository.dart';
+import 'package:flutter_recipe_app/domain/repository/search_repository.dart';
 import 'package:flutter_recipe_app/domain/repository/system_settings_repository.dart';
 import 'package:flutter_recipe_app/domain/usecase/add_recent_recipes_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/add_saved_recipe_use_case.dart';
+import 'package:flutter_recipe_app/domain/usecase/delete_recent_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_airplane_mode_activate_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_bookmark_changed_stream_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_procedures_by_recipe_id_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_recent_recipes_use_case.dart';
+import 'package:flutter_recipe_app/domain/usecase/get_recent_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_recipes_by_category.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_recipes_category_list_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_recipes_use_case.dart';
@@ -23,6 +27,7 @@ import 'package:flutter_recipe_app/domain/usecase/get_saved_recipe_find_by_id_us
 import 'package:flutter_recipe_app/domain/usecase/get_saved_recipe_ids_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_saved_recipes_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/remove_saved_recipe_use_case.dart';
+import 'package:flutter_recipe_app/domain/usecase/save_recent_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/search_recipe_by_filter_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/search_recipe_by_keyword_use_case.dart';
 import 'package:flutter_recipe_app/presentation/home/home_view_model.dart';
@@ -36,8 +41,12 @@ final getIt = GetIt.instance;
 
 void diSetUp() {
   // DataSource
-  getIt.registerLazySingleton<RemoteRecipeDataSource>(() => RemoteRecipeDataSourceImpl());
-  getIt.registerLazySingleton<LocalSearchDataSource>(() => LocalSearchDataSourceImpl());
+  getIt.registerLazySingleton<RemoteRecipeDataSource>(
+    () => RemoteRecipeDataSourceImpl(),
+  );
+  getIt.registerLazySingleton<LocalSearchDataSource>(
+    () => LocalSearchDataSourceImpl(),
+  );
 
   // Repository
   getIt.registerLazySingleton<RecipeRepository>(
@@ -51,6 +60,9 @@ void diSetUp() {
   );
   getIt.registerLazySingleton<SystemSettingsRepository>(
     () => MockSystemSettingsRepositoryImpl(),
+  );
+  getIt.registerLazySingleton<SearchRepository>(
+    () => SearchRepositoryImpl(localSearchDataSource: getIt()),
   );
 
   // UseCase
@@ -101,6 +113,15 @@ void diSetUp() {
   );
   getIt.registerLazySingleton<AddRecentRecipesUseCase>(
     () => AddRecentRecipesUseCase(recipeRepository: getIt()),
+  );
+  getIt.registerLazySingleton<DeleteRecentSearchKeywordUseCase>(
+    () => DeleteRecentSearchKeywordUseCase(searchRepository: getIt()),
+  );
+  getIt.registerLazySingleton<GetRecentSearchKeywordUseCase>(
+    () => GetRecentSearchKeywordUseCase(searchRepository: getIt()),
+  );
+  getIt.registerLazySingleton<SaveRecentSearchKeywordUseCase>(
+    () => SaveRecentSearchKeywordUseCase(searchRepository: getIt()),
   );
 
   // ViewModel
