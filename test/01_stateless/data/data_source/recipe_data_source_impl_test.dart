@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter_recipe_app/01_stateless/data/data_source/recipe_data_source.dart';
-import 'package:flutter_recipe_app/01_stateless/data/data_source/recipe_data_source_impl.dart';
+import 'package:flutter_recipe_app/01_stateless/data/data_source/api/recipe_data_source.dart';
+import 'package:flutter_recipe_app/01_stateless/data/data_source/api/recipe_data_source_impl.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:http/testing.dart';
 import 'package:http/http.dart' as http;

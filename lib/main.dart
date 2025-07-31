@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import '01_stateless/core/routing/router.dart';
 import '01_stateless/di/di_setup.dart';
 
-void main() {
-  diSetup();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await diSetup();
 
   runApp(const MyApp());
 }

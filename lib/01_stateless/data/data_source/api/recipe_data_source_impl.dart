@@ -1,5 +1,5 @@
 import 'package:flutter_recipe_app/01_stateless/core/response.dart';
-import 'package:flutter_recipe_app/01_stateless/data/data_source/recipe_data_source.dart';
+import 'package:flutter_recipe_app/01_stateless/data/data_source/api/recipe_data_source.dart';
 import 'package:http/http.dart' as http;
 
 class RecipeDataSourceImpl implements RecipeDataSource {

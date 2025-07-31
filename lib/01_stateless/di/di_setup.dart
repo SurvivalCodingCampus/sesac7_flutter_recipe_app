@@ -1,9 +1,12 @@
+import 'package:flutter_recipe_app/01_stateless/data/data_source/db/db_helper.dart';
 import 'package:flutter_recipe_app/01_stateless/data/repository/person_repository_impl.dart';
 import 'package:flutter_recipe_app/01_stateless/domain/repository/person_repository.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/saved_recipes/saved_recipes_view_model.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_view_model.dart';
 import 'package:get_it/get_it.dart';
+import 'package:sqflite/sqflite.dart';
 
+import '../data/data_source/db/dao/recipe_dao.dart';
 import '../data/repository/mock/mock_recipe_repository_impl.dart';
 import '../domain/repository/recipe_repository.dart';
 import '../domain/use_case/fetch_recipes_use_case.dart';
@@ -15,7 +18,17 @@ import '../presentation/screen/main/main_view_model.dart';
 
 final getIt = GetIt.instance;
 
-void diSetup() {
+Future<void> diSetup() async {
+  final db = await DbHelper().database;
+
+  // DB
+  getIt.registerLazySingleton<Database>(() => db);
+
+  // DAO
+  getIt.registerLazySingleton<RecipeDao>(
+    () => RecipeDao(getIt()),
+  );
+
   // Repository
   getIt.registerLazySingleton<RecipeRepository>(
     () => MockRecipeRepositoryImpl(),

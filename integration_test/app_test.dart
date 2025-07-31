@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_recipe_app/01_stateless/data/data_source/recipe_data_source_impl.dart';
+import 'package:flutter_recipe_app/01_stateless/data/data_source/api/recipe_data_source_impl.dart';
 import 'package:flutter_recipe_app/01_stateless/data/repository/person_repository_impl.dart';
 import 'package:flutter_recipe_app/01_stateless/data/repository/recipe_repository_impl.dart';
 import 'package:flutter_recipe_app/01_stateless/domain/model/recipe.dart';

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_recipe_app/01_stateless/data/data_source/recipe_data_source.dart';
+import 'package:flutter_recipe_app/01_stateless/data/data_source/api/recipe_data_source.dart';
 import 'package:flutter_recipe_app/01_stateless/data/mapper/recipe_mapper.dart';
 import 'package:flutter_recipe_app/01_stateless/domain/model/recipe.dart';
 import 'package:flutter_recipe_app/01_stateless/domain/repository/recipe_repository.dart';

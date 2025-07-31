@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/01_stateless/core/result.dart';
 import 'package:flutter_recipe_app/01_stateless/domain/model/recipe.dart';
 
+import '../../../data/data_source/db/dao/recipe_dao.dart';
+import '../../../di/di_setup.dart';
 import '../../../domain/use_case/fetch_recipes_use_case.dart';
 
 class SavedRecipesViewModel with ChangeNotifier {
@@ -38,5 +40,7 @@ class SavedRecipesViewModel with ChangeNotifier {
     }
     _isLoading = false;
     notifyListeners();
+
+    print(await getIt<RecipeDao>().getAllRecipes());
   }
 }
