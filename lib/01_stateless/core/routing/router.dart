@@ -85,13 +85,8 @@ final router = GoRouter(
                   personRepository: PersonRepositoryImpl(),
                 );
                 mainViewModel.fetchPersonData();
-                return ListenableBuilder(
-                  listenable: mainViewModel,
-                  builder: (context, child) {
-                    return MainScreen(
-                      viewModel: mainViewModel,
-                    );
-                  },
+                return MainScreen(
+                  viewModel: mainViewModel,
                 );
               },
             ),
