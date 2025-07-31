@@ -22,8 +22,10 @@ import 'package:flutter_recipe_app/feature/saved_recipes/domain/repository/bookm
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/get_saved_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/remove_saved_recipe_use_case.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_view_model.dart';
-import 'package:flutter_recipe_app/feature/search_recipes/data/repository/mock_search_history_repository_impl.dart';
-import 'package:flutter_recipe_app/feature/search_recipes/domain/repository/search_history_repository.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/data/data_source/recent_search_keyword_data_source.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/data/data_source/recent_search_keyword_data_source_impl.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/data/repository/recent_search_keyword_repository_impl.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/repository/recent_search_keyword_repository.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/get_recent_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/filter_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/save_search_keyword_use_case.dart';
@@ -33,13 +35,24 @@ import 'package:flutter_recipe_app/feature/splash/domain/repository/system_contr
 import 'package:flutter_recipe_app/feature/splash/domain/use_case/is_airplane_mode_use_case.dart';
 import 'package:flutter_recipe_app/feature/splash/presentation/splash_view_model.dart';
 import 'package:get_it/get_it.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final getIt = GetIt.instance;
 
 void diSetUp() {
+  // DB
+  getIt.registerLazySingleton<SharedPreferencesAsync>(
+    () => SharedPreferencesAsync(),
+  );
+
   // Data Source
   getIt.registerLazySingleton<RecipeDataSource>(
     () => RecipeDataSourceImpl(),
+  );
+  getIt.registerLazySingleton<RecentSearchKeywordDataSource>(
+    () => RecentSearchKeywordDataSourceImpl(
+      sharedPreferencesAsync: getIt(),
+    ),
   );
 
   // Repository
@@ -58,8 +71,10 @@ void diSetUp() {
   getIt.registerLazySingleton<SystemControlsRepository>(
     () => MockSystemControlsRepositoryImpl(),
   );
-  getIt.registerLazySingleton<SearchHistoryRepository>(
-    () => MockSearchHistoryRepositoryImpl(),
+  getIt.registerLazySingleton<RecentSearchKeywordRepository>(
+    () => RecentSearchKeywordRepositoryImpl(
+      recentSearchKeywordDataSource: getIt(),
+    ),
   );
 
   // Use Case

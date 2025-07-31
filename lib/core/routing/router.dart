@@ -140,7 +140,8 @@ GoRouter devRouter() => GoRouter(
       builder: (context, state) {
         return SplashScreenRoot(
           viewModel: getIt(),
-          onStartCookingTap: () => context.go(Routes.signIn),
+          // onStartCookingTap: () => context.go(Routes.signIn),
+          onStartCookingTap: () => context.go(Routes.search),
         );
       },
     ),
