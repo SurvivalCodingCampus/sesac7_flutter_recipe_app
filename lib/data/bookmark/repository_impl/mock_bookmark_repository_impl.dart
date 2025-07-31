@@ -158,27 +158,28 @@ class MockBookmarkRepositoryImpl implements MockBookmarkRepository {
     },
   ];
 
-  final List<Recipe> bookmarkList = [];
+  List<Recipe>? bookmarkList;
 
   @override
-  List<Recipe> getAllRecipes() {
-    final result = data
-        .map((e) => RecipeDto.fromJson(e))
-        .toList()
-        .map((e) => e.toModel(e.recipes?.first.id as int))
-        .toList();
+  List<Recipe>? getSavedRecipes() {
+    if (bookmarkList == null) {
+      final dtoToModelResult = data
+          .map((e) => RecipeDto.fromJson(e))
+          .toList()
+          .map((e) => e.toModel(e.recipes?.first.id as int))
+          .toList();
 
-    for (int i = 0; i < result.length; i++) {
-      if (!bookmarkList.contains(result[i])) {
-        bookmarkList.add(result[i]);
+      final List<Recipe> result = [];
+      for (int i = 0; i < dtoToModelResult.length; i++) {
+        if (!result.contains(dtoToModelResult[i])) {
+          result.add(dtoToModelResult[i]);
+        }
       }
+
+      bookmarkList = result;
+      return bookmarkList;
     }
 
-    return bookmarkList;
-  }
-
-  @override
-  List<Recipe> getSavedRecipes() {
     return bookmarkList;
   }
 
@@ -192,7 +193,7 @@ class MockBookmarkRepositoryImpl implements MockBookmarkRepository {
   @override
   void deleteRecipe(int id) {
     try {
-      bookmarkList.removeWhere((recipe) => recipe.id == id);
+      bookmarkList?.removeWhere((recipe) => recipe.id == id);
     } catch (e) {
       print(e);
     }
@@ -203,7 +204,7 @@ void main() async {
   final MockBookmarkRepository bookmarkRepository =
       MockBookmarkRepositoryImpl();
 
-  final result = bookmarkRepository.getAllRecipes();
+  final result = bookmarkRepository.getSavedRecipes();
   bookmarkRepository.deleteRecipe(1);
 
   print(result);
