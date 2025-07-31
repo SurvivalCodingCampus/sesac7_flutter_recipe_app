@@ -17,7 +17,9 @@ import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/get_proced
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/domain/use_case/format_review_count_use_case.dart';
 import 'package:flutter_recipe_app/feature/ingredient/presentation/ingredient_view_model.dart';
-import 'package:flutter_recipe_app/feature/saved_recipes/data/repository/mock/mock_bookmark_repository_impl.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/data/data_source/bookmark_db_helper.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/data/data_source/local_bookmark_data_source_impl.dart';
+import 'package:flutter_recipe_app/feature/saved_recipes/data/repository/bookmark_repository_impl.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/repository/bookmark_repository.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/get_saved_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/remove_saved_recipe_use_case.dart';
@@ -44,12 +46,13 @@ import 'package:get_it/get_it.dart';
 import 'package:hive/hive.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sqflite/sqflite.dart';
 
 final getIt = GetIt.instance;
 const hiveDatabaseName = 'Hive';
 
 Future<void> diSetUp() async {
-  // DB
+  // hive
   final appDocumentDirectory = await getApplicationDocumentsDirectory();
   final hivePath = appDocumentDirectory.path;
   final boxCollection = await BoxCollection.open(
@@ -57,11 +60,19 @@ Future<void> diSetUp() async {
     {FilterSearchStateDataSourceImpl.boxName},
     path: hivePath,
   );
+
+  // sqflite
+  final sqfliteDb = await BookmarkDbHelper().database;
+
+  // DB
   getIt.registerLazySingleton<SharedPreferencesAsync>(
     () => SharedPreferencesAsync(),
   );
   getIt.registerLazySingleton<BoxCollection>(
     () => boxCollection,
+  );
+  getIt.registerLazySingleton<Database>(
+    () => sqfliteDb,
   );
 
   // Data Source
@@ -76,13 +87,16 @@ Future<void> diSetUp() async {
   getIt.registerLazySingleton<FilterSearchStateDataSource>(
     () => FilterSearchStateDataSourceImpl(boxCollection: boxCollection),
   );
+  getIt.registerLazySingleton(
+    () => LocalBookmarkDataSourceImpl(db: sqfliteDb),
+  );
 
   // Repository
   getIt.registerLazySingleton<RecipeRepository>(
     () => RecipeRepositoryImpl(recipeDataSource: getIt()),
   );
   getIt.registerLazySingleton<BookmarkRepository>(
-    () => MockBookmarkRepositoryImpl(),
+    () => BookmarkRepositoryImpl(localBookmarkDataSource: getIt()),
   );
   getIt.registerLazySingleton<IngredientRepository>(
     () => MockIngredientRepositoryImpl(),
