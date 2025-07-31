@@ -1,0 +1,1 @@
+genhtml /Users/parkgiteck/Desktop/git/sesac7_flutter_recipe_app/sesac7_flutter_recipe_app/coverage/lcov.info -o /Users/parkgiteck/Desktop/git/sesac7_flutter_recipe_app/sesac7_flutter_recipe_app/coverage/html
