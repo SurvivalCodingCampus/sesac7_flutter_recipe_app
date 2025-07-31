@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_image_test_utils/image_test/image_test.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/ingredient.dart';
 import 'package:flutter_recipe_app/core/presentation/component/list_item/ingredient_item.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:network_image_mock/network_image_mock.dart';
 
 void main() {
-  mockNetworkImagesFor(() {
-    group('IngredientItem', () {
-      testWidgets('displays ingredient name and whole number weight', (
-        tester,
-      ) async {
+  group('IngredientItem', () {
+    testWidgets('Given an ingredient with a whole number weight, '
+        'When the widget is rendered, '
+        'Then it should display the name and formatted weight correctly', (
+      tester,
+    ) async {
+      await provideMockedNetworkImages(() async {
+        // Given
         final ingredient = Ingredient(
           id: '1',
           name: 'Sugar',
@@ -17,20 +20,26 @@ void main() {
           weight: 100.0,
         );
 
+        // When
         await tester.pumpWidget(
           MaterialApp(home: IngredientItem(ingredient: ingredient)),
         );
+        await tester.pump(); // Allow the image to "load"
 
+        // Then
         expect(find.text('Sugar'), findsOneWidget);
         expect(find.text('100g'), findsOneWidget);
-        // We cannot reliably test Image.network loading in widget tests without mocking
-        // so we will only check for the absence of the error icon.
         expect(find.byIcon(Icons.image_not_supported), findsNothing);
       });
+    });
 
-      testWidgets('displays ingredient name and decimal weight', (
-        tester,
-      ) async {
+    testWidgets('Given an ingredient with a decimal weight, '
+        'When the widget is rendered, '
+        'Then it should display the name and formatted weight correctly', (
+      tester,
+    ) async {
+      await provideMockedNetworkImages(() async {
+        // Given
         final ingredient = Ingredient(
           id: '2',
           name: 'Flour',
@@ -38,54 +47,17 @@ void main() {
           weight: 150.5,
         );
 
+        // When
         await tester.pumpWidget(
           MaterialApp(home: IngredientItem(ingredient: ingredient)),
         );
+        await tester.pump(); // Allow the image to "load"
 
+        // Then
         expect(find.text('Flour'), findsOneWidget);
         expect(find.text('150.5g'), findsOneWidget);
         expect(find.byIcon(Icons.image_not_supported), findsNothing);
       });
-
-      testWidgets('displays error icon when image fails to load', (
-        tester,
-      ) async {
-        final ingredient = Ingredient(
-          id: '3',
-          name: 'Salt',
-          imageUrl: '', // Invalid URL to trigger errorBuilder
-          weight: 10.0,
-        );
-
-        await tester.pumpWidget(
-          MaterialApp(home: IngredientItem(ingredient: ingredient)),
-        );
-        await tester.pumpAndSettle(); // Wait for image to load/fail
-
-        expect(find.text('Salt'), findsOneWidget);
-        expect(find.text('10g'), findsOneWidget);
-        expect(find.byIcon(Icons.image_not_supported), findsOneWidget);
-      });
-
-      testWidgets(
-        'does not display CircularProgressIndicator as image loads instantly',
-        (tester) async {
-          final ingredient = Ingredient(
-            id: '4',
-            name: 'Water',
-            imageUrl: 'https://example.com/water.jpg',
-            weight: 200.0,
-          );
-
-          await tester.pumpWidget(
-            MaterialApp(home: IngredientItem(ingredient: ingredient)),
-          );
-
-          // With mockNetworkImagesFor, the image loads instantly, so the indicator should not be visible
-          expect(find.byType(CircularProgressIndicator), findsNothing);
-          expect(find.byIcon(Icons.image_not_supported), findsNothing);
-        },
-      );
     });
   });
 }

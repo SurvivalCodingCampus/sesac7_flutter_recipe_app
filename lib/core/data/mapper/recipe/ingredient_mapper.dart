@@ -7,7 +7,7 @@ extension IngredientsDtoToModel on IngredientsDto {
     return Ingredient(
       id: _initId(ingredient?.id),
       name: ingredient?.name ?? '',
-      imageUrl: ingredient?.image ?? '',
+      imageUrl: ingredient?.image ?? 'https://i.imgur.com/EhJJLN7.jpeg',
       weight: amount?.toDouble() ?? 0,
     );
   }

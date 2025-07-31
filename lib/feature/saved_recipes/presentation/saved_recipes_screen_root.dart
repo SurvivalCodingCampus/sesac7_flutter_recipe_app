@@ -50,17 +50,11 @@ class _SavedRecipesScreenRootState extends State<SavedRecipesScreenRoot> {
   Widget build(BuildContext context) {
     final viewModel = widget.viewModel;
 
-    return StreamBuilder(
-      stream: viewModel.state,
-      builder: (context, snapshot) {
-        if (!snapshot.hasData) {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-
+    return ListenableBuilder(
+      listenable: viewModel,
+      builder: (context, child) {
         return SavedRecipesScreen(
-          state: snapshot.data!,
+          state: viewModel.state,
           onAction: (action) {
             switch (action) {
               case TapRecipeCard():

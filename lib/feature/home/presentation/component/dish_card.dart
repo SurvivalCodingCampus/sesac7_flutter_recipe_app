@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
@@ -51,13 +52,12 @@ class DishCard extends StatelessWidget {
             top: 0,
             left: 0,
             right: 0,
-            child: Image.network(
-              recipe.imageWithoutBackground,
+            child: CachedNetworkImage(
+              imageUrl: recipe.imageWithoutBackground,
               height: 110,
               fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) => Center(
-                child: Icon(Icons.image_not_supported),
-              ),
+              errorWidget: (context, url, error) =>
+                  Icon(Icons.image_not_supported),
             ),
           ),
           Positioned(

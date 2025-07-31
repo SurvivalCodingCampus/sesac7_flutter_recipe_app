@@ -43,8 +43,9 @@ void main() {
       'should load recipes successfully and update state',
       () async {
         // Given
-        when(mockGetSavedRecipesUseCase.execute())
-            .thenAnswer((_) async => Result.success(mockRecipes));
+        when(mockGetSavedRecipesUseCase.execute()).thenAnswer((_) async* {
+          yield Result.success(mockRecipes);
+        });
 
         // When
         await viewModel.init();
@@ -59,8 +60,11 @@ void main() {
     test('should handle error when fetching recipes', () async {
       // Given
       const networkError = NetworkError.unknown;
-      when(mockGetSavedRecipesUseCase.execute())
-          .thenAnswer((_) async => const Result.error(networkError));
+      when(
+        mockGetSavedRecipesUseCase.execute(),
+      ).thenAnswer((_) async* {
+        yield const Result.error(networkError);
+      });
 
       // Expect
       final future = expectLater(
@@ -81,46 +85,59 @@ void main() {
 
   group('onAction', () {
     test(
-        'should remove recipe successfully when TapRecipeBookmark is called',
-        () async {
-      // Given
-      when(mockGetSavedRecipesUseCase.execute())
-          .thenAnswer((_) async => Result.success(mockRecipes));
-      await viewModel.init();
+      'should remove recipe successfully when TapRecipeBookmark is called',
+      () async {
+        // Given
+        when(
+          mockGetSavedRecipesUseCase.execute(),
+        ).thenAnswer((_) async* {
+          yield Result.success(mockRecipes);
+        });
+        await viewModel.init();
 
-      final recipeToRemove = mockRecipes.first;
-      final updatedRecipes = mockRecipes.sublist(1);
+        final recipeToRemove = mockRecipes.first;
+        final updatedRecipes = mockRecipes.sublist(1);
 
-      when(mockRemoveSavedRecipeUseCase.execute(
-        any,
-        recipeToRemove.id,
-      )).thenAnswer((_) async => Result.success(updatedRecipes));
+        when(
+          mockRemoveSavedRecipeUseCase.execute(
+            any,
+            recipeToRemove.id,
+          ),
+        ).thenAnswer((_) async => Result.success(updatedRecipes));
 
-      // When
-      await viewModel.onAction(TapRecipeBookmark(recipeToRemove.id));
+        // When
+        await viewModel.onAction(TapRecipeBookmark(recipeToRemove.id));
 
-      // Then
-      expect(viewModel.state.savedRecipes, updatedRecipes);
-      expect(viewModel.state.isLoading, false);
-      verify(mockRemoveSavedRecipeUseCase.execute(
-        any,
-        recipeToRemove.id,
-      )).called(1);
-    });
+        // Then
+        expect(viewModel.state.savedRecipes, updatedRecipes);
+        expect(viewModel.state.isLoading, false);
+        verify(
+          mockRemoveSavedRecipeUseCase.execute(
+            any,
+            recipeToRemove.id,
+          ),
+        ).called(1);
+      },
+    );
 
     test('should handle error when removing recipe fails', () async {
       // Given
-      when(mockGetSavedRecipesUseCase.execute())
-          .thenAnswer((_) async => Result.success(mockRecipes));
+      when(
+        mockGetSavedRecipesUseCase.execute(),
+      ).thenAnswer((_) async* {
+        yield Result.success(mockRecipes);
+      });
       await viewModel.init();
 
       final recipeToRemove = mockRecipes.first;
       const networkError = NetworkError.unknown;
 
-      when(mockRemoveSavedRecipeUseCase.execute(
-        any,
-        recipeToRemove.id,
-      )).thenAnswer((_) async => const Result.error(networkError));
+      when(
+        mockRemoveSavedRecipeUseCase.execute(
+          any,
+          recipeToRemove.id,
+        ),
+      ).thenAnswer((_) async => const Result.error(networkError));
 
       // Expect
       final future = expectLater(
@@ -135,10 +152,12 @@ void main() {
       await future; // Wait for the event
       expect(viewModel.state.savedRecipes, mockRecipes);
       expect(viewModel.state.isLoading, false);
-      verify(mockRemoveSavedRecipeUseCase.execute(
-        any,
-        recipeToRemove.id,
-      )).called(1);
+      verify(
+        mockRemoveSavedRecipeUseCase.execute(
+          any,
+          recipeToRemove.id,
+        ),
+      ).called(1);
     });
   });
 }

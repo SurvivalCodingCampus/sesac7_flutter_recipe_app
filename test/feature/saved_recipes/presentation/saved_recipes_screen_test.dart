@@ -28,14 +28,15 @@ void main() {
     return MaterialApp(
       home: SavedRecipesScreen(
         state: state,
-        onAction: mockOnAction,
+        onAction: mockOnAction.call,
       ),
     );
   }
 
   group('SavedRecipesScreen', () {
-    testWidgets('displays CircularProgressIndicator when loading',
-        (tester) async {
+    testWidgets('displays CircularProgressIndicator when loading', (
+      tester,
+    ) async {
       // Given
       const state = SavedRecipesState(isLoading: true);
 
@@ -77,6 +78,7 @@ void main() {
           rating: 5.0,
           reviewCount: 10,
           serve: 2,
+          isSaved: false,
         ),
       ];
       final state = SavedRecipesState(savedRecipes: recipes, isLoading: false);
@@ -90,62 +92,73 @@ void main() {
       expect(find.text('Test Recipe 1'), findsOneWidget);
     });
 
-    testWidgets('calls onAction with TapRecipeCard when a recipe card is tapped',
-        (tester) async {
-      // Given
-      final recipes = <Recipe>[
-        const Recipe(
-          id: '1',
-          name: 'Test Recipe 1',
-          category: 'Test',
-          creator: 'Chef',
-          imageUrl: '',
-          imageWithoutBackground: '',
-          cookingTime: '10 min',
-          rating: 5.0,
-          reviewCount: 10,
-          serve: 2,
-        ),
-      ];
-      final state = SavedRecipesState(savedRecipes: recipes, isLoading: false);
-      await tester.pumpWidget(createWidget(state: state));
+    testWidgets(
+      'calls onAction with TapRecipeCard when a recipe card is tapped',
+      (tester) async {
+        // Given
+        final recipes = <Recipe>[
+          const Recipe(
+            id: '1',
+            name: 'Test Recipe 1',
+            category: 'Test',
+            creator: 'Chef',
+            imageUrl: '',
+            imageWithoutBackground: '',
+            cookingTime: '10 min',
+            rating: 5.0,
+            reviewCount: 10,
+            serve: 2,
+            isSaved: false,
+          ),
+        ];
+        final state = SavedRecipesState(
+          savedRecipes: recipes,
+          isLoading: false,
+        );
+        await tester.pumpWidget(createWidget(state: state));
 
-      // When
-      await tester.tap(find.byType(RecipeCard));
-      await tester.pump();
+        // When
+        await tester.tap(find.byType(RecipeCard));
+        await tester.pump();
 
-      // Then
-      verify(mockOnAction(const TapRecipeCard('1'))).called(1);
-    });
+        // Then
+        verify(mockOnAction(const TapRecipeCard('1'))).called(1);
+      },
+    );
 
     testWidgets(
-        'calls onAction with TapRecipeBookmark when a bookmark is tapped',
-        (tester) async {
-      // Given
-      final recipes = <Recipe>[
-        const Recipe(
-          id: '1',
-          name: 'Test Recipe 1',
-          category: 'Test',
-          creator: 'Chef',
-          imageUrl: '',
-          imageWithoutBackground: '',
-          cookingTime: '10 min',
-          rating: 5.0,
-          reviewCount: 10,
-          serve: 2,
-        ),
-      ];
-      final state = SavedRecipesState(savedRecipes: recipes, isLoading: false);
-      await tester.pumpWidget(createWidget(state: state));
+      'calls onAction with TapRecipeBookmark when a bookmark is tapped',
+      (tester) async {
+        // Given
+        final recipes = <Recipe>[
+          const Recipe(
+            id: '1',
+            name: 'Test Recipe 1',
+            category: 'Test',
+            creator: 'Chef',
+            imageUrl: '',
+            imageWithoutBackground: '',
+            cookingTime: '10 min',
+            rating: 5.0,
+            reviewCount: 10,
+            serve: 2,
+            isSaved: false,
+          ),
+        ];
+        final state = SavedRecipesState(
+          savedRecipes: recipes,
+          isLoading: false,
+        );
+        await tester.pumpWidget(createWidget(state: state));
 
-      // When
-      // The bookmark button is an Icon within an InkWell.
-      await tester.tap(find.byIcon(Icons.bookmark_outline));
-      await tester.pump();
+        // When
+        // The bookmark button is an Icon within an InkWell.
+        await tester.tap(find.byIcon(Icons.bookmark_outline));
+        await tester.pump();
 
-      // Then
-      verify(mockOnAction(const TapRecipeBookmark('1'))).called(1);
-    });
+        // Then
+        verify(mockOnAction(const TapRecipeBookmark('1'))).called(1);
+      },
+    );
   });
 }

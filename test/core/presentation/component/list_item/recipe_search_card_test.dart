@@ -17,6 +17,7 @@ void main() {
     imageWithoutBackground: '',
     reviewCount: 0,
     serve: 0,
+    isSaved: false,
   );
 
   group('RecipeSearchCard Widget Test', () {

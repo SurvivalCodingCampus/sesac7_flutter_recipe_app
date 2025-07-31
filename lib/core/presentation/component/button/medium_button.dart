@@ -60,13 +60,15 @@ class _MediumButtonState extends State<MediumButton> {
           spacing: MediumButton.spacing,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              widget.text,
-              style: TextStyles.normalTextBold.copyWith(
-                color: AppColors.white,
+            Flexible(
+              child: Text(
+                widget.text,
+                style: TextStyles.normalTextBold.copyWith(
+                  color: AppColors.white,
+                ),
+                maxLines: MediumButton.textMaxLines,
+                overflow: TextOverflow.ellipsis,
               ),
-              maxLines: MediumButton.textMaxLines,
-              overflow: TextOverflow.ellipsis,
             ),
             Icon(
               Icons.arrow_forward,

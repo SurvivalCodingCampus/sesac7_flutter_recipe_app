@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_recipe_app/core/domain/model/recipe/recipe.dart';
 import 'package:flutter_recipe_app/core/presentation/component/constants/component_constant.dart';
@@ -41,13 +42,13 @@ class IngredientRecipeCard extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              Image.network(
-                recipe.imageUrl,
+              CachedNetworkImage(
+                imageUrl: recipe.imageUrl,
                 width: double.infinity,
                 height: double.infinity,
                 fit: BoxFit.cover,
-                errorBuilder: (context, error, stackTrace) =>
-                    Center(child: const Icon(Icons.image_not_supported)),
+                errorWidget: (context, url, error) =>
+                    const Icon(Icons.image_not_supported),
               ),
               Container(
                 decoration: BoxDecoration(

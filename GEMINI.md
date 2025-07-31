@@ -1,3 +1,6 @@
+# 테스트 목표
+- coverage 80 이상.
+
 # 유닛 테스트
 ## 1. 테스트 대상 정의 (Define the Target)
 - 클래스: [테스트하려는 클래스 이름] (예: UserRepositoryImpl)
@@ -136,7 +139,7 @@ testWidgets('[시나리오 설명(영어로 작성)]', (WidgetTester tester) asy
   - 예시: AuthRepositoryImpl이 사용하는 외부 네트워크 클라이언트(ApiClient)를 Mocking한다.
   - 예시: Firebase Auth, 로컬 DB(Isar, Hive) 등
 
-## 3. 사전 조건 (Arrange)
+## 3. 사전 조건 (Given)
 - Mock 객체 설정:
   - 조건: 테스트 시작 전, Mocking된 의존성은 어떤 상태를 반환해야 하는가?
     - 예시 (성공): when(() => mockApiClient.login(...))가 호출되면, 성공 응답(200 OK)과 함께 가짜 사용자 데이터를 반환하도록 설정한다.
@@ -146,7 +149,7 @@ testWidgets('[시나리오 설명(영어로 작성)]', (WidgetTester tester) asy
   - 의존성 주입: ProviderScope 또는 ProviderContainer의 overrides를 사용하여 Mock 객체를 실제 의존성 대신 주입한다.
   - 앱 실행: tester.pumpWidget(const MyApp())을 통해 어떤 위젯에서 테스트를 시작할 것인가? (보통 앱의 루트 위젯)
 
-## 4. 사용자 행동 (Act)
+## 4. 사용자 행동 (When)
 - 행동 순서: 사용자의 행동을 순서대로 구체적으로 작성한다. 각 행동 후에는 pump() 또는 pumpAndSettle()을 호출하여 UI 변경 및 비동기 작업 완료를 기다려야 한다.
   - 예시:
     a. '이메일' TextFormField를 찾는다 (find.byKey(...)).
@@ -157,7 +160,7 @@ testWidgets('[시나리오 설명(영어로 작성)]', (WidgetTester tester) asy
     f. tester.tap()으로 버튼을 누른다.
     g. tester.pumpAndSettle()을 호출하여 로딩 인디케이터가 사라지고 화면 전환이 완료될 때까지 기다린다.
 
-## 5. 기대 결과 (Assert)
+## 5. 기대 결과 (Then)
 - UI 상태 검증:
   - 조건: 모든 행동이 끝난 후, 최종적으로 화면은 어떤 상태여야 하는가?
     - 예시 (성공): 홈 화면의 '환영합니다, [사용자 이름]!' 텍스트가 보여야 한다 (findsOneWidget).

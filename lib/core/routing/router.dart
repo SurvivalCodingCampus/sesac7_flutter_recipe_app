@@ -13,17 +13,134 @@ import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_re
 import 'package:flutter_recipe_app/feature/splash/presentation/splash_screen_root.dart';
 import 'package:go_router/go_router.dart';
 
-GoRouter createRouter() => GoRouter(
-  // initialLocation: Routes.splash,
-  initialLocation: Routes.home,
+GoRouter productionRouter() => GoRouter(
+  initialLocation: Routes.splash,
+  // initialLocation: Routes.home,
   routes: [
     GoRoute(
       path: Routes.splash,
       builder: (context, state) {
         return SplashScreenRoot(
           viewModel: getIt(),
-          // onStartCookingTap: () => context.go(Routes.signIn),
-          onStartCookingTap: () => context.push(Routes.search),
+          onStartCookingTap: () => context.go(Routes.signIn),
+        );
+      },
+    ),
+    GoRoute(
+      path: Routes.signIn,
+      builder: (context, state) {
+        return SignInScreen(
+          onSignInTap: () => context.go(Routes.home),
+          onSignUpTap: () => context.go(Routes.signUp),
+        );
+      },
+    ),
+    GoRoute(
+      path: Routes.signUp,
+      builder: (context, state) {
+        return SignUpScreen(
+          onSignInTap: () => context.go(Routes.signIn),
+        );
+      },
+    ),
+
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        return MainNavigationScreen(
+          currentIndex: navigationShell.currentIndex,
+          onTabSelected: navigationShell.goBranch,
+          child: navigationShell,
+        );
+      },
+      branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: Routes.home,
+              builder: (context, state) {
+                return HomeScreenRoot(viewModel: getIt());
+              },
+            ),
+          ],
+        ),
+
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: Routes.savedRecipes,
+              builder: (context, state) {
+                return SavedRecipesScreenRoot(
+                  viewModel: getIt(),
+                  onTapRecipeCard: (String recipeId) {
+                    context.push(
+                      Uri(
+                        path: Routes.ingredient,
+                        queryParameters: {QueryParameters.id: recipeId},
+                      ).toString(),
+                    );
+                  },
+                );
+              },
+            ),
+          ],
+        ),
+
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: Routes.notifications,
+              builder: (context, state) {
+                return const NotificationsScreen();
+              },
+            ),
+          ],
+        ),
+
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: Routes.profile,
+              builder: (context, state) {
+                return const ProfileScreen();
+              },
+            ),
+          ],
+        ),
+      ],
+    ),
+
+    GoRoute(
+      path: Routes.ingredient,
+      builder: (context, state) {
+        final id = state.uri.queryParameters[QueryParameters.id]!;
+        // TODO: id null 기본 화면
+        return IngredientScreenRoot(
+          recipeId: id,
+          viewModel: getIt(),
+          onTapBack: () => context.pop(),
+        );
+      },
+    ),
+
+    GoRoute(
+      path: Routes.search,
+      builder: (context, state) {
+        return SearchRecipesScreenRoot(viewModel: getIt());
+      },
+    ),
+  ],
+);
+
+GoRouter devRouter() => GoRouter(
+  initialLocation: Routes.splash,
+  // initialLocation: Routes.home,
+  routes: [
+    GoRoute(
+      path: Routes.splash,
+      builder: (context, state) {
+        return SplashScreenRoot(
+          viewModel: getIt(),
+          onStartCookingTap: () => context.go(Routes.signIn),
         );
       },
     ),
