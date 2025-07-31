@@ -6,28 +6,24 @@ class FilterSearchStateDataSourceImpl implements FilterSearchStateDataSource {
   static String boxName = 'FilterSearchStateDataSource';
   static String objectName = 'FilterSearchState';
 
-  final BoxCollection _boxCollection;
+  final Future<CollectionBox> _stateBoxFuture;
 
   FilterSearchStateDataSourceImpl({required BoxCollection boxCollection})
-    : _boxCollection = boxCollection;
+    : _stateBoxFuture = boxCollection.openBox<Map>(boxName);
 
   @override
   Future<FilterSearchStateDto?> findFilterSearchState() async {
-    final stateBox = await _boxCollection.openBox<Map<String, dynamic>>(
-      boxName,
-    );
-    final json = await stateBox.get(objectName);
+    final stateBox = await _stateBoxFuture;
+    final Map? json = await stateBox.get(objectName);
 
     if (json == null) return null;
 
-    return FilterSearchStateDto.fromJson(json);
+    return FilterSearchStateDto.fromJson(json.cast<String, dynamic>());
   }
 
   @override
   Future<void> saveFilterSeaerchState(FilterSearchStateDto dto) async {
-    final stateBox = await _boxCollection.openBox<Map<String, dynamic>>(
-      boxName,
-    );
+    final stateBox = await _stateBoxFuture;
 
     await stateBox.put(objectName, dto.toJson());
   }

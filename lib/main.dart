@@ -3,8 +3,11 @@ import 'package:flutter_recipe_app/core/routing/router.dart';
 import 'package:flutter_recipe_app/di/di.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 
-void main() {
-  diSetUp();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await diSetUp();
+
   runApp(const MyApp());
 }
 

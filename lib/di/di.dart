@@ -22,12 +22,18 @@ import 'package:flutter_recipe_app/feature/saved_recipes/domain/repository/bookm
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/get_saved_recipes_use_case.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/domain/use_case/remove_saved_recipe_use_case.dart';
 import 'package:flutter_recipe_app/feature/saved_recipes/presentation/saved_recipes_view_model.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/data/data_source/filter_search_state_data_source.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/data/data_source/filter_search_state_data_source_impl.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/data/data_source/recent_search_keyword_data_source.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/data/data_source/recent_search_keyword_data_source_impl.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/data/repository/filter_search_state_repository_impl.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/data/repository/recent_search_keyword_repository_impl.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/repository/filter_search_state_repository.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/repository/recent_search_keyword_repository.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/get_filter_search_state_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/get_recent_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/filter_recipes_use_case.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/save_filter_search_state_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/domain/use_case/save_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/feature/search_recipes/presentation/search_recipes_view_model.dart';
 import 'package:flutter_recipe_app/feature/splash/data/repository/mock_system_controls_repository_impl.dart';
@@ -35,14 +41,27 @@ import 'package:flutter_recipe_app/feature/splash/domain/repository/system_contr
 import 'package:flutter_recipe_app/feature/splash/domain/use_case/is_airplane_mode_use_case.dart';
 import 'package:flutter_recipe_app/feature/splash/presentation/splash_view_model.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive/hive.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 final getIt = GetIt.instance;
+const hiveDatabaseName = 'Hive';
 
-void diSetUp() {
+Future<void> diSetUp() async {
   // DB
+  final appDocumentDirectory = await getApplicationDocumentsDirectory();
+  final hivePath = appDocumentDirectory.path;
+  final boxCollection = await BoxCollection.open(
+    hiveDatabaseName,
+    {FilterSearchStateDataSourceImpl.boxName},
+    path: hivePath,
+  );
   getIt.registerLazySingleton<SharedPreferencesAsync>(
     () => SharedPreferencesAsync(),
+  );
+  getIt.registerLazySingleton<BoxCollection>(
+    () => boxCollection,
   );
 
   // Data Source
@@ -53,6 +72,9 @@ void diSetUp() {
     () => RecentSearchKeywordDataSourceImpl(
       sharedPreferencesAsync: getIt(),
     ),
+  );
+  getIt.registerLazySingleton<FilterSearchStateDataSource>(
+    () => FilterSearchStateDataSourceImpl(boxCollection: boxCollection),
   );
 
   // Repository
@@ -75,6 +97,9 @@ void diSetUp() {
     () => RecentSearchKeywordRepositoryImpl(
       recentSearchKeywordDataSource: getIt(),
     ),
+  );
+  getIt.registerLazySingleton<FilterSearchStateRepository>(
+    () => FilterSearchStateRepositoryImpl(filterSearchStateDataSource: getIt()),
   );
 
   // Use Case
@@ -123,6 +148,12 @@ void diSetUp() {
   getIt.registerLazySingleton(
     () => RemoveBookmarkUseCase(bookmarkRepository: getIt()),
   );
+  getIt.registerLazySingleton(
+    () => GetFilterSearchStateUseCase(filterSearchStateRepository: getIt()),
+  );
+  getIt.registerLazySingleton(
+    () => SaveFilterSearchStateUseCase(filterSearchStateRepository: getIt()),
+  );
 
   // View Model
   getIt.registerFactory(
@@ -153,11 +184,13 @@ void diSetUp() {
   );
   getIt.registerFactory(
     () => SearchRecipesViewModel(
-      fetchAllRecipesUseCase: getIt(),
+      getAllRecipesUseCase: getIt(),
       filterRecipesUseCase: getIt(),
-      fetchRecentSearchKeywordUseCase: getIt(),
+      getRecentSearchKeywordUseCase: getIt(),
       saveSearchKeywordUseCase: getIt(),
       debouncer: Debouncer(delay: Duration(milliseconds: 500)),
+      getFilterSearchStateUseCase: getIt(),
+      saveFilterSearchStateUseCase: getIt(),
     ),
   );
 }
