@@ -49,6 +49,8 @@ class MainViewModel with ChangeNotifier {
         break;
       case ClickOnBookmark():
         _toggleBookmark(action.recipeId);
+      case ClickOnSearch():
+        break;
     }
   }
 

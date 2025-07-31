@@ -21,41 +21,45 @@ void main() {
 class RatingButton extends StatelessWidget {
   final String text;
   final bool isSelected;
+  final Function() onTap;
 
-  const RatingButton({super.key, required this.text, required this.isSelected});
+  const RatingButton({super.key, required this.text, required this.isSelected, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 50,
-      height: 28,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: isSelected? Colors.white : AppColors.primary100,
-        border: Border.all(
-          width: 1,
-          color: isSelected? AppColors.primary80 : AppColors.primary100,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 50,
+        height: 28,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: !isSelected? Colors.white : AppColors.primary100,
+          border: Border.all(
+            width: 1,
+            color: !isSelected? AppColors.primary80 : AppColors.primary100,
+          )
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              text,
+              style: GoogleFonts.poppins(
+                textStyle: TextStyles.smallerTextRegular,
+                color: !isSelected? AppColors.primary80 : Colors.white,
+              )
+            ),
+            const SizedBox(
+              width: 5,
+            ),
+            Icon(
+              Icons.star,
+              color: !isSelected? AppColors.primary80: Colors.white),
+          ],
         )
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Text(
-            text,
-            style: GoogleFonts.poppins(
-              textStyle: TextStyles.smallerTextRegular,
-              color: isSelected? AppColors.primary80 : Colors.white,
-            )
-          ),
-          const SizedBox(
-            width: 5,
-          ),
-          Icon(
-            Icons.star,
-            color: isSelected? AppColors.primary80: Colors.white),
-        ],
-      )
     );
   }
 }

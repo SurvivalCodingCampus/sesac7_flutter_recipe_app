@@ -7,7 +7,9 @@ import 'package:flutter_recipe_app/01_stateless/data/repository/user_repository.
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/main/main_view_model.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/saved_recipes/saved_recipes_view_model.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/recipe_detail/recipe_detail_view_model.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_view_model.dart';
 import 'package:flutter_recipe_app/01_stateless/usecase/bookmark_recipe_by_id_use_case.dart';
+import 'package:flutter_recipe_app/01_stateless/usecase/filter_recipes_by_keyword_use_case.dart';
 import 'package:flutter_recipe_app/01_stateless/usecase/get_bookmarked_recipes_use_case.dart';
 import 'package:flutter_recipe_app/01_stateless/usecase/get_recipe_detail_by_id_use_case.dart';
 import 'package:flutter_recipe_app/01_stateless/usecase/get_recipes_by_category_use_case.dart';
@@ -68,6 +70,12 @@ void diSetup() {
     ),
   );
 
+  getIt.registerLazySingleton<FilterRecipesByKeywordUseCase>(
+    () => FilterRecipesByKeywordUseCase(
+      recipeRepository: getIt(),
+    ),
+  );
+
   getIt.registerFactory<MainViewModel>(
     () => MainViewModel(
       getRecipeByCategoryUseCase: getIt(),
@@ -91,6 +99,12 @@ void diSetup() {
       bookmarkRecipeByIdUseCase: getIt(),
       unBookmarkRecipeByIdUseCase: getIt(),
       isBookmarkedByIdUseCase: getIt(),
+    ),
+  );
+
+  getIt.registerFactory<SearchRecipesViewModel>(
+    () => SearchRecipesViewModel(
+      filterRecipesByKeywordUseCase: getIt(),
     ),
   );
 }

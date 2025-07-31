@@ -37,7 +37,7 @@ class _SmallButtonState extends State<SmallButton> {
           child: Text(
             widget.text,
             style: GoogleFonts.poppins(
-              textStyle: TextStyles.smallerTextBold,
+              textStyle: TextStyles.smallerTextSemibold,
               color: Colors.white,
               decoration: TextDecoration.none,
             ),
