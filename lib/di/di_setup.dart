@@ -26,6 +26,8 @@ import '../features/search_recipes/presentation/screen/search_recipes_screen_vie
 import '../features/show_ingredients/data/domain/use_case/fetch_procedure_by_id_use_case.dart';
 import '../features/show_ingredients/data/domain/use_case/fetch_recipe_by_id_use_case.dart';
 import '../features/show_ingredients/presentation/screen/ingredient_screen_view_model.dart';
+import '../features/show_saved_recipes/data/domain/use_case/delete_bookmarked_recipe_use_case.dart';
+import '../features/show_saved_recipes/data/domain/use_case/get_saved_recipes_use_case.dart';
 import '../features/show_saved_recipes/presentation/screen/saved_recipes_view_model.dart';
 import '../features/splash/data/domain/use_case/fetch_system_settings_use_case.dart';
 import '../features/splash/presentation/screen/splash_screen_view_model.dart';
@@ -69,6 +71,12 @@ void diSetup() {
   getIt.registerLazySingleton<AddSearchHistoryUseCase>(
     () => AddSearchHistoryUseCase(searchHistoryRepository: getIt()),
   );
+  getIt.registerLazySingleton<GetSavedRecipesUseCase>(
+    () => GetSavedRecipesUseCase(bookmarkRepository: getIt()),
+  );
+  getIt.registerLazySingleton<DeleteBookmarkedRecipeUseCase>(
+    () => DeleteBookmarkedRecipeUseCase(bookmarkRepository: getIt()),
+  );
 
   // Repository
   getIt.registerLazySingleton<RecipeRepository>(
@@ -90,7 +98,8 @@ void diSetup() {
   // ViewModel
   getIt.registerFactory<SavedRecipesViewModel>(
     () => SavedRecipesViewModel(
-      bookmarkRepository: getIt(),
+      getSavedRecipesUseCase: getIt(),
+      deleteBookmarkedRecipeUseCase: getIt(),
     ),
   );
   getIt.registerFactory<IngredientScreenViewModel>(
