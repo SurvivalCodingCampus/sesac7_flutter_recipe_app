@@ -36,6 +36,9 @@ class _MainRootState extends State<MainRoot> {
             if(action is ClickOnRecipe) {
               context.push('${Routes.recipeDetail}/${action.recipeId}');
             }
+            if(action is ClickOnSearch) {
+              context.push(Routes.searchRecipes);
+            }
           },
         );
       },
