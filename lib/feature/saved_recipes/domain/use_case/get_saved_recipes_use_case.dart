@@ -22,7 +22,10 @@ class GetSavedRecipesUseCase {
 
       await for (final bookmarks in _bookmarkRepository.fetchBookmarks()) {
         final savedRecipes = recipes
-            .where((recipe) => bookmarks.contains(recipe.id))
+            .where(
+              (recipe) =>
+                  bookmarks.every((bookmark) => bookmark.recipeId == recipe.id),
+            )
             .toList();
         yield Result.success(savedRecipes);
       }
