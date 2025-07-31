@@ -1,45 +1,54 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/features/show_saved_recipes/data/domain/use_case/delete_bookmarked_recipe_use_case.dart';
+import 'package:flutter_recipe_app/features/show_saved_recipes/presentation/screen/saved_recipes_action.dart';
 import 'package:flutter_recipe_app/features/show_saved_recipes/presentation/screen/saved_recipes_screen_state.dart';
 
-import '../../../../core/data/recipe/domain/repository/recipe_repository.dart';
-import '../../../../data/bookmark/domain/repository/bookmark_repository.dart';
+import '../../data/domain/use_case/get_saved_recipes_use_case.dart';
 
 class SavedRecipesViewModel with ChangeNotifier {
-  final RecipeRepository _recipeRepository;
-  final BookmarkRepository _bookmarkRepository;
+  final GetSavedRecipesUseCase _getSavedRecipesUseCase;
+  final DeleteBookmarkedRecipeUseCase _deleteBookmarkedRecipeUseCase;
 
   SavedRecipesScreenState _state = const SavedRecipesScreenState();
 
   SavedRecipesScreenState get state => _state;
 
   SavedRecipesViewModel({
-    required RecipeRepository recipeRepository,
-    required BookmarkRepository bookmarkRepository,
-  }) : _recipeRepository = recipeRepository,
-       _bookmarkRepository = bookmarkRepository {
-    fetchRecipes();
+    required GetSavedRecipesUseCase getSavedRecipesUseCase,
+    required DeleteBookmarkedRecipeUseCase deleteBookmarkedRecipeUseCase,
+  }) : _getSavedRecipesUseCase = getSavedRecipesUseCase,
+       _deleteBookmarkedRecipeUseCase = deleteBookmarkedRecipeUseCase;
+
+  void onAction(SavedRecipesAction action) {
+    switch (action) {
+      case ClickRecipeCard():
+        break;
+      case ClickBookmarkButton():
+        _deleteRecipe(action.id);
+    }
   }
 
-  void fetchRecipes() async {
+  void fetchRecipes() {
     _state = state.copyWith(
       isLoading: true,
     );
 
     notifyListeners();
 
-    final recipes = await _bookmarkRepository.getSavedRecipes();
+    final recipes = _getSavedRecipesUseCase.execute();
 
     _state = state.copyWith(
-      recipes: recipes,
+      recipes: recipes ?? [],
       isLoading: false,
     );
     notifyListeners();
   }
 
-  void deleteRecipe(int id) async {
-    final recipes = state.recipes.where((recipe) => recipe.id != id).toList();
+  void _deleteRecipe(int id) async {
+    _deleteBookmarkedRecipeUseCase.execute(id);
+
     _state = state.copyWith(
-      recipes: recipes,
+      recipes: _getSavedRecipesUseCase.execute() ?? [],
     );
     notifyListeners();
   }

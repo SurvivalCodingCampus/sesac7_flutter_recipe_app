@@ -33,7 +33,7 @@ class RecipeCategorySelector extends StatelessWidget {
                   // width: 54,
                   height: 31,
                   padding: EdgeInsets.fromLTRB(20, 7, 20, 7),
-                  margin: EdgeInsets.symmetric(horizontal: 9),
+                  margin: EdgeInsets.only(right: 9),
                   decoration: BoxDecoration(
                     color: category == Category.values[index].name
                         ? AppColors.primary100

@@ -8,7 +8,7 @@ import '../core/data/recipe/domain/repository/recipe_repository.dart';
 import '../core/data/recipe/repository_impl/mock_recipe_repository_impl.dart';
 import '../core/data/system_settings/domain/repository/mock_system_settings_repository.dart';
 import '../core/data/system_settings/repository_impl/mock_system_settings_repository_impl.dart';
-import '../data/bookmark/data_source/bookmark_data_source.dart';
+import '../data/bookmark/data_source/mock_bookmark_data_source.dart';
 import '../data/bookmark/data_source/mock_bookmark_data_source_impl.dart';
 import '../data/bookmark/domain/repository/bookmark_repository.dart';
 import '../data/bookmark/repository_impl/mock_bookmark_repository_impl.dart';
@@ -26,6 +26,8 @@ import '../features/search_recipes/presentation/screen/search_recipes_screen_vie
 import '../features/show_ingredients/data/domain/use_case/fetch_procedure_by_id_use_case.dart';
 import '../features/show_ingredients/data/domain/use_case/fetch_recipe_by_id_use_case.dart';
 import '../features/show_ingredients/presentation/screen/ingredient_screen_view_model.dart';
+import '../features/show_saved_recipes/data/domain/use_case/delete_bookmarked_recipe_use_case.dart';
+import '../features/show_saved_recipes/data/domain/use_case/get_saved_recipes_use_case.dart';
 import '../features/show_saved_recipes/presentation/screen/saved_recipes_view_model.dart';
 import '../features/splash/data/domain/use_case/fetch_system_settings_use_case.dart';
 import '../features/splash/presentation/screen/splash_screen_view_model.dart';
@@ -37,7 +39,7 @@ void diSetup() {
   getIt.registerLazySingleton<RecipeDataSource>(
     () => MockRecipeDataSourceImpl(),
   );
-  getIt.registerLazySingleton<BookmarkDataSource>(
+  getIt.registerLazySingleton<MockBookmarkDataSource>(
     () => MockBookmarkDataSourceImpl(),
   );
   getIt.registerLazySingleton<ProcedureDataSource>(
@@ -69,13 +71,19 @@ void diSetup() {
   getIt.registerLazySingleton<AddSearchHistoryUseCase>(
     () => AddSearchHistoryUseCase(searchHistoryRepository: getIt()),
   );
+  getIt.registerLazySingleton<GetSavedRecipesUseCase>(
+    () => GetSavedRecipesUseCase(bookmarkRepository: getIt()),
+  );
+  getIt.registerLazySingleton<DeleteBookmarkedRecipeUseCase>(
+    () => DeleteBookmarkedRecipeUseCase(bookmarkRepository: getIt()),
+  );
 
   // Repository
   getIt.registerLazySingleton<RecipeRepository>(
     () => MockRecipeRepositoryImpl(dataSource: getIt()),
   );
   getIt.registerLazySingleton<BookmarkRepository>(
-    () => MockBookmarkRepositoryImpl(dataSource: getIt()),
+    () => MockBookmarkRepositoryImpl(),
   );
   getIt.registerLazySingleton<ProcedureRepository>(
     () => MockProcedureRepositoryImpl(procedureDataSource: getIt()),
@@ -90,8 +98,8 @@ void diSetup() {
   // ViewModel
   getIt.registerFactory<SavedRecipesViewModel>(
     () => SavedRecipesViewModel(
-      bookmarkRepository: getIt(),
-      recipeRepository: getIt(),
+      getSavedRecipesUseCase: getIt(),
+      deleteBookmarkedRecipeUseCase: getIt(),
     ),
   );
   getIt.registerFactory<IngredientScreenViewModel>(
