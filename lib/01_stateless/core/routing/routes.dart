@@ -4,6 +4,8 @@ abstract class Routes {
   static const String searchRecipes = '/search-recipes';
   static const String ingredient = '/ingredient';
   static const String ingredientWithId = '/ingredient/:id';
+  static const String recipeDetail = '/recipe-detail';
 
   static String getIngredientWithId(int id) => '$ingredient/$id';
+  static String getRecipeDetail(int id) => '$recipeDetail/$id';
 }

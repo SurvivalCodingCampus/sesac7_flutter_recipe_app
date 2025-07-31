@@ -94,32 +94,35 @@ void main() {
       expect(viewModel.errorMessage, errorMessage);
     });
 
-    test('fetchRecipes 성공 후 실패 시: 에러 메시지가 설정되고 로딩 상태가 false가 되어야 합니다.', () async {
-      when(
-        mockRecipeRepository.getRecipes(),
-      ).thenAnswer((_) async => Result<List<Recipe>>.success(mockRecipes));
+    test(
+      'fetchRecipes 성공 후 실패 시: 에러 메시지가 설정되고 로딩 상태가 false가 되어야 합니다.',
+      () async {
+        when(
+          mockRecipeRepository.getRecipes(),
+        ).thenAnswer((_) async => Result<List<Recipe>>.success(mockRecipes));
 
-      await viewModel.fetchRecipes();
+        await viewModel.fetchRecipes();
 
-      expect(viewModel.recipes, isNotEmpty);
+        expect(viewModel.recipes, isNotEmpty);
 
-      // ======== 여기까지 성공
+        // ======== 여기까지 성공
 
-      const errorMessage = '레시피를 불러오는데 실패했습니다.';
+        const errorMessage = '레시피를 불러오는데 실패했습니다.';
 
-      // RecipeRepository의 getRecipes 메소드가 Error를 반환하도록 설정
-      when(
-        mockRecipeRepository.getRecipes(),
-      ).thenAnswer((_) async => Result<List<Recipe>>.error(errorMessage));
+        // RecipeRepository의 getRecipes 메소드가 Error를 반환하도록 설정
+        when(
+          mockRecipeRepository.getRecipes(),
+        ).thenAnswer((_) async => Result<List<Recipe>>.error(errorMessage));
 
-      await viewModel.fetchRecipes();
+        await viewModel.fetchRecipes();
 
-      // 레시피 목록이 비어 있는지 확인 (업데이트되지 않음)
-      expect(viewModel.recipes, isEmpty);
-      // 로딩 상태가 false가 되었는지 확인
-      expect(viewModel.isLoading, false);
-      // 에러 메시지가 올바르게 설정되었는지 확인
-      expect(viewModel.errorMessage, errorMessage);
-    });
+        // 레시피 목록이 비어 있는지 확인 (업데이트되지 않음)
+        expect(viewModel.recipes, isEmpty);
+        // 로딩 상태가 false가 되었는지 확인
+        expect(viewModel.isLoading, false);
+        // 에러 메시지가 올바르게 설정되었는지 확인
+        expect(viewModel.errorMessage, errorMessage);
+      },
+    );
   });
 }

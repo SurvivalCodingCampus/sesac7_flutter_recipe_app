@@ -9,6 +9,7 @@ import '../../domain/model/recipe.dart';
 import '../../presentation/screen/ingredient/ingredient_screen.dart';
 import '../../presentation/screen/main/main_screen.dart';
 import '../../presentation/screen/main/main_view_model.dart';
+import '../../presentation/screen/recipe_detail/recipe_detail_screen.dart';
 import '../../presentation/screen/saved_recipes/saved_recipes_screen.dart';
 import '../../presentation/screen/saved_recipes/saved_recipes_view_model.dart';
 import '../../presentation/screen/search_recipes/search_recipes_screen_root.dart';
@@ -32,6 +33,33 @@ final router = GoRouter(
         return IngredientScreen(
           viewModel: getIt()..fetchRecipe(int.parse(id)),
         );
+      },
+    ),
+    GoRoute(
+      path: Routes.getRecipeDetail(0).replaceAll('/0', '/:id'),
+      builder: (context, state) {
+        final id = state.pathParameters['id'];
+        if (id == null) {
+          return Scaffold(
+            body: Center(
+              child: Text('잘못된 페이지 요청'),
+            ),
+          );
+        }
+
+        // TODO: 실제로는 Recipe를 가져와야 함
+        final recipe = Recipe(
+          id: int.parse(id),
+          name: 'Spicy chicken burger with French fries',
+          imageUrl: 'https://example.com/recipe.jpg',
+          chef: 'Laura Wilson',
+          time: '20 min',
+          rating: 4.0,
+          category: 'Burger',
+          createdAt: DateTime.now(),
+        );
+
+        return RecipeDetailScreen(recipe: recipe);
       },
     ),
     StatefulShellRoute.indexedStack(

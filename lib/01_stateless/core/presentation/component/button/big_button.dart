@@ -21,7 +21,9 @@ class _BigButtonState extends State<BigButton> {
 
   @override
   Widget build(BuildContext context) {
-    final Color buttonColor = _isPressed ? AppColors.gray4 : AppColors.primary100;
+    final Color buttonColor = _isPressed
+        ? AppColors.gray4
+        : AppColors.primary100;
     return GestureDetector(
       onTapDown: (_) {
         setState(() {

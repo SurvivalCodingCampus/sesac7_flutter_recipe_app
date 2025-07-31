@@ -12,7 +12,8 @@ class MockRecipeRepositoryImpl implements RecipeRepository {
         category: '한식',
         id: 101,
         name: '김치찌개',
-        imageUrl: 'https://example.com/kimchijjigae.jpg',
+        imageUrl:
+            "https://cdn.pixabay.com/photo/2017/11/10/15/04/steak-2936531_1280.jpg",
         chef: '김셰프',
         time: '30분',
         createdAt: DateTime.now(),
@@ -22,7 +23,8 @@ class MockRecipeRepositoryImpl implements RecipeRepository {
         category: '양식',
         id: 102,
         name: '스테이크',
-        imageUrl: 'https://example.com/steak.jpg',
+        imageUrl:
+            "https://cdn.pixabay.com/photo/2018/12/04/16/49/tandoori-3856045_1280.jpg",
         chef: '박셰프',
         time: '45분',
         createdAt: DateTime.now().subtract(Duration(days: 2)),

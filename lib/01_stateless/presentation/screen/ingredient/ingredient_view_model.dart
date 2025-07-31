@@ -22,7 +22,7 @@ class IngredientViewModel with ChangeNotifier {
         _state = state.copyWith(recipe: result.data);
         notifyListeners();
       case Error<Recipe>():
-      // TODO: Handle this case.
+        // TODO: Handle this case.
         throw UnimplementedError();
     }
   }

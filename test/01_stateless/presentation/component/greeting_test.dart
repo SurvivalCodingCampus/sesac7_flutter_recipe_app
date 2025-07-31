@@ -27,6 +27,5 @@ void main() {
 
     final Finder personFinder = find.byKey(const Key('value'));
     expect(personFinder, findsOneWidget);
-
   });
 }

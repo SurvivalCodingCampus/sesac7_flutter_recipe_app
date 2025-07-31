@@ -105,7 +105,6 @@ void main() {
         case Error<List<Recipe>>():
           expect(result.message, 'Failed to fetch recipes');
       }
-
     });
 
     test('getRecipes는 잘못된 JSON 응답 시 에러를 반환해야 한다', () async {
@@ -113,7 +112,7 @@ void main() {
       when(
         mockRecipeDataSource.getRecipes(),
       ).thenAnswer(
-            (_) async => Response(
+        (_) async => Response(
           statusCode: 200,
           header: {},
           body: '{"recipes": [invalid json]}',
