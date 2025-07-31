@@ -14,6 +14,8 @@ class FilterSearchStateRepositoryImpl implements FilterSearchStateRepository {
   Future<FilterSearchState> findFilterSearchState() async {
     final dto = await _filterSearchStateDataSource.findFilterSearchState();
 
+    if (dto == null) return FilterSearchState();
+
     return dto.toModel();
   }
 
