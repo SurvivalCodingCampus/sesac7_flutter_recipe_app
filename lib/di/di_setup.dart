@@ -10,7 +10,7 @@ import '../core/data/system_settings/domain/repository/mock_system_settings_repo
 import '../core/data/system_settings/repository_impl/mock_system_settings_repository_impl.dart';
 import '../data/bookmark/data_source/mock_bookmark_data_source.dart';
 import '../data/bookmark/data_source/mock_bookmark_data_source_impl.dart';
-import '../data/bookmark/domain/repository/mock_bookmark_repository.dart';
+import '../data/bookmark/domain/repository/bookmark_repository.dart';
 import '../data/bookmark/repository_impl/mock_bookmark_repository_impl.dart';
 import '../data/procedure/data_source/mock_procedure_data_source_impl.dart';
 import '../data/procedure/data_source/procedure_data_source.dart';
@@ -82,7 +82,7 @@ void diSetup() {
   getIt.registerLazySingleton<RecipeRepository>(
     () => MockRecipeRepositoryImpl(dataSource: getIt()),
   );
-  getIt.registerLazySingleton<MockBookmarkRepository>(
+  getIt.registerLazySingleton<BookmarkRepository>(
     () => MockBookmarkRepositoryImpl(),
   );
   getIt.registerLazySingleton<ProcedureRepository>(

@@ -1,11 +1,11 @@
 import '../../../../../core/data/recipe/domain/model/recipe.dart';
-import '../../../../../data/bookmark/domain/repository/mock_bookmark_repository.dart';
+import '../../../../../data/bookmark/domain/repository/bookmark_repository.dart';
 
 class GetSavedRecipesUseCase {
-  final MockBookmarkRepository _bookmarkRepository;
+  final BookmarkRepository _bookmarkRepository;
 
   const GetSavedRecipesUseCase({
-    required MockBookmarkRepository bookmarkRepository,
+    required BookmarkRepository bookmarkRepository,
   }) : _bookmarkRepository = bookmarkRepository;
 
   List<Recipe>? execute() {

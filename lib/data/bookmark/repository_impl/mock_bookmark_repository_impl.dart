@@ -2,9 +2,9 @@ import 'package:flutter_recipe_app/core/data/recipe/mapper/recipe_mapper.dart';
 
 import '../../../core/data/recipe/domain/model/recipe.dart';
 import '../../../core/data/recipe/dto/recipe_dto.dart';
-import '../domain/repository/mock_bookmark_repository.dart';
+import '../domain/repository/bookmark_repository.dart';
 
-class MockBookmarkRepositoryImpl implements MockBookmarkRepository {
+class MockBookmarkRepositoryImpl implements BookmarkRepository {
   // final MockBookmarkDataSource _dataSource;
   //
   // MockBookmarkRepositoryImpl({required MockBookmarkDataSource dataSource})
@@ -201,8 +201,7 @@ class MockBookmarkRepositoryImpl implements MockBookmarkRepository {
 }
 
 void main() async {
-  final MockBookmarkRepository bookmarkRepository =
-      MockBookmarkRepositoryImpl();
+  final BookmarkRepository bookmarkRepository = MockBookmarkRepositoryImpl();
 
   final result = bookmarkRepository.getSavedRecipes();
   bookmarkRepository.deleteRecipe(1);

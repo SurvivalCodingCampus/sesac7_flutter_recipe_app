@@ -1,10 +1,10 @@
-import '../../../../../data/bookmark/domain/repository/mock_bookmark_repository.dart';
+import '../../../../../data/bookmark/domain/repository/bookmark_repository.dart';
 
 class DeleteBookmarkedRecipeUseCase {
-  final MockBookmarkRepository _bookmarkRepository;
+  final BookmarkRepository _bookmarkRepository;
 
   const DeleteBookmarkedRecipeUseCase({
-    required MockBookmarkRepository bookmarkRepository,
+    required BookmarkRepository bookmarkRepository,
   }) : _bookmarkRepository = bookmarkRepository;
 
   void execute(int id) {
