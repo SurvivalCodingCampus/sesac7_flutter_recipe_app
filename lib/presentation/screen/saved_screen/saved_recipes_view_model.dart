@@ -1,12 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_recipe_app/presentation/screen/saved_screen/saved_recipes_state.dart';
 
+import '../../../core/routing/result.dart';
 import '../../../data/repository/recipe_repository.dart';
 
-class SavedRecipesScreen with ChangeNotifier {
-  RecipeRepository _recipeRepository;
+class SavedRecipesViewModel with ChangeNotifier {
+  final RecipeRepository _recipeRepository;
 
-  SavedRecipesScreen({required RecipeRepository recipeRepository})
+  SavedRecipesViewModel({required RecipeRepository recipeRepository})
     : _recipeRepository = recipeRepository;
 
+  final SavedRecipesState _state = const SavedRecipesState();
 
+  SavedRecipesState get state => _state;
+
+  void fetchSavedRecipes() async {
+    state.copyWith(isLoading: true);
+    notifyListeners();
+
+    final result = await _recipeRepository.getRecipes();
+    switch (result) {
+      case Success(data: final result):
+        state.copyWith(savedRecipes: result);
+      case Error(error: final error):
+        state.copyWith(savedRecipes: []);
+        state.copyWith(errorMessage: error.toString());
+    }
+    state.copyWith(isLoading: false);
+
+    notifyListeners();
+  }
 }

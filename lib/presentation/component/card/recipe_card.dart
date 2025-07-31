@@ -83,9 +83,9 @@ class RecipeCard extends StatelessWidget {
                               ),
                               SizedBox(width: 4.0),
                               Text(
-                                '4.5', // 修正 수정 필요
+                                recipe.rating.toStringAsFixed(1), // 修正 수정 필요
                                 style: TextStyle(
-                                  fontSize: 12.0,
+                                  fontSize: 8.0,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
