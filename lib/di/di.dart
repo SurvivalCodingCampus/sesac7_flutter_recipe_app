@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter_recipe_app/core/data/data_source/recipe/recipe_data_source.dart';
 import 'package:flutter_recipe_app/core/data/data_source/recipe/recipe_data_source_impl.dart';
 import 'package:flutter_recipe_app/core/data/repository/recipe/recipe_repository_impl.dart';
@@ -52,18 +54,34 @@ import 'package:sqflite/sqflite.dart';
 final getIt = GetIt.instance;
 const hiveDatabaseName = 'Hive';
 
-Future<void> diSetUp() async {
-  // hive
-  final appDocumentDirectory = await getApplicationDocumentsDirectory();
-  final hivePath = appDocumentDirectory.path;
-  final boxCollection = await BoxCollection.open(
-    hiveDatabaseName,
-    {FilterSearchStateDataSourceImpl.boxName},
-    path: hivePath,
-  );
+Future<BoxCollection> _hiveSetUp() async {
+  try {
+    final appDocumentDirectory = await getApplicationDocumentsDirectory();
+    final hivePath = appDocumentDirectory.path;
+    final boxCollection = await BoxCollection.open(
+      hiveDatabaseName,
+      {FilterSearchStateDataSourceImpl.boxName},
+      path: hivePath,
+    );
+    return boxCollection;
+  } catch (e) {
+    // TODO: 대체 처리?, 로깅
+    rethrow;
+  }
+}
 
-  // sqflite
-  final sqfliteDb = await BookmarkDbHelper().database;
+Future<Database> _sqfliteSetUp() async {
+  try {
+    return await BookmarkDbHelper().database;
+  } catch (e) {
+    // TODO: 대체 처리?, 로깅
+    rethrow;
+  }
+}
+
+Future<void> diSetUp() async {
+  final boxCollection = await _hiveSetUp();
+  final sqfliteDb = await _sqfliteSetUp();
 
   // DB
   getIt.registerLazySingleton<SharedPreferencesAsync>(
