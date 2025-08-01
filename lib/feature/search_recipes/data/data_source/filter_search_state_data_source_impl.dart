@@ -22,7 +22,7 @@ class FilterSearchStateDataSourceImpl implements FilterSearchStateDataSource {
   }
 
   @override
-  Future<void> saveFilterSeaerchState(FilterSearchStateDto dto) async {
+  Future<void> saveFilterSearchState(FilterSearchStateDto dto) async {
     final stateBox = await _stateBoxFuture;
 
     await stateBox.put(objectName, dto.toJson());

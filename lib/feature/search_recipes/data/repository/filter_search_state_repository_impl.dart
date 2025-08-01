@@ -21,6 +21,6 @@ class FilterSearchStateRepositoryImpl implements FilterSearchStateRepository {
 
   @override
   Future<void> saveFilterSearchState(FilterSearchState state) async {
-    await _filterSearchStateDataSource.saveFilterSeaerchState(state.toDto());
+    await _filterSearchStateDataSource.saveFilterSearchState(state.toDto());
   }
 }

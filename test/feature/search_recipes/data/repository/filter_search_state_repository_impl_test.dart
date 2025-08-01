@@ -25,8 +25,7 @@ void main() {
     });
 
     group('findFilterSearchState', () {
-      test(
-          'Given data source returns a DTO, '
+      test('Given data source returns a DTO, '
           'When findFilterSearchState is called, '
           'Then it should return the mapped model', () async {
         // Given
@@ -35,8 +34,9 @@ void main() {
           filterRate: FilterRate.four.toInt(),
           filterCategory: FilterCategory.chinese.toString(),
         );
-        when(mockDataSource.findFilterSearchState())
-            .thenAnswer((_) async => dto);
+        when(
+          mockDataSource.findFilterSearchState(),
+        ).thenAnswer((_) async => dto);
 
         // When
         final result = await repository.findFilterSearchState();
@@ -49,8 +49,7 @@ void main() {
         verify(mockDataSource.findFilterSearchState()).called(1);
       });
 
-      test(
-          'Given data source throws an exception, '
+      test('Given data source throws an exception, '
           'When findFilterSearchState is called, '
           'Then it should re-throw the exception', () async {
         // Given
@@ -67,8 +66,7 @@ void main() {
     });
 
     group('saveFilterSearchState', () {
-      test(
-          'Given a model, '
+      test('Given a model, '
           'When saveFilterSearchState is called, '
           'Then it should call data source to save the mapped DTO', () async {
         // Given
@@ -82,24 +80,28 @@ void main() {
           filterRate: FilterRate.one.toInt(),
           filterCategory: FilterCategory.dinner.toString(),
         );
-        when(mockDataSource.saveFilterSeaerchState(any))
-            .thenAnswer((_) async {});
+        when(
+          mockDataSource.saveFilterSearchState(any),
+        ).thenAnswer((_) async {});
 
         // When
         await repository.saveFilterSearchState(stateToSave);
 
         // Then
-        verify(mockDataSource.saveFilterSeaerchState(argThat(
-          predicate<FilterSearchStateDto>((dto) {
-            return dto.filterSortBy == expectedDto.filterSortBy &&
-                dto.filterRate == expectedDto.filterRate &&
-                dto.filterCategory == expectedDto.filterCategory;
-          }),
-        ))).called(1);
+        verify(
+          mockDataSource.saveFilterSearchState(
+            argThat(
+              predicate<FilterSearchStateDto>((dto) {
+                return dto.filterSortBy == expectedDto.filterSortBy &&
+                    dto.filterRate == expectedDto.filterRate &&
+                    dto.filterCategory == expectedDto.filterCategory;
+              }),
+            ),
+          ),
+        ).called(1);
       });
 
-      test(
-          'Given data source throws an exception, '
+      test('Given data source throws an exception, '
           'When saveFilterSearchState is called, '
           'Then it should re-throw the exception', () async {
         // Given
@@ -109,15 +111,14 @@ void main() {
           filterCategory: FilterCategory.fruit,
         );
         final exception = Exception('Failed to save filter state');
-        when(mockDataSource.saveFilterSeaerchState(any))
-            .thenThrow(exception);
+        when(mockDataSource.saveFilterSearchState(any)).thenThrow(exception);
 
         // When & Then
         expect(
           () => repository.saveFilterSearchState(stateToSave),
           throwsA(isA<Exception>()),
         );
-        verify(mockDataSource.saveFilterSeaerchState(any)).called(1);
+        verify(mockDataSource.saveFilterSearchState(any)).called(1);
       });
     });
   });

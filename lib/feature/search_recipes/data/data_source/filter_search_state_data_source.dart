@@ -2,5 +2,5 @@ import 'package:flutter_recipe_app/feature/search_recipes/data/dto/filter_search
 
 abstract interface class FilterSearchStateDataSource {
   Future<FilterSearchStateDto?> findFilterSearchState();
-  Future<void> saveFilterSeaerchState(FilterSearchStateDto dto);
+  Future<void> saveFilterSearchState(FilterSearchStateDto dto);
 }
