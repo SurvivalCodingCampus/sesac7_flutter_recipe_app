@@ -1,22 +1,22 @@
 import 'package:flutter_recipe_app/core/enum/network_error.dart';
 import 'package:flutter_recipe_app/core/result.dart';
 import 'package:flutter_recipe_app/domain/model/recipe.dart';
-import 'package:flutter_recipe_app/domain/repository/bookmark_repository.dart';
 import 'package:flutter_recipe_app/domain/repository/recipe_repository.dart';
+import 'package:flutter_recipe_app/domain/usecase/get_user_saved_recipe_ids_use_case.dart';
 
 class GetSavedRecipesUseCase {
-  final BookmarkRepository _bookmarkRepository;
   final RecipeRepository _recipeRepository;
+  final GetUserSavedRecipeIdsUseCase _getUserSavedRecipeIdsUseCase;
 
   GetSavedRecipesUseCase({
-    required BookmarkRepository bookmarkRepository,
     required RecipeRepository recipeRepository,
-  }) : _bookmarkRepository = bookmarkRepository,
-       _recipeRepository = recipeRepository;
+    required GetUserSavedRecipeIdsUseCase getUserSavedRecipeIdsUseCase,
+  }) : _recipeRepository = recipeRepository,
+       _getUserSavedRecipeIdsUseCase = getUserSavedRecipeIdsUseCase;
 
   Future<Result<List<Recipe>, String>> execute() async {
-    final Result<List<int>, String> bookmarkRecipeIdsResult =
-        await _bookmarkRepository.getBookmarkRecipesId();
+    final Result<List<int>, void> savedRecipeIdsResult =
+        await _getUserSavedRecipeIdsUseCase.execute();
     final Result<List<Recipe>, NetworkError> recipesResult =
         await _recipeRepository.getRecipes();
     final List<Recipe> savedRecipes = [];
@@ -30,16 +30,16 @@ class GetSavedRecipesUseCase {
     }
 
     if (recipes.isNotEmpty) {
-      switch (bookmarkRecipeIdsResult) {
-        case Success<List<int>, String>():
-          final List<int> bookmarkRecipeIds = bookmarkRecipeIdsResult.data;
+      switch (savedRecipeIdsResult) {
+        case Success<List<int>, void>():
+          final List<int> bookmarkRecipeIds = savedRecipeIdsResult.data;
           savedRecipes.addAll(
             recipes
                 .where((recipe) => bookmarkRecipeIds.contains(recipe.id))
                 .toList(),
           );
           return Success(savedRecipes);
-        case Error<List<int>, String>():
+        case Error<List<int>, void>():
           return Success([]);
       }
     } else {

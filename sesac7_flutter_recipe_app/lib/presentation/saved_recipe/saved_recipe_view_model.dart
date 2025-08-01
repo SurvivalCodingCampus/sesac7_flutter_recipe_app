@@ -3,13 +3,14 @@ import 'package:flutter_recipe_app/core/result.dart';
 import 'package:flutter_recipe_app/domain/model/recipe.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_bookmark_changed_stream_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_saved_recipes_use_case.dart';
-import 'package:flutter_recipe_app/domain/usecase/remove_saved_recipe_use_case.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_action.dart';
 import 'package:flutter_recipe_app/presentation/saved_recipe/saved_recipe_state.dart';
 
+import '../../domain/usecase/remove_saved_recipe_id_use_case.dart';
+
 class SavedRecipeViewModel extends ValueNotifier<SavedRecipeState> {
   final GetSavedRecipesUseCase _getSavedRecipesUseCase;
-  final RemoveSavedRecipeUseCase _removeSavedRecipeUseCase;
+  final RemoveSavedRecipeIdUseCase _removeSavedRecipeIdUseCase;
   final GetBookmarkChangedStreamUseCase _getBookmarkChangedStreamUseCase;
 
   Stream<void> get bookmarkChangedStream =>
@@ -17,10 +18,10 @@ class SavedRecipeViewModel extends ValueNotifier<SavedRecipeState> {
 
   SavedRecipeViewModel({
     required GetSavedRecipesUseCase getSavedRecipesUseCase,
-    required RemoveSavedRecipeUseCase removeSavedRecipeUseCase,
+    required RemoveSavedRecipeIdUseCase removeSavedRecipeUseCase,
     required GetBookmarkChangedStreamUseCase getBookmarkChangedStreamUseCase,
   }) : _getSavedRecipesUseCase = getSavedRecipesUseCase,
-       _removeSavedRecipeUseCase = removeSavedRecipeUseCase,
+       _removeSavedRecipeIdUseCase = removeSavedRecipeUseCase,
        _getBookmarkChangedStreamUseCase = getBookmarkChangedStreamUseCase,
        super(SavedRecipeState());
 
@@ -48,7 +49,7 @@ class SavedRecipeViewModel extends ValueNotifier<SavedRecipeState> {
   }
 
   Future<void> _removeSavedRecipe(int id) async {
-    final Result<void, String> result = await _removeSavedRecipeUseCase.execute(
+    final Result<void, void> result = await _removeSavedRecipeIdUseCase.execute(
       id,
     );
     switch (result) {

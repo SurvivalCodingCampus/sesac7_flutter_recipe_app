@@ -44,6 +44,7 @@ class _SplashScreenRootState extends State<SplashScreenRoot> {
                       );
                     }
                   } else {
+                    widget._splashViewModel.onAction(SplashAction.clickStartButton());
                     widget.moveSignInScreen();
                   }
               }
