@@ -10,7 +10,7 @@ void main() {
       id: '1',
       name: 'Delicious Pasta with Tomato Sauce and Meatballs',
       category: 'Italian',
-      imageUrl: 'https://example.com/pasta.jpg',
+      imageUrl: '',
       creator: 'Chef Mario',
       cookingTime: '30 min',
       rating: 4.7,

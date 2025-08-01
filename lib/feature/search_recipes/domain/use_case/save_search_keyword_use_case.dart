@@ -1,15 +1,15 @@
-import 'package:flutter_recipe_app/feature/search_recipes/domain/repository/search_history_repository.dart';
+import 'package:flutter_recipe_app/feature/search_recipes/domain/repository/recent_search_keyword_repository.dart';
 
 class SaveSearchKeywordUseCase {
-  final SearchHistoryRepository _searchHistoryRepository;
+  final RecentSearchKeywordRepository _recentSearchKeywordRepository;
 
   SaveSearchKeywordUseCase({
-    required SearchHistoryRepository searchHistoryRepository,
-  }) : _searchHistoryRepository = searchHistoryRepository;
+    required RecentSearchKeywordRepository searchHistoryRepository,
+  }) : _recentSearchKeywordRepository = searchHistoryRepository;
 
   Future<void> execute(String value) async {
     try {
-      await _searchHistoryRepository.saveSearchKeyword(value);
+      await _recentSearchKeywordRepository.saveSearchKeyword(value);
     } catch (e) {
       // TODO: log
     }
