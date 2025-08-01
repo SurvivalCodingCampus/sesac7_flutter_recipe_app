@@ -43,18 +43,22 @@ class BookmarkRepositoryImpl implements BookmarkRepository {
 
   @override
   Future<int> removeBookmarks(String id) async {
-    final bookmarkToRemove = _cache.firstWhere(
-      (bookmark) => bookmark.recipeId == id,
-    );
-    final result = await _localBookmarkDataSource.deleteBookmark(
-      bookmarkToRemove.toDto(),
-    );
+    try {
+      final bookmarkToRemove = _cache.firstWhere(
+        (bookmark) => bookmark.recipeId == id,
+      );
+      final result = await _localBookmarkDataSource.deleteBookmark(
+        bookmarkToRemove.toDto(),
+      );
 
-    if (result > 0) {
-      _cache.removeWhere((bookmark) => bookmark.recipeId == id);
-      _streamController.add(List.of(_cache));
+      if (result > 0) {
+        _cache.removeWhere((bookmark) => bookmark.recipeId == id);
+        _streamController.add(List.of(_cache));
+      }
+
+      return result;
+    } on StateError {
+      return 0;
     }
-
-    return result;
   }
 }
