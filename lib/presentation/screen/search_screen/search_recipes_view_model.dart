@@ -11,30 +11,46 @@ class SearchRecipesViewModel with ChangeNotifier {
   SearchRecipesViewModel({required RecipeRepository recipeRepository})
     : _recipeRepository = recipeRepository;
 
-  final SearchRecipesState _state = const SearchRecipesState();
+  SearchRecipesState _state = SearchRecipesState();
 
   SearchRecipesState get state => _state;
 
   // 修正：同じロジックを使っている
   void fetchSearchRecipes() async {
-    state.copyWith(isLoading: true);
+    _state = _state.copyWith(
+      isLoading: true,
+      errorMessage: null,
+      searchLabel: 'Loading...',
+      resultLabel: '',
+    );
     notifyListeners();
 
     final result = await _recipeRepository.getRecipes();
     switch (result) {
-      case Success(data: final result):
-        state.copyWith(filteredRecipes: result);
-      case Error(error: final error):
-        state.copyWith(filteredRecipes: []);
-        state.copyWith(errorMessage: error.toString());
+      case Success():
+        _state = _state.copyWith(
+          originalRecipes: result.data,
+          filteredRecipes: result.data,
+          searchQuery: '',
+          searchLabel: 'Recent Search',
+          resultLabel: '',
+          isLoading: false,
+        );
+      case Error():
+        _state = _state.copyWith(
+          originalRecipes: [],
+          filteredRecipes: [],
+          searchLabel: 'Recent Search',
+          resultLabel: '0 results',
+          isLoading: false,
+          errorMessage: 'error',
+        );
     }
-    state.copyWith(isLoading: false);
-
     notifyListeners();
   }
 
   void searchRecipes(String query) {
-    state.copyWith(searchQuery: query);
+    _state = state.copyWith(searchQuery: query);
     notifyListeners();
     // 찾기
     final filteredRecipes = state.originalRecipes.where((recipe) {
@@ -42,7 +58,7 @@ class SearchRecipesViewModel with ChangeNotifier {
           recipe.chef.toLowerCase().contains(query.toLowerCase());
     }).toList();
 
-    state.copyWith(
+    _state = state.copyWith(
       searchQuery: query,
       searchLabel: state.originalRecipes.length == filteredRecipes.length
           ? 'Recent Search'

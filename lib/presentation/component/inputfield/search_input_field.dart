@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class SearchInputField extends StatelessWidget {
-  const SearchInputField({super.key});
+  final void Function(String) onValueChange;
+
+  const SearchInputField({super.key, required this.onValueChange});
 
   @override
   Widget build(BuildContext context) {
@@ -11,6 +13,7 @@ class SearchInputField extends StatelessWidget {
           children: [
             Expanded(
               child: TextField(
+                onChanged: onValueChange,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.search),
                   hintText: 'Search Recipes',

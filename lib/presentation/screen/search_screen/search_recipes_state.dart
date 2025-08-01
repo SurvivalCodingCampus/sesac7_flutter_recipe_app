@@ -12,7 +12,7 @@ abstract class SearchRecipesState with _$SearchRecipesState {
     @Default('') String searchQuery,
     @Default('Recent Search') String searchLabel,
     @Default('') String resultLabel,
-    @Default(true) bool isLoading,
+    @Default(false) bool isLoading,
     @Default('') String? errorMessage,
   }) = _SearchRecipesState;
 }

@@ -3,6 +3,7 @@ import 'package:flutter_recipe_app/presentation/screen/search_screen/search_reci
 
 import '../../../data/data_source/recipe_data_source_impl.dart';
 import '../../../data/repository/recipe_repository_impl.dart';
+import '../../component/card/recipe_card.dart';
 import '../../component/inputfield/search_input_field.dart';
 
 class SearchRecipesScreen extends StatelessWidget {
@@ -12,25 +13,70 @@ class SearchRecipesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final state = searchRecipesViewModel.state;
+    // final state = searchRecipesViewModel.state;
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Search Recipes'),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: SearchInputField(),
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: SearchInputField(
+                    onValueChange: (query) {
+                      searchRecipesViewModel.searchRecipes(query);
+                    },
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: () {},
+                child: Text('三'),
+              ),
+            ],
           ),
-          const SizedBox(height: 10),
-          ElevatedButton(
-            onPressed: (){},
-            child: Text('三'),
+          ListenableBuilder(
+            listenable: searchRecipesViewModel,
+            builder: (context, _ ) {
+              final state = searchRecipesViewModel.state;
+              return Row(
+                children: [
+                  Text(state.searchLabel),
+                  Spacer(),
+                  Text(state.resultLabel),
+                ],
+              );
+            },
+          ),
+          Expanded(
+            child: ListenableBuilder(
+              listenable: searchRecipesViewModel,
+              builder: (context, child) {
+                final state = searchRecipesViewModel.state;
+                if (state.isLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                }
+                return GridView.builder(
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                  ),
+                  itemCount: searchRecipesViewModel.state.filteredRecipes.length,
+                  itemBuilder: (context, index) {
+                    final recipe = state.filteredRecipes[index];
+                    return RecipeCard(
+                      recipe: recipe,
+                      onBookmarkPressed: () {},
+                    );
+                  },
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -39,11 +85,13 @@ class SearchRecipesScreen extends StatelessWidget {
 }
 
 void main() async {
-  SearchRecipesViewModel searchRecipesViewModel = SearchRecipesViewModel(
+  final searchRecipesViewModel = SearchRecipesViewModel(
     recipeRepository: RecipeRepositoryImpl(
       RecipeDataSourceImpl(),
     ),
   );
+
+  searchRecipesViewModel.fetchSearchRecipes();
 
   runApp(
     MaterialApp(

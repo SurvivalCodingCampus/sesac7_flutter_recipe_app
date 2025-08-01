@@ -7,27 +7,35 @@ import '../../../data/repository/recipe_repository.dart';
 class SavedRecipesViewModel with ChangeNotifier {
   final RecipeRepository _recipeRepository;
 
-  SavedRecipesViewModel({required RecipeRepository recipeRepository})
-    : _recipeRepository = recipeRepository;
-
-  final SavedRecipesState _state = const SavedRecipesState();
+  SavedRecipesState _state = const SavedRecipesState();
 
   SavedRecipesState get state => _state;
 
+  SavedRecipesViewModel({required RecipeRepository recipeRepository})
+    : _recipeRepository = recipeRepository;
+
   void fetchSavedRecipes() async {
-    state.copyWith(isLoading: true);
+    _state = _state.copyWith(
+      savedRecipes: [],
+      isLoading: true,
+      errorMessage: null,
+    );
     notifyListeners();
 
     final result = await _recipeRepository.getRecipes();
     switch (result) {
-      case Success(data: final result):
-        state.copyWith(savedRecipes: result);
-      case Error(error: final error):
-        state.copyWith(savedRecipes: []);
-        state.copyWith(errorMessage: error.toString());
+      case Success():
+        _state = _state.copyWith(
+          savedRecipes: result.data,
+          isLoading: false,
+          errorMessage: null,
+        );
+      case Error():
+        _state = _state.copyWith(
+          savedRecipes: [],
+          errorMessage: result.error.toString(),
+        );
     }
-    state.copyWith(isLoading: false);
-
     notifyListeners();
   }
 }
