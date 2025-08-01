@@ -54,31 +54,6 @@ import 'package:sqflite/sqflite.dart';
 final getIt = GetIt.instance;
 const hiveDatabaseName = 'Hive';
 
-Future<BoxCollection> _hiveSetUp() async {
-  try {
-    final appDocumentDirectory = await getApplicationDocumentsDirectory();
-    final hivePath = appDocumentDirectory.path;
-    final boxCollection = await BoxCollection.open(
-      hiveDatabaseName,
-      {FilterSearchStateDataSourceImpl.boxName},
-      path: hivePath,
-    );
-    return boxCollection;
-  } catch (e) {
-    // TODO: 대체 처리?, 로깅
-    rethrow;
-  }
-}
-
-Future<Database> _sqfliteSetUp() async {
-  try {
-    return await BookmarkDbHelper().database;
-  } catch (e) {
-    // TODO: 대체 처리?, 로깅
-    rethrow;
-  }
-}
-
 Future<void> diSetUp() async {
   final boxCollection = await _hiveSetUp();
   final sqfliteDb = await _sqfliteSetUp();
@@ -226,4 +201,29 @@ Future<void> diSetUp() async {
       saveFilterSearchStateUseCase: getIt(),
     ),
   );
+}
+
+Future<BoxCollection> _hiveSetUp() async {
+  try {
+    final appDocumentDirectory = await getApplicationDocumentsDirectory();
+    final hivePath = appDocumentDirectory.path;
+    final boxCollection = await BoxCollection.open(
+      hiveDatabaseName,
+      {FilterSearchStateDataSourceImpl.boxName},
+      path: hivePath,
+    );
+    return boxCollection;
+  } catch (e) {
+    // TODO: 대체 처리?, 로깅
+    rethrow;
+  }
+}
+
+Future<Database> _sqfliteSetUp() async {
+  try {
+    return await BookmarkDbHelper().database;
+  } catch (e) {
+    // TODO: 대체 처리?, 로깅
+    rethrow;
+  }
 }
