@@ -4,14 +4,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_recipe_app/core/enum/network_error.dart';
 import 'package:flutter_recipe_app/core/result.dart';
 import 'package:flutter_recipe_app/domain/model/recipe.dart';
-import 'package:flutter_recipe_app/domain/usecase/add_saved_recipe_use_case.dart';
+import 'package:flutter_recipe_app/domain/usecase/add_saved_recipe_id_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_bookmark_changed_stream_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_recipes_by_category.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_recipes_category_list_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_recipes_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_saved_recipe_find_by_id_use_case.dart';
-import 'package:flutter_recipe_app/domain/usecase/get_saved_recipe_ids_use_case.dart';
-import 'package:flutter_recipe_app/domain/usecase/remove_saved_recipe_use_case.dart';
+import 'package:flutter_recipe_app/domain/usecase/get_user_saved_recipe_ids_use_case.dart';
+import 'package:flutter_recipe_app/domain/usecase/remove_saved_recipe_id_use_case.dart';
 import 'package:flutter_recipe_app/presentation/home/home_action.dart';
 import 'package:flutter_recipe_app/presentation/home/home_state.dart';
 
@@ -19,10 +19,10 @@ class HomeViewModel extends ValueNotifier<HomeState> {
   final GetRecipesUseCase _getRecipesUseCase;
   final GetRecipesCategoryListUseCase _getRecipesCategoryListUseCase;
   final GetRecipesByCategory _getRecipesByCategory;
-  final GetSavedRecipeIdsUseCase _getSavedRecipeIdsUseCase;
   final GetSavedRecipeFindByIdUseCase _getSavedRecipeFindByIdUseCase;
-  final RemoveSavedRecipeUseCase _removeSavedRecipeUseCase;
-  final AddSavedRecipeUseCase _addSavedRecipeUseCase;
+  final GetUserSavedRecipeIdsUseCase _getUserSavedRecipeIdsUseCase;
+  final RemoveSavedRecipeIdUseCase _removeSavedRecipeIdUseCase;
+  final AddSavedRecipeIdUseCase _addSavedRecipeIdUseCase;
   final GetBookmarkChangedStreamUseCase _bookmarkChangedStreamUseCase;
 
   Stream<void> get bookmarkChangedStream =>
@@ -32,18 +32,18 @@ class HomeViewModel extends ValueNotifier<HomeState> {
     required GetRecipesUseCase getRecipesUseCase,
     required GetRecipesCategoryListUseCase getRecipesCategoryListUseCase,
     required GetRecipesByCategory getRecipesByCategory,
-    required GetSavedRecipeIdsUseCase getSavedRecipeIdsUseCase,
     required GetSavedRecipeFindByIdUseCase getSavedRecipeFindByIdUseCase,
-    required RemoveSavedRecipeUseCase removeSavedRecipeUseCase,
-    required AddSavedRecipeUseCase addSavedRecipeUseCase,
+    required GetUserSavedRecipeIdsUseCase getUserSavedRecipeIdsUseCase,
+    required RemoveSavedRecipeIdUseCase removeSavedRecipeIdUseCase,
+    required AddSavedRecipeIdUseCase addSavedRecipeIdUseCase,
     required GetBookmarkChangedStreamUseCase bookmarkChangedStreamUseCase,
   }) : _getRecipesUseCase = getRecipesUseCase,
        _getRecipesCategoryListUseCase = getRecipesCategoryListUseCase,
        _getRecipesByCategory = getRecipesByCategory,
-       _getSavedRecipeIdsUseCase = getSavedRecipeIdsUseCase,
        _getSavedRecipeFindByIdUseCase = getSavedRecipeFindByIdUseCase,
-       _removeSavedRecipeUseCase = removeSavedRecipeUseCase,
-       _addSavedRecipeUseCase = addSavedRecipeUseCase,
+       _getUserSavedRecipeIdsUseCase = getUserSavedRecipeIdsUseCase,
+       _removeSavedRecipeIdUseCase = removeSavedRecipeIdUseCase,
+       _addSavedRecipeIdUseCase = addSavedRecipeIdUseCase,
        _bookmarkChangedStreamUseCase = bookmarkChangedStreamUseCase,
        super(HomeState());
 
@@ -112,12 +112,12 @@ class HomeViewModel extends ValueNotifier<HomeState> {
   }
 
   Future<void> loadSavedRecipeIds() async {
-    final Result<List<int>, String> result = await _getSavedRecipeIdsUseCase
+    final Result<List<int>, void> result = await _getUserSavedRecipeIdsUseCase
         .execute();
     switch (result) {
-      case Success<List<int>, String>():
+      case Success<List<int>, void>():
         value = value.copyWith(savedRecipeIds: result.data);
-      case Error<List<int>, String>():
+      case Error<List<int>, void>():
         value = value.copyWith(savedRecipeIds: []);
     }
     notifyListeners();
@@ -136,10 +136,10 @@ class HomeViewModel extends ValueNotifier<HomeState> {
   }
 
   Future<void> _addSavedRecipe(int recipeId) async {
-    await _addSavedRecipeUseCase.execute(recipeId);
+    await _addSavedRecipeIdUseCase.execute(recipeId);
   }
 
   Future<void> _removeSavedRecipe(int recipeId) async {
-    await _removeSavedRecipeUseCase.execute(recipeId);
+    await _removeSavedRecipeIdUseCase.execute(recipeId);
   }
 }
