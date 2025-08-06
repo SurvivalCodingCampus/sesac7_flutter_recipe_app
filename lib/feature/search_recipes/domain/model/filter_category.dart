@@ -12,6 +12,13 @@ enum FilterCategory {
   spanish,
   lunch;
 
+  factory FilterCategory.fromString(String value) {
+    return values.firstWhere(
+      (e) => e.toString() == value,
+      orElse: () => all,
+    );
+  }
+
   @override
   String toString() => name.capitalizeFirstLetter();
 }

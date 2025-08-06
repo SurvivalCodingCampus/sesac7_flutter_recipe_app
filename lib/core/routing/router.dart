@@ -132,15 +132,16 @@ GoRouter productionRouter() => GoRouter(
 );
 
 GoRouter devRouter() => GoRouter(
-  initialLocation: Routes.splash,
-  // initialLocation: Routes.home,
+  // initialLocation: Routes.splash,
+  initialLocation: Routes.home,
   routes: [
     GoRoute(
       path: Routes.splash,
       builder: (context, state) {
         return SplashScreenRoot(
           viewModel: getIt(),
-          onStartCookingTap: () => context.go(Routes.signIn),
+          // onStartCookingTap: () => context.go(Routes.signIn),
+          onStartCookingTap: () => context.push(Routes.search),
         );
       },
     ),

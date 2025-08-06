@@ -5,6 +5,11 @@ enum FilterRate {
   four,
   five;
 
+  static FilterRate? fromInt(int value) {
+    if (![1, 2, 3, 4, 5].contains(value)) return null;
+    return values.firstWhere((e) => e.toInt() == value);
+  }
+
   int toInt() {
     return switch (this) {
       FilterRate.one => 1,
