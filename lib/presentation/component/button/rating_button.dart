@@ -18,37 +18,35 @@ class RatingButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: SizedBox(
-        width: 50.0,
-        height: 28.0,
-        child: Container(
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            color: isSelected ? AppColors.primary100 : Colors.transparent,
-            borderRadius: BorderRadius.circular(10.0),
-            border: Border.all(
-              color: AppColors.primary100,
-              width: 1.5,
-            ),
+      child: Container(
+        //padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        //margin: const EdgeInsets.only(right: 8, bottom: 8),
+        decoration: BoxDecoration(
+          color: isSelected ? AppColors.primary100 : Colors.transparent,
+          borderRadius: BorderRadius.circular(10.0),
+          border: Border.all(
+            color: AppColors.primary100,
+            width: 1.5,
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                text,
-                style: TextStyles.smallerTextRegular.copyWith(
-                  color: isSelected ? AppColors.white : AppColors.primary100,
-                  fontSize: 11,
-                ),
-              ),
-              const SizedBox(width: 4),
-              Icon(
-                Icons.star,
-                size: 18,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              text,
+              style: TextStyles.smallerTextRegular.copyWith(
                 color: isSelected ? AppColors.white : AppColors.primary100,
+                fontSize: 11,
               ),
-            ],
-          ),
+            ),
+            const SizedBox(width: 4),
+            Icon(
+              Icons.star,
+              size: 18,
+              color: isSelected ? AppColors.white : AppColors.primary100,
+            ),
+          ],
         ),
       ),
     );
