@@ -62,10 +62,13 @@ class MainBody extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 30),
-          Container(
-            width: double.infinity,
-            height: 40,
-            color: Colors.black,
+          GestureDetector(
+            onTap: () => onAction(MainAction.clickOnSearch()),
+            child: Container(
+              width: double.infinity,
+              height: 40,
+              color: Colors.black,
+            ),
           ), // search bar placeholder
           const SizedBox(height: 15),
           MainCategoryFragment(

@@ -35,18 +35,19 @@ class _RecipeDetailRootState extends State<RecipeDetailRoot> {
           state: widget.viewModel.state,
           onAction: (RecipeDetailAction action) {
             widget.viewModel.onAction(action);
-            Future.delayed(Duration.zero, () {
+            if (action is ClickOnRate) {
               showDialog(
                 context: context,
-                builder: (context) => UnconstrainedBox(
-                  child: RatingDialog(
-                    title: "rate recipe",
-                    buttonText: "send",
-                    onPress: (int i) => print(i),
-                  ),
-                ),
+                builder: (context) =>
+                    UnconstrainedBox(
+                      child: RatingDialog(
+                        title: "rate recipe",
+                        buttonText: "send",
+                        onPress: (int i) => print(i),
+                      ),
+                    ),
               );
-            });
+            }
           },
         );
       },

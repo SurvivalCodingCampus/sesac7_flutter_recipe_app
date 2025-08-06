@@ -6,6 +6,8 @@ import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_scre
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/nav_bar_screen/body/saved_recipes/saved_recipes_view_model.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/recipe_detail/recipe_detail_root.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/recipe_detail/recipe_detail_view_model.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_root.dart';
+import 'package:flutter_recipe_app/01_stateless/presentation/screen/search_recipes/search_recipes_view_model.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/sign_in/sign_in_screen.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/sign_up/sign_up_screen.dart';
 import 'package:flutter_recipe_app/01_stateless/presentation/screen/splash/splash_screen.dart';
@@ -44,7 +46,9 @@ final router = GoRouter(
             GoRoute(
               path: Routes.savedRecipes,
               builder: (context, state) {
-                return SavedRecipesRoot(viewModel: getIt<SavedRecipesViewModel>());
+                return SavedRecipesRoot(
+                  viewModel: getIt<SavedRecipesViewModel>(),
+                );
               },
             ),
           ],
@@ -77,11 +81,31 @@ final router = GoRouter(
         );
       },
     ),
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) => navigationShell,
+      branches: [
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: Routes.searchRecipes,
+              builder: (context, state) {
+                return SearchRecipesRoot(
+                  viewModel: getIt<SearchRecipesViewModel>(),
+                );
+              },
+            ),
+          ],
+        ),
+      ],
+    ),
     GoRoute(
       path: '${Routes.recipeDetail}/:id',
       builder: (context, state) {
         final id = int.parse(state.pathParameters['id']!);
-        return RecipeDetailRoot(viewModel: getIt<RecipeDetailViewModel>(), recipeId: id);
+        return RecipeDetailRoot(
+          viewModel: getIt<RecipeDetailViewModel>(),
+          recipeId: id,
+        );
       },
     ),
   ],
