@@ -7,8 +7,8 @@ import 'package:flutter_recipe_app/core/enum/search_recipe_filter_category_type.
 import 'package:flutter_recipe_app/core/enum/search_recipe_filter_time_type.dart';
 import 'package:flutter_recipe_app/core/result.dart';
 import 'package:flutter_recipe_app/domain/model/recipe.dart';
-import 'package:flutter_recipe_app/domain/usecase/add_recent_recipes_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/get_recent_recipes_use_case.dart';
+import 'package:flutter_recipe_app/domain/usecase/save_recent_search_keyword_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/search_recipe_by_filter_use_case.dart';
 import 'package:flutter_recipe_app/domain/usecase/search_recipe_by_keyword_use_case.dart';
 import 'package:flutter_recipe_app/presentation/search_recipe/search_recipes_event.dart';
@@ -19,7 +19,7 @@ class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
   final SearchRecipeByKeywordUseCase _searchRecipeByKeywordUseCase;
   final SearchRecipeByFilterUseCase _searchRecipeByFilterUseCase;
   final GetRecentRecipesUseCase _getRecentRecipesUseCase;
-  final AddRecentRecipesUseCase _addRecentRecipesUseCase;
+  final SaveRecentSearchKeywordUseCase _saveRecentSearchKeywordUseCase;
 
   final StreamController<SearchRecipesEvent> _eventController =
       StreamController<SearchRecipesEvent>();
@@ -32,11 +32,11 @@ class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
     required SearchRecipeByKeywordUseCase searchRecipeByKeywordUseCase,
     required SearchRecipeByFilterUseCase searchRecipeByFilterUseCase,
     required GetRecentRecipesUseCase getRecentRecipesUseCase,
-    required AddRecentRecipesUseCase addRecentRecipesUseCase,
+    required SaveRecentSearchKeywordUseCase addRecentRecipesUseCase,
   }) : _searchRecipeByKeywordUseCase = searchRecipeByKeywordUseCase,
        _searchRecipeByFilterUseCase = searchRecipeByFilterUseCase,
        _getRecentRecipesUseCase = getRecentRecipesUseCase,
-       _addRecentRecipesUseCase = addRecentRecipesUseCase,
+       _saveRecentSearchKeywordUseCase = addRecentRecipesUseCase,
        super(SearchRecipesState());
 
   @override
@@ -76,8 +76,8 @@ class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
   Future<void> fetchRecentRecipes() async {
     value = value.copyWith(isLoading: true);
     notifyListeners();
-    final Result<List<Recipe>, NetworkError> result =
-        await _getRecentRecipesUseCase.execute();
+    final Result<List<Recipe>, void> result = await _getRecentRecipesUseCase
+        .execute();
     switch (result) {
       case Success():
         value = value.copyWith(
@@ -104,13 +104,17 @@ class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
       searchKeyword: keyword ?? '',
     );
     notifyListeners();
-    final Result<List<Recipe>, NetworkError> result = keyword != null
-        ? await _searchRecipeByKeywordUseCase.execute(keyword)
-        : await _searchRecipeByFilterUseCase.execute(
-            timeType,
-            ratingType,
-            categoryType,
-          );
+    final Result<List<Recipe>, NetworkError> result;
+    if (keyword != null) {
+      await _saveRecentSearchKeywordUseCase.execute(keyword);
+      result = await _searchRecipeByKeywordUseCase.execute(keyword);
+    } else {
+      result = await _searchRecipeByFilterUseCase.execute(
+        timeType,
+        ratingType,
+        categoryType,
+      );
+    }
     switch (result) {
       case Success():
         final List<Recipe> searchRecipes = result.data;
@@ -123,7 +127,6 @@ class SearchRecipesViewModel extends ValueNotifier<SearchRecipesState> {
           value = value.copyWith(
             searchResultRecipes: result.data,
           );
-          _addRecentRecipesUseCase.execute(result.data);
         }
       case Error():
         value = value.copyWith(

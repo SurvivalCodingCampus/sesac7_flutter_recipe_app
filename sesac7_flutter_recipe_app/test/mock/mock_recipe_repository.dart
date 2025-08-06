@@ -1,4 +1,3 @@
-
 import 'package:flutter_recipe_app/core/enum/network_error.dart';
 import 'package:flutter_recipe_app/core/enum/rating_type.dart';
 import 'package:flutter_recipe_app/core/enum/search_recipe_filter_category_type.dart';
@@ -18,14 +17,15 @@ class MockRecipeRepository implements RecipeRepository {
     required Result<List<Recipe>, NetworkError> searchRecipesResult,
     required Result<List<Recipe>, NetworkError> getRecentRecipesResult,
     required Result<List<Recipe>, NetworkError> addRecentRecipesResult,
-  })
-      : _getRecipesResult = getRecipesResult,
-        _searchRecipesResult = searchRecipesResult,
-        _getRecentRecipesResult = getRecentRecipesResult,
-        _addRecentRecipesResult = addRecentRecipesResult;
+  }) : _getRecipesResult = getRecipesResult,
+       _searchRecipesResult = searchRecipesResult,
+       _getRecentRecipesResult = getRecentRecipesResult,
+       _addRecentRecipesResult = addRecentRecipesResult;
 
   @override
-  Future<Result<List<Recipe>, NetworkError>> addRecentRecipes(List<Recipe> recentRecipes) async {
+  Future<Result<List<Recipe>, NetworkError>> addRecentRecipes(
+    List<Recipe> recentRecipes,
+  ) async {
     return _addRecentRecipesResult;
   }
 
@@ -40,7 +40,12 @@ class MockRecipeRepository implements RecipeRepository {
   }
 
   @override
-  Future<Result<List<Recipe>, NetworkError>> searchRecipes(String? keyword, SearchRecipeFilterTimeType? timeType, RatingType? ratingType, SearchRecipeFilterCategoryType? categoryType) async {
+  Future<Result<List<Recipe>, NetworkError>> searchRecipes([
+    String? keyword,
+    SearchRecipeFilterTimeType? timeType,
+    RatingType? ratingType,
+    SearchRecipeFilterCategoryType? categoryType,
+  ]) async {
     return _searchRecipesResult;
   }
 }

@@ -4,7 +4,8 @@ import 'package:flutter_recipe_app/di/di_setup.dart';
 import 'package:flutter_recipe_app/ui/app_colors.dart';
 
 void main() async {
-  diSetUp();
+  WidgetsFlutterBinding.ensureInitialized();
+  await diSetUp();
   runApp(const MyApp());
 }
 
