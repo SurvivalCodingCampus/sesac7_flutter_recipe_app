@@ -106,6 +106,7 @@ class _FilterSearchBottomSheetState extends State<FilterSearchBottomSheet> {
                     isSelected: isSelected,
                     onTap: () {
                       setState(() {
+                        _handleCategorySelection(category);
                         // 기존 카테고리 목록을 복사 // 스프레드 연산자 ...
                         final newCategories = [..._state.selectedCategories];
                         // final newCategories = [
@@ -165,4 +166,9 @@ class _FilterSearchBottomSheetState extends State<FilterSearchBottomSheet> {
       ),
     );
   }
+}
+
+void _handleCategorySelection(String category) {
+
+
 }

@@ -7,6 +7,8 @@ class InputField extends StatelessWidget {
   final String label;
   final String placeHolder;
   final String value;
+  final double width;
+  final double height;
   final void Function(String) onValueChange;
 
   const InputField({
@@ -15,13 +17,12 @@ class InputField extends StatelessWidget {
     required this.placeHolder,
     required this.value,
     required this.onValueChange,
+    this.width = 315.0,
+    this.height = 55.0,
   });
 
   @override
   Widget build(BuildContext context) {
-    final double inputFieldWidth = 315.0;
-    final double inputFieldHeight = 55.0;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -32,8 +33,8 @@ class InputField extends StatelessWidget {
           ),
         ),
         Container(
-          width: inputFieldWidth,
-          height: inputFieldHeight,
+          width: width,
+          height: height,
           decoration: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.circular(10.0),

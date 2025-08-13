@@ -50,8 +50,6 @@ class SearchRecipesViewModel with ChangeNotifier {
   }
 
   void searchRecipes(String query) {
-    _state = state.copyWith(searchQuery: query);
-    notifyListeners();
     // 찾기
     final filteredRecipes = state.originalRecipes.where((recipe) {
       return recipe.name.toLowerCase().contains(query.toLowerCase()) ||

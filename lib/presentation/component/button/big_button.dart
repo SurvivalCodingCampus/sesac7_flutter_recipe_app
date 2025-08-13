@@ -5,17 +5,18 @@ import '../../../ui/text_styles.dart';
 
 class BigButton extends StatelessWidget {
   final String text;
+  final double width;
   final void Function(String) onClick;
 
   const BigButton({
     super.key,
     required this.text,
     required this.onClick,
+    this.width = 315.0,
   });
 
   @override
   Widget build(BuildContext context) {
-    final double buttonWidth = 315.0;
     final double buttonHeight = 60.0;
     final double iconSize = 20.0;
 
@@ -24,7 +25,7 @@ class BigButton extends StatelessWidget {
         onClick('$text, Big button');
       },
       child: Container(
-        width: buttonWidth,
+        width: width,
         height: buttonHeight,
         decoration: BoxDecoration(
           color: AppColors.primary100,
